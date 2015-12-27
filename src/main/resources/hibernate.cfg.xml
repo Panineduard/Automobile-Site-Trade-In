@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+        <!--http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd-->
+
+
+
+<hibernate-configuration>
+    <session-factory>
+
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/ALL_Cars</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="connection.password">123</property>
+        <property name="connection.pool_size">1</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="dialect">org.hibernate.dialect.PostgreSQL81Dialect</property>
+
+        <property name="show_sql">true</property>
+        <property name="hbm2ddl.auto">update</property>
+        <mapping class="modelClass.Login"/>
+        <mapping class="modelClass.Car"/>
+        <mapping class="modelClass.Dealer"/>
+
+
+
+    </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+           xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+           version="3.0">
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    <display-name>Spring MVC Application</display-name>
+
+
+
+    <!--<listener>-->
+        <!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
+    <!--</listener>-->
+    <!--this Filter We use for encoding UTF8-->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!--It's main servlet for all req-->
+    <servlet>
+        <servlet-name>mvc-dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>mvc-dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+
+    <!--<servlet>-->
+    <!--<servlet-name>registration</servlet-name>-->
+    <!--<servlet-class>wepServise.RegistrationServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+    <!--<servlet-name>registration</servlet-name>-->
+    <!--<url-pattern>/registration</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<filter>-->
+    <!--<filter-name>entrance</filter-name>-->
+    <!--<filter-class>wepServise.FilterCheckLogin</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+    <!--<filter-name>entrance</filter-name>-->
+    <!--<url-pattern>/entrance/*</url-pattern>-->
+    <!--</filter-mapping>-->
+    <!--<servlet>-->
+    <!--<servlet-name>personalAccount</servlet-name>-->
+    <!--<servlet-class>wepServise.LoginServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+    <!--<servlet-name>personalAccount</servlet-name>-->
+    <!--<url-pattern>/entrance/secure</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<filter>-->
+    <!--<filter-name>addcar</filter-name>-->
+    <!--<filter-class>wepServise.FilterCheckAutentation</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+    <!--<filter-name>addcar</filter-name>-->
+    <!--<url-pattern>/account/*</url-pattern>-->
+    <!--</filter-mapping>-->
+    <!--<servlet>-->
+    <!--<servlet-name>pagefocar</servlet-name>-->
+    <!--<servlet-class>wepServise.UploadServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+    <!--<servlet-name>pagefocar</servlet-name>-->
+    <!--<url-pattern>/account/addCar</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet>-->
+    <!--<servlet-name>images</servlet-name>-->
+    <!--<servlet-class>wepServise.ServletImeges</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+    <!--<servlet-name>images</servlet-name>-->
+    <!--<url-pattern>/images</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet>-->
+    <!--<servlet-name>showcar</servlet-name>-->
+    <!--<servlet-class>wepServise.ServletShowCarPage</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+    <!--<servlet-name>showcar</servlet-name>-->
+    <!--<url-pattern>/viewCar</url-pattern>-->
+    <!--</servlet-mapping>-->
+</web-app>
