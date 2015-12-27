@@ -1,5 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page import="modelClass.Dealer" %>
+<%@ page import="modelClass.Car" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML>
 <head>
@@ -33,11 +35,13 @@
   </script>
 </head>
 <body>
-<form action="/" >
+<form action="/startPage" method="get" >
   <button type="submit" class="btn btn-theme btn-lg">На главную страницу</button>
 </form>
 <%
-  Dealer dealer = (Dealer)  request.getAttribute("dealer");%>
+  Dealer dealer = (Dealer)request.getAttribute("dealer");
+  List<Car> cars= (List<Car>) request.getAttribute("cars");
+%>
 <div style="clear:both"></div>
 <div class="box_highlight" style="margin-top:40px">
 
@@ -45,7 +49,7 @@
   <h2 style="text-align:center">Диллер номер - <%=dealer.getNameDealer()%>
   </h2>
 
-  <h3 style="text-align:center">${HelloMessage}</h3>
+  <h3 style="text-align:center">Это ваш акаунт где вы можете добавить или убрать авто. Так же просмотреть количество просмотров авто.</h3>
 
   <h3 style="text-align:center">Контактное лицо</h3>
 
@@ -62,22 +66,21 @@
     <div id="panes">
       <%
 
-        for (int i = 1; i <= dealer.getCountOfCar(); i++) {
+        for (Car car:cars) {
 
-          String path = "/res/dealerCarsImg/"+dealer.getNameDealer()+"/" + i + ".jpg";
+          String path = car.getPhotoPath().get(0);
 
       %>
-      <div><img src="<%=path%>" alt="">
+      <p><div><img width="300" height="200" src="/getPhoto?pathPhoto=<%=path%> ">;
 
-        <p style="text-align:right; margin-right: 16px"><a href="#" class="button">Описание</a> <a href="#" class="button">Написать продавцу</a></p>
+      <p style="text-align:right; margin-right: 16px"><a href="#" class="button">Описание</a> <a href="#" class="button">Написать продавцу</a></p>
 
-        <br>
+      <br>
 
-        <p style="text-align:right; margin-right: 16px">
-          <a href="/showCarPage.jsp" class="button">More Info</a> <a href="#" class="button">Buy Now</a></p>
-      </div>
+      <p style="text-align:right; margin-right: 16px">
+        <a href="/showCarPage.jsp" class="button">More Info</a> <a href="#" class="button">Buy Now</a></p>
+    </div></p>
       <%}%>
-
 
     </div>
     <!-- END tab panes -->
@@ -87,11 +90,12 @@
       <ul>
         <%
 
-          for (int i = 1; i <= dealer.getCountOfCar(); i++) {
-            String path = "/res/dealerCarsImg/"+dealer.getNameDealer()+"/" + i + ".jpg";
+          for (Car car:cars) {
+
+            String path = car.getPhotoPath().get(0);
         %>
 
-        <li><a href="#1"><img src="<%=path%>" width="160" alt=""><strong>Class aptent</strong> $ 199</a></li>
+        <li><a href="#1"><img src="/getPhoto?pathPhoto=<%=path%>" width="160" alt=""><strong>Class aptent</strong> $ 199</a></li>
         <%}%>
 
       </ul>

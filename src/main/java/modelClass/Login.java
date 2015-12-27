@@ -1,9 +1,6 @@
 package modelClass;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by ������ on 30.08.15.
@@ -13,15 +10,27 @@ import javax.persistence.Table;
 public class Login {
     @Id
     @Column(name = "iddeal")
-    private Long idDealer;
+    private String idDealer;
     @Column(name = "password")
     private String password;
+    @Column(name = "role")
 
-    public Long getIdDealer() {
+    @Enumerated(EnumType.STRING)
+    private ListRole role;
+
+    public ListRole getRole() {
+        return role;
+    }
+
+    public void setRole(ListRole role) {
+        this.role = role;
+    }
+
+    public String getIdDealer() {
         return idDealer;
     }
 
-    public void setIdDealer(Long idDealer) {
+    public void setIdDealer(String idDealer) {
         this.idDealer = idDealer;
     }
 

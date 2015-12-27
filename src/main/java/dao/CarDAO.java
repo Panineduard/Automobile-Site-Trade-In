@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Эдуард on 02.10.15.
  */
 public class CarDAO {
-    public List<Car> getCarByIdDealer(Long idD){
+    public List<Car> getCarByIdDealer(String idD){
        List <Car> cars = new ArrayList<Car>();
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -44,7 +44,7 @@ public class CarDAO {
                 System.out.println("модель");
                 return -1L;
             }
-            if (car.getIdDealer()==0L){
+            if (car.getIdDealer().isEmpty()){
                 System.out.println("Диллер");
              return -1L;
               }

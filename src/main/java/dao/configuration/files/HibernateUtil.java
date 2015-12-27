@@ -3,10 +3,8 @@ package dao.configuration.files;
 import org.hibernate.SessionFactory;
 import org.hibernate.TransientObjectException;
 import org.hibernate.cfg.Configuration;
-
-
 /**
- * Created by ������ on 05.09.15.
+ * Created by Panin Eduard on 05.09.15.
  */
 public class HibernateUtil {
 
@@ -24,24 +22,8 @@ public class HibernateUtil {
             throw new ExceptionInInitializerError(ex);
         }
     }
-
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 
-
-
-//    private static SessionFactory sessionFactory;
-//    private HibernateUtil(){}
-//    static {
-//       try {
-//           sessionFactory = new Configuration().configure().buildSessionFactory();
-//       }
-//       catch (Throwable e)       {throw new ExceptionInInitializerError(e);}
-//
-//    }
-
-//    public static SessionFactory getSessionFactory() {
-//        return sessionFactory;
-//    }
 }

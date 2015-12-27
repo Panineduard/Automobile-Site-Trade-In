@@ -14,7 +14,7 @@ import java.util.List;
 @Table (name = "DEALER")
 public class Dealer {
     @Id
-    private Long numberDealer;
+    private String numberDealer;
 
     private String nameDealer;
     private int countOfCar;
@@ -31,11 +31,11 @@ public class Dealer {
         this.contact_persons = contact_persons;
     }
 
-    public long getNumberDealer() {
+    public String getNumberDealer() {
         return numberDealer;
     }
 
-    public void setNumberDealer(long numberDealer) {
+    public void setNumberDealer(String numberDealer) {
         this.numberDealer = numberDealer;
     }
 

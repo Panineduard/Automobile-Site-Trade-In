@@ -9,7 +9,7 @@
 
 	<!-- this is your package structure where you create file CrunchifyEmailAPI.java
            and CrunchifyEmailTest.java -->
-	<context:component-scan base-package="sending.email" />
+	<context:component-scan base-package="com.email" />
 
 	<!-- Production implementation of the JavaMailSender interface, supporting
            both JavaMail MimeMessages and Spring SimpleMailMessages -->

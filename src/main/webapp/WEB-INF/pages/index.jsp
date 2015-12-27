@@ -45,21 +45,21 @@
           <span class="icon-bar"></span>
         </button>
         <%
-          Login login = (Login)request.getSession().getAttribute("login");
-          if(login!=null){%>
-        <a class="navbar-brand" href="/checkLogin">Войти</a>
-        <a class="navbar-brand" href= "#clinSess"><%="Диллер - "+login.getIdDealer()+" "%>Выход</a>
+          if(request.getSession().getAttribute("login")!=null){
+            Login login = (Login)request.getSession().getAttribute("login");
+            request.getSession().setAttribute("login",login);
+                   %>
 
-        <%}
+        <a class="navbar-brand"  href="/login">Войти</a>
+<%----%>
+        <a class="navbar-brand" href= "/logout">Выход</a>
+        <%
+          }
         else {
           %>
-        <a class="navbar-brand" href="/checkLogin">Войти</a>
+        <a class="navbar-brand" href="/login">Войти</a>
         <%
-
         }
-
-
-
         %>
 
       </div>

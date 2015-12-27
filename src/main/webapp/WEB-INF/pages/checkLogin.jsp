@@ -14,7 +14,7 @@
   <div class="container">
     ${msg}
 
-    <form name="login_form" class="form" action="/checkLogin" onsubmit=" return validate_form ( );" method="post">
+    <form name="login_form" class="form" action="/login" onsubmit=" return validate_form ( );" method="post">
       <input type="text" placeholder="Номер диллера" name="user">
       <input type="password" placeholder="Пароль" name="password">
 
@@ -34,7 +34,7 @@
 
 <script src="res/js/index.js"></script>
 
-<form action="/">
+<form action="/startPage">
   <button type="submit">На главную страницу</button>
 </form>
 

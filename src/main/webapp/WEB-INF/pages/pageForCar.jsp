@@ -65,7 +65,7 @@
 </head>
 <body>
 <h1>${msg}</h1>
-<form action="/" >
+<form action="/startPage" >
 <button type="submit" class="btn btn-theme btn-lg">На главную страницу</button>
 </form>
 

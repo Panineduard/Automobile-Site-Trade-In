@@ -1,5 +1,6 @@
-package sending.email;
+package com.email;
 
+import com.email.CrunchifyEmailAPI;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

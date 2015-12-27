@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Эдуард on 25.09.15.
  */
 public class DealerDao {
-public Integer updateCountOfCar(Long idDealer){
+public Integer updateCountOfCar(String idDealer){
     Session session= HibernateUtil.getSessionFactory().getCurrentSession();
     Transaction tr=null;
 
@@ -51,43 +51,41 @@ public Integer updateCountOfCar(Long idDealer){
 
 
 }
-public String getDealerName(Long namberDealer){
+public String getDealerName(String numberDealer){
         Session session= HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Dealer dealer = new Dealer();
         String nameDealer;
         try {
-            dealer =  session.get(Dealer.class,namberDealer);
-
-//        if(dealer==null){
-            nameDealer=dealer.getNameDealer();
-            session.close();
+           Query query = session.createQuery("select nameDealer from Dealer dealer where dealer.numberDealer =:numberDealer") ;
+            query.setParameter("numberDealer",numberDealer);
+            nameDealer=(String)query.uniqueResult();
             return nameDealer;
         }
         catch (NullPointerException p){
-
             return null;
         }
-
-
+        finally {
+            if(session.isOpen()){
+                session.close();
+            }
+        }
     }
-public Dealer getDealerById(Integer id){
+public Dealer getDealerById(String id){
     Session session = HibernateUtil.getSessionFactory().getCurrentSession();
     session.beginTransaction();
     Dealer dealer= session.get(Dealer.class, id);
-
     session.close();
     return dealer;
 
 }
 public String setDealer(String numberDealer, String nameDealer, String email, String name, String personPhone, String password) {
-        if (getDealerName(new Long(numberDealer)) != null) {
+        if (getDealerName(numberDealer) != null) {
             return "Данный полюзователь уже зарегестрирован";
         }
         if (!nameDealer.isEmpty() || !numberDealer.isEmpty() || !email.isEmpty() || !name.isEmpty() || !password.isEmpty()) {
             Dealer dealer = new Dealer();
 
-            dealer.setNumberDealer(new Long(numberDealer));
+            dealer.setNumberDealer(numberDealer);
 
             dealer.setNameDealer(nameDealer);
             List<Contact_person> contact_persons = new ArrayList<Contact_person>();

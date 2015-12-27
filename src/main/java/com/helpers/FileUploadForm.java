@@ -1,4 +1,4 @@
-package com.springapp.mvc;
+package com.helpers;
 
 import org.springframework.web.multipart.MultipartFile;
 

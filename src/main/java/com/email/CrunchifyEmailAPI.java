@@ -1,4 +1,4 @@
-package sending.email;
+package com.email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;

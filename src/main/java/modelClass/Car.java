@@ -23,7 +23,7 @@ public class Car {
     private String transmission;
     private String enginesType;
     private Integer prise;
-    private Long idDealer;
+    private String idDealer;
     private Long views;
     @Temporal (TemporalType.DATE)
     private Date dateProvide;
@@ -70,11 +70,11 @@ public class Car {
         this.dateProvide = dateProvide;
     }
 
-    public Long getIdDealer() {
+    public String getIdDealer() {
         return idDealer;
     }
 
-    public void setIdDealer(Long idDealer) {
+    public void setIdDealer(String idDealer) {
         this.idDealer = idDealer;
     }
 

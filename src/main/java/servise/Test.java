@@ -13,7 +13,6 @@ import java.util.List;
  */
 public class Test {
     public static void main(String... arg) throws IOException {
-        System.out.println(new Integer("ewr"));
 
 //        Session session = HibernateUtil.getSessionFactory().openSession();
 //        session.beginTransaction();
