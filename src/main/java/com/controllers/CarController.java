@@ -1,23 +1,21 @@
 package com.controllers;
 
 import com.helpers.FileUploadForm;
-import dao.CarDAO;
-import dao.DealerDao;
-import dao.configuration.files.HibernateUtil;
-import modelClass.Car;
-import modelClass.Login;
-import org.hibernate.Session;
+import com.dao.CarDAO;
+import com.dao.DealerDao;
+import com.modelClass.Car;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import servise.ViewHalper;
+import com.helpers.ViewHalper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -81,10 +79,10 @@ public class CarController {
                                           @ModelAttribute("make")String make,@ModelAttribute("model")String model,
                                           @ModelAttribute("prise")String prise,@ModelAttribute("year_prov")String year_prov,
                                           @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox,
-                                          @ModelAttribute("comment")String comment,HttpServletRequest request) {
-        Login login = (Login)request.getSession().getAttribute("login");
-        if (login!=null) {
-            String idDealer=login.getIdDealer();
+                                          @ModelAttribute("comment")String comment) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String idDealer = auth.getName();
+        if (!idDealer.isEmpty()) {
             Car car = new Car();
             CarDAO carDAO=new CarDAO();
             DealerDao dealerDao = new DealerDao();
@@ -118,7 +116,7 @@ public class CarController {
                 if (carDAO.setCar(car, uploadForm.getFiles()) != -1L) {
                     ModelAndView modelAndView=new ModelAndView("myAccount");
                     modelAndView.addObject("msg","Автомобиль удачно добавлен");
-                    return ViewHalper.addingDealerAndCarsInView(modelAndView,request);
+                    return ViewHalper.addingDealerAndCarsInView(modelAndView);
                 }
 
 

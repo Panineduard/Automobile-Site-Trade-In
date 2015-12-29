@@ -1,19 +1,15 @@
 package com.controllers;
 
-import dao.DealerDao;
-import dao.LoginDao;
-import dao.configuration.files.HibernateUtil;
-import modelClass.Dealer;
-import modelClass.ListRole;
-import modelClass.Login;
-import org.hibernate.Session;
+import com.dao.DealerDao;
+import com.modelClass.ListRole;
+import com.modelClass.Login;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
-import servise.ViewHalper;
+import com.helpers.ViewHalper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,28 +21,7 @@ import javax.servlet.http.HttpSession;
 @SessionAttributes("login")
 
 public class UserController {
-//    private ModelAndView checkLogin(Login login){
-//        LoginDao loginDao = new LoginDao();
-//        if(loginDao.checkLogin(login)) {
-//
-//            ModelAndView model3 = new ModelAndView("myAccount");
-//            Dealer dealer = new Dealer();
-//            Session session = HibernateUtil.getSessionFactory().openSession();
-//            session.beginTransaction();
-//            dealer = session.get(Dealer.class, login.getIdDealer());
-//
-//
-//            model3.addObject("HelloMessage", "Это ваш акаунт где вы можете добавить или убрать авто. Так же просмотреть количество просмотров авто.");
-//            model3.addObject("dealer",dealer);
-//            return model3;
-//        }
-//        else{
-//            ModelAndView model3 = new ModelAndView("checkLogin");
-//            model3.addObject("msg", "<h2>Пароль или пользователь не верен!</h2>");
-//
-//            return model3;
-//        }
-//    }
+
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView getRegistrationForm(){
         ModelAndView modelAndView = new ModelAndView("registration");
@@ -84,6 +59,14 @@ public class UserController {
         }
         return new ModelAndView("index");
     }
+
+
+    @RequestMapping(value = "/myAccount")
+    public ModelAndView accountModel(HttpServletRequest request){
+            ModelAndView modelAndView = new ModelAndView("myAccount");
+            return ViewHalper.addingDealerAndCarsInView(modelAndView);
+    }
+
     @RequestMapping(value = "/checkLogin")
     public ModelAndView getLoginForm(HttpServletRequest request){
     Login login = (Login)request.getSession().getAttribute("login");
@@ -93,7 +76,7 @@ public class UserController {
         return modelAndView;}
         else {
             ModelAndView modelAndView = new ModelAndView("myAccount");
-            return ViewHalper.addingDealerAndCarsInView(modelAndView,request);}
+            return ViewHalper.addingDealerAndCarsInView(modelAndView);}
     }
 
     @RequestMapping(value = "/checkLogin",method = RequestMethod.POST)
@@ -108,10 +91,10 @@ public class UserController {
 
         login.setIdDealer(user);
         login.setPassword(password);
-        login.setRole(ListRole.USER);
+        login.setRole(ListRole.ROLE_USER);
         request.getSession().setAttribute("login", login);
         ModelAndView model = new ModelAndView("myAccount");
-       return ViewHalper.addingDealerAndCarsInView(model,request);
+       return ViewHalper.addingDealerAndCarsInView(model);
 }
 
 

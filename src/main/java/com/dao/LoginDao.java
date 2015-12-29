@@ -1,7 +1,7 @@
-package dao;
+package com.dao;
 
-import dao.configuration.files.HibernateUtil;
-import modelClass.Login;
+import com.dao.configuration.files.HibernateUtil;
+import com.modelClass.Login;
 import org.hibernate.Session;
 
 /**

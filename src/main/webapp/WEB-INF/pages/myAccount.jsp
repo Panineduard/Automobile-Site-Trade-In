@@ -1,6 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ page import="modelClass.Dealer" %>
-<%@ page import="modelClass.Car" %>
+<%@ page import="com.modelClass.Dealer" %>
+<%@ page import="com.modelClass.Car" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML>
@@ -35,7 +35,7 @@
   </script>
 </head>
 <body>
-<form action="/startPage" method="get" >
+<form action="/" method="get" >
   <button type="submit" class="btn btn-theme btn-lg">На главную страницу</button>
 </form>
 <%

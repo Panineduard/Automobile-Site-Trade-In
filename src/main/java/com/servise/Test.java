@@ -1,12 +1,6 @@
-package servise;
-
-import dao.configuration.files.HibernateUtil;
-import modelClass.Car;
-import org.hibernate.Session;
+package com.servise;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ������ on 12.08.15.

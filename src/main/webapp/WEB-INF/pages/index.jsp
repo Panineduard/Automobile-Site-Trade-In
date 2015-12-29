@@ -1,4 +1,6 @@
-<%@ page import="modelClass.Login" %>
+<%@ page import="com.modelClass.Login" %>
+<%@ page import="org.springframework.security.core.Authentication" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%--
   Created by IntelliJ IDEA.
   User: ������
@@ -45,19 +47,16 @@
           <span class="icon-bar"></span>
         </button>
         <%
-          if(request.getSession().getAttribute("login")!=null){
-            Login login = (Login)request.getSession().getAttribute("login");
-            request.getSession().setAttribute("login",login);
-                   %>
-
-        <a class="navbar-brand"  href="/login">Войти</a>
-<%----%>
+          Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+          String idDealer = auth.getName();
+          if(idDealer!="anonymousUser"){%>
+        <a class="navbar-brand"  href="/myAccount">Войти</a>
         <a class="navbar-brand" href= "/logout">Выход</a>
         <%
           }
         else {
           %>
-        <a class="navbar-brand" href="/login">Войти</a>
+        <a class="navbar-brand" href="/myAccount">Войти</a>
         <%
         }
         %>
@@ -67,11 +66,12 @@
         <ul class="nav navbar-nav navbar-right">
           <li><a href="#home">Домой</a></li>
           <li><a href="#about">Описание</a></li>
-
+          <% if(idDealer=="anonymousUser"){%>
           <li><a href="registration" method="get">Регистрация</a></li>
-
-          <li><a href="#registration">Контакты</a></li>
+<%}else{ %>
           <li><a href="#feedback">Обратная связь</a></li>
+          <% } %>
+          <li><a href="#registration">Контакты</a></li>
 
 
         </ul>
@@ -601,7 +601,7 @@
   </section>
   <section class="for-full-back color-white text-center" id="contact-inner">
     <div class="container">
-
+<%if(idDealer!="anonymousUser"){%>
       <h1>Оставте отзыв</h1>
 
       <form action="/sendMessage" method="post">
@@ -629,6 +629,7 @@
           </div>
         </div>
       </form>
+      <%}%>
       <div id="add">
         <br />
         Kharkov City, UA

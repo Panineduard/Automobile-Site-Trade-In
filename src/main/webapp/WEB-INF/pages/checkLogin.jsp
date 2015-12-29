@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html >
@@ -12,18 +13,12 @@
 <div class="body"></div>
 <div class="wrapper">
   <div class="container">
-    ${msg}
-
-    <form name="login_form" class="form" action="/login" onsubmit=" return validate_form ( );" method="post">
-      <input type="text" placeholder="Номер диллера" name="user">
-      <input type="password" placeholder="Пароль" name="password">
-
+    <h1>Welcome</h1>
+      <c:url value="/j_spring_security_check" var="loginUrl" />
+    <form class="form" action="${loginUrl}"  method="post">
+      <input type="text" placeholder="Номер диллера" name="j_username">
+      <input type="password" placeholder="Пароль" name="j_password">
       <button type="submit">Войти</button>
-      <%--<%--%>
-      <%--String massege;--%>
-      <%--if(session.getAttribute("my3")==null){massege="";}--%>
-      <%--else massege=(String)session.getAttribute("my3");%>--%>
-      <%--<h1 > <%=massege %></h1>--%>
     </form>
 
   </div>
@@ -34,7 +29,7 @@
 
 <script src="res/js/index.js"></script>
 
-<form action="/startPage">
+<form action="/">
   <button type="submit">На главную страницу</button>
 </form>
 

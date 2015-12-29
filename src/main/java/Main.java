@@ -1,17 +1,11 @@
 
 
-import dao.CarDAO;
-import dao.configuration.files.HibernateUtil;
-import modelClass.*;
+import com.dao.configuration.files.HibernateUtil;
+import com.modelClass.*;
 import org.hibernate.Session;
 
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Эдуард on 11.08.15.

@@ -1,9 +1,10 @@
-package dao;
+package com.dao;
 
-import dao.configuration.files.HibernateUtil;
-import modelClass.Contact_person;
-import modelClass.Dealer;
-import modelClass.Login;
+import com.dao.configuration.files.HibernateUtil;
+import com.modelClass.Contact_person;
+import com.modelClass.Dealer;
+import com.modelClass.ListRole;
+import com.modelClass.Login;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -103,6 +104,7 @@ public String setDealer(String numberDealer, String nameDealer, String email, St
             Login login1 = new Login();
             login1.setIdDealer(dealer.getNumberDealer());
             login1.setPassword(login.getPassword());
+            login1.setRole(ListRole.ROLE_USER);
             session.merge(login1);
             new File("C:\\ClientsFolder\\"+numberDealer).mkdir();
 

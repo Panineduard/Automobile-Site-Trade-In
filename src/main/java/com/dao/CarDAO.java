@@ -1,7 +1,7 @@
-package dao;
+package com.dao;
 
-import dao.configuration.files.HibernateUtil;
-import modelClass.Car;
+import com.dao.configuration.files.HibernateUtil;
+import com.modelClass.Car;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

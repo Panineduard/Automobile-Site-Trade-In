@@ -1,4 +1,4 @@
-package modelClass;
+package com.modelClass;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;

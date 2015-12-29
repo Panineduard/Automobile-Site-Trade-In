@@ -17,9 +17,9 @@
 
         <property name="show_sql">true</property>
         <property name="hbm2ddl.auto">update</property>
-        <mapping class="modelClass.Login"/>
-        <mapping class="modelClass.Car"/>
-        <mapping class="modelClass.Dealer"/>
+        <mapping class="com.modelClass.Login"/>
+        <mapping class="com.modelClass.Car"/>
+        <mapping class="com.modelClass.Dealer"/>
 
 
 

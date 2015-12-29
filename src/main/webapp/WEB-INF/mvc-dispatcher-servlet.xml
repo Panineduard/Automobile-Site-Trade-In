@@ -3,15 +3,40 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
     <context:component-scan base-package="com.controllers"/>
+
     <context:annotation-config />
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+<!--<security:http pattern="/resources/**" security="none"/>-->
+    <!--<security:http auto-config="true" use-expressions="true"-->
+<!--<in-->
 
+
+
+
+                   <!--access-denied-page="pages/myAccount.jsp">-->
+        <!--<security:form-login login-page="pages/checkLogin.jsp"-->
+                             <!--login-processing-url="/login" username-parameter="username"-->
+                             <!--password-parameter="password" default-target-url="pages/myAccount.jsp"-->
+                             <!--always-use-default-target="true" authentication-failure-url="pages/myAccount.jsp?error=1"/>-->
+        <!--<security:intercept-url pattern="pages/myAccount.jsp" access="isAuthenticated"/>-->
+
+        <!--<security:logout logout-url="/logout"/>-->
+<!--<security:remember-me user-service-ref="userDetailsServiceImpl" key="lesson_key"/>-->
+        <!-- -->
+
+
+
+
+
+
+    <!--</security:http>-->
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass"

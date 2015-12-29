@@ -260,34 +260,3 @@
 
 
 
-
-
-
-<%--</head>--%>
-<%--<body bgcolor=  #20b2aa >--%>
-<%--<div style="font-size: 18px; color: black !important; clear: both;">--%>
-    <%--<FORM action="registration" method="post">--%>
-    <%--<%= request.getAttribute("my1")%>--%>
-    <%--<%= session.getAttribute("my2")%>--%>
-    <%--<h1>Здесь заполните пожалуйста данные диллерского центра</h1>--%>
-    <%--Название организации: <input type="text" name="nameDealer" size="30"><br>--%>
-    <%--Номер диллера:        <input type="text" name="numberDealer" size="30"><br>--%>
-    <%--Телефон:              <input type="text" name="phone" size="30"><br>--%>
-    <%--<h1>Здесь данные контактного лица</h1>--%>
-    <%--Имя :     <input type="text" name="name" size="70"><br>--%>
-    <%--Фамилия:  <input type="text" name="lastname" size="70"><br>--%>
-    <%--Отчество: <input type="text" name="firsname" size="70"><br>--%>
-    <%--Телефон:  <input type="text" name="personPhone" size="70"><br>--%>
-    <%--Электронный адрес: <input type="text" name="email" size="70"><br>--%>
-    <%--<h1>Введите пароль для полной регистрации. </h1>--%>
-    <%--Пароль:          <input type="password" name="pasword" size="70"><br>--%>
-    <%--Проверка пароля: <input type="password" name="checkPasword" size="70"><br>--%>
-
-    <%--<INPUT value="Зарегестрироваться" type="submit"  style="color: darkviolet"  name="registration" >--%>
-  <%--</Form>--%>
-  <%--</div>--%>
-<%--</body>--%>
-<%--</html>--%>
-
-
-

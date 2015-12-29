@@ -1,6 +1,4 @@
-package dao;
-
-import modelClass.Dealer;
+package com.dao;
 
 import java.sql.*;
 

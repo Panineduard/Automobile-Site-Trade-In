@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class MainController {
-    @RequestMapping("/startPage")
+    @RequestMapping("/")
     public ModelAndView printWelcome(HttpServletRequest request) {
 
         ModelAndView model = new ModelAndView("index");//this is constructor were is view filrd

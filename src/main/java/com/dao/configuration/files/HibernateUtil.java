@@ -1,7 +1,6 @@
-package dao.configuration.files;
+package com.dao.configuration.files;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.TransientObjectException;
 import org.hibernate.cfg.Configuration;
 /**
  * Created by Panin Eduard on 05.09.15.

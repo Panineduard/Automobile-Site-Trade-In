@@ -1,8 +1,6 @@
-package modelClass;
+package com.modelClass;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
  * Created by ������ on 30.08.15.
