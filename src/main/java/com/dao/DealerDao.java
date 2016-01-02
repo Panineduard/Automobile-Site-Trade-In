@@ -1,6 +1,7 @@
 package com.dao;
 
 import com.dao.configuration.files.HibernateUtil;
+import com.helpers.PasswordHelper;
 import com.modelClass.Contact_person;
 import com.modelClass.Dealer;
 import com.modelClass.ListRole;
@@ -85,9 +86,7 @@ public String setDealer(String numberDealer, String nameDealer, String email, St
         }
         if (!nameDealer.isEmpty() || !numberDealer.isEmpty() || !email.isEmpty() || !name.isEmpty() || !password.isEmpty()) {
             Dealer dealer = new Dealer();
-
             dealer.setNumberDealer(numberDealer);
-
             dealer.setNameDealer(nameDealer);
             List<Contact_person> contact_persons = new ArrayList<Contact_person>();
             Contact_person contact_person = new Contact_person();
@@ -96,16 +95,15 @@ public String setDealer(String numberDealer, String nameDealer, String email, St
             contact_person.setPhone(personPhone);
             contact_persons.add(contact_person);
             dealer.setContact_persons(contact_persons);
-            Login login = new Login();
-            login.setPassword(password);
+            PasswordHelper passwordHelper = new PasswordHelper();
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
             session.merge(dealer);
-            Login login1 = new Login();
-            login1.setIdDealer(dealer.getNumberDealer());
-            login1.setPassword(login.getPassword());
-            login1.setRole(ListRole.ROLE_USER);
-            session.merge(login1);
+            Login login = new Login();
+            login.setIdDealer(dealer.getNumberDealer());
+            login.setPassword(passwordHelper.encode(password));
+            login.setRole(ListRole.ROLE_USER);
+            session.merge(login);
             new File("C:\\ClientsFolder\\"+numberDealer).mkdir();
 
 

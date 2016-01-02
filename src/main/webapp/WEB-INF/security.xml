@@ -9,10 +9,16 @@
         <intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/myAccount" access="ROLE_USER" />
         <form-login login-page='/login'/>
+        <logout invalidate-session="true" logout-success-url="/" logout-url="/j_spring_security_logout"/>
     </http>
     <authentication-manager>
-        <authentication-provider user-service-ref="userDetailsServiceImpl"/>
+        <authentication-provider user-service-ref="userDetailsServiceImpl">
+            <password-encoder ref="passwordHelper"/>
+
+                </authentication-provider>
+
     </authentication-manager>
+    <beans:bean id="passwordHelper" class="com.helpers.PasswordHelper"/>
     <beans:bean id="userDetailsServiceImpl"
                 class="com.servise.UserDetailsServiceImpl" />
 </beans:beans>

@@ -9,6 +9,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -51,7 +52,8 @@
           String idDealer = auth.getName();
           if(idDealer!="anonymousUser"){%>
         <a class="navbar-brand"  href="/myAccount">Войти</a>
-        <a class="navbar-brand" href= "/logout">Выход</a>
+        <c:url var="logoutAction" value="/j_spring_security_logout"></c:url>
+        <a class="navbar-brand" href= "${logoutAction}">Выход</a>
         <%
           }
         else {

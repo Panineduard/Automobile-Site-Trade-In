@@ -50,15 +50,7 @@ public class UserController {
            return model1;
        }
     }
-    @RequestMapping(value = "/clinSes")
-    public ModelAndView getRegistrationForm(HttpServletRequest request){
-        HttpSession newsession = request.getSession(false);
-        if (newsession != null)
-        {
-            newsession.invalidate();
-        }
-        return new ModelAndView("index");
-    }
+
 
 
     @RequestMapping(value = "/myAccount")

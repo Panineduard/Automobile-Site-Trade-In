@@ -1,4 +1,6 @@
 package com.helpers;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -6,8 +8,8 @@ import java.security.NoSuchAlgorithmException;
  * Created by volkswagen1 on 17.12.2015.
  */
 
-public class PasswordHelper  {
-private MessageDigest md;
+public class PasswordHelper implements PasswordEncoder {
+    private MessageDigest md;
     public PasswordHelper(){
         try {
             md=MessageDigest.getInstance("MD5");
@@ -32,6 +34,6 @@ private MessageDigest md;
     }
 
     public boolean matches(CharSequence charSequence, String s) {
-       return (encode(charSequence)).equals(s);
+        return (encode(charSequence)).equals(s);
     }
 }
