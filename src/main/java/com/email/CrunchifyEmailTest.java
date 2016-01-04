@@ -10,7 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class CrunchifyEmailTest {
 
-    @SuppressWarnings("resource")
+
     public static void sendMessageOnEmail(String message, String email) {
 
         // Spring Bean file you specified in /src/main/resources folder
@@ -25,7 +25,7 @@ public class CrunchifyEmailTest {
         if (!toAddr.equals(email)) {
             toAddr = email;
         }
-        String subject = "Это сообщение отправлено автоматически.";
+        String subject = " Это сообщение отправлено автоматически. ";
         if (email.equals(toAddr)) {
             // email subject
             subject = "Users our site";

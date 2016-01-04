@@ -1,5 +1,8 @@
 package com.servise;
 
+import com.dao.DealerDao;
+import com.email.CrunchifyEmailTest;
+
 import java.io.*;
 
 /**
@@ -7,7 +10,9 @@ import java.io.*;
  */
 public class Test {
     public static void main(String... arg) throws IOException {
-
+        CrunchifyEmailTest.sendMessageOnEmail("Hello","veselaya_gora@mail.ru");
+//        DealerDao dealerDao=new DealerDao();
+//        dealerDao.updateRegistrationAndRoleById("3");
 //        Session session = HibernateUtil.getSessionFactory().openSession();
 //        session.beginTransaction();
 //        Car car = new Car();

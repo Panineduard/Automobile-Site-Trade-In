@@ -160,7 +160,7 @@
 <option value="1594"class="cat-top">Toyota (3687)</option>
 
 <option value="volkswagen"class="cat-top">Volkswagen</option>
-<option value="1479"class="cat-top">Volvo (650)</option>
+<option value="1479"class="cat-top">Volvo</option>
 
 <%--<option value="180">Богдан (102)</option>--%>
 <option value="1659"class="cat-top">ВАЗ</option>
@@ -288,19 +288,19 @@
 
 <h2>Тип двигателя</h2>
 <select id="id_engine" class="form-control" name="engine">
-<option value="1948">Бензин</option>
-<option value="1987">Дизель</option>
-<option value="2022">Электро</option>
-<option value="1988">Гибрид</option>
-<option value="1943">Другое</option>
+<option value="gasoline">Бензин</option>
+<option value="disel">Дизель</option>
+<option value="elektro">Электро</option>
+<option value="hybrid">Гибрид</option>
+<option value="other">Другое</option>
 </select>
 
 
 <h2>Тип КПП</h2>
 <select id="id_gearbox" class="form-control" name="gearbox">
 <option value="another" >Другое</option>
-<option value="2009">Автоматическая</option>
-<option value="2008">Механическая</option>
+<option value="auto">Автоматическая</option>
+<option value="mechanical">Механическая</option>
 </select>
 
 <h2>Описание</h2><br>

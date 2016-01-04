@@ -1,0 +1,123 @@
+
+header{
+	text-align:left;
+	padding:5px;
+	background-color:silver;
+	
+}
+body{
+	background-color:#778899;
+}
+h5{margin:0px;
+text-align:center;}
+ul#menu {
+    padding: 0;
+}
+
+ul#menu li {
+    display: inline;
+}
+
+ul#menu li a {
+    background-color: #C0C0C0;
+    color: black;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px 4px 4px 4px;
+}
+
+ul#menu li a:hover {
+    background-color: orange;
+}
+
+#layout{overflow:hidden;
+background: #DCDCDC;}
+
+
+#baner-left{
+		width:200px;
+		background-color:#C0C0C0;
+		float:left;
+		margin-top:5px;
+		}
+		#search{
+			padding:0px 5px 5px 10px;
+			margin-top:0px;
+		}
+#result {
+	/* background-color: #C7E3E4; */
+	margin: 5px 205px 5px 205px;
+	
+}
+#baner-right{
+		width:200px;
+		background-color:green;
+		float:right;
+		margin-top:5px;
+}
+#auto{
+	margin-bottom:15px;
+	border:1px solid red;
+	background-color:#C7E3E4;
+}
+.info{
+	color:red;
+	border:red;
+	/* overflow:hidden; */
+}
+.town{
+	width:200px;
+	float:left;
+	border:1px solid red;
+	margin-left:5px;
+	padding:3px;
+}
+.diller{
+	margin: 0px 210px 0px 210px;
+	border:1px solid red;
+	padding:3px;
+}
+.phone-number{
+	width:200px;
+	float:right;
+	border:1px solid red;
+	margin-right:5px;
+	padding:3px;
+}
+footer {
+	background-color:silver;
+}
+		
+		
+a.more{
+	background:red;
+	text-align:right;
+	margin:5px 5px 10px 5px;
+}
+a.model{
+	background-color:red;
+	text-align:left;
+	text-decoration:none;
+}
+img {
+      float:left; 
+	  height: 120px;
+      width: 185px;
+	  margin:30px 0px 10px 5px;
+	  padding:5px 5px 5px 5px;
+	  border: 3px solid red;
+	  
+}
+
+div.model-info {
+	color:green;
+	/* padding:5px; */
+	line-height:30px;
+	margin-left:220px;
+	
+	}
+		
+	
+		
+	
+

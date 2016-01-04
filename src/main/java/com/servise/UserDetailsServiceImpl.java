@@ -15,15 +15,14 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     public UserDetails loadUserByUsername(String idDealer) throws UsernameNotFoundException {
-        System.out.println(idDealer);
-        Login login=new Login();
+
+        Login login;
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         Query query= session.createQuery("from Login l where l.idDealer=:idDealer");
         query.setParameter("idDealer",idDealer);
         login=(Login)query.uniqueResult();
         session.beginTransaction().commit();
-        System.out.println("Login - "+login.getIdDealer()+"Pssword"+login.getPassword());
         return login;
     }
 

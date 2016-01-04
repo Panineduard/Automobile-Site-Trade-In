@@ -1,6 +1,8 @@
 package com.controllers;
 
 import com.dao.DealerDao;
+import com.email.CrunchifyEmailAPI;
+import com.email.CrunchifyEmailTest;
 import com.modelClass.ListRole;
 import com.modelClass.Login;
 import org.springframework.stereotype.Controller;
@@ -36,59 +38,41 @@ public class UserController {
         DealerDao dealerDao = new DealerDao();
        try{ if (pasword.equals(checkPasword)){
             returnMassege= dealerDao.setDealer(numberDealer, nameDealer,email,name,personPhone,pasword);
+            CrunchifyEmailTest.sendMessageOnEmail("Подтвердите регистрацию на сайте volkswagen trade in перейдя по этой ссылке \n" +
+                    "http://localhost:8080/ConfirmationOfRegistration?id="+nameDealer,email);
         }
         else {
             returnMassege = "Проверте пароль!!!";
         }
         ModelAndView model = new ModelAndView("successfulRegistration");
-        model.addObject("msg", "Здравствуйте " + name + " " + returnMassege);
+        model.addObject("msg", "Здравствуйте " + name + " " + returnMassege+"\n вам на почту отправлено письмо с подтверждением регистрации");
         return model;}
-       catch (NumberFormatException e){
-//           returnMassege="Вы ввели не допустимое поле номер диллера!";
+        catch (NumberFormatException e){
+
            ModelAndView model1 = new ModelAndView("registration");
            model1.addObject("msg", "Поле 'Номер диллера'! Только цифры!");
            return model1;
-       }
+        }
     }
 
-
+@RequestMapping(value = "/ConfirmationOfRegistration", method = RequestMethod.GET)
+public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
+    DealerDao dealerDao = new DealerDao();
+    dealerDao.updateRegistrationAndRoleById(idDealer);
+    ModelAndView model = new ModelAndView("successfulRegistration");
+    model.addObject("msg", "Вы удачно подтвердили почту с номером диллера - " +idDealer);
+    return model;
+}
 
     @RequestMapping(value = "/myAccount")
-    public ModelAndView accountModel(HttpServletRequest request){
+    public ModelAndView accountModel(){
             ModelAndView modelAndView = new ModelAndView("myAccount");
             return ViewHalper.addingDealerAndCarsInView(modelAndView);
     }
 
-    @RequestMapping(value = "/checkLogin")
-    public ModelAndView getLoginForm(HttpServletRequest request){
-    Login login = (Login)request.getSession().getAttribute("login");
-        if(login==null){
-        ModelAndView modelAndView = new ModelAndView("checkLogin");
-        modelAndView.addObject("msg","<h1>Welcome<h1>");
-        return modelAndView;}
-        else {
-            ModelAndView modelAndView = new ModelAndView("myAccount");
-            return ViewHalper.addingDealerAndCarsInView(modelAndView);}
-    }
-
-    @RequestMapping(value = "/checkLogin",method = RequestMethod.POST)
-    public ModelAndView checkUserData(@RequestParam("user") String user,@RequestParam("password") String password,HttpServletRequest request){
-    if(user.isEmpty()||password.isEmpty()){
-    ModelAndView model3 = new ModelAndView("checkLogin");
-    model3.addObject("msg", "<h2>Пароль или пользователь не верен!</h2>");
-    return model3;
-}
-        else {
-        Login login = new Login();
-
-        login.setIdDealer(user);
-        login.setPassword(password);
-        login.setRole(ListRole.ROLE_USER);
-        request.getSession().setAttribute("login", login);
-        ModelAndView model = new ModelAndView("myAccount");
-       return ViewHalper.addingDealerAndCarsInView(model);
-}
 
 
-    }
+
+
+
 }

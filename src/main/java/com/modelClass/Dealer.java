@@ -15,7 +15,7 @@ import java.util.List;
 public class Dealer {
     @Id
     private String numberDealer;
-
+    private boolean registration;
     private String nameDealer;
     private int countOfCar;
     @ElementCollection
@@ -53,6 +53,14 @@ public class Dealer {
 
     public void setCountOfCar(int countOfCar) {
         this.countOfCar = countOfCar;
+    }
+
+    public boolean isRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(boolean registration) {
+        this.registration = registration;
     }
 
     public String toString() {

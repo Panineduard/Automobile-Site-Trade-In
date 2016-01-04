@@ -95,7 +95,18 @@
             font-weight: 400;
             padding: 4px;
         }
-
+        .login input[type=email]{
+            width: 250px;
+            height: 30px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 2px;
+            color: indigo;
+            font-family: 'Exo', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            padding: 4px;
+        }
         .login input[type=password]{
             width: 250px;
             height: 30px;
@@ -137,7 +148,10 @@
             outline: none;
             border: 1px solid rgba(255,255,255,0.9);
         }
-
+        .login input[type=email]:focus{
+            outline: none;
+            border: 1px solid rgba(255,255,255,0.9);
+        }
         .login input[type=password]:focus{
             outline: none;
             border: 1px solid rgba(255,255,255,0.9);
@@ -184,7 +198,7 @@
     <%--<input type="text" placeholder="Фамилия" name="lastname"><br>--%>
     <%--<input type="text" placeholder="Отчество" name="firsname"><br>--%>
     <input type="text" placeholder="Телефон" name="personPhone"><br>
-    <input type="text" placeholder="Электронный адрес" name="email"><br>
+    <input type="email" placeholder="Электронный адрес" name="email"><br>
     <h2>Введите пароль для полной регистрации. </h2>
     <input type="password" placeholder="Пароль" name="pasword"><br>
     <input type="password" placeholder="Проверка пароля" name="checkPasword"><br>

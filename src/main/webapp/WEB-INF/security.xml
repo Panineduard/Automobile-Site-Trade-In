@@ -8,6 +8,7 @@
     <http auto-config="true">
         <intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/myAccount" access="ROLE_USER" />
+        <intercept-url pattern="/addCar" access="ROLE_USER"/>
         <form-login login-page='/login'/>
         <logout invalidate-session="true" logout-success-url="/" logout-url="/j_spring_security_logout"/>
     </http>

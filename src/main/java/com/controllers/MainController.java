@@ -15,7 +15,7 @@ public class MainController {
     @RequestMapping("/")
     public ModelAndView printWelcome(HttpServletRequest request) {
 
-        ModelAndView model = new ModelAndView("index");//this is constructor were is view filrd
+        ModelAndView model = new ModelAndView("index1");//this is constructor were is view filrd
         return model;
     }
 }

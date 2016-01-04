@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Эдуард on 30.11.15.
@@ -29,7 +31,7 @@ public class CarController {
     @RequestMapping(value = "/getPhoto", method = RequestMethod.GET)
     public void getRegistrationForm(HttpServletRequest req,HttpServletResponse response){
         String path_of_photo=(String)req.getParameter("pathPhoto");
-        System.out.println(path_of_photo);
+
         if(!req.getParameter("pathPhoto").isEmpty()){
 //            path_of_photo=req.getParameter("path_of_photo");
 
@@ -74,8 +76,22 @@ public class CarController {
         return modelAndView;
     }
 
+
+    @RequestMapping(value = "/lookForCars",method = RequestMethod.POST)
+    public ModelAndView getCarsPages(@ModelAttribute("make")String make,@ModelAttribute("model")String model,
+                                     @ModelAttribute("price_from")String price_from,@ModelAttribute("price_to")String price_to,
+                                     @ModelAttribute("year_from")String year_from,@ModelAttribute("year_to")String year_to,
+                                     @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox){
+        CarDAO carDAO= new CarDAO();
+        List<Car> cars =carDAO.getCarsByParameters(make,model,price_from,price_to,year_from,year_to,engine,gearbox);
+        ModelAndView modelAndView = new ModelAndView("index1");
+
+        modelAndView.addObject("cars",cars);
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/addCarWithPhoto",method = RequestMethod.POST)
-    public ModelAndView uploadFileHandler(@ModelAttribute("uploadForm") FileUploadForm uploadForm,Model map,
+    public ModelAndView uploadCarsFile(@ModelAttribute("uploadForm") FileUploadForm uploadForm,Model map,
                                           @ModelAttribute("make")String make,@ModelAttribute("model")String model,
                                           @ModelAttribute("prise")String prise,@ModelAttribute("year_prov")String year_prov,
                                           @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox,

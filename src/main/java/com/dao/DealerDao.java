@@ -18,6 +18,19 @@ import java.util.List;
  * Created by Эдуард on 25.09.15.
  */
 public class DealerDao {
+    public void updateRegistrationAndRoleById(String idDealer){
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr=session.beginTransaction();
+        Query query =  session.createQuery("update Dealer d set d.registration =:registration where numberDealer=:id ");
+        Query query1=session.createQuery("update  Login l set l.role =:role where l.idDealer =:id");
+        query.setParameter("registration", true);
+        query.setParameter("id", idDealer);
+        query1.setParameter("id", idDealer);
+        query1.setParameter("role",ListRole.ROLE_USER);
+        query1.executeUpdate();
+        query.executeUpdate();
+        tr.commit();
+    }
 public Integer updateCountOfCar(String idDealer){
     Session session= HibernateUtil.getSessionFactory().getCurrentSession();
     Transaction tr=null;
@@ -33,7 +46,7 @@ public Integer updateCountOfCar(String idDealer){
     Integer countOfCar = (Integer) countOfCars.get(0);
     countOfCar++;
 
-    query = session.createQuery("update Dealer set countOfCar = :countOfCar" +
+    query = session.createQuery("update Dealer set countOfCar = :countOfCar " +
             " where numberDealer = :numberDealer");
     query.setParameter("countOfCar", countOfCar);
     query.setParameter("numberDealer", idDealer);
@@ -88,6 +101,7 @@ public String setDealer(String numberDealer, String nameDealer, String email, St
             Dealer dealer = new Dealer();
             dealer.setNumberDealer(numberDealer);
             dealer.setNameDealer(nameDealer);
+            dealer.setRegistration(false);
             List<Contact_person> contact_persons = new ArrayList<Contact_person>();
             Contact_person contact_person = new Contact_person();
             contact_person.setEmail(email);
@@ -102,10 +116,9 @@ public String setDealer(String numberDealer, String nameDealer, String email, St
             Login login = new Login();
             login.setIdDealer(dealer.getNumberDealer());
             login.setPassword(passwordHelper.encode(password));
-            login.setRole(ListRole.ROLE_USER);
+            login.setRole(ListRole.ROLE_ANONYMOUS);
             session.merge(login);
             new File("C:\\ClientsFolder\\"+numberDealer).mkdir();
-
 
             session.beginTransaction().commit();
             return "Вы удачно добавили данные";

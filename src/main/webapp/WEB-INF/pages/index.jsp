@@ -94,13 +94,13 @@
 
         <h3 align="center" class="head-last">Автомобили программы Volkswagen TRADE-IN по Украине</h3>
 
-         <form action="/poisk/avto/" method="get">
+         <form action="/lookForCars" method="post">
 
             <div class="row">
               <div class="col-sm-6 form-group">
                 <h2>Марка</h2>
-                <select id="id_make1" class="form-control" name="make1">
-                  <option value="" selected="selected">выберите марку</option>
+                <select id="id_make1" class="form-control" name="make">
+                  <option value="" selected="selected">вcе марки</option>
                   <option value="131">Acura </option>
                   <%--<option value="722">Alfa Romeo </option>--%>
                   <%--<option value="273">Aston Martin </option>--%>
@@ -114,12 +114,12 @@
                   <%--<option value="990">Cadillac </option>--%>
                   <%----%>
                   <%--<option value="77">Chery </option>--%>
-                  <option value="583"class="cat-top">Chevrolet (3632)</option>
+                  <option value="583"class="cat-top">Chevrolet</option>
                   <%--<option value="957">Chrysler </option>--%>
-                  <option value="1004"class="cat-top">Citroen (1767)</option>
+                  <option value="1004"class="cat-top">Citroen</option>
                   <%--<option value="344">Dacia </option>--%>
 
-                  <option value="1639"class="cat-top">Daewoo (4922)</option>
+                  <option value="1639"class="cat-top">Daewoo </option>
                   <%--<option value="417">Daihatsu (70)</option>--%>
                   <%----%>
                   <%--<option value="546">Dodge </option>--%>
@@ -182,13 +182,13 @@
                   <%--<option value="2001">Tesla (7)</option>--%>
                   <option value="1594"class="cat-top">Toyota (3687)</option>
 
-                  <option value="volkswagen"class="cat-top">Volkswagen (8918)</option>
-                  <option value="1479"class="cat-top">Volvo (650)</option>
+                  <option value="volkswagen"class="cat-top">Volkswagen </option>
+                  <option value="1479"class="cat-top">Volvo </option>
 
                   <%--<option value="180">Богдан (102)</option>--%>
-                  <option value="1659"class="cat-top">ВАЗ (18402)</option>
-                  <option value="1799"class="cat-top">ГАЗ (1416)</option>
-                  <option value="576"class="cat-top">ЗАЗ (3524)</option>
+                  <option value="1659"class="cat-top">ВАЗ </option>
+                  <option value="1799"class="cat-top">ГАЗ </option>
+                  <option value="576"class="cat-top">ЗАЗ </option>
 
                   <%--<option value="634"class="cat-top">Москвич (843)</option>--%>
                   <%--<option value="7183">СМЗ (7)</option>--%>
@@ -197,7 +197,7 @@
               </div>
               <div class="col-sm-6 form-group">
                 <h2>Модель</h2>
-                <select id="id_model1" class="form-control" name="model1">
+                <select id="id_model1" class="form-control" name="model">
                   <option value="" selected="selected">укажите марку</option>
                 </select>
               </div>
@@ -215,6 +215,7 @@
                 <div class="row">
                   <div class="col-sm-6"><select id="id_year_from" class="form-control" name="year_from">
                     <option value="" selected="selected">c</option>
+                    <option value="2016">2016</option>
                     <option value="2015">2015</option>
                     <option value="2014">2014</option>
                     <option value="2013">2013</option>
@@ -313,6 +314,7 @@
                   </select></div>
                   <div class="col-sm-6"><select id="id_year_to" class="form-control" name="year_to">
                     <option value="" selected="selected">по</option>
+                    <option value="2016">2016</option>
                     <option value="2015">2015</option>
                     <option value="2014">2014</option>
                     <option value="2013">2013</option>
@@ -418,19 +420,21 @@
                   <div class="col-sm-6 form-group">
                     Тип двигателя
                     <select id="id_engine" class="form-control" name="engine">
-                      <option value="" selected="selected">все</option>
-                      <option value="1948">Бензин</option>
-                      <option value="1987">Дизель</option>
-                      <option value="2022">Электро</option>
-                      <option value="1988">Гибрид</option>
+                      <option value="">все</option>
+                      <option value="gasoline">Бензин</option>
+                      <option value="disel">Дизель</option>
+                      <option value="elektro">Электро</option>
+                      <option value="hybrid">Гибрид</option>
+                      <option value="other">Другое</option>
                     </select>
                   </div>
                   <div class="col-sm-6 form-group">
                     Тип КПП
                     <select id="id_gearbox" class="form-control" name="gearbox">
-                      <option value="" selected="selected">все</option>
-                      <option value="2009">Автоматическая</option>
-                      <option value="2008">Механическая</option>
+                      <option value="">все</option>
+                      <option value="another" >Другое</option>
+                      <option value="auto">Автоматическая</option>
+                      <option value="mechanical">Механическая</option>
                     </select>
                   </div>
                 </div>
@@ -676,11 +680,12 @@
        от выбранного значения в первом списке */
 
       '': {
-        '': 'Вы не выбрали марку',
+        '': 'Вы не выбрали марку'
 
       },
 
       'volkswagen': {
+        '':'Все модели',
         'passat': 'Passat',
         'jeta': 'Jeta'
 

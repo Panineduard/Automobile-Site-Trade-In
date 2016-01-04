@@ -126,28 +126,88 @@ public class CarDAO {
             tr.commit();
             new DealerDao().updateCountOfCar(car.getIdDealer());
         }
-
-
         catch (Exception e){
             if(tr!=null)tr.rollback();
             return -1L;
         }
-
         finally {
             if (session.isOpen()){
                 session.close();
             }
         }
-
-
-
-
-
-
-
-
         return carId ;
-
     }
+//this method found cars for all or one parameters
+    public  List<Car> getCarsByParameters(String make,String model,String price_from,String price_to,String year_from,
+                                          String year_to,String engine,String gearbox){
+        List<Car> carsList;
+        Session session =HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        String requestDb ="";
+        boolean fMake = false,fModel = false,fPrise_from = false,fPrise_to = false,fYear_from = false,fYear_to = false,fEngine = false,fGearbox=false;
+        if(!make.isEmpty()){
+            fMake=true;
+        requestDb=requestDb+" and c.brand=:make";
+        }
+        if(!model.isEmpty()){
+            fModel=true;
+            requestDb+= " and c.model=:model";
+        }
+        if(!price_from.isEmpty()){
+            fPrise_from=true;
+            requestDb+=" and c.prise>:prise_from";
+        }
+        if(!price_to.isEmpty()){
+            fPrise_to=true;
+            requestDb+=" and c.prise<:prise_to";
+        }
+        if(!engine.isEmpty()){
+            fEngine=true;
+            requestDb+=" and c.enginesType =:engine ";
+        }
+        if(!gearbox.isEmpty()){
+            fGearbox=true;
+            requestDb+=" and c.transmission =:gearbox";
 
+        }
+        if(!year_from.isEmpty()){
+            fYear_from=true;
+            requestDb+=" and  c.yearMade >:year_from";
+        }
+        if(!year_to.isEmpty()){
+            fYear_to=true;
+            requestDb+=" and c.yearMade <:year_to ";
+        }
+
+        Query query =session.createQuery("from Car  c where c.id>=:id "+requestDb);
+        query.setParameter("id",0L);
+        if(fMake){
+            query.setParameter("make",make);
+        }
+        if(fModel){
+            query.setParameter("model",model);
+        }
+        if(fPrise_from){
+            query.setParameter("prise_from",new Integer(price_from));
+        }
+        if(fPrise_to){
+            query.setParameter("prise_to",new Integer(price_to));
+        }
+        if(fEngine){
+            query.setParameter("engine",engine);
+        }
+        if(fYear_from){
+            query.setParameter("year_from",new Integer(year_from));
+        }
+        if(fYear_to){
+            query.setParameter("year_to",new Integer(year_to));
+        }
+        if(fGearbox){
+            query.setParameter("gearbox", gearbox);
+        }
+        List list=query.list();
+//        session.beginTransaction().commit();
+        carsList=list;
+        return carsList;
+    }
 }
