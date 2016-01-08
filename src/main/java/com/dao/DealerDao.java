@@ -1,6 +1,8 @@
 package com.dao;
 
 import com.dao.configuration.files.HibernateUtil;
+import com.email.CrunchifyEmailTest;
+import com.helpers.HttpHelper;
 import com.helpers.PasswordHelper;
 import com.modelClass.Contact_person;
 import com.modelClass.Dealer;
@@ -10,6 +12,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.mail.MessagingException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +124,14 @@ public String setDealer(String numberDealer, String nameDealer, String email, St
             new File("C:\\ClientsFolder\\"+numberDealer).mkdir();
 
             session.beginTransaction().commit();
+            HttpHelper httpHelper = new HttpHelper();
+//
+//            try {
+////                CrunchifyEmailTest.sendMessageOnEmail(httpHelper.getHttpMessage("Подтвердите регистрацию на сайте volkswagen trade in перейдя по этой ссылке \n" +
+////                        "http://localhost:8080/ConfirmationOfRegistration?id=" + nameDealer), email);
+//            } catch (MessagingException e) {
+//                e.printStackTrace();
+//            }
             return "Вы удачно добавили данные";
         }
         return "Проверте поля!";

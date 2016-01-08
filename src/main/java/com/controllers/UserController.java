@@ -72,6 +72,12 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
 
 
 
+    @RequestMapping(value = "/feedback")
+    public ModelAndView getFeedbackForm(){
+        ModelAndView modelAndView = new ModelAndView("feedback");
+        return ViewHalper.addingDealerAndCarsInView(modelAndView);
+    }
+
 
 
 

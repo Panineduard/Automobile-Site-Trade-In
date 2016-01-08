@@ -210,4 +210,15 @@ public class CarDAO {
         carsList=list;
         return carsList;
     }
+    public List<Car> getLastCars(Integer countLastCar){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query query1 = session.createQuery("select max (idCar) from Car ");
+        Long maxIdOfCar = (Long)query1.list().get(0);
+        Query query = session.createQuery("from Car c where c.idCar>= :maxId ");
+        query.setParameter("maxId",maxIdOfCar-countLastCar);
+        List<Car> cars = (List<Car>)query.list();
+
+        return cars;
+    }
 }

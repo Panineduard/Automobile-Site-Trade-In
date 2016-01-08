@@ -46,7 +46,7 @@
   <% if(idDealer=="anonymousUser"){%>
   <li><a href="registration" method="get">Регистрация</a></li>
   <%}else{ %>
-  <li><a href="#feedback">Обратная связь</a></li>
+  <li><a href="/feedback">Обратная связь</a></li>
   <% } %>
   <li><a href="#home">На главную</a></li>
 </ul>
@@ -417,7 +417,7 @@
   </div>
 
   <div id="result">
-    <div id="auto">
+
       <%
         if(request.getAttribute("cars")!=null){
         List<Car> cars= (List<Car>) request.getAttribute("cars");
@@ -431,7 +431,7 @@
       <!--<a title="Подробнее"href="http" class="more">
       Подробнее
       </a> --->
-
+    <div id="auto">
 
       <a title="Vokswagen Passat B8"href="http" class= "foto-185x120" >
         <img src="/getPhoto?pathPhoto=<%=path%>" align="left">
@@ -457,9 +457,10 @@
       <a title="Подробнее"href="http" class="more">
         Подробнее
       </a>
+    </div>
+
     <%}
     }%>
-    </div>
 
 
   </div>
