@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 @Service("crunchifyEmail")
 public class CrunchifyEmailAPI {
-
     @Autowired
     private MailSender crunchifymail; // MailSender interface defines a strategy
     // for sending simple mails

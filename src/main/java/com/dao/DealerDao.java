@@ -1,7 +1,8 @@
 package com.dao;
 
 import com.dao.configuration.files.HibernateUtil;
-import com.email.CrunchifyEmailTest;
+import com.email.SendHTMLEmail;
+import com.helpers.EncoderId;
 import com.helpers.HttpHelper;
 import com.helpers.PasswordHelper;
 import com.modelClass.Contact_person;
@@ -12,7 +13,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import javax.mail.MessagingException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +21,10 @@ import java.util.List;
  * Created by Эдуард on 25.09.15.
  */
 public class DealerDao {
-    public void updateRegistrationAndRoleById(String idDealer){
+    public void updateRegistrationAndRoleById(String id){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+
+        String idDealer=EncoderId.decodeID(id);
         Transaction tr=session.beginTransaction();
         Query query =  session.createQuery("update Dealer d set d.registration =:registration where numberDealer=:id ");
         Query query1=session.createQuery("update  Login l set l.role =:role where l.idDealer =:id");
@@ -122,16 +124,8 @@ public String setDealer(String numberDealer, String nameDealer, String email, St
             login.setRole(ListRole.ROLE_ANONYMOUS);
             session.merge(login);
             new File("C:\\ClientsFolder\\"+numberDealer).mkdir();
-
             session.beginTransaction().commit();
-            HttpHelper httpHelper = new HttpHelper();
-//
-//            try {
-////                CrunchifyEmailTest.sendMessageOnEmail(httpHelper.getHttpMessage("Подтвердите регистрацию на сайте volkswagen trade in перейдя по этой ссылке \n" +
-////                        "http://localhost:8080/ConfirmationOfRegistration?id=" + nameDealer), email);
-//            } catch (MessagingException e) {
-//                e.printStackTrace();
-//            }
+            SendHTMLEmail.successfulRegistration(EncoderId.encodId(numberDealer));
             return "Вы удачно добавили данные";
         }
         return "Проверте поля!";

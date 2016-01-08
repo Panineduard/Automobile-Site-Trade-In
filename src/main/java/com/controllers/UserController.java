@@ -1,10 +1,7 @@
 package com.controllers;
 
 import com.dao.DealerDao;
-import com.email.CrunchifyEmailAPI;
-import com.email.CrunchifyEmailTest;
-import com.modelClass.ListRole;
-import com.modelClass.Login;
+import com.email.SendEmailText;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,9 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import com.helpers.ViewHalper;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by Эдуард on 07.11.15.
@@ -38,8 +32,7 @@ public class UserController {
         DealerDao dealerDao = new DealerDao();
        try{ if (pasword.equals(checkPasword)){
             returnMassege= dealerDao.setDealer(numberDealer, nameDealer,email,name,personPhone,pasword);
-            CrunchifyEmailTest.sendMessageOnEmail("Подтвердите регистрацию на сайте volkswagen trade in перейдя по этой ссылке \n" +
-                    "http://localhost:8080/ConfirmationOfRegistration?id="+nameDealer,email);
+
         }
         else {
             returnMassege = "Проверте пароль!!!";
@@ -60,7 +53,7 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
     DealerDao dealerDao = new DealerDao();
     dealerDao.updateRegistrationAndRoleById(idDealer);
     ModelAndView model = new ModelAndView("successfulRegistration");
-    model.addObject("msg", "Вы удачно подтвердили почту с номером диллера - " +idDealer);
+    model.addObject("msg", "Вы удачно подтвердили почту ");
     return model;
 }
 

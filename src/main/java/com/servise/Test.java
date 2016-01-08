@@ -1,8 +1,7 @@
 package com.servise;
 
-import com.dao.CarDAO;
-import com.dao.DealerDao;
-import com.email.CrunchifyEmailTest;
+import com.email.SendEmailText;
+import com.helpers.PasswordHelper;
 
 import java.io.*;
 
@@ -11,10 +10,12 @@ import java.io.*;
  */
 public class Test {
     public static void main(String... arg) throws IOException {
-//        CrunchifyEmailTest.sendMessageOnEmail("Hello","veselaya_gora@mail.ru");
+        PasswordHelper passwordHelper=new PasswordHelper();
+        System.out.println(passwordHelper.encode("1"));
+        System.out.println(passwordHelper.encode(passwordHelper.encode("1")));
 //        DealerDao dealerDao=new DealerDao();
-        CarDAO carDAO = new CarDAO();
-        System.out.println(carDAO.getLastCars(3));
+//        CarDAO carDAO = new CarDAO();
+//        System.out.println(carDAO.getLastCars(3));
 
 //        dealerDao.updateRegistrationAndRoleById("3");
 //        Session session = HibernateUtil.getSessionFactory().openSession();
