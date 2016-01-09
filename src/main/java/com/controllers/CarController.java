@@ -95,7 +95,9 @@ public class CarController {
                                           @ModelAttribute("make")String make,@ModelAttribute("model")String model,
                                           @ModelAttribute("prise")String prise,@ModelAttribute("year_prov")String year_prov,
                                           @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox,
-                                          @ModelAttribute("comment")String comment) {
+                                          @ModelAttribute("mileage")String mileage,@ModelAttribute("comment")String comment,
+                                          @ModelAttribute("engine_capacity")String engine_capacity) {
+        String nullMsg="Нет данных";
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String idDealer = auth.getName();
         if (!idDealer.isEmpty()) {
@@ -127,11 +129,16 @@ public class CarController {
                 if (!comment.isEmpty()) {
                     car.setDescription(comment);
                 }
-
+                if(!engine_capacity.isEmpty()){car.setEngineCapacity(engine_capacity);}
+                else {car.setEngineCapacity(nullMsg);}
+                if(!mileage.isEmpty()){
+                    car.setMileage(new Integer(mileage));
+                }
+                else car.setMileage(0);
 
                 if (carDAO.setCar(car, uploadForm.getFiles()) != -1L) {
                     ModelAndView modelAndView=new ModelAndView("myAccount");
-                    modelAndView.addObject("msg","Автомобиль удачно добавлен");
+                    modelAndView.addObject("msg", "Автомобиль удачно добавлен");
                     return ViewHalper.addingDealerAndCarsInView(modelAndView);
                 }
 
@@ -141,6 +148,7 @@ public class CarController {
         }
 
         ModelAndView modelAndView=new ModelAndView("pageForCar");
+
         modelAndView.addObject("msg","Авто не добавлено проверьте поля");
         return modelAndView;
 

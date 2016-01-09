@@ -5,7 +5,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML>
 <head>
-  <title>Ваш акаунт</title>
+  <title>Страница авто</title>
   <meta charset="utf-8">
   <!-- Google Fonts -->
   <link href='http://fonts.googleapis.com/css?family=Parisienne' rel='stylesheet' type='text/css'>
@@ -40,7 +40,7 @@
 </form>
 <%
   Dealer dealer = (Dealer)request.getAttribute("dealer");
-  List<Car> cars= (List<Car>) request.getAttribute("cars");
+  Car car= (Car) request.getAttribute("car");
 %>
 <div style="clear:both"></div>
 <div class="box_highlight" style="margin-top:40px">
@@ -48,8 +48,6 @@
 
   <h2 style="text-align:center">Диллер номер - <%=dealer.getNameDealer()%>
   </h2>
-
-  <h3 style="text-align:center">Это ваш акаунт где вы можете добавить или убрать авто. Так же просмотреть количество просмотров авто.</h3>
 
   <h3 style="text-align:center">Контактное лицо</h3>
 
@@ -66,20 +64,19 @@
     <div id="panes">
       <%
 
-        for (Car car:cars) {
+        for (String photo:car.getPhotoPath()) {
 
-          String path = car.getPhotoPath().get(0);
+
 
       %>
-      <p><div><img width="300" height="200" src="/getPhoto?pathPhoto=<%=path%> ">;
+      <p><div><img  width="600" height="500" src="/getPhoto?pathPhoto=<%=photo%> ">;
 
-      <p style="text-align:right; margin-right: 16px"><a href="#" class="button">Описание</a> <a href="#" class="button">Написать продавцу</a></p>
 
       <br>
 
-      <p style="text-align:right; margin-right: 16px">
-        <a href="/WEB-INF/pages/carPage.jsp" class="button">More Info</a> <a href="#" class="button">Buy Now</a></p>
     </div></p>
+
+
       <%}%>
 
     </div>
@@ -90,16 +87,14 @@
       <ul>
         <%
 
-          for (Car car:cars) {
+          for (String photo1:car.getPhotoPath()) {
 
-            String path = car.getPhotoPath().get(0);
         %>
 
-        <li><a href="#1"><img src="/getPhoto?pathPhoto=<%=path%>" width="160" alt=""><strong>Class aptent</strong> $ 199</a></li>
+        <li><a href="#1"><img src="/getPhoto?pathPhoto=<%=photo1%>" width="160" alt=""> </a></li>
         <%}%>
 
       </ul>
-      <li><a href="/addCar"><img src="/res/img/icon-addons.png" width="160" alt=""><strong>Добавить авто</strong> </a></li>
 
     </div>
     <!-- END navigator -->
@@ -114,26 +109,6 @@
 
 
 
-
-
-
-      <%--<form  >--%>
-        <%--<div class="col-lg-4 desc">--%>
-
-          <%--<form action="UploadServlet" method="post"--%>
-                <%--enctype="multipart/form-data">--%>
-            <%--<input type="file" name="file" size="100" />--%>
-            <%--<br />--%>
-            <%--<input type="submit" value="Добавить фото" />--%>
-          <%--</form>--%>
-
-
-          <%--<a class="b-from-right b-animate b-delay03"href="787">Изменить</a>--%>
-
-          <%--</p>--%>
-
-        <%--</div>--%>
-      <%--</form>--%>
 
 
 </body>

@@ -25,6 +25,8 @@ public class Car {
     private Integer prise;
     private String idDealer;
     private Long views;
+    private Integer mileage;
+    private String engineCapacity;
     @Temporal (TemporalType.DATE)
     private Date dateProvide;
     @Lob
@@ -125,6 +127,23 @@ public class Car {
     public void setEnginesType(String enginesType) {
         this.enginesType = enginesType;
     }
+
+    public Integer getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(Integer mileage) {
+        this.mileage = mileage;
+    }
+
+    public String getEngineCapacity() {
+        return engineCapacity;
+    }
+
+    public void setEngineCapacity(String engineCapacity) {
+        this.engineCapacity = engineCapacity;
+    }
+
     public String toString(){
         return "model"+model +"prise"+ prise +"brand"+brand+"year"+yearMade+"transm"+transmission+"engin"+enginesType;
 

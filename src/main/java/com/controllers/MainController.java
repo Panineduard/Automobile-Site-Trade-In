@@ -19,17 +19,22 @@ public class MainController {
     public ModelAndView printWelcome(HttpServletRequest request) {
         int countOfCars=5;
         CarDAO carDAO = new CarDAO();
+        List<Car> cars=null;
         ModelAndView model = new ModelAndView("index1");//this is constructor were is view filrd
-        List<Car> cars =carDAO.getLastCars(countOfCars);
-        if(cars.isEmpty()){
+        if(carDAO.getLastCars(countOfCars)!=null){
+             cars=carDAO.getLastCars(countOfCars);
         }
-        if(cars.size()<countOfCars){
+
+
+        if(cars!=null&&cars.size()<countOfCars){
             model.addObject("cars",carDAO.getLastCars(cars.size()));
+            return model;
         }
-        if (cars.size()==countOfCars){
+        if (cars!=null&&cars.size()>=countOfCars){
             model.addObject("cars",carDAO.getLastCars(countOfCars));
+            return model;
         }
 //        model.addObject("cars",carDAO.getLastCars(countOfCars));
-        return model;
+        else {return model;}
     }
 }

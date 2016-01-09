@@ -21,11 +21,18 @@ import java.util.List;
  * Created by Эдуард on 25.09.15.
  */
 public class DealerDao {
-    public void updateRegistrationAndRoleById(String id){
+    public boolean updateRegistrationAndRoleById(String id){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
 
         String idDealer=EncoderId.decodeID(id);
         Transaction tr=session.beginTransaction();
+        Query queryCheck = session.createQuery("select numberDealer from Dealer where numberDealer=:idD");
+        queryCheck.setParameter("idD", idDealer);
+        if(queryCheck.list().isEmpty()){
+            return false;
+        }
+        else {
+
         Query query =  session.createQuery("update Dealer d set d.registration =:registration where numberDealer=:id ");
         Query query1=session.createQuery("update  Login l set l.role =:role where l.idDealer =:id");
         query.setParameter("registration", true);
@@ -35,6 +42,7 @@ public class DealerDao {
         query1.executeUpdate();
         query.executeUpdate();
         tr.commit();
+        return true;}
     }
 public Integer updateCountOfCar(String idDealer){
     Session session= HibernateUtil.getSessionFactory().getCurrentSession();
@@ -94,7 +102,7 @@ public Dealer getDealerById(String id){
     Session session = HibernateUtil.getSessionFactory().getCurrentSession();
     session.beginTransaction();
     Dealer dealer= session.get(Dealer.class, id);
-    session.close();
+//    session.close();
     return dealer;
 
 }
@@ -125,8 +133,9 @@ public String setDealer(String numberDealer, String nameDealer, String email, St
             session.merge(login);
             new File("C:\\ClientsFolder\\"+numberDealer).mkdir();
             session.beginTransaction().commit();
-            SendHTMLEmail.successfulRegistration(EncoderId.encodId(numberDealer));
-            return "Вы удачно добавили данные";
+            SendHTMLEmail.successfulRegistration(EncoderId.encodId(numberDealer),email);
+            return "Вы удачно добавили данные." +
+                    " \n Вам на почту отправлено письмо с подтверждением регистрации";
         }
         return "Проверте поля!";
 

@@ -423,6 +423,22 @@
         List<Car> cars= (List<Car>) request.getAttribute("cars");
         for (Car car:cars){
           String path=car.getPhotoPath().get(0);
+          String EnginesType="нет данных";
+          String transmission ="нет данных";
+          if (car.getEnginesType().equals("gasoline")) {
+            EnginesType = "Бензин";
+          } else if (car.getEnginesType().equals("disel")) {
+            EnginesType = "Дизель";
+          } else if (car.getEnginesType().equals("elektro")) {
+            EnginesType = "Электро";
+          } else if (car.getEnginesType().equals("hybrid")) {
+            EnginesType = "Гибрид";
+          }
+          if (car.getTransmission().equals("auto")) {
+            transmission = "Автомат";
+          } else if (car.getTransmission().equals("mechanical")) {
+            transmission = "Механическая";
+          }
       %>
 
       <a title="Vokswagen Passat B8"href="http" class= "model" >
@@ -433,7 +449,7 @@
       </a> --->
     <div id="auto">
 
-      <a title="Vokswagen Passat B8"href="http" class= "foto-185x120" >
+      <a title="Vokswagen Passat B8" href="/carPage?idCar=<%=car.getIdCar()%>" class= "foto-185x120" >
         <img src="/getPhoto?pathPhoto=<%=path%>" align="left">
       </a>
 
@@ -441,14 +457,15 @@
       <div class="model-info">
         Цена: <%=car.getPrise()%>$<br>
         Год: <%=car.getYearMade()%> <br>
-        Пробег: 68 000км<br>
-        Двигатель: 1,8<br>
-        Топливо: <%=car.getEnginesType()%><br>
-        КП: <%=car.getTransmission()%>
+        Пробег: <%=car.getMileage()%>км<br>
+        Двигатель: <%=car.getEngineCapacity()%><br>
+        Топливо: <%=EnginesType%><br>
+        КП: <%=transmission%>
       </div>
       <br/>
+
       <div class="info">
-        <div class="town">Город:<br> Харьков</div>
+        <div class="town">Город:<br> < src="/getDealer"></src> </div>
         <div class="phone-number">Телефон:<br> +38 057 705 20 25</div>
         <div class="diller">Дилер:<br> ТОВ "Автодом Харків"</div>
 

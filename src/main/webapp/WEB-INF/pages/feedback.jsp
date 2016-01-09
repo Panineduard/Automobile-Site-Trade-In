@@ -54,8 +54,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#home">Домой</a></li>
                 <li><a href="#about">Описание</a></li>
-                <li><a href="#feedback">Обратная связь</a></li>
-                <li><a href="#registration">Контакты</a></li>
+                <li><a href="/">На главную</a></li>
             </ul>
         </div>
 
@@ -67,11 +66,33 @@
 <div class="container" id="home">
     <div class="row text-center ">
         <div class="col-md-12">
-            <span class="head-main">Поиск твоего автомобиля </span>
+            <span class="head-main">Оставте отзыв </span>
 
-            <h3 align="center" class="head-last">Автомобили программы Volkswagen TRADE-IN по Украине</h3>
-
-
+            <form align="center" class="head-last" action="/sendMessage" method="post">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="text" name="senderName" class="form-control" required="required"  placeholder="Имя" rec>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="email" name="senderEmail" class="form-control" required="required"
+                                   placeholder="Email электронный адресс">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <textarea name="message" id="message" required="required" class="form-control" style="min-height:200px;" placeholder="Текст письма"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-lg">Отправить</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
 
         </div>
     </div>
@@ -138,63 +159,6 @@
 
     </div>
 </section>
-<!--END ABOUT SECTION-->
-
-<!--CLIENT TESTIMONIALS SECTION-->
-<section id="clients-testimonial">
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-md-12 ">
-                <h1>Clients Testimonials</h1>
-                <div id="carousel-example" class="carousel slide" data-ride="carousel">
-
-                    <ol class="carousel-indicators">
-                        <li data-target="#carousel-example" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example" data-slide-to="1"></li>
-                        <li data-target="#carousel-example" data-slide-to="2"></li>
-                    </ol>
-
-                    <div class="carousel-inner">
-                        <div class="item active">
-                            <div class="container center">
-                                <div class="col-md-6 col-md-offset-3 slide-custom">
-
-                                    <h4><i class="fa fa-quote-left"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit onec molestie non sem vel condimentum. <i class="fa fa-quote-right"></i></h4>
-                                    <div class="user-img pull-right">
-                                        <img src="/res/assets/img/user.gif" alt="" class="img-u image-responsive"/>
-                                    </div>
-                                    <h5 class="pull-right"><strong class="c-black">Lorem Dolor</strong></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="container center">
-                                <div class="col-md-6 col-md-offset-3 slide-custom">
-                                    <h4> <i class="fa fa-quote-left"></i> Aenean faucibus luctus enim. Duis quis sem risu suspend lacinia elementum nunc. <i class="fa fa-quote-right"></i></h4>
-                                    <div class="user-img pull-right">
-                                        <img src="res/assets/img/user2.png" alt="" class="img-u image-responsive"/>
-                                    </div>
-                                    <h5 class="pull-right"><strong class="c-black">Faucibus luctus</strong></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="container center">
-                                <div class="col-md-6 col-md-offset-3 slide-custom">
-                                    <h4><i class="fa fa-quote-left"></i>Sed ultricies, libero ut adipiscing fringilla, ante elit luctus lorem, a egestas dui metus a arcu condimentum. <i class="fa fa-quote-right"></i></h4>
-                                    <div class="user-img pull-right">
-                                        <img src="/res/assets/img/user.gif" alt="" class="img-u image-responsive"/>
-                                    </div>
-                                    <h5 class="pull-right"><strong class="c-black">Sed ultricies</strong></h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 
 
@@ -203,48 +167,15 @@
     <div class="container">
         <div class="row text-center">
             <div class="col-md-8 col-md-offset-2 ">
-                <h1>Контакты</h1>
+                <h1> Всегда готовы учесть ваши пожелания</h1>
             </div>
-            <div class="row text-center">
-                <div class="col-md-8 col-md-offset-2 ">
-                    <h5>
-                        Всегда готовы учесть ваши пожелания
 
-                    </h5>
-                </div>
-            </div>
         </div>
     </div>
 </section>
 <section class="for-full-back color-white text-center" id="contact-inner">
     <div class="container">
-        <h1>Оставте отзыв</h1>
 
-        <form action="/sendMessage" method="post">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <input type="text" name="senderName" class="form-control" required="required"  placeholder="Имя" rec>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <input type="email" name="senderEmail" class="form-control" required="required"
-                               placeholder="Email электронный адресс">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="form-group">
-                        <textarea name="message" id="message" required="required" class="form-control" style="min-height:200px;" placeholder="Текст письма"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-lg">Отправить</button>
-                    </div>
-                </div>
-            </div>
-        </form>
 
         <div id="add">
             <br />
@@ -277,39 +208,6 @@
 <script src="/res/assets/plugins/jquery.easing.min.js"></script>
 <!-- CUSTOM SCRIPTS -->
 <script src="/res/assets/js/custom.js"></script>
-
-
-<script type="text/javascript">
-    // Создаем новый объект связанных списков
-    var syncList1 = new syncList;
-
-    // Определяем значения подчиненных списков (2 и 3 селектов)
-    syncList1.dataList = {
-
-        /* Определяем элементы второго списка в зависимости
-         от выбранного значения в первом списке */
-
-        '': {
-            '': 'Вы не выбрали марку'
-
-        },
-
-        'volkswagen': {
-            '':'Все модели',
-            'passat': 'Passat',
-            'jeta': 'Jeta'
-
-        }
-
-
-    };
-
-    // Включаем синхронизацию связанных списков
-    syncList1.sync("id_make1", "id_model1");
-</script>
-
-
-
 
 </body>
 </html>

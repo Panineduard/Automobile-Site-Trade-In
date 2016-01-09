@@ -1,7 +1,9 @@
 package com.controllers;
 
+import com.dao.CarDAO;
 import com.dao.DealerDao;
 import com.email.SendEmailText;
+import com.modelClass.Car;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +40,7 @@ public class UserController {
             returnMassege = "Проверте пароль!!!";
         }
         ModelAndView model = new ModelAndView("successfulRegistration");
-        model.addObject("msg", "Здравствуйте " + name + " " + returnMassege+"\n вам на почту отправлено письмо с подтверждением регистрации");
+        model.addObject("msg", "Здравствуйте " + name + " " + returnMassege);
         return model;}
         catch (NumberFormatException e){
 
@@ -51,27 +53,44 @@ public class UserController {
 @RequestMapping(value = "/ConfirmationOfRegistration", method = RequestMethod.GET)
 public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
     DealerDao dealerDao = new DealerDao();
-    dealerDao.updateRegistrationAndRoleById(idDealer);
+    String msg;
+    if(dealerDao.updateRegistrationAndRoleById(idDealer))
+    {
+        msg="Вы удачно подтвердили почту ";
+    }
+    else msg="Ошибка подтверждения регистрации";
     ModelAndView model = new ModelAndView("successfulRegistration");
-    model.addObject("msg", "Вы удачно подтвердили почту ");
+    model.addObject("msg",msg );
     return model;
 }
-
     @RequestMapping(value = "/myAccount")
     public ModelAndView accountModel(){
             ModelAndView modelAndView = new ModelAndView("myAccount");
             return ViewHalper.addingDealerAndCarsInView(modelAndView);
     }
 
-
-
     @RequestMapping(value = "/feedback")
     public ModelAndView getFeedbackForm(){
         ModelAndView modelAndView = new ModelAndView("feedback");
-        return ViewHalper.addingDealerAndCarsInView(modelAndView);
+        return modelAndView;
     }
 
+    @RequestMapping(value = "/carPage",method = RequestMethod.GET)
+    public ModelAndView getDealer(@RequestParam ("idCar") String idCar){
+        ModelAndView modelAndView= new ModelAndView("carPage");
+        System.out.println(idCar);
+        Car car=null;
+        CarDAO carDAO =new CarDAO();
+        if(!idCar.isEmpty()){
+            car=carDAO.getCarById(idCar);
+            DealerDao dealerDao=new DealerDao();
+            modelAndView.addObject("car", car);
+            modelAndView.addObject("dealer",dealerDao.getDealerById(car.getIdDealer()));
+        }
 
+
+        return modelAndView;
+    }
 
 
 }

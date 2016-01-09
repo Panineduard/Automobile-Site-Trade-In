@@ -18,9 +18,14 @@ import java.util.Properties;
  */
 public class SendHTMLEmail
 {
-    public static void successfulRegistration (String id){
+    public static void successfulRegistration (String id,String email){
         // Recipient's email ID needs to be mentioned.
-        String to = "veselaya_gora@mail.ru";
+        String to;
+        if(email.isEmpty()){
+        to = "veselaya_gora@mail.ru";}
+        else {
+            to=email;
+        }
         // Sender's email ID needs to be mentioned
         String from = Setting.getFromEmailAddr();
         // Assuming you are sending email from localhost

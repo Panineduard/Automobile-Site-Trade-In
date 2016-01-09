@@ -9,7 +9,7 @@
     </welcome-file-list>
     <display-name>Spring MVC Application</display-name>
 
-    this Filter We use for encoding UTF8
+    <!--this Filter We use for encoding UTF8-->
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

@@ -182,7 +182,8 @@
 
 <h2>Цена, $ <br>
 <input type="text" size="20" class="form-control" required="required" name="prise" pattern="^[ 0-9]+$"></h2>
-
+<h2>Пробег, км <br>
+<input type="text" size="20" class="form-control" required="required" name="mileage" pattern="^[ 0-9]+$"></h2>
 
 <h2>Год выпуска</h2>
 <select id="id_year_from" class="form-control" name="year_prov">
@@ -294,7 +295,8 @@
 <option value="hybrid">Гибрид</option>
 <option value="other">Другое</option>
 </select>
-
+<h2>Обьем двигателя, л <br>
+<input type="text" size="20" class="form-control" required="required" name="engine_capacity" pattern="^[ 0-9]+$"></h2>
 
 <h2>Тип КПП</h2>
 <select id="id_gearbox" class="form-control" name="gearbox">

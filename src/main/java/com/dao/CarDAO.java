@@ -2,6 +2,7 @@ package com.dao;
 
 import com.dao.configuration.files.HibernateUtil;
 import com.modelClass.Car;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -211,7 +212,9 @@ public class CarDAO {
         return carsList;
     }
     public List<Car> getLastCars(Integer countLastCar){
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+       try {
+           Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
         session.beginTransaction();
         Query query1 = session.createQuery("select max (idCar) from Car ");
         Long maxIdOfCar = (Long)query1.list().get(0);
@@ -220,5 +223,19 @@ public class CarDAO {
         List<Car> cars = (List<Car>)query.list();
 
         return cars;
+       }
+       catch (Exception e){
+          return null;
+       }
+    }
+    public Car getCarById(String id){
+        Long idCar =new Long(id);
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from Car c where c.idCar=:id");
+        query.setParameter("id",idCar);
+        Car car =(Car)query.uniqueResult();
+
+        return car;
     }
 }
