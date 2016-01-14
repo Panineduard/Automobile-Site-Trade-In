@@ -17,7 +17,7 @@ import java.util.List;
 public class MainController {
     @RequestMapping("/")
     public ModelAndView printWelcome(HttpServletRequest request) {
-        int countOfCars=5;
+        int countOfCars=4;
         CarDAO carDAO = new CarDAO();
         List<Car> cars=null;
         ModelAndView model = new ModelAndView("index1");//this is constructor were is view filrd

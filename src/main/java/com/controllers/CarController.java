@@ -4,6 +4,7 @@ import com.helpers.FileUploadForm;
 import com.dao.CarDAO;
 import com.dao.DealerDao;
 import com.modelClass.Car;
+import com.servise.CreateImg;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import com.helpers.ViewHalper;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,25 +31,50 @@ public class CarController {
     @RequestMapping(value = "/getPhoto", method = RequestMethod.GET)
     public void getRegistrationForm(HttpServletRequest req,HttpServletResponse response){
         String path_of_photo=(String)req.getParameter("pathPhoto");
+        Integer imgHeight=0;
+        Integer imgWidth =0;
+        try {
 
-        if(!req.getParameter("pathPhoto").isEmpty()){
+        if(req.getParameter("Height")!=null||req.getParameter("Width")!=null){
+            imgHeight=new Integer(req.getParameter("Height"));
+            imgWidth=new Integer(req.getParameter("Width"));
+
+        }
+        }
+        catch (ClassCastException e){
+            System.out.println("exeption in car contpoller param");
+        }
+        finally {
+
+
+        if(req.getParameter("pathPhoto")!=null&&!req.getParameter("pathPhoto").isEmpty()){
 //            path_of_photo=req.getParameter("path_of_photo");
 
 
             try {
 
-                FileInputStream fileInputStream=null;
+//                FileInputStream fileInputStream=null;
 
                 try {
                     File file=new File(path_of_photo);
-                    byte[] chars = new byte[(int)file.length()];
-                    fileInputStream=new FileInputStream(path_of_photo);
-                    fileInputStream.read(chars);
-                    fileInputStream.close();
+//                    byte[] chars = new byte[(int)file.length()];
+//                    fileInputStream=new FileInputStream(path_of_photo);
+//                    fileInputStream.read(chars);
+//                    fileInputStream.close();
+                    BufferedImage bufferedImage =  ImageIO.read(file);
+//
+                    if(imgHeight!=0||imgWidth!=0){
+                        bufferedImage = CreateImg.resizeImage(bufferedImage, imgWidth, imgHeight);
+                    }
 
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(bufferedImage,"jpg",baos);
+                    baos.flush();
+                    byte[] imageInByte = baos.toByteArray();
+                    baos.close();
 
                     response.setContentType("image/jpg");
-                    response.getOutputStream().write(chars);
+                    response.getOutputStream().write(imageInByte);
                     response.getOutputStream().flush();
                     response.getOutputStream().close();
                 }
@@ -58,7 +83,7 @@ public class CarController {
                     fe.printStackTrace();
                 }
                 finally {
-                    fileInputStream.close();
+//                    fileInputStream.close();
                 }
 
             }
@@ -66,7 +91,7 @@ public class CarController {
                 System.out.println("Ошибка потока");
             }
         }
-
+        }
     }
 
 

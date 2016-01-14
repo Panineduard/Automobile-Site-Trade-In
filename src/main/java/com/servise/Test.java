@@ -4,6 +4,9 @@ import com.dao.CarDAO;
 import com.dao.DealerDao;
 import com.email.SendEmailText;
 import com.helpers.PasswordHelper;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.task.TaskExecutor;
 
 import java.io.*;
 
@@ -12,11 +15,17 @@ import java.io.*;
  */
 public class Test {
     public static void main(String... arg) throws IOException {
-        CarDAO carDAO=new CarDAO();
-        DealerDao dealerDao = new DealerDao();
 
-        System.out.println(carDAO.getCarById("1"));
-        System.out.println(dealerDao.getDealerById(carDAO.getCarById("1").getIdDealer()));
+CleanDBTaskExecutor cleanDBTaskExecutor;
+
+
+//        AutoClineDB autoClineDB=new AutoClineDB();
+//        autoClineDB.beepForAnHour();
+//        CarDAO carDAO=new CarDAO();
+//        DealerDao dealerDao = new DealerDao();
+//
+//        System.out.println(carDAO.getCarById("1"));
+//        System.out.println(dealerDao.getDealerById(carDAO.getCarById("1").getIdDealer()));
 //        PasswordHelper passwordHelper=new PasswordHelper();
 //        System.out.println(passwordHelper.encode("1"));
 //        System.out.println(passwordHelper.encode(passwordHelper.encode("1")));

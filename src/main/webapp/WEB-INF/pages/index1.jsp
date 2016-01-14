@@ -450,7 +450,7 @@
     <div id="auto">
 
       <a title="Vokswagen Passat B8" href="/carPage?idCar=<%=car.getIdCar()%>" class= "foto-185x120" >
-        <img src="/getPhoto?pathPhoto=<%=path%>" align="left">
+        <img src="/getPhoto?pathPhoto=<%=path%>&Width=200&Height=200" align="left">
       </a>
 
       <br>
