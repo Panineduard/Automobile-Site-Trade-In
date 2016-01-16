@@ -9,19 +9,32 @@ import com.modelClass.Contact_person;
 import com.modelClass.Dealer;
 import com.modelClass.ListRole;
 import com.modelClass.Login;
+import com.setting.Setting;
+import javassist.tools.rmi.ObjectNotFoundException;
+import org.apache.commons.io.FileUtils;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Эдуард on 25.09.15.
  */
 public class DealerDao {
-    public boolean updateRegistrationAndRoleById(String id){
+    public List<Dealer>getIdDealersWithoutAuth(){
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query query =session.createQuery("select numberDealer from  Dealer d where d.registration=false ");
+        List<Dealer> dealers=query.list();
+        return dealers;
+    }
+public boolean updateRegistrationAndRoleById(String id){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
 
         String idDealer=EncoderId.decodeID(id);
@@ -85,7 +98,7 @@ public String getDealerName(String numberDealer){
         String nameDealer;
         try {
            Query query = session.createQuery("select nameDealer from Dealer dealer where dealer.numberDealer =:numberDealer") ;
-            query.setParameter("numberDealer",numberDealer);
+            query.setParameter("numberDealer", numberDealer);
             nameDealer=(String)query.uniqueResult();
             return nameDealer;
         }
@@ -98,15 +111,54 @@ public String getDealerName(String numberDealer){
             }
         }
     }
-public Dealer getDealerById(String id){
+    public Dealer getDealerById(String id){
     Session session = HibernateUtil.getSessionFactory().getCurrentSession();
     session.beginTransaction();
     Dealer dealer= session.get(Dealer.class, id);
+
 //    session.close();
     return dealer;
 
 }
-public String setDealer(String numberDealer, String nameDealer, String email, String name, String personPhone, String password) {
+    public boolean deleteLoginAndDealerById(String id){
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr =session.beginTransaction();
+        Dealer dr= session.load(Dealer.class, id);
+        Login login =session.load(Login.class,id);
+
+        try {
+            if (login!=null){
+                session.delete(login);
+
+            }
+
+            if(dr!=null) {
+
+                session.delete(dr);
+            }
+            tr.commit();
+            try {
+                FileUtils.deleteDirectory(new File(Setting.getClientsFolder()+"\\"+id));
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
+            return true;
+        }
+        catch (HibernateException e){
+            return false;
+        }
+        finally {
+            if(session.isOpen()){
+                session.close();
+            }
+        }
+
+
+
+
+    }
+    public String setDealer(String numberDealer, String nameDealer, String email, String name, String personPhone, String password) {
         if (getDealerName(numberDealer) != null) {
             return "Данный полюзователь уже зарегестрирован";
         }
@@ -131,7 +183,7 @@ public String setDealer(String numberDealer, String nameDealer, String email, St
             login.setPassword(passwordHelper.encode(password));
             login.setRole(ListRole.ROLE_ANONYMOUS);
             session.merge(login);
-            new File("C:\\ClientsFolder\\"+numberDealer).mkdir();
+            new File(Setting.getClientsFolder()+"\\"+numberDealer).mkdir();
             session.beginTransaction().commit();
             SendHTMLEmail.successfulRegistration(EncoderId.encodId(numberDealer),email);
             return "Вы удачно добавили данные." +

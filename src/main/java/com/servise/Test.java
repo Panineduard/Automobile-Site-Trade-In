@@ -16,7 +16,8 @@ import java.io.*;
 public class Test {
     public static void main(String... arg) throws IOException {
 
-CleanDBTaskExecutor cleanDBTaskExecutor;
+DealerDao dealerDao=new DealerDao();
+        System.out.println(dealerDao.getIdDealersWithoutAuth());
 
 
 //        AutoClineDB autoClineDB=new AutoClineDB();

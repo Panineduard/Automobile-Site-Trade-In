@@ -46,6 +46,7 @@
         <param-value>
             /WEB-INF/mvc-dispatcher-servlet.xml,
             /WEB-INF/security.xml
+            /WEB-INF/scheduled.xml
         </param-value>
     </context-param>
 

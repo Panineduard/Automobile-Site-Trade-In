@@ -1,4 +1,4 @@
-package com.servise;
+package com.controllers;
 
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.TaskScheduler;
@@ -14,8 +14,8 @@ import java.util.concurrent.ScheduledFuture;
  */
 public class CleanDBTaskExecutor {
 
-    @Scheduled(cron = "1 * * * * ?")
-    public void demoServiceMethod()
+//    @Scheduled(cron="*/5 * * * * ?")
+    public void serviceMethod()
     {
         System.out.println("Method executed at every 5 seconds. Current time is :: "+ new Date());
     }

@@ -10,6 +10,11 @@ public final class Setting {
     private static String fromEmailAddr = "veselayagora1@gmail.com";
     private static  String password ="p1120772";
     private static String username = "veselayagora1@gmail.com";
+    private static String ClientsFolder="C:\\ClientsFolder";
+
+    public static String getClientsFolder() {
+        return ClientsFolder;
+    }
 
     public static String getEmailTo() {
         return emailTo;
