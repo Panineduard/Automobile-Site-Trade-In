@@ -18,7 +18,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import sun.util.resources.LocaleData;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -46,23 +46,26 @@ public boolean updateRegistrationAndRoleById(String id){
 
         String idDealer=EncoderId.decodeID(id);
         Transaction tr=session.beginTransaction();
-        Query queryCheck = session.createQuery("select numberDealer from Dealer where numberDealer=:idD");
+        Query queryCheck = session.createQuery("from Dealer where numberDealer=:idD");
         queryCheck.setParameter("idD", idDealer);
         if(queryCheck.list().isEmpty()){
             return false;
         }
         else {
-
-        Query query =  session.createQuery("update Dealer d set d.registration =:registration where numberDealer=:id ");
-        Query query1=session.createQuery("update  Login l set l.role =:role where l.idDealer =:id");
-        query.setParameter("registration", true);
-        query.setParameter("id", idDealer);
-        query1.setParameter("id", idDealer);
-        query1.setParameter("role",ListRole.ROLE_USER);
-        query1.executeUpdate();
-        query.executeUpdate();
-        tr.commit();
-        return true;}
+            if(!((Dealer)queryCheck.list().get(0)).isRegistration()) {
+                Query query =  session.createQuery("update Dealer d set d.registration =:registration where numberDealer=:id ");
+                Query query1=session.createQuery("update  Login l set l.role =:role where l.idDealer =:id");
+                query.setParameter("registration", true);
+                query.setParameter("id", idDealer);
+                query1.setParameter("id", idDealer);
+                query1.setParameter("role", ListRole.ROLE_USER);
+                query1.executeUpdate();
+                query.executeUpdate();
+                tr.commit();
+                return true;
+            }
+            return false;
+    }
     }
 public Integer updateCountOfCar(String idDealer){
     Session session= HibernateUtil.getSessionFactory().getCurrentSession();

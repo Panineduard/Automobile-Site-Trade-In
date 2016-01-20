@@ -19,7 +19,7 @@
         public static ModelAndView addingDealerAndCarsInView(ModelAndView view){
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String idDealer = auth.getName();
-            System.out.println("ID DEALER FROM AUTH"+idDealer);
+//            System.out.println("ID DEALER FROM AUTH"+idDealer);
             Session session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             Dealer dealer= session.get(Dealer.class, idDealer);

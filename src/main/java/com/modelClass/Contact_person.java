@@ -37,7 +37,5 @@ public class Contact_person {
         this.email = email;
     }
 
-    public String toString() {
-        return "Имя - " + name + "<br> Телефон - " + phone + "<br> Электронная почта - " + email;
-    }
+
 }

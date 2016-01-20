@@ -55,13 +55,18 @@ public class UserController {
 public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
     DealerDao dealerDao = new DealerDao();
     String msg;
+    ModelAndView model;
     if(dealerDao.updateRegistrationAndRoleById(idDealer))
     {
+        model = new ModelAndView("successfulRegistration");
         msg=StandartMasege.getMessage(9);
+        model.addObject("msg",msg );
     }
-    else msg="";
-    ModelAndView model = new ModelAndView("successfulRegistration");
-    model.addObject("msg",msg );
+    else {
+
+        model=new ModelAndView("zerroPage");
+    }
+
     return model;
 }
     @RequestMapping(value = "/myAccount")

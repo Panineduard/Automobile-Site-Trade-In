@@ -1,9 +1,11 @@
 package com.servise;
 
+import com.setting.Setting;
 import com.sun.java.util.jar.pack.*;
 
-import com.sun.xml.internal.bind.api.impl.NameConverter;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.nio.Buffer;
 import java.nio.charset.StandardCharsets;
@@ -18,14 +20,20 @@ import java.util.stream.Stream;
  */
 public class StandartMasege {
     public static String getMessage(Integer p)  {
-        String linePosition = p.toString();
-//        System.out.println(new File(System.getProperty( "catalina.base")).getAbsolutePath());
-        String fileName = new File(System.getProperty( "catalina.base")).getAbsolutePath()+"\\src\\main\\java\\com\\servise\\messages.txt";
+        String rootPath;
+        if(Setting.isAbsolutePath()){
+            rootPath=Setting.getTheAbsolutrPathOfTheMessageFile();
+        }
+        else {
+            String catalinaBase = new File(new File( System.getProperty( "java.class.path" ) ).getParent()).getParent();
+            StringBuffer stringBuffer =new StringBuffer(catalinaBase);
+            int index=stringBuffer.indexOf(";");
+            rootPath=stringBuffer.substring(index + 1)+"\\webapps\\ROOT\\resources\\messages.txt";
+            //        System.out.println(rootPath);
+        }
         final String[] returnMessage = new String[1];
-
-
         BufferedReader reader = null;
-        try(Stream<String> stream=new BufferedReader(new FileReader(fileName)).lines()) {
+        try(Stream<String> stream=new BufferedReader(new FileReader(rootPath)).lines()) {
             stream
                     .filter(s -> ( new Integer(s.substring(0,2))).equals(p))
                     .forEach(s1 -> {

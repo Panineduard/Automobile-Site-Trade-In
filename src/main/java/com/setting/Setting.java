@@ -12,10 +12,12 @@ public final class Setting {
     private static String username = "veselayagora1@gmail.com";
     private static String ClientsFolder="C:\\ClientsFolder\\";
     private static String RECIPIENT_EMAIL="veselaya_gora@mail.ru";
-
+    private static String THE_ABSOLUTE_PATH_OF_THE_MESSAGE_FILE="D:\\Java\\Java projects\\volkswagenTradeWithoutSecurity\\src\\main\\webapp\\WEB-INF\\pages\\messages.txt";
+    private static boolean  IS_ABSOLUTE_PATH=true;
     public static String getClientsFolder() {
         return ClientsFolder;
     }
+
 
     public static String getEmailTo() {
         return emailTo;
@@ -35,5 +37,14 @@ public final class Setting {
 
     public static String getRecipientEmail() {
         return RECIPIENT_EMAIL;
+    }
+
+
+    public static String getTheAbsolutrPathOfTheMessageFile() {
+        return THE_ABSOLUTE_PATH_OF_THE_MESSAGE_FILE;
+    }
+
+    public static boolean isAbsolutePath() {
+        return IS_ABSOLUTE_PATH;
     }
 }
