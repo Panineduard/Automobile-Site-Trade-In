@@ -9,17 +9,23 @@ import com.modelClass.Contact_person;
 import com.modelClass.Dealer;
 import com.modelClass.ListRole;
 import com.modelClass.Login;
+import com.servise.StandartMasege;
 import com.setting.Setting;
 import javassist.tools.rmi.ObjectNotFoundException;
+import net.sf.cglib.core.Local;
 import org.apache.commons.io.FileUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import sun.util.resources.LocaleData;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,7 +36,8 @@ public class DealerDao {
     public List<Dealer>getIdDealersWithoutAuth(){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Query query =session.createQuery("select numberDealer from  Dealer d where d.registration=false ");
+        LocalDateTime localDateTime = LocalDateTime.now();
+        Query query =session.createQuery("from  Dealer d where d.registration=false ");
         List<Dealer> dealers=query.list();
         return dealers;
     }
@@ -138,7 +145,7 @@ public String getDealerName(String numberDealer){
             }
             tr.commit();
             try {
-                FileUtils.deleteDirectory(new File(Setting.getClientsFolder()+"\\"+id));
+                FileUtils.deleteDirectory(new File(Setting.getClientsFolder()+id));
             } catch (IOException e) {
                 e.printStackTrace();
 
@@ -160,10 +167,11 @@ public String getDealerName(String numberDealer){
     }
     public String setDealer(String numberDealer, String nameDealer, String email, String name, String personPhone, String password) {
         if (getDealerName(numberDealer) != null) {
-            return "Данный полюзователь уже зарегестрирован";
+            return StandartMasege.getMessage(11);
         }
         if (!nameDealer.isEmpty() || !numberDealer.isEmpty() || !email.isEmpty() || !name.isEmpty() || !password.isEmpty()) {
             Dealer dealer = new Dealer();
+            dealer.setDateRegistration(new Date());
             dealer.setNumberDealer(numberDealer);
             dealer.setNameDealer(nameDealer);
             dealer.setRegistration(false);
@@ -183,13 +191,13 @@ public String getDealerName(String numberDealer){
             login.setPassword(passwordHelper.encode(password));
             login.setRole(ListRole.ROLE_ANONYMOUS);
             session.merge(login);
-            new File(Setting.getClientsFolder()+"\\"+numberDealer).mkdir();
+            new File(Setting.getClientsFolder()+numberDealer).mkdir();
             session.beginTransaction().commit();
             SendHTMLEmail.successfulRegistration(EncoderId.encodId(numberDealer),email);
-            return "Вы удачно добавили данные." +
-                    " \n Вам на почту отправлено письмо с подтверждением регистрации";
+            return StandartMasege.getMessage(12) +
+                    " \n "+StandartMasege.getMessage(13);
         }
-        return "Проверте поля!";
+        return StandartMasege.getMessage(14);
 
 
     }

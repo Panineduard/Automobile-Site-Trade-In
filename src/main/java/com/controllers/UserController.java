@@ -4,6 +4,7 @@ import com.dao.CarDAO;
 import com.dao.DealerDao;
 import com.email.SendEmailText;
 import com.modelClass.Car;
+import com.servise.StandartMasege;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,15 +38,15 @@ public class UserController {
 
         }
         else {
-            returnMassege = "Проверте пароль!!!";
+            returnMassege = StandartMasege.getMessage(6);
         }
         ModelAndView model = new ModelAndView("successfulRegistration");
-        model.addObject("msg", "Здравствуйте " + name + " " + returnMassege);
+        model.addObject("msg", StandartMasege.getMessage(7) +" "+ name + " " + returnMassege);
         return model;}
         catch (NumberFormatException e){
 
            ModelAndView model1 = new ModelAndView("registration");
-           model1.addObject("msg", "Поле 'Номер диллера'! Только цифры!");
+           model1.addObject("msg", StandartMasege.getMessage(8));
            return model1;
         }
     }
@@ -56,9 +57,9 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
     String msg;
     if(dealerDao.updateRegistrationAndRoleById(idDealer))
     {
-        msg="Вы удачно подтвердили почту ";
+        msg=StandartMasege.getMessage(9);
     }
-    else msg="Ошибка подтверждения регистрации";
+    else msg="";
     ModelAndView model = new ModelAndView("successfulRegistration");
     model.addObject("msg",msg );
     return model;
@@ -77,8 +78,7 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
 
     @RequestMapping(value = "/carPage",method = RequestMethod.GET)
     public ModelAndView getDealer(@RequestParam ("idCar") String idCar){
-        ModelAndView modelAndView= new ModelAndView("carPage");
-        System.out.println(idCar);
+        ModelAndView modelAndView= new ModelAndView("auto");
         Car car=null;
         CarDAO carDAO =new CarDAO();
         if(!idCar.isEmpty()){

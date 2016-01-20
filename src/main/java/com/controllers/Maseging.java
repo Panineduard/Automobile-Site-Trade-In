@@ -1,5 +1,7 @@
 package com.controllers;
 
+import com.servise.StandartMasege;
+import com.setting.Setting;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,9 +22,9 @@ public class Maseging {
     @RequestMapping(value = "/sendMessage",method = RequestMethod.POST)
     public ModelAndView saveUserData(@RequestParam("senderName") String senderName,@RequestParam("senderEmail") String senderEmail,@RequestParam("message")
     String message){
-        SendEmailText.sendMessageOnEmail("Письмо от " + senderName + "\n Email - " + senderEmail + "\n" + message, "veselaya_gora@mail.ru");
+        SendEmailText.sendMessageOnEmail(StandartMasege.getMessage(4)+" " + senderName + "\n Email - " + senderEmail + "\n" + message, Setting.getRecipientEmail());
         ModelAndView model1 = new ModelAndView("successfulRegistration");
-        model1.addObject("msg","Спасибо за отзыв,коментарии, или пожелания!");
+        model1.addObject("msg",StandartMasege.getMessage(5));
         return model1;
 }
 }

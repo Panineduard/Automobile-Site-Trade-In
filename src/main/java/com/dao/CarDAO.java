@@ -2,6 +2,7 @@ package com.dao;
 
 import com.dao.configuration.files.HibernateUtil;
 import com.modelClass.Car;
+import com.setting.Setting;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -98,7 +99,7 @@ public class CarDAO {
                     String formatFile =file.getOriginalFilename().substring(pointPosition);
                     BufferedOutputStream stream=null;
                     try {
-                        File file1 = new File("C:\\ClientsFolder\\"+car.getIdDealer(),carId+"-"+numberPhoto+formatFile);
+                        File file1 = new File(Setting.getClientsFolder()+car.getIdDealer(),carId+"-"+numberPhoto+formatFile);
                         pathPhoto.add(file1.getAbsolutePath());
                         byte[] bytes = file.getBytes();
                         stream =new BufferedOutputStream(new FileOutputStream(file1));

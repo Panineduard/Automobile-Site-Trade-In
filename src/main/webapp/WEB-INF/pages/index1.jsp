@@ -441,7 +441,7 @@
           }
       %>
 
-      <a title="Vokswagen Passat B8"href="http" class= "model" >
+      <a title=<%=car.getBrand()+" "%><%=car.getModel()%> href="/carPage?idCar=<%=car.getIdCar()%>" class= "model" >
         <%=car.getBrand()+" "%><%=car.getModel()%>
       </a>
       <!--<a title="Подробнее"href="http" class="more">
@@ -449,7 +449,7 @@
       </a> --->
     <div id="auto">
 
-      <a title="Vokswagen Passat B8" href="/carPage?idCar=<%=car.getIdCar()%>" class= "foto-185x120" >
+      <a title= <%=car.getBrand()+" "%><%=car.getModel()%> href="/carPage?idCar=<%=car.getIdCar()%>" class= "foto-185x120" >
         <img src="/getPhoto?pathPhoto=<%=path%>&Width=200&Height=200" align="left">
       </a>
 
@@ -464,14 +464,9 @@
       </div>
       <br/>
 
-      <div class="info">
-        <div class="town">Город:<br> < src="/getDealer"></src> </div>
-        <div class="phone-number">Телефон:<br> +38 057 705 20 25</div>
-        <div class="diller">Дилер:<br> ТОВ "Автодом Харків"</div>
 
-      </div>
       <br/>
-      <a title="Подробнее"href="http" class="more">
+      <a title="Подробнее" href="/carPage?idCar=<%=car.getIdCar()%>" class="more">
         Подробнее
       </a>
     </div>

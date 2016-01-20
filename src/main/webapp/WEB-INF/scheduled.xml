@@ -3,16 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-       <bean id="xmlScheduledTasks" class="com.controllers.CleanDBTaskExecutor" />
-
-
+       <bean id="xmlScheduledTasks" class="com.servise.CleanDBTaskExecutor" />
 
        <task:scheduler id="taskScheduler" pool-size="10" />
 
 
-
        <task:scheduled-tasks>
-              <task:scheduled ref="xmlScheduledTasks" method="serviceMethod" cron="* * * * * *"/>
+              <task:scheduled ref="xmlScheduledTasks" method="serviceMethod" cron="0 0 12 * * ?"/>
        </task:scheduled-tasks>
 
 </beans>

@@ -4,7 +4,8 @@ import com.helpers.FileUploadForm;
 import com.dao.CarDAO;
 import com.dao.DealerDao;
 import com.modelClass.Car;
-import com.servise.CreateImg;
+import com.servise.ChangeImgSize;
+import com.servise.StandartMasege;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,7 +64,7 @@ public class CarController {
                     BufferedImage bufferedImage =  ImageIO.read(file);
 //
                     if(imgHeight!=0||imgWidth!=0){
-                        bufferedImage = CreateImg.resizeImage(bufferedImage, imgWidth, imgHeight);
+                        bufferedImage = ChangeImgSize.resizeImage(bufferedImage, imgWidth, imgHeight);
                     }
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -122,7 +122,7 @@ public class CarController {
                                           @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox,
                                           @ModelAttribute("mileage")String mileage,@ModelAttribute("comment")String comment,
                                           @ModelAttribute("engine_capacity")String engine_capacity) {
-        String nullMsg="Нет данных";
+        String nullMsg="Data not available.";
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String idDealer = auth.getName();
         if (!idDealer.isEmpty()) {
@@ -163,7 +163,7 @@ public class CarController {
 
                 if (carDAO.setCar(car, uploadForm.getFiles()) != -1L) {
                     ModelAndView modelAndView=new ModelAndView("myAccount");
-                    modelAndView.addObject("msg", "Автомобиль удачно добавлен");
+                    modelAndView.addObject("msg", StandartMasege.getMessage(1));
                     return ViewHalper.addingDealerAndCarsInView(modelAndView);
                 }
 
@@ -174,7 +174,7 @@ public class CarController {
 
         ModelAndView modelAndView=new ModelAndView("pageForCar");
 
-        modelAndView.addObject("msg","Авто не добавлено проверьте поля");
+        modelAndView.addObject("msg",StandartMasege.getMessage(2));
         return modelAndView;
 
     }

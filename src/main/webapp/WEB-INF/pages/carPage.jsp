@@ -3,19 +3,9 @@
 <%@ page import="com.modelClass.Car" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE HTML>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-  <title>Страница авто</title>
-  <meta charset="utf-8">
-  <!-- Google Fonts -->
-  <link href='http://fonts.googleapis.com/css?family=Parisienne' rel='stylesheet' type='text/css'>
-  <!-- CSS Files -->
-  <link rel="stylesheet" type="text/css" media="screen" href="/res/css/style.css">
-  <link rel="stylesheet" type="text/css" media="screen" href="/res/menu/css/simple_menu.css">
-  <!-- Contact Form -->
-  <link href="/res/contact-form/css/style.css" media="screen" rel="stylesheet" type="text/css">
-  <link href="/res/contact-form/css/uniform.css" media="screen" rel="stylesheet" type="text/css">
-  <!-- JS Files -->
   <script src="/res/js/jquery.tools.min.js"></script>
   <script>
     $(function () {
@@ -25,92 +15,89 @@
       });
     });
   </script>
-  <script>
-    $(document).ready(function () {
-      $(".pane-list li").click(function () {
-        window.location = $(this).find("a").attr("href");
-        return false;
-      });
-    });
-  </script>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/res/css/style_auto.css">
+  <!-- <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'> -->
+  <title> Автомобили с пробегом </title>
 </head>
 <body>
-<form action="/" method="get" >
-  <button type="submit" class="btn btn-theme btn-lg">На главную страницу</button>
-</form>
-<%
-  Dealer dealer = (Dealer)request.getAttribute("dealer");
-  Car car= (Car) request.getAttribute("car");
-%>
-<div style="clear:both"></div>
-<div class="box_highlight" style="margin-top:40px">
+<header>
+  <h1><a class="header"title="На главную" href="">NAME OF OUR PROJECT</a></h1>
+  <h2>Автомобили с пробегом <br>
+    <Small>Только официальные дилеры</Small></h2>
+  <!-- <h5>Результаты поиска: </h5><br>  -->
+</header>
 
 
-  <h2 style="text-align:center">Диллер номер - <%=dealer.getNameDealer()%>
-  </h2>
+<ul id="menu">
+  <li><a title="На главную" href="/">На главную</a></li>
+  <li><a title="Мои автомобили" href="">Мои автомобили</a></li>
+  <li><a title="К результатам" href="">Вернуться к результатам поиска</a></li>
+  <li><a title="Выход"  href="">Выход</a></li>
+</ul>
+<div id="layout">
+  <div id="baner-left">
+    jgjj kjkjkjb kbkjbkjb
+  </div>
+  <div id="baner-right">
+    some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 777777777777 77777 77777777 77777777 7777777 7777777
+  </div>
+    <%
+    Dealer dealer = (Dealer)request.getAttribute("dealer");
+    Car car= (Car) request.getAttribute("car");
 
-  <h3 style="text-align:center">Контактное лицо</h3>
 
-  <h3 style="text-align:center"><%=dealer.getContact_persons().get(0)%>
-  </h3>
+    String EnginesType="нет данных";
+    String transmission ="нет данных";
+    if (car.getEnginesType().equals("gasoline")) {
+      EnginesType = "Бензин";
+    } else if (car.getEnginesType().equals("disel")) {
+      EnginesType = "Дизель";
+    } else if (car.getEnginesType().equals("elektro")) {
+      EnginesType = "Электро";
+    } else if (car.getEnginesType().equals("hybrid")) {
+      EnginesType = "Гибрид";
+    }
+    if (car.getTransmission().equals("auto")) {
+      transmission = "Автомат";
+    } else if (car.getTransmission().equals("mechanical")) {
+      transmission = "Механическая";
+    }
+  %>
 
+  <div id="result">
+    <div class="auto">
+  <div class= "model" >
+    <%=car.getBrand()%>  <%=car.getModel()%>
+  </div>
   <hr>
-</div>
-<!-- END header -->
-<!-- END header -->
-<div id="container">
-  <!-- tab panes -->
-  <div id="prod_wrapper">
-    <div id="panes">
+
+    <div id="panes" class ="main-foto">
       <%
-
         for (String photo:car.getPhotoPath()) {
-
-
-
       %>
-      <p><div><img  width="600" height="500" src="/getPhoto?pathPhoto=<%=photo%> ">;
-
-
-      <br>
-
-    </div></p>
-
-
+      <div><img  class="foto-380x250" align="left" src="/getPhoto?pathPhoto=<%=photo%> ">
+    </div>
       <%}%>
-
     </div>
     <!-- END tab panes -->
     <br clear="all">
     <!-- navigator -->
-    <div id="prod_nav">
+    <div id="prod_nav" class="small-foto">
       <ul>
         <%
-
           for (String photo1:car.getPhotoPath()) {
-
         %>
-
-        <li><a href="#1"><img src="/getPhoto?pathPhoto=<%=photo1%>" width="160" alt=""> </a></li>
+        <li><a title="Vokswagen Passat B8"  href="#1"><img  class="foto-85x56" src="/getPhoto?pathPhoto=<%=photo1%>" align="left" alt=""> </a></li>
         <%}%>
 
       </ul>
 
     </div>
-    <!-- END navigator -->
-  </div>
-  <!-- END prod wrapper -->
-  <div style="clear:both"></div>
 
-
-  <div style="clear:both; height: 40px"></div>
 </div>
-
-
-
-
-
-
+  </div>
 </body>
 </html>
 

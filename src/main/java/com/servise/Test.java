@@ -4,20 +4,27 @@ import com.dao.CarDAO;
 import com.dao.DealerDao;
 import com.email.SendEmailText;
 import com.helpers.PasswordHelper;
+import javafx.util.converter.LocalDateTimeStringConverter;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.task.TaskExecutor;
 
 import java.io.*;
+import java.time.LocalDateTime;
 
 /**
  * Created by ������ on 12.08.15.
  */
 public class Test {
     public static void main(String... arg) throws IOException {
-
-DealerDao dealerDao=new DealerDao();
-        System.out.println(dealerDao.getIdDealersWithoutAuth());
+        System.out.println(StandartMasege.getMessage(1));
+//        LocalDateTime localDateTime=LocalDateTime.now();
+//        LocalDateTime localDateTime1 = localDateTime.plusDays(2);
+////        System.out.println(localDateTime1.isAfter(localDateTime));
+//CleanDBTaskExecutor cdb =new CleanDBTaskExecutor();
+//        cdb.serviceMethod();
+//DealerDao dealerDao=new DealerDao();
+//        System.out.println(dealerDao.getIdDealersWithoutAuth());
 
 
 //        AutoClineDB autoClineDB=new AutoClineDB();

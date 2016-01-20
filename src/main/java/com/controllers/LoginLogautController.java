@@ -1,5 +1,6 @@
 package com.controllers;
 
+import com.servise.StandartMasege;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,7 +16,7 @@ public class LoginLogautController {
     @RequestMapping(value = "/login")
     public ModelAndView login(HttpServletRequest request){
             ModelAndView modelAndView = new ModelAndView("checkLogin");
-            modelAndView.addObject("msg","<h1>Welcome<h1>");
+            modelAndView.addObject("msg","<h1>"+ StandartMasege.getMessage(3)+"<h1>");
             return modelAndView;
     }
 

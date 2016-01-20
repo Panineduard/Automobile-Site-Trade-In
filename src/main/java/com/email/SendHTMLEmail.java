@@ -1,5 +1,6 @@
 package com.email;
 
+import com.servise.StandartMasege;
 import com.setting.Setting;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -22,7 +23,7 @@ public class SendHTMLEmail
         // Recipient's email ID needs to be mentioned.
         String to;
         if(email.isEmpty()){
-        to = "veselaya_gora@mail.ru";}
+        to = Setting.getRecipientEmail();}
         else {
             to=email;
         }
@@ -48,11 +49,11 @@ public class SendHTMLEmail
             // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             // Set Subject: header field
-            message.setSubject("Successful registration");
+            message.setSubject(StandartMasege.getMessage(17));
             // Send the actual HTML message, as big as you like
             // Send message
             MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
-            helper.setText("<a href='http://localhost:8080/ConfirmationOfRegistration?id="+id+"'>Click her please</a>", true);
+            helper.setText("<a href='http://localhost:8080/ConfirmationOfRegistration?id="+id+"'>"+StandartMasege.getMessage(18)+"</a>", true);
 //            Transport transport =session.getTransport("smtp");
             Transport.send(helper.getMimeMessage());
         }

@@ -1,9 +1,11 @@
 package com.servise;
 
+import com.sun.java.util.jar.pack.*;
+
 import com.sun.xml.internal.bind.api.impl.NameConverter;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.Buffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -15,21 +17,26 @@ import java.util.stream.Stream;
  * Created by volkswagen1 on 11.01.2016.
  */
 public class StandartMasege {
-    BiPredicate <Path,BasicFileAttributes> fileAttributesBiPredicate=(path,attr)->{
-        PathMatcher matcher= FileSystems.getDefault().getPathMatcher("");
-        return matcher.matches(path);
-    };
-//    public static List<String> finedMesege(String number,Stream<Path>files,int lines){
-//        return files
-//                .<String>flatMap(StandartMasege::linesOfFile);
-////                .filter()
-//    }
-    public static Stream<String> linesOfFile(Path file){
-        try {
-            return Files.lines(file, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Stream.empty();
+    public static String getMessage(Integer p)  {
+        String linePosition = p.toString();
+//        System.out.println(new File(System.getProperty( "catalina.base")).getAbsolutePath());
+        String fileName = new File(System.getProperty( "catalina.base")).getAbsolutePath()+"\\src\\main\\java\\com\\servise\\messages.txt";
+        final String[] returnMessage = new String[1];
+
+
+        BufferedReader reader = null;
+        try(Stream<String> stream=new BufferedReader(new FileReader(fileName)).lines()) {
+            stream
+                    .filter(s -> ( new Integer(s.substring(0,2))).equals(p))
+                    .forEach(s1 -> {
+                        returnMessage[0] = new String(s1.substring(3));
+                    });
+            return returnMessage[0];
+        } catch (FileNotFoundException e) {
+            return "The file with messages was not found";
         }
+
+
+
     }
 }

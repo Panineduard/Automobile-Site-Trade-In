@@ -1,10 +1,10 @@
 package com.modelClass;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,6 +18,8 @@ public class Dealer {
     private boolean registration;
     private String nameDealer;
     private int countOfCar;
+    @Temporal(TemporalType.DATE)
+    private Date dateRegistration;
     @ElementCollection
     private List<Contact_person> contact_persons=new ArrayList<Contact_person>();
 
@@ -61,6 +63,14 @@ public class Dealer {
 
     public void setRegistration(boolean registration) {
         this.registration = registration;
+    }
+
+    public Date getDateRegistration() {
+        return dateRegistration;
+    }
+
+    public void setDateRegistration(Date dateRegistration) {
+        this.dateRegistration = dateRegistration;
     }
 
     public String toString() {

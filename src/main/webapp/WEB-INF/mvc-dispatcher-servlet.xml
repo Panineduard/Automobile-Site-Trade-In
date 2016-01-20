@@ -26,7 +26,7 @@
 
     <!--<task:annotation-driven  />-->
 
-    <!--<bean id="CleanDBTaskExecutor" class="com.controllers.CleanDBTaskExecutor"/>-->
+    <!--<bean id="CleanDBTaskExecutor" class="com.servise.CleanDBTaskExecutor"/>-->
 
 
 

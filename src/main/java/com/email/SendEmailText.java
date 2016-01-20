@@ -1,6 +1,7 @@
 package com.email;
 
 import com.email.CrunchifyEmailAPI;
+import com.servise.StandartMasege;
 import com.setting.Setting;
 import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +31,10 @@ public class SendEmailText {
         if (!toAddr.equals(email)) {
             toAddr = email;
         }
-        String subject = " Это сообщение отправлено автоматически. ";
+        String subject = StandartMasege.getMessage(15);
         if (email.equals(toAddr)) {
             // email subject
-            subject = "Письмо от пользователя сайта";
+            subject = StandartMasege.getMessage(16);
         }
 
         // email body
