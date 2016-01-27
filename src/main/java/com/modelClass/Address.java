@@ -1,5 +1,6 @@
 package com.modelClass;
 
+
 import javax.persistence.Embeddable;
 
 /**
@@ -9,7 +10,8 @@ import javax.persistence.Embeddable;
 public class Address {
     private String  street;
     private String city;
-    private long namberhouse;
+    private String numberHouse;
+    private String index;
 
     public String getStreet() {
         return street;
@@ -27,11 +29,19 @@ public class Address {
         this.city = city;
     }
 
-    public long getNamberhouse() {
-        return namberhouse;
+    public String getNumberHouse() {
+        return numberHouse;
     }
 
-    public void setNamberhouse(long namberhouse) {
-        this.namberhouse = namberhouse;
+    public void setNumberHouse(String numberHouse) {
+        this.numberHouse = numberHouse;
+    }
+
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 }

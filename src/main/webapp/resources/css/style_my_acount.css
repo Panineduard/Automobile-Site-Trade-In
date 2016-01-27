@@ -14,12 +14,13 @@ footer{
 	background:#8498C9;
 	padding:3px;
 }
+h3{
+	margin:5px;
+}
 a{
 	text-decoration:none;
-	}
-	h5{
-		margin:10px 10px 10px 220px;
-	}
+	
+}
 .header{
 	text-decoration:none;
 	
@@ -46,6 +47,21 @@ ul#menu li a {
 
 
 ul#menu li a:hover {
+    background-color: #415A98;
+	color:white;
+}
+ul#menu-diller li{
+	display:inline;
+}
+ul#menu-diller li a {
+	background-color:  #7784A6;
+    color: #DAE1F3;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px 4px 4px 4px;
+	
+}
+ul#menu-diller li a:hover {
     background-color: #415A98;
 	color:white;
 }
@@ -103,10 +119,17 @@ border-radius: 4px 4px 4px 4px;
 	
 	padding:3px;
 }
-.diller{
-	margin: 0px 210px 0px 210px;
+.diller-info{
+	/* color:green; */
+	/* line-height:30px; */
 	/* border:1px solid red; */
-	padding:3px;
+	/* border-radius: 4px 4px 4px 4px; */
+	padding:5px;
+	margin:5px 5px 5px 20px;
+	font:400 14px/30px san-serif;
+}
+.diller-info-data {
+	font: 600 16px  serif;
 }
 .phone-number{
 	width:200px;
@@ -173,35 +196,8 @@ div.model-info {
 	.model-info-data{
 		font: 600 16px  serif;
 	}
+		
 	
-	ul.pagination {
-    display: inline-block;
-    padding: 0;
-    margin: 0;
-}
-
-ul.pagination li {display: inline;}
-
-ul.pagination li a {
-    color: black;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-    transition: background-color .3s;
-    border: 1px solid #ddd;
-    margin: 0 4px;
-}
-
-ul.pagination li a.active {
-    background-color: #415A98;
-    color: white;
-    border: 1px solid #415A98;
-}
-
-ul.pagination li a:hover:not(.active) {background-color: #ddd;}
-div.page {
-	text-align:center;
-}
 		
 	
 

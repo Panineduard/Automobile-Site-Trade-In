@@ -21,7 +21,7 @@ public class MainController {
         int countOfCars=4;
         CarDAO carDAO = new CarDAO();
         List<Car> cars=null;
-        ModelAndView model = new ModelAndView("index1");//this is constructor were is view filrd
+        ModelAndView model = new ModelAndView("index");//this is constructor were is view filrd
         if(carDAO.getLastCars(countOfCars)!=null){
              cars=carDAO.getLastCars(countOfCars);
         }

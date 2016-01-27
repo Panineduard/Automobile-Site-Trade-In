@@ -192,6 +192,7 @@
     <h2>Заполните данные диллерского центра</h2>
     <input type="text" placeholder="Название организации" name="nameDealer"><br>
     <input type="text" placeholder="Номер диллера(Только цифры)" name="numberDealer"><br>
+    <input type="text" placeholder="Местоположение" name="city"><br>
     <%--<input type="text" placeholder="Телефон" name="phone"><br>--%>
     <h2>Данные контактного лица</h2>
     <input type="text" placeholder="Имя" name="name"><br>

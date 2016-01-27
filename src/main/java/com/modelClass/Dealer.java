@@ -15,6 +15,9 @@ import java.util.List;
 public class Dealer {
     @Id
     private String numberDealer;
+
+    @Embedded
+    private Address address;
     private boolean registration;
     private String nameDealer;
     private int countOfCar;
@@ -71,6 +74,15 @@ public class Dealer {
 
     public void setDateRegistration(Date dateRegistration) {
         this.dateRegistration = dateRegistration;
+    }
+
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String toString() {

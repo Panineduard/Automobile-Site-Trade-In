@@ -27,6 +27,7 @@ public class Car {
     private Long views;
     private Integer mileage;
     private String engineCapacity;
+    private String region;
     @Temporal (TemporalType.DATE)
     private Date dateProvide;
     @Lob
@@ -142,6 +143,14 @@ public class Car {
 
     public void setEngineCapacity(String engineCapacity) {
         this.engineCapacity = engineCapacity;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     public String toString(){

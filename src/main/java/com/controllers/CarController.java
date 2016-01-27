@@ -19,6 +19,7 @@ import com.helpers.ViewHalper;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.List;
@@ -106,12 +107,13 @@ public class CarController {
     public ModelAndView getCarsPages(@ModelAttribute("make")String make,@ModelAttribute("model")String model,
                                      @ModelAttribute("price_from")String price_from,@ModelAttribute("price_to")String price_to,
                                      @ModelAttribute("year_from")String year_from,@ModelAttribute("year_to")String year_to,
-                                     @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox){
+                                     @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox,HttpSession session){
         CarDAO carDAO= new CarDAO();
         List<Car> cars =carDAO.getCarsByParameters(make,model,price_from,price_to,year_from,year_to,engine,gearbox);
-        ModelAndView modelAndView = new ModelAndView("index1");
-
-        modelAndView.addObject("cars",cars);
+        ModelAndView modelAndView = new ModelAndView("index");
+        session.setAttribute("cars",cars);
+        session.removeAttribute("page");
+//        modelAndView.addObject("cars",cars);
         return modelAndView;
     }
 
@@ -162,7 +164,7 @@ public class CarController {
                 else car.setMileage(0);
 
                 if (carDAO.setCar(car, uploadForm.getFiles()) != -1L) {
-                    ModelAndView modelAndView=new ModelAndView("myAccount");
+                    ModelAndView modelAndView=new ModelAndView("my_account");
                     modelAndView.addObject("msg", StandartMasege.getMessage(1));
                     return ViewHalper.addingDealerAndCarsInView(modelAndView);
                 }

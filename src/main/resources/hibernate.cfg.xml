@@ -20,6 +20,7 @@
         <mapping class="com.modelClass.Login"/>
         <mapping class="com.modelClass.Car"/>
         <mapping class="com.modelClass.Dealer"/>
+        <mapping class="com.modelClass.Address"/>
 
 
 

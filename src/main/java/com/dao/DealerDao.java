@@ -5,10 +5,7 @@ import com.email.SendHTMLEmail;
 import com.helpers.EncoderId;
 import com.helpers.HttpHelper;
 import com.helpers.PasswordHelper;
-import com.modelClass.Contact_person;
-import com.modelClass.Dealer;
-import com.modelClass.ListRole;
-import com.modelClass.Login;
+import com.modelClass.*;
 import com.servise.StandartMasege;
 import com.setting.Setting;
 import javassist.tools.rmi.ObjectNotFoundException;
@@ -168,16 +165,23 @@ public String getDealerName(String numberDealer){
 
 
     }
-    public String setDealer(String numberDealer, String nameDealer, String email, String name, String personPhone, String password) {
+    public String setDealer(String numberDealer, String nameDealer, String email, String name, String personPhone, String password,String city) {
         if (getDealerName(numberDealer) != null) {
             return StandartMasege.getMessage(11);
         }
-        if (!nameDealer.isEmpty() || !numberDealer.isEmpty() || !email.isEmpty() || !name.isEmpty() || !password.isEmpty()) {
+        if (!nameDealer.isEmpty() || !numberDealer.isEmpty() || !email.isEmpty() || !name.isEmpty() || !password.isEmpty()||!city.isEmpty())
+        {
             Dealer dealer = new Dealer();
+            Address address=new Address();
             dealer.setDateRegistration(new Date());
             dealer.setNumberDealer(numberDealer);
             dealer.setNameDealer(nameDealer);
             dealer.setRegistration(false);
+            address.setCity(city);
+            address.setIndex("");
+            address.setNumberHouse("");
+            address.setStreet("");
+            dealer.setAddress(address);
             List<Contact_person> contact_persons = new ArrayList<Contact_person>();
             Contact_person contact_person = new Contact_person();
             contact_person.setEmail(email);

@@ -52,7 +52,14 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
   <%
     Dealer dealer = (Dealer)request.getAttribute("dealer");
     Car car= (Car) request.getAttribute("car");
+    String path;
+    if(car.getPhotoPath().get(0).equals("null")) {
+      path="/res/img/notAvailable.png";
+    }
+    else {
+      path = "/getPhoto?pathPhoto="+car.getPhotoPath().get(0);
 
+    }
 
     String EnginesType="нет данных";
     String transmission ="нет данных";
@@ -85,17 +92,24 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 
   <div id="panes">
   <a title="Vokswagen Passat B8"href="http"  >
-<img  id='bigimgslide' class="foto-380x250" src="/getPhoto?pathPhoto=<%=car.getPhotoPath().get(0)%>" align="left">
+ <img  id='bigimgslide' class="foto-380x250" src="<%=path%>" align="left">
   </a>
   </div>
   <%
     int idPhoto=0;
     for (String photo:car.getPhotoPath()) {
+      String paths;
+      if(photo.equals("null")) {
+        paths="/res/img/notAvailable.png";
+      }
+      else {
+        paths = "/getPhoto?pathPhoto="+photo;
+      }
   %>
 <div class="small-foto">
 
   <a title="Vokswagen Passat B8"  >
-<img  id=<%=idPhoto%>  class="foto-85x56" onclick='setBigImageSlide(<%=idPhoto%>)'  src="/getPhoto?pathPhoto=<%=photo%>" align="left" alt="">
+<img  id=<%=idPhoto%>  class="foto-85x56" onclick='setBigImageSlide(<%=idPhoto%>)'  src="<%=paths%>" align="left" alt="">
 </a>
 
 </div>
@@ -124,7 +138,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 
 
 <div class="info">
-<div class="town"><u>Город:</u><br> <span class="info-data"><%=dealer.getDateRegistration()%></span></div>
+<div class="town"><u>Город:</u><br> <span class="info-data"><%=dealer.getAddress().getCity()%></span></div>
 <div class="phone-number"><u>Телефон:</u><br> <span class="info-data">
   <%for (Contact_person contact_person:dealer.getContact_persons()){%>
 <%=contact_person.getPhone()%> <br>

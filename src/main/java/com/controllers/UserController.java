@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import com.helpers.ViewHalper;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Created by Эдуард on 07.11.15.
  */
@@ -20,6 +22,13 @@ import com.helpers.ViewHalper;
 @SessionAttributes("login")
 
 public class UserController {
+    @RequestMapping(value = "/replacing_the_page_number", method = RequestMethod.GET)
+    public ModelAndView replacePage(@RequestParam("page") Integer page,HttpSession session){
+        System.out.println("Номер страницы= "+page);
+        session.setAttribute("page", page);
+        ModelAndView modelAndView = new ModelAndView("index");
+        return modelAndView;
+    }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView getRegistrationForm(){
@@ -28,13 +37,14 @@ public class UserController {
     }
     @RequestMapping(value = "/registration",method = RequestMethod.POST)
     public ModelAndView saveUserData(@RequestParam("pasword") String pasword,@RequestParam("checkPasword") String checkPasword,@RequestParam("numberDealer")
-    String numberDealer,@RequestParam("nameDealer") String nameDealer,@RequestParam("email") String email,
-                                     @RequestParam("name") String name,@RequestParam("personPhone")String personPhone){
+                String numberDealer,@RequestParam("nameDealer") String nameDealer,@RequestParam("email") String email,
+                @RequestParam("name") String name,@RequestParam("personPhone")String personPhone,
+                @RequestParam("city")String city) {
 
         String returnMassege;
         DealerDao dealerDao = new DealerDao();
        try{ if (pasword.equals(checkPasword)){
-            returnMassege= dealerDao.setDealer(numberDealer, nameDealer,email,name,personPhone,pasword);
+            returnMassege= dealerDao.setDealer(numberDealer, nameDealer,email,name,personPhone,pasword,city);
 
         }
         else {
@@ -71,7 +81,7 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
 }
     @RequestMapping(value = "/myAccount")
     public ModelAndView accountModel(){
-            ModelAndView modelAndView = new ModelAndView("myAccount");
+            ModelAndView modelAndView = new ModelAndView("my_account");
             return ViewHalper.addingDealerAndCarsInView(modelAndView);
     }
 

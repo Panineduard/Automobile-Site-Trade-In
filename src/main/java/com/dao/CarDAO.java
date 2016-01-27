@@ -123,6 +123,7 @@ public class CarDAO {
                     }
                 }
             }
+            else pathPhoto.add("null");
             car.setPhotoPath(pathPhoto);
             session.merge(car);
             tr.commit();
