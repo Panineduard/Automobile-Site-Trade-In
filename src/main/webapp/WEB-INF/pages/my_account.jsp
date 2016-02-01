@@ -522,7 +522,6 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
             var old_manager=document.getElementById("manager".concat(id));
             var old_phone=document.getElementById("phone".concat(id));
             var old_email=document.getElementById("email".concat(id));
-
             var manager=document.createElement("input");
             manager.setAttribute("type","text");
             manager.setAttribute("placeholder","Имя менеджера");
