@@ -13,7 +13,7 @@ import java.util.List;
 @Table (name = "CARS")
 public class Car {
     @Id
-//    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long idCar;
     @ElementCollection
     private List<String> photoPath = new ArrayList<String>();

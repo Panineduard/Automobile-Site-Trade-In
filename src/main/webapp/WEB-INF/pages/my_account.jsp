@@ -3,6 +3,7 @@
 <%@ page import="com.modelClass.Car" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.modelClass.Contact_person" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -399,18 +400,125 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 <h3>Мое меню:</h3>
 <div class="auto">
 
+    <script>
+
+        function changeAddress(){
+            var address=document.getElementById("address");
+            var dealer_data=document.getElementById("dealer_data");
+            dealer_data.removeChild(address);
+            var form=document.createElement("form");
+            form.setAttribute("action","/changeAddress");
+            form.setAttribute("method","post")
+
+            var city=document.createElement("span");
+            <%if(!dealer.getAddress().getCity().isEmpty()){%>
+            var node = document.createTextNode(<%=dealer.getAddress().getCity() %>);
+            <%}%>
+            city.appendChild(node);
+
+            var field_for_index=document.createElement("input");
+            field_for_index.setAttribute("type","text");
+            field_for_index.setAttribute("placeholder","Индекс");
+            <%if(!dealer.getAddress().getIndex().isEmpty()){%>
+            field_for_index.setAttribute("value",<%=dealer.getAddress().getIndex() %>);
+<%}%>
+            var field_for_street=document.createElement("input");
+            field_for_street.setAttribute("type","text");
+            field_for_street.setAttribute("placeholder","Улица");
+            <%if(!dealer.getAddress().getStreet().isEmpty()){%>
+            field_for_street.setAttribute("value",<%=dealer.getAddress().getStreet()+" "%>);
+<%}%>
+            var field_for_numberHouse=document.createElement("input");
+            field_for_numberHouse.setAttribute("type","text");
+            field_for_numberHouse.setAttribute("placeholder","Номер дома");
+            <%if(!dealer.getAddress().getNumberHouse().isEmpty()){%>
+            field_for_numberHouse.setAttribute("value",<%=dealer.getAddress().getNumberHouse()%>);
+            <%}%>
+
+            var submit_button=document.createElement("button");
+            submit_button.setAttribute("type","submit");
+            var button_text = document.createTextNode("Сохранить");
+            submit_button.appendChild(button_text);
+            form.appendChild(city);
+            form.appendChild(document.createElement("br"));
+            form.appendChild(field_for_index);
+            form.appendChild(document.createElement("br"));
+            form.appendChild(field_for_street);
+            form.appendChild(document.createElement("br"));
+            form.appendChild(field_for_numberHouse);
+            form.appendChild(document.createElement("br"));
+            form.appendChild(submit_button);
+            dealer_data.appendChild(form);
+            dealer_data.removeChild(document.getElementById("address_button"));
+        }
+        function changeContactPersonsData(id){
+        var contact_person_data=document.getElementById("contact_persons_data"+id);
+            var old_manager=document.getElementById("manager");
+            var old_phone=document.getElementById("phone");
+            var old_email=document.getElementById("email");
+
+            var manager=document.createElement("input");
+            manager.setAttribute("type","text");
+            manager.setAttribute("placeholder","Имя менеджера");
+            manager.setAttribute("value",old_manager.innerHTML);
+            manager.setAttribute("name","manager");
 
 
-<div class="diller-info">
+
+            var phone=document.createElement("input");
+            phone.setAttribute("type","text");
+            phone.setAttribute("placeholder","телефон");
+            phone.setAttribute("value",old_phone.innerHTML);
+            phone.setAttribute("name","phone");
+
+            var email=document.createElement("input");
+            email.setAttribute("type","email");
+            email.setAttribute("placeholder","Электронный адресс");
+            email.setAttribute("value",old_email.innerHTML);
+            email.setAttribute("name","email");
+
+
+            var submit_button=document.createElement("button");
+            submit_button.setAttribute("type","submit");
+            var button_text = document.createTextNode("Сохранить");
+            submit_button.appendChild(button_text);
+
+            contact_person_data.replaceChild(manager,old_manager);
+            contact_person_data.replaceChild(phone,old_phone);
+            contact_person_data.replaceChild(email,old_email);
+            contact_person_data.appendChild(submit_button);
+        }
+    </script>
+
+<div class="diller-info" >
 Диллер: <span class="diller-info-data"><%=dealer.getNameDealer()%> </span><br>
-Адресс: <span class="diller-info-data"><%=dealer.getAddress().getIndex()+" "%> <%=dealer.getAddress().getCity()%>, ул.
+    <div id="dealer_data">
+Адресс: <span id ="address" class="diller-info-data"><%=dealer.getAddress().getIndex()+" "%>  <%=dealer.getAddress().getCity()%>
+        , ул.
 
-    <%=dealer.getAddress().getStreet()+" "%> <%=dealer.getAddress().getNumberHouse()%></span><br>
-    <%for (Contact_person contact_person:dealer.getContact_persons()){%>
-Менеджер: <span class="diller-info-data"><%=contact_person.getName()%></span><br>
-Телефон: <span class="diller-info-data"><%=contact_person.getPhone()%></span><br>
-Email: <span class="diller-info-data"><%=contact_person.getEmail()%></span><br>
-    <%}%>
+    <%=dealer.getAddress().getStreet()+" "%> <%=dealer.getAddress().getNumberHouse()%></span>
+    <a id="address_button" href="#" class="more" title="Изменить" onclick="changeAddress()">Изменить</a>
+    </div>
+    <h4>Контактные лица</h4>
+    <%
+        int count=0;
+        for (Contact_person contact_person:dealer.getContact_persons()){%>
+    <form action="/change_contact_person" method="post">
+    <div id="contact_persons_data<%=count%>">
+    <%request.getSession().setAttribute("id",count);%>
+    Менеджер:<span id="manager" class="diller-info-data"><%=contact_person.getName()%></span><br>
+    Телефон: <span id="phone" class="diller-info-data"><%=contact_person.getPhone()%></span><br>
+    Email:   <span id="email" class="diller-info-data"><%=contact_person.getEmail()%></span><br>
+
+    </div>
+    </form>
+    <a id="contact_persons_button" class="more" title="Изменить" onclick="changeContactPersonsData(<%=count%>)">Изменить</a>
+    <%if(count>0){%>
+    <a  href="/delete_contact_person?count=<%=count%>" class="more" title="Удалить" >Удалить</a>
+    <%}
+            count++;
+        }%>
+
 </div>
 <br/>
 <!-- <div class="info">
@@ -423,7 +531,7 @@ Email: <span class="diller-info-data"><%=contact_person.getEmail()%></span><br>
 <ul id="menu-diller">
   <li><a href="">Изменить инфо</a></li>
   <li><a href="/addCar">Добавить авто</a></li>
-  <li><a href="">какая нибуть ссылка</a></li>
+  <li><a >Добавить контактное лицо</a></li>
   <li><a href="">какая нибуть ссылка</a></li>
 </ul>  
 </div>

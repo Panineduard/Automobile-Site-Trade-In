@@ -6,13 +6,15 @@ import org.hibernate.Session;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Эдуард on 11.08.15.
  */
 public class Main {
     public static void main(String...args) throws SQLException {
-        System.out.println("H");
+
 //
 //        CarDAO carDAO = new CarDAO();
 //        Long idFoundDealer = (121L);

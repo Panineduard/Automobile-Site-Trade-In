@@ -4,7 +4,12 @@ import com.dao.CarDAO;
 import com.dao.DealerDao;
 import com.email.SendEmailText;
 import com.modelClass.Car;
+import com.modelClass.Contact_person;
 import com.servise.StandartMasege;
+import com.sun.deploy.net.HttpResponse;
+import org.springframework.http.HttpRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import com.helpers.ViewHalper;
+import sun.plugin.liveconnect.SecurityContextHelper;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.IdentityHashMap;
 
 /**
  * Created by Эдуард on 07.11.15.
@@ -106,6 +114,24 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
 
         return modelAndView;
     }
+    @RequestMapping(value = "/change_contact_person", method = RequestMethod.POST)
+    public ModelAndView changeContactPersonsData(@RequestParam("manager") String manager,@RequestParam("phone") String phone,
+                                                 @RequestParam("email") String email,HttpSession session){
+        System.out.println(manager);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String idDealer=auth.getName();
+        Integer idPerson=(Integer)session.getAttribute("id");
+        Contact_person contact_person = new Contact_person();
+        DealerDao dealerDao= new DealerDao();
+        if(!manager.isEmpty()){contact_person.setName(manager);}
+        if(!phone.isEmpty()){contact_person.setPhone(phone);}
+        if(!email.isEmpty()){contact_person.setEmail(email);}
+        dealerDao.changeContactPersonsData(idDealer, idPerson, contact_person);
 
+        session.removeAttribute("id");
+
+        ModelAndView modelAndView = new ModelAndView("my_account");
+        return ViewHalper.addingDealerAndCarsInView(modelAndView);
+    }
 
 }

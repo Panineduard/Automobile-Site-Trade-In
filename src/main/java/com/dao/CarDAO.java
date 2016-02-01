@@ -2,7 +2,9 @@ package com.dao;
 
 import com.dao.configuration.files.HibernateUtil;
 import com.modelClass.Car;
+
 import com.setting.Setting;
+import javassist.tools.rmi.ObjectNotFoundException;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -35,8 +37,6 @@ public class CarDAO {
     }
     //This method return -1 if something from data equally 0
     public Long setCar(Car car,List<MultipartFile> multipartFiles){
-
-
         //check block fo null and empty
              if(car.getBrand().isEmpty()){
                  System.out.println("марка");
@@ -78,16 +78,16 @@ public class CarDAO {
         try {
             tr= session.beginTransaction();
             //her wi check and looking for last Id Car
-            Query query = session.createQuery("select max (idCar) from Car");
-            Long maxIdOfCar = (Long)query.list().get(0);
-            if(maxIdOfCar==null){
-                maxIdOfCar=0L;
-            }
-            carId=++maxIdOfCar;
-            if (carId==0L){
-                return -1L;
-            }
-            car.setIdCar(carId);
+//            Query query = session.createQuery("select max (idCar) from Car");
+//            Long maxIdOfCar = (Long)query.list().get(0);
+//            if(maxIdOfCar==null){
+//                maxIdOfCar=0L;
+//            }
+//            carId=++maxIdOfCar;
+//            if (carId==0L){
+//                return -1L;
+//            }
+//            car.setIdCar(carId);
             car.setDateProvide(new Date());
             List<String> pathPhoto=new ArrayList<String>();
 
@@ -237,7 +237,43 @@ public class CarDAO {
         Query query = session.createQuery("from Car c where c.idCar=:id");
         query.setParameter("id",idCar);
         Car car =(Car)query.uniqueResult();
-
         return car;
     }
+    public boolean deleteCarById(String idCar){
+        Long id =new Long(idCar);
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr=session.beginTransaction();
+        try {
+            Car car= session.load(Car.class, id);
+            for (String path:car.getPhotoPath()) {
+                try {
+                    File file = new File(path);
+                    file.delete();//return true if file deleted
+                } catch (Exception e) {
+                    continue;
+                }
+            }
+            session.delete(car);
+            tr.commit();
+            return true;
+        }
+        catch (org.hibernate.ObjectNotFoundException e){
+            return false;
+        }
+       finally {
+            if(session.isOpen()){
+                session.close();
+            }
+        }
+    }
+    public boolean updateCarById(String idCar,Car car){
+        Long id=new Long(idCar);
+        car.setIdCar(id);
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr=session.beginTransaction();
+        session.update(car);
+        tr.commit();
+        return true;
+    }
+
 }

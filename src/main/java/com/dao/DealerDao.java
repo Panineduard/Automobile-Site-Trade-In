@@ -21,10 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Created by Эдуард on 25.09.15.
@@ -131,7 +128,7 @@ public String getDealerName(String numberDealer){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr =session.beginTransaction();
         Dealer dr= session.load(Dealer.class, id);
-        Login login =session.load(Login.class,id);
+        Login login =session.load(Login.class, id);
 
         try {
             if (login!=null){
@@ -182,7 +179,7 @@ public String getDealerName(String numberDealer){
             address.setNumberHouse("");
             address.setStreet("");
             dealer.setAddress(address);
-            List<Contact_person> contact_persons = new ArrayList<Contact_person>();
+            List<Contact_person> contact_persons = new ArrayList<>();
             Contact_person contact_person = new Contact_person();
             contact_person.setEmail(email);
             contact_person.setName(name);
@@ -207,5 +204,21 @@ public String getDealerName(String numberDealer){
         return StandartMasege.getMessage(14);
 
 
+    }
+
+    public boolean changeContactPersonsData(String idDealer,Integer contactPersonsNumber,Contact_person contact_person){
+
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr = session.beginTransaction();
+        Dealer dealer= session.get(Dealer.class, idDealer);
+        List<Contact_person> contact_persons =dealer.getContact_persons();
+        contact_persons.set(contactPersonsNumber,contact_person);
+        dealer.setContact_persons(contact_persons);
+        session.merge(dealer);
+        tr.commit();
+
+
+
+        return true;
     }
 }

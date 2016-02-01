@@ -4,6 +4,7 @@ import com.dao.CarDAO;
 import com.dao.DealerDao;
 import com.email.SendEmailText;
 import com.helpers.PasswordHelper;
+import com.modelClass.Contact_person;
 import javafx.util.converter.LocalDateTimeStringConverter;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -17,7 +18,16 @@ import java.time.LocalDateTime;
  */
 public class Test {
     public static void main(String... arg) throws IOException {
-        System.out.println(StandartMasege.getMessage(1));
+        DealerDao dealerDao = new DealerDao();
+        Contact_person contact_person = new Contact_person();
+        contact_person.setEmail("dgfhdgf");
+        contact_person.setPhone("45454");
+        contact_person.setName("fdhfjhdf");
+        dealerDao.changeContactPersonsData("1",0,contact_person);
+//        CarDAO carDAO = new CarDAO();
+//
+//        System.out.println(carDAO.deleteCarById("1"));
+//        System.out.println(StandartMasege.getMessage(1));
 //        LocalDateTime localDateTime=LocalDateTime.now();
 //        LocalDateTime localDateTime1 = localDateTime.plusDays(2);
 ////        System.out.println(localDateTime1.isAfter(localDateTime));

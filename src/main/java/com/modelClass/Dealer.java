@@ -3,9 +3,7 @@ package com.modelClass;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by ������ on 30.08.15.
@@ -24,8 +22,7 @@ public class Dealer {
     @Temporal(TemporalType.DATE)
     private Date dateRegistration;
     @ElementCollection
-    private List<Contact_person> contact_persons=new ArrayList<Contact_person>();
-
+    private List<Contact_person> contact_persons=new ArrayList<>();
 
 
     public List<Contact_person> getContact_persons() {
