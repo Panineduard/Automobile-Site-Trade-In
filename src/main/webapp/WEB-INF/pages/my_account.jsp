@@ -518,10 +518,10 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
             dealer_data.removeChild(document.getElementById("address_button"));
         }
         function changeContactPersonsData(id){
-        var contact_person_data=document.getElementById("contact_persons_data"+id);
-            var old_manager=document.getElementById("manager");
-            var old_phone=document.getElementById("phone");
-            var old_email=document.getElementById("email");
+            var contact_person_data=document.getElementById("contact_persons_data".concat(id));
+            var old_manager=document.getElementById("manager".concat(id));
+            var old_phone=document.getElementById("phone".concat(id));
+            var old_email=document.getElementById("email".concat(id));
 
             var manager=document.createElement("input");
             manager.setAttribute("type","text");
@@ -571,14 +571,14 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
         for (Contact_person contact_person:dealer.getContact_persons()){%>
     <form action="/change_contact_person" method="post">
     <div id="contact_persons_data<%=count%>">
-    <%request.getSession().setAttribute("id",count);%>
-    Менеджер:<span id="manager" class="diller-info-data"><%=contact_person.getName()%></span><br>
-    Телефон: <span id="phone" class="diller-info-data"><%=contact_person.getPhone()%></span><br>
-    Email:   <span id="email" class="diller-info-data"><%=contact_person.getEmail()%></span><br>
+             <input type="hidden" name="id" value="<%=count%>">
+    Менеджер:<span id="manager<%=count%>" class="diller-info-data"><%=contact_person.getName()%></span><br>
+    Телефон: <span id="phone<%=count%>" class="diller-info-data"><%=contact_person.getPhone()%></span><br>
+    Email:   <span id="email<%=count%>" class="diller-info-data"><%=contact_person.getEmail()%></span><br>
 
     </div>
     </form>
-    <a id="contact_persons_button" class="more" title="Изменить" onclick="changeContactPersonsData(<%=count%>)">Изменить</a>
+    <a id="contact_persons_button" class="more" href="#" title="Изменить" onclick="changeContactPersonsData(<%=count%>)">Изменить</a>
     <%if(count>0){%>
     <a  href="/delete_contact_person?count=<%=count%>" class="more" title="Удалить" >Удалить</a>
     <%}

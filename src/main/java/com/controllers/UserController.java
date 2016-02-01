@@ -116,18 +116,16 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
     }
     @RequestMapping(value = "/change_contact_person", method = RequestMethod.POST)
     public ModelAndView changeContactPersonsData(@RequestParam("manager") String manager,@RequestParam("phone") String phone,
-                                                 @RequestParam("email") String email,HttpSession session){
-
+                                                 @RequestParam("id") Integer idPerson, @RequestParam("email") String email){
+        System.out.println(idPerson);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String idDealer=auth.getName();
-        Integer idPerson=(Integer)session.getAttribute("id");
         Contact_person contact_person = new Contact_person();
         DealerDao dealerDao= new DealerDao();
         if(!manager.isEmpty()){contact_person.setName(manager);}
         if(!phone.isEmpty()){contact_person.setPhone(phone);}
         if(!email.isEmpty()){contact_person.setEmail(email);}
         dealerDao.changeContactPersonsData(idDealer, idPerson, contact_person);
-        session.removeAttribute("id");
         ModelAndView modelAndView = new ModelAndView("my_account");
         return ViewHalper.addingDealerAndCarsInView(modelAndView);
     }
