@@ -117,7 +117,7 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
     @RequestMapping(value = "/change_contact_person", method = RequestMethod.POST)
     public ModelAndView changeContactPersonsData(@RequestParam("manager") String manager,@RequestParam("phone") String phone,
                                                  @RequestParam("email") String email,HttpSession session){
-        System.out.println(manager);
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String idDealer=auth.getName();
         Integer idPerson=(Integer)session.getAttribute("id");
@@ -127,11 +127,34 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
         if(!phone.isEmpty()){contact_person.setPhone(phone);}
         if(!email.isEmpty()){contact_person.setEmail(email);}
         dealerDao.changeContactPersonsData(idDealer, idPerson, contact_person);
-
         session.removeAttribute("id");
-
         ModelAndView modelAndView = new ModelAndView("my_account");
         return ViewHalper.addingDealerAndCarsInView(modelAndView);
     }
 
+    @RequestMapping(value = "/add_contact_person", method = RequestMethod.POST)
+    public ModelAndView addContactPersonsData(@RequestParam("manager") String manager,@RequestParam("phone") String phone,
+                                                 @RequestParam("email") String email){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String idDealer=auth.getName();
+        Contact_person contact_person = new Contact_person();
+        DealerDao dealerDao= new DealerDao();
+        if(!manager.isEmpty()){contact_person.setName(manager);}
+        if(!phone.isEmpty()){contact_person.setPhone(phone);}
+        if(!email.isEmpty()){contact_person.setEmail(email);}
+        dealerDao.changeContactPersonsData(idDealer, null, contact_person);
+        ModelAndView modelAndView = new ModelAndView("my_account");
+        return ViewHalper.addingDealerAndCarsInView(modelAndView);
+    }
+    @RequestMapping(value = "/delete_contact_person", method = RequestMethod.GET)
+    public ModelAndView deleteContactPerson(@RequestParam("count")Integer idPerson,HttpSession session){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String idDealer=auth.getName();
+        DealerDao dealerDao= new DealerDao();
+        if(idPerson!=null){
+        dealerDao.deleteContactPersonById(idDealer,idPerson);
+        }
+        ModelAndView modelAndView = new ModelAndView("my_account");
+        return ViewHalper.addingDealerAndCarsInView(modelAndView);
+    }
 }

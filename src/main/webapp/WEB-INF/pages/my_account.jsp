@@ -13,6 +13,72 @@
 <link rel="stylesheet" type="text/css" href="/res/css/style_my_acount.css">
 <!-- <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'> -->
 <title> Автомобили с пробегом </title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <style type="text/css">
+        /* Окно */
+        #modal_form {
+            width: 300px;
+            height: 300px; /* Размеры должны быть фиксированы */
+            border-radius: 5px;
+            border: 3px #000 solid;
+            background: #fff;
+            position: fixed; /* чтобы окно было в видимой зоне в любом месте */
+            top: 45%; /* отступаем сверху 45%, остальные 5% подвинет скрипт */
+            left: 50%; /* половина экрана слева */
+            margin-top: -150px;
+            margin-left: -150px; /* тут вся магия центровки css, отступаем влево и вверх минус половину ширины и высоты соответственно =) */
+            display: none; /* в обычном состоянии окна не должно быть */
+            opacity: 0; /* полностью прозрачно для анимирования */
+            z-index: 5; /* окно должно быть наиболее большем слое */
+            padding: 20px 10px;
+        }
+        /* Кнопка закрыть для тех кто в танке) */
+        #modal_form #modal_close {
+            width: 21px;
+            height: 21px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            display: block;
+        }
+        /* Подложка */
+        #overlay {
+            z-index: 3; /* подложка должна быть выше слоев элементов сайта, но ниже слоя модального окна */
+            position: fixed; /* всегда перекрывает весь сайт */
+            background-color: #000; /* черная */
+            opacity: 0.8; /* но немного прозрачна */
+            width: 100%;
+            height: 100%; /* размером во весь экран */
+            top: 0;
+            left: 0; /* сверху и слева 0, обязательные свойства! */
+            cursor: pointer;
+            display: none; /* в обычном состоянии её нет) */
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function() { // вся магия после загрузки страницы
+            $('a#go').click( function(event){ // ловим клик по ссылки с id="go"
+                event.preventDefault(); // выключаем стандартную роль элемента
+                $('#overlay').fadeIn(400, // сначала плавно показываем темную подложку
+                        function(){ // после выполнения предъидущей анимации
+                            $('#modal_form')
+                                    .css('display', 'block') // убираем у модального окна display: none;
+                                    .animate({opacity: 1, top: '50%'}, 200); // плавно прибавляем прозрачность одновременно со съезжанием вниз
+                        });
+            });
+            /* Закрытие модального окна, тут делаем то же самое но в обратном порядке */
+            $('#modal_close, #overlay').click( function(){ // ловим клик по крестику или подложке
+                $('#modal_form')
+                        .animate({opacity: 0, top: '45%'}, 200,  // плавно меняем прозрачность на 0 и одновременно двигаем окно вверх
+                        function(){ // после анимации
+                            $(this).css('display', 'none'); // делаем ему display: none;
+                            $('#overlay').fadeOut(400); // скрываем подложку
+                        }
+                );
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -531,7 +597,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 <ul id="menu-diller">
   <li><a href="">Изменить инфо</a></li>
   <li><a href="/addCar">Добавить авто</a></li>
-  <li><a >Добавить контактное лицо</a></li>
+  <li><a href="#" id="go">Добавить контактное лицо</a></li>
   <li><a href="">какая нибуть ссылка</a></li>
 </ul>  
 </div>
@@ -602,6 +668,28 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 
 <footer>Подвал </footer>
 
+
+<!-- Модальное окно -->
+<div id="modal_form">
+    <span id="modal_close">X</span>
+    <form action="/add_contact_person" method="post">
+        <h3>Введите пожалуйста данные</h3>
+        <p>Имя менеджера<br />
+            <input  type="text" name="manager" value="" size="40" />
+        </p>
+        <p>Телефон<br />
+            <input type="text" name="phone" value="" size="40" />
+        </p>
+        <p>Электронный адресс<br />
+            <input type="email" name="email" size="40" />
+        </p>
+        <p style="text-align: center; padding-bottom: 10px;">
+            <input type="submit" value="Записать" />
+        </p>
+
+    </form>
+</div>
+<div id="overlay"></div>
 
 
 

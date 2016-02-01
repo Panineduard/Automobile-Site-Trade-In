@@ -207,18 +207,38 @@ public String getDealerName(String numberDealer){
     }
 
     public boolean changeContactPersonsData(String idDealer,Integer contactPersonsNumber,Contact_person contact_person){
-
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr = session.beginTransaction();
         Dealer dealer= session.get(Dealer.class, idDealer);
         List<Contact_person> contact_persons =dealer.getContact_persons();
-        contact_persons.set(contactPersonsNumber,contact_person);
+        if(contactPersonsNumber==null){
+            contact_persons.add(contact_person);
+        }
+        else {
+            contact_persons.set(contactPersonsNumber,contact_person);
+        }
+
         dealer.setContact_persons(contact_persons);
         session.merge(dealer);
         tr.commit();
+        if(session.isOpen()){
+            session.close();
+        }
+        return true;
+    }
+    public boolean deleteContactPersonById(String idDealer,int id){
+        if(id==0){
+            return false;
+        }
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr = session.beginTransaction();
+        Dealer dealer= session.get(Dealer.class, idDealer);
+        List<Contact_person> contact_persons =dealer.getContact_persons();
+        contact_persons.remove(id);
 
-
-
+        dealer.setContact_persons(contact_persons);
+        session.merge(dealer);
+        tr.commit();
         return true;
     }
 }

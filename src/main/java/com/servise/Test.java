@@ -12,6 +12,8 @@ import org.springframework.core.task.TaskExecutor;
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ������ on 12.08.15.
@@ -21,10 +23,20 @@ public class Test {
         DealerDao dealerDao = new DealerDao();
         Contact_person contact_person = new Contact_person();
         contact_person.setEmail("dgfhdgf");
-        contact_person.setPhone("45454");
-        contact_person.setName("fdhfjhdf");
-        dealerDao.changeContactPersonsData("1",0,contact_person);
+        contact_person.setPhone("0501214455");
+        contact_person.setName("Сергей");
+        dealerDao.changeContactPersonsData("1",null,contact_person);
+//        System.out.println(dealerDao.deleteContactPersonById("1", 0));
+//        List<String> strings = new ArrayList<>();
+//        strings.add("1");
+//        strings.add("2");
+//        strings.add("3");
+//        System.out.println(strings);
+//        strings.remove(1);
+//        System.out.println(strings);
+
 //        CarDAO carDAO = new CarDAO();
+
 //
 //        System.out.println(carDAO.deleteCarById("1"));
 //        System.out.println(StandartMasege.getMessage(1));
