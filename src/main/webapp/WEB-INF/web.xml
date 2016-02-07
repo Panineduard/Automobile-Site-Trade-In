@@ -64,60 +64,14 @@
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    <!--<servlet>-->
-    <!--<servlet-name>registration</servlet-name>-->
-    <!--<servlet-class>wepServise.RegistrationServlet</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>registration</servlet-name>-->
-    <!--<url-pattern>/registration</url-pattern>-->
-    <!--</servlet-mapping>-->
-    <!--<filter>-->
-    <!--<filter-name>entrance</filter-name>-->
-    <!--<filter-class>wepServise.FilterCheckLogin</filter-class>-->
-    <!--</filter>-->
-    <!--<filter-mapping>-->
-    <!--<filter-name>entrance</filter-name>-->
-    <!--<url-pattern>/entrance/*</url-pattern>-->
-    <!--</filter-mapping>-->
-    <!--<servlet>-->
-    <!--<servlet-name>personalAccount</servlet-name>-->
-    <!--<servlet-class>wepServise.LoginServlet</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>personalAccount</servlet-name>-->
-    <!--<url-pattern>/entrance/secure</url-pattern>-->
-    <!--</servlet-mapping>-->
-    <!--<filter>-->
-    <!--<filter-name>addcar</filter-name>-->
-    <!--<filter-class>wepServise.FilterCheckAutentation</filter-class>-->
-    <!--</filter>-->
-    <!--<filter-mapping>-->
-    <!--<filter-name>addcar</filter-name>-->
-    <!--<url-pattern>/account/*</url-pattern>-->
-    <!--</filter-mapping>-->
-    <!--<servlet>-->
-    <!--<servlet-name>pagefocar</servlet-name>-->
-    <!--<servlet-class>wepServise.UploadServlet</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>pagefocar</servlet-name>-->
-    <!--<url-pattern>/account/addCar</url-pattern>-->
-    <!--</servlet-mapping>-->
-    <!--<servlet>-->
-    <!--<servlet-name>images</servlet-name>-->
-    <!--<servlet-class>wepServise.ServletImeges</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>images</servlet-name>-->
-    <!--<url-pattern>/images</url-pattern>-->
-    <!--</servlet-mapping>-->
-    <!--<servlet>-->
-    <!--<servlet-name>showcar</servlet-name>-->
-    <!--<servlet-class>wepServise.ServletShowCarPage</servlet-class>-->
-    <!--</servlet>-->
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>showcar</servlet-name>-->
-    <!--<url-pattern>/viewCar</url-pattern>-->
-    <!--</servlet-mapping>-->
+
+    <servlet>
+        <servlet-name>CaptchaServlet</servlet-name>
+        <servlet-class>com.captcha.servlet.CaptchaGenServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CaptchaServlet</servlet-name>
+        <url-pattern>/captcha.jpg</url-pattern>
+    </servlet-mapping>
+
 </web-app>

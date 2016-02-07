@@ -96,7 +96,7 @@ public Integer updateCountOfCar(String idDealer){
 
 
 }
-public String getDealerName(String numberDealer){
+    public String getDealerName(String numberDealer){
         Session session= HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         String nameDealer;
@@ -240,5 +240,28 @@ public String getDealerName(String numberDealer){
         session.merge(dealer);
         tr.commit();
         return true;
+    }
+    public boolean changeDealersAddress(String id,String index,String street,String houses_number){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr = session.beginTransaction();
+        try {
+           Dealer dealer = session.get(Dealer.class, id);
+           Address address = dealer.getAddress();
+           address.setStreet(street);
+           address.setNumberHouse(houses_number);
+           address.setIndex(index);
+           session.update(dealer);
+           tr.commit();
+            return true;
+       }
+        catch (Exception e){
+            if(tr!=null)tr.rollback();
+            return false;
+        }
+        finally {
+            if (session.isOpen()){
+                session.close();
+            }
+        }
     }
 }

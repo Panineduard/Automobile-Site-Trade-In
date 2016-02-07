@@ -181,28 +181,57 @@
 <div class="body"></div>
 <div class="grad"></div>
 <div class="header">
-    <div>Ввести <span>данные</span></div>
+    <div>Ввести <span>данные</span></div><br>
     <h2><br>${msg}</h2>
 </div>
 <br>
 
 <FORM name="user_form" action="registration" method="post" onsubmit="return validate_form ( );">
 <div class="login">
+<%
 
+    String    numberDealer=request.getParameter("numberDealer");
+    String    nameDealer=request.getParameter("nameDealer");
+    String    city=request.getParameter("city");
+    String    name=request.getParameter("name");
+    String    personPhone=request.getParameter("personPhone");
+    String    email=request.getParameter("email");
+   if(name==null||nameDealer==null||numberDealer==null||city==null||personPhone==null||email==null){
+       numberDealer="";
+       nameDealer="";
+       city="";
+       name="";
+       personPhone="";
+       email="";
+   }
+
+%>
     <h2>Заполните данные диллерского центра</h2>
-    <input type="text" placeholder="Название организации" name="nameDealer"><br>
-    <input type="text" placeholder="Номер диллера(Только цифры)" name="numberDealer"><br>
-    <input type="text" placeholder="Местоположение" name="city"><br>
+
+    <input type="text" placeholder="Название организации" value="<%=nameDealer%>" name="nameDealer"><br>
+    <input type="text" placeholder="Номер диллера(Только цифры)" value="<%=numberDealer%>" name="numberDealer"><br>
+    <input type="text" placeholder="Местоположение" value="<%=city%>" name="city"><br>
     <%--<input type="text" placeholder="Телефон" name="phone"><br>--%>
     <h2>Данные контактного лица</h2>
-    <input type="text" placeholder="Имя" name="name"><br>
+    <input type="text" placeholder="Имя" value="<%=name%>" name="name"><br>
     <%--<input type="text" placeholder="Фамилия" name="lastname"><br>--%>
     <%--<input type="text" placeholder="Отчество" name="firsname"><br>--%>
-    <input type="text" placeholder="Телефон" name="personPhone"><br>
-    <input type="email" placeholder="Электронный адрес" name="email"><br>
+    <input type="text" placeholder="Телефон" value="<%=personPhone%>" name="personPhone"><br>
+    <input type="email" placeholder="Электронный адрес" value="<%=email%>" name="email"><br>
     <h2>Введите пароль для полной регистрации. </h2>
     <input type="password" placeholder="Пароль" name="pasword"><br>
     <input type="password" placeholder="Проверка пароля" name="checkPasword"><br>
+    <td>
+        <div>
+            <img id="captcha_id" name="imgCaptcha" src="captcha.jpg">
+        </div>
+    </td>
+    <td ><a href="javascript:;"
+                        title="change captcha text"
+                        onclick="document.getElementById('captcha_id').src = 'captcha.jpg?' + Math.random();  return false">
+        <img src="res/img/refresh.png" width="30"  height="30" />
+    </a></td>
+    <input type="text" placeholder="Текст с картинки" name="captcha"><br>
     <input type="submit" value="Зарегистрироваться">
     <%--<h1> <%= session.getAttribute("my2")%>!!</h1>--%>
 </div>

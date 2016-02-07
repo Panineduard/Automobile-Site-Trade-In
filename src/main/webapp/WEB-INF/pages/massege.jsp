@@ -41,7 +41,7 @@
 
 
 
-<footer>Подвал </footer
+<footer>Подвал </footer>
 
 
 

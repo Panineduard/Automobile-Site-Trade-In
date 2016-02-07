@@ -90,7 +90,9 @@ public class CarDAO {
 //            car.setIdCar(carId);
             car.setDateProvide(new Date());
             List<String> pathPhoto=new ArrayList<String>();
-
+            session.save(car);
+            session.flush();
+            carId=car.getIdCar();
             if (!multipartFiles.get(0).isEmpty()) {
                 int numberPhoto=0;
                 for (MultipartFile file:multipartFiles){
@@ -125,7 +127,7 @@ public class CarDAO {
             }
             else pathPhoto.add("null");
             car.setPhotoPath(pathPhoto);
-            session.merge(car);
+            session.update(car);
             tr.commit();
             new DealerDao().updateCountOfCar(car.getIdDealer());
         }

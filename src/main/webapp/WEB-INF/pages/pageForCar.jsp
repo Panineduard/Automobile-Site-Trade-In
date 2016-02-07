@@ -1,3 +1,4 @@
+<%@ page import="com.modelClass.Car" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -24,13 +25,15 @@
         });
     </script>
     <script>
-        function readURL(input,index) {  if(!/(\.bmp|\.gif|\.jpg|\.jpeg|\.png)$/i.test(input.value)) {
+        function readURL(input,index) {
+            if(!/(\.bmp|\.gif|\.jpg|\.jpeg|\.png)$/i.test(input.value))
+            {
 
             alert('Не допустимый формат изображения');
 
             document.getElementById('image_p'+index).value='';return false;
 
-        }
+            }
             else {
 //            for (var i = 0; i<= index; i++ )
 //            {
@@ -65,6 +68,38 @@
 </head>
 <body>
 <h1>${msg}</h1>
+<% Car car= (Car) request.getAttribute("car");
+    boolean presentCar=false;
+    String EnginesType = "нет данных";
+    String transmission = "нет данных";
+    if(car!=null) {
+        presentCar = true;
+
+        String path;
+        if (car.getPhotoPath().get(0).equals("null")) {
+            path = "/res/img/notAvailable.png";
+        } else {
+            path = "/getPhoto?pathPhoto=" + car.getPhotoPath().get(0);
+
+        }
+
+
+        if (car.getEnginesType().equals("gasoline")) {
+            EnginesType = "Бензин";
+        } else if (car.getEnginesType().equals("disel")) {
+            EnginesType = "Дизель";
+        } else if (car.getEnginesType().equals("elektro")) {
+            EnginesType = "Электро";
+        } else if (car.getEnginesType().equals("hybrid")) {
+            EnginesType = "Гибрид";
+        }
+        if (car.getTransmission().equals("auto")) {
+            transmission = "Автомат";
+        } else if (car.getTransmission().equals("mechanical")) {
+            transmission = "Механическая";
+        }
+    }
+%>
 <form action="/" >
 <button type="submit" class="btn btn-theme btn-lg">На главную страницу</button>
 </form>
@@ -77,7 +112,12 @@
 <div class="col-sm-6 form-group">
     <h2>Марка</h2>
     <select id="id_make1" class="form-control" name="make">
+        <%if(presentCar){%>
+<option value="<%=car.getBrand()%>" selected="selected"><%=car.getBrand()%></option>
+        <%}
+        else {%>
 <option value="" selected="selected">выберите марку</option>
+        <%}%>
 <option value="acura">Acura </option>
 <%--<option value="722">Alfa Romeo </option>--%>
 <%--<option value="273">Aston Martin </option>--%>
@@ -159,7 +199,7 @@
 <%--<option value="2001">Tesla (7)</option>--%>
 <option value="1594"class="cat-top">Toyota (3687)</option>
 
-<option value="volkswagen"class="cat-top">Volkswagen</option>
+<option value="Volkswagen"class="cat-top">Volkswagen</option>
 <option value="1479"class="cat-top">Volvo</option>
 
 <%--<option value="180">Богдан (102)</option>--%>
@@ -181,13 +221,32 @@
 </div>
 
 <h2>Цена, $ <br>
-<input type="text" size="20" class="form-control" required="required" name="prise" pattern="^[ 0-9]+$"></h2>
+    <%if(presentCar){%>
+    <input type="text" size="20" class="form-control" value="<%=car.getPrise()%>" required="required" name="prise" pattern="^[ 0-9]+$"></h2>
+    <%}
+    else {%>
+    <input type="text" size="20" class="form-control" required="required" name="prise" pattern="^[ 0-9]+$"></h2>
+    <%}%>
+
 <h2>Пробег, км <br>
-<input type="text" size="20" class="form-control" required="required" name="mileage" pattern="^[ 0-9]+$"></h2>
+    <%if(presentCar){%>
+    <input type="text" size="20" class="form-control" value="<%=car.getMileage()%>" required="required" name="mileage" pattern="^[ 0-9]+$"></h2>
+    <%}
+    else {%>
+    <input type="text" size="20" class="form-control" required="required" name="mileage" pattern="^[ 0-9]+$"></h2>
+    <%}%>
+
 
 <h2>Год выпуска</h2>
+
 <select id="id_year_from" class="form-control" name="year_prov">
-<option value="" selected="selected"></option>
+    <%if(presentCar){%>
+    <option value="<%=car.getYearMade()%>" selected="selected"><%=car.getYearMade()%></option>
+    <%}
+    else {%>
+    <option value="" selected="selected"></option>
+    <%}%>
+
 <option value="2015">2015</option>
 <option value="2014">2014</option>
 <option value="2013">2013</option>
@@ -289,6 +348,12 @@
 
 <h2>Тип двигателя</h2>
 <select id="id_engine" class="form-control" name="engine">
+    <%if(presentCar){%>
+    <option value="<%=car.getEnginesType()%>" selected="selected"><%=EnginesType%></option>
+    <%}
+    else {%>
+    <option value="" selected="selected"></option>
+    <%}%>
 <option value="gasoline">Бензин</option>
 <option value="disel">Дизель</option>
 <option value="elektro">Электро</option>
@@ -296,17 +361,31 @@
 <option value="other">Другое</option>
 </select>
 <h2>Обьем двигателя, л <br>
-<input type="text" size="20" class="form-control" required="required" name="engine_capacity" pattern="^[ 0-9]+$"></h2>
+    <%if(presentCar){%>
+    <input type="text" value="<%=car.getEngineCapacity()%>" size="20" class="form-control" required="required" name="engine_capacity" pattern="^[ 0-9]+$"></h2>
+    <%}
+    else {%>
+    <input type="text" size="20" class="form-control" required="required" name="engine_capacity" pattern="^[ 0-9]+$"></h2>
+    <%}%>
 
 <h2>Тип КПП</h2>
+
 <select id="id_gearbox" class="form-control" name="gearbox">
+    <%if(presentCar){%>
+    <option value="<%=car.getTransmission()%>" ><%=transmission%></option>
+    <%}%>
 <option value="another" >Другое</option>
 <option value="auto">Автоматическая</option>
 <option value="mechanical">Механическая</option>
 </select>
 
 <h2>Описание</h2><br>
-<textarea name="comment" class="form-control" required="required" cols="40" rows="7"></textarea></h2>
+    <%if(presentCar){%>
+    <textarea name="comment"  class="form-control" required="required" cols="40" rows="7"><%=car.getDescription()%></textarea></h2>
+    <%}
+    else {%>
+    <textarea name="comment" class="form-control" required="required" cols="40" rows="7"></textarea></h2>
+    <%}%>
 
 
     <input  type="hidden" name="MAX_FILE_SIZE" value="1000">
@@ -349,9 +428,14 @@
 
         },
 
-        'volkswagen': {
-            'passat': 'Passat',
-            'jeta': 'Jeta'
+        'Volkswagen': {
+            <%if(presentCar){%>
+            '<%=car.getModel()%>':'<%=car.getModel()%>',
+            <%}%>
+            'Passat': 'Passat',
+            'Jeta': 'Jeta',
+            'Polo': 'Polo'
+
 
         }
 

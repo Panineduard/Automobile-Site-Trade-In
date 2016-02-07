@@ -6,6 +6,7 @@
     import com.modelClass.Dealer;
     import org.hibernate.Query;
     import org.hibernate.Session;
+    import org.hibernate.Transaction;
     import org.springframework.security.core.Authentication;
     import org.springframework.security.core.context.SecurityContextHolder;
     import org.springframework.web.servlet.ModelAndView;
@@ -21,7 +22,7 @@
             String idDealer = auth.getName();
 //            System.out.println("ID DEALER FROM AUTH"+idDealer);
             Session session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
+            Transaction tr=session.beginTransaction();
             Dealer dealer= session.get(Dealer.class, idDealer);
             List<Car> cars;
             try {
@@ -31,6 +32,10 @@
                 cars=list;
             }
             catch (NullPointerException n){
+                cars=null;
+            }
+            catch (Exception e){
+                if(tr!=null)tr.rollback();
                 cars=null;
             }
             view.addObject("dealer",dealer);

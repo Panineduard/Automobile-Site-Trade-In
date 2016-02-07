@@ -140,7 +140,7 @@
             <%--<option value="2001">Tesla (7)</option>--%>
             <option value="1594"class="cat-top">Toyota</option>
 
-            <option value="volkswagen"class="cat-top">Volkswagen </option>
+            <option value="Volkswagen"class="cat-top">Volkswagen </option>
             <option value="1479"class="cat-top">Volvo </option>
 
             <%--<option value="180">Богдан (102)</option>--%>
@@ -559,10 +559,10 @@
 
     },
 
-    'volkswagen': {
+    'Volkswagen': {
       '':'Все модели',
-      'passat': 'Passat',
-      'jeta': 'Jeta'
+      'Passat': 'Passat',
+      'Jeta': 'Jeta'
 
     }
 

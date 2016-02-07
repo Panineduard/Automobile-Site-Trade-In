@@ -3,14 +3,18 @@ package com.controllers;
 import com.dao.CarDAO;
 import com.dao.DealerDao;
 import com.email.SendEmailText;
+import com.helpers.EncoderId;
+import com.helpers.PasswordHelper;
 import com.modelClass.Car;
 import com.modelClass.Contact_person;
+import com.modelClass.Dealer;
 import com.servise.StandartMasege;
 import com.sun.deploy.net.HttpResponse;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,8 +24,10 @@ import com.helpers.ViewHalper;
 import sun.plugin.liveconnect.SecurityContextHelper;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.IdentityHashMap;
+import java.util.Map;
 
 /**
  * Created by Эдуард on 07.11.15.
@@ -47,19 +53,27 @@ public class UserController {
     public ModelAndView saveUserData(@RequestParam("pasword") String pasword,@RequestParam("checkPasword") String checkPasword,@RequestParam("numberDealer")
                 String numberDealer,@RequestParam("nameDealer") String nameDealer,@RequestParam("email") String email,
                 @RequestParam("name") String name,@RequestParam("personPhone")String personPhone,
-                @RequestParam("city")String city) {
-
-        String returnMassege;
+                @RequestParam("city")String city,@RequestParam("captcha")String input_captcha,HttpSession session,
+                                     ModelMap modelMap) {
+                String captcha =(String)session.getAttribute("CAPTCHA");
+        PasswordHelper passwordHelper = new PasswordHelper();
+        if(captcha==null || (captcha!=null && !passwordHelper.matches(input_captcha, captcha))){
+            ModelAndView modelAndView = new ModelAndView("registration");
+            modelAndView.addAllObjects(modelMap);
+            modelAndView.addObject("msg",StandartMasege.getMessage(22)+"<br>"+StandartMasege.getMessage(23));
+            return modelAndView;
+        }
+        String returnMessage;
         DealerDao dealerDao = new DealerDao();
        try{ if (pasword.equals(checkPasword)){
-            returnMassege= dealerDao.setDealer(numberDealer, nameDealer,email,name,personPhone,pasword,city);
+            returnMessage= dealerDao.setDealer(numberDealer, nameDealer,email,name,personPhone,pasword,city);
 
         }
         else {
-            returnMassege = StandartMasege.getMessage(6);
+            returnMessage = StandartMasege.getMessage(6);
         }
         ModelAndView model = new ModelAndView("successfulRegistration");
-        model.addObject("msg", StandartMasege.getMessage(7) +" "+ name + " " + returnMassege);
+        model.addObject("msg", StandartMasege.getMessage(7) +" "+ name + " " + returnMessage);
         return model;}
         catch (NumberFormatException e){
 
@@ -114,10 +128,10 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
 
         return modelAndView;
     }
-    @RequestMapping(value = "/change_contact_person", method = RequestMethod.POST)
+    @RequestMapping(value = "*/change_contact_person", method = RequestMethod.POST)
     public ModelAndView changeContactPersonsData(@RequestParam("manager") String manager,@RequestParam("phone") String phone,
                                                  @RequestParam("id") Integer idPerson, @RequestParam("email") String email){
-        System.out.println(idPerson);
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String idDealer=auth.getName();
         Contact_person contact_person = new Contact_person();
@@ -130,25 +144,25 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
         return ViewHalper.addingDealerAndCarsInView(modelAndView);
     }
 
-    @RequestMapping(value = "/add_contact_person", method = RequestMethod.POST)
-    public ModelAndView addContactPersonsData(@RequestParam("manager") String manager,@RequestParam("phone") String phone,
-                                                 @RequestParam("email") String email){
+    @RequestMapping(value = "*/changeAddress", method = RequestMethod.POST)
+    public ModelAndView addContactPersonsData(@RequestParam("index") String index,@RequestParam("street") String street,
+                                                 @RequestParam("house_number") String house_number){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String idDealer=auth.getName();
-        Contact_person contact_person = new Contact_person();
         DealerDao dealerDao= new DealerDao();
-        if(!manager.isEmpty()){contact_person.setName(manager);}
-        if(!phone.isEmpty()){contact_person.setPhone(phone);}
-        if(!email.isEmpty()){contact_person.setEmail(email);}
-        dealerDao.changeContactPersonsData(idDealer, null, contact_person);
+        if(index.isEmpty()){index="";}
+        if(street.isEmpty()){street="";}
+        if(house_number.isEmpty()){house_number="";}
+        dealerDao.changeDealersAddress(idDealer,index,street,house_number);
         ModelAndView modelAndView = new ModelAndView("my_account");
         return ViewHalper.addingDealerAndCarsInView(modelAndView);
     }
-    @RequestMapping(value = "/delete_contact_person", method = RequestMethod.GET)
-    public ModelAndView deleteContactPerson(@RequestParam("count")Integer idPerson,HttpSession session){
+    @RequestMapping(value = "*/delete_contact_person", method = RequestMethod.GET)
+    public ModelAndView deleteContactPerson(@RequestParam("count")String id ,HttpSession session){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String idDealer=auth.getName();
         DealerDao dealerDao= new DealerDao();
+        Integer idPerson = new Integer(EncoderId.decodeID(id));
         if(idPerson!=null){
         dealerDao.deleteContactPersonById(idDealer,idPerson);
         }

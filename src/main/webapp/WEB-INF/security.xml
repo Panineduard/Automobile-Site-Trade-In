@@ -9,6 +9,7 @@
         <intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <access-denied-handler error-page="/403" />
         <intercept-url pattern="/myAccount" access="ROLE_USER" />
+        <intercept-url pattern="/myAccount/*" access="ROLE_USER" />
         <intercept-url pattern="/addCar" access="ROLE_USER"/>
         <intercept-url pattern="/feedback" access="ROLE_USER"/>
         <intercept-url pattern="/ConfirmationOfRegistration" access="ROLE_ANONYMOUS"/>

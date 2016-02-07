@@ -1,5 +1,6 @@
 package com.controllers;
 
+import com.helpers.EncoderId;
 import com.helpers.FileUploadForm;
 import com.dao.CarDAO;
 import com.dao.DealerDao;
@@ -30,7 +31,7 @@ import java.util.List;
 @Controller
 public class CarController {
     @RequestMapping(value = "/getPhoto", method = RequestMethod.GET)
-    public void getRegistrationForm(HttpServletRequest req,HttpServletResponse response){
+    public void getRegistrationForm(HttpServletRequest req, HttpServletResponse response){
         String path_of_photo=(String)req.getParameter("pathPhoto");
         Integer imgHeight=0;
         Integer imgWidth =0;
@@ -176,10 +177,39 @@ public class CarController {
 
         ModelAndView modelAndView=new ModelAndView("pageForCar");
 
-        modelAndView.addObject("msg",StandartMasege.getMessage(2));
+        modelAndView.addObject("msg", StandartMasege.getMessage(2));
         return modelAndView;
 
     }
+    @RequestMapping(value = "*/change_car",method = RequestMethod.GET)
+    public ModelAndView responseCar(@ModelAttribute("car")String carId){
+        CarDAO carDAO = new CarDAO();
+        Car car=carDAO.getCarById(EncoderId.decodeID(carId));
+        ModelAndView modelAndView=new ModelAndView("pageForCar");
+        modelAndView.addObject("car",car);
+        return modelAndView;
+    }
+    @RequestMapping(value = "*/delete_car",method = RequestMethod.GET)
+    public ModelAndView deleteCar(@ModelAttribute("car")String car){
+        CarDAO carDAO = new CarDAO();
+        ModelAndView modelAndView=new ModelAndView("my_account");
+        if(carDAO.deleteCarById(EncoderId.decodeID(car))){
+            modelAndView.addObject("msg",StandartMasege.getMessage(20));
+            return ViewHalper.addingDealerAndCarsInView(modelAndView);
+        }
+        else {
+            modelAndView.addObject("msg",StandartMasege.getMessage(21));
+            return ViewHalper.addingDealerAndCarsInView(modelAndView);
+        }
 
+    }
+    @RequestMapping(value = "*/change_car",method = RequestMethod.POST)
+    public ModelAndView changeCar(@ModelAttribute("car")String car){
+        CarDAO carDAO = new CarDAO();
+        Car car1=carDAO.getCarById(EncoderId.decodeID(car));
+        ModelAndView modelAndView=new ModelAndView("pageForCar");
+        modelAndView.addObject("car",car);
+        return modelAndView;
+    }
 
 }

@@ -3,6 +3,7 @@
 <%@ page import="com.modelClass.Car" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.modelClass.Contact_person" %>
+<%@ page import="com.helpers.EncoderId" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,7 +12,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="/res/css/style_my_acount.css">
-<!-- <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'> -->
+    <script type="text/javascript" src="/res/js/linkedselect.js"></script>
+
+    <!-- <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'> -->
 <title> Автомобили с пробегом </title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <style type="text/css">
@@ -86,6 +89,7 @@
 <h1><a class="header"title="На главную" href="">NAME OF OUR PROJECT</a></h1>
 <h2>Автомобили с пробегом <br>
 <Small>Только официальные дилеры</Small></h2>
+    <h2>${msg}</h2>
 <!-- <h5>Результаты поиска: </h5><br>  -->
 </header>
 <ul id="menu">
@@ -191,7 +195,7 @@
                   <%--<option value="2001">Tesla (7)</option>--%>
                   <option value="1594"class="cat-top">Toyota</option>
 
-                  <option value="volkswagen"class="cat-top">Volkswagen</option>
+                  <option value="Volkswagen"class="cat-top">Volkswagen</option>
                   <option value="1479"class="cat-top">Volvo</option>
 
                   <%--<option value="180">Богдан (102)</option>--%>
@@ -250,66 +254,8 @@
                     <option value="1982">1982</option>
                     <option value="1981">1981</option>
                     <option value="1980">1980</option>
-                    <!-- <option value="1979">1979</option>
-                    <option value="1978">1978</option>
-                    <option value="1977">1977</option>
-                    <option value="1976">1976</option>
-                    <option value="1975">1975</option>
-                    <option value="1974">1974</option>
-                    <option value="1973">1973</option>
-                    <option value="1972">1972</option>
-                    <option value="1971">1971</option>
-                    <option value="1970">1970</option>
-                    <option value="1969">1969</option>
-                    <option value="1968">1968</option>
-                    <option value="1967">1967</option>
-                    <option value="1966">1966</option>
-                    <option value="1965">1965</option>
-                    <option value="1964">1964</option>
-                    <option value="1963">1963</option>
-                    <option value="1962">1962</option>
-                    <option value="1961">1961</option>
-                    <option value="1960">1960</option>
-                    <option value="1959">1959</option>
-                    <option value="1958">1958</option>
-                    <option value="1957">1957</option>
-                    <option value="1956">1956</option>
-                    <option value="1955">1955</option>
-                    <option value="1954">1954</option>
-                    <option value="1953">1953</option>
-                    <option value="1952">1952</option>
-                    <option value="1951">1951</option>
-                    <option value="1950">1950</option>
-                    <option value="1949">1949</option>
-                    <option value="1948">1948</option>
-                    <option value="1947">1947</option>
-                    <option value="1946">1946</option>
-                    <option value="1945">1945</option>
-                    <option value="1944">1944</option>
-                    <option value="1943">1943</option>
-                    <option value="1942">1942</option>
-                    <option value="1941">1941</option>
-                    <option value="1940">1940</option>
-                    <option value="1939">1939</option>
-                    <option value="1938">1938</option>
-                    <option value="1937">1937</option>
-                    <option value="1936">1936</option>
-                    <option value="1935">1935</option>
-                    <option value="1934">1934</option>
-                    <option value="1933">1933</option>
-                    <option value="1932">1932</option>
-                    <option value="1931">1931</option>
-                    <option value="1930">1930</option>
-                    <option value="1929">1929</option>
-                    <option value="1928">1928</option>
-                    <option value="1927">1927</option>
-                    <option value="1926">1926</option>
-                    <option value="1925">1925</option>
-                    <option value="1924">1924</option>
-                    <option value="1923">1923</option>
-                    <option value="1922">1922</option>
-                    <option value="1921">1921</option>
- -->                  </select>
+
+                 </select>
  <select id="id_year_to" class="form-control" name="year_to">
                     <option value="" selected="selected">по</option>
                     <option value="2015">2015</option>
@@ -348,65 +294,7 @@
                     <option value="1982">1982</option>
                     <option value="1981">1981</option>
                     <option value="1980">1980</option>
-                    <!-- <option value="1979">1979</option>
-                    <option value="1978">1978</option>
-                    <option value="1977">1977</option>
-                    <option value="1976">1976</option>
-                    <option value="1975">1975</option>
-                    <option value="1974">1974</option>
-                    <option value="1973">1973</option>
-                    <option value="1972">1972</option>
-                    <option value="1971">1971</option>
-                    <option value="1970">1970</option>
-                    <option value="1969">1969</option>
-                    <option value="1968">1968</option>
-                    <option value="1967">1967</option>
-                    <option value="1966">1966</option>
-                    <option value="1965">1965</option>
-                    <option value="1964">1964</option>
-                    <option value="1963">1963</option>
-                    <option value="1962">1962</option>
-                    <option value="1961">1961</option>
-                    <option value="1960">1960</option>
-                    <option value="1959">1959</option>
-                    <option value="1958">1958</option>
-                    <option value="1957">1957</option>
-                    <option value="1956">1956</option>
-                    <option value="1955">1955</option>
-                    <option value="1954">1954</option>
-                    <option value="1953">1953</option>
-                    <option value="1952">1952</option>
-                    <option value="1951">1951</option>
-                    <option value="1950">1950</option>
-                    <option value="1949">1949</option>
-                    <option value="1948">1948</option>
-                    <option value="1947">1947</option>
-                    <option value="1946">1946</option>
-                    <option value="1945">1945</option>
-                    <option value="1944">1944</option>
-                    <option value="1943">1943</option>
-                    <option value="1942">1942</option>
-                    <option value="1941">1941</option>
-                    <option value="1940">1940</option>
-                    <option value="1939">1939</option>
-                    <option value="1938">1938</option>
-                    <option value="1937">1937</option>
-                    <option value="1936">1936</option>
-                    <option value="1935">1935</option>
-                    <option value="1934">1934</option>
-                    <option value="1933">1933</option>
-                    <option value="1932">1932</option>
-                    <option value="1931">1931</option>
-                    <option value="1930">1930</option>
-                    <option value="1929">1929</option>
-                    <option value="1928">1928</option>
-                    <option value="1927">1927</option>
-                    <option value="1926">1926</option>
-                    <option value="1925">1925</option>
-                    <option value="1924">1924</option>
-                    <option value="1923">1923</option>
-                    <option value="1922">1922</option>
-                    <option value="1921">1921</option> -->
+
                   </select></p>
 <p>ТИП ДВИГАТЕЛЯ</br>
 <select id="id_engine" class="form-control" name="engine">
@@ -473,7 +361,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
             var dealer_data=document.getElementById("dealer_data");
             dealer_data.removeChild(address);
             var form=document.createElement("form");
-            form.setAttribute("action","/changeAddress");
+            form.setAttribute("action","/myAccount/changeAddress");
             form.setAttribute("method","post")
 
             var city=document.createElement("span");
@@ -485,20 +373,23 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
             var field_for_index=document.createElement("input");
             field_for_index.setAttribute("type","text");
             field_for_index.setAttribute("placeholder","Индекс");
+            field_for_index.setAttribute("name","index");
             <%if(!dealer.getAddress().getIndex().isEmpty()){%>
-            field_for_index.setAttribute("value",<%=dealer.getAddress().getIndex() %>);
+            field_for_index.setAttribute("value","<%=dealer.getAddress().getIndex() %>");
 <%}%>
             var field_for_street=document.createElement("input");
             field_for_street.setAttribute("type","text");
             field_for_street.setAttribute("placeholder","Улица");
+            field_for_street.setAttribute("name","street");
             <%if(!dealer.getAddress().getStreet().isEmpty()){%>
-            field_for_street.setAttribute("value",<%=dealer.getAddress().getStreet()+" "%>);
+            field_for_street.setAttribute("value","<%=dealer.getAddress().getStreet()%>");
 <%}%>
             var field_for_numberHouse=document.createElement("input");
             field_for_numberHouse.setAttribute("type","text");
             field_for_numberHouse.setAttribute("placeholder","Номер дома");
+            field_for_numberHouse.setAttribute("name","house_number");
             <%if(!dealer.getAddress().getNumberHouse().isEmpty()){%>
-            field_for_numberHouse.setAttribute("value",<%=dealer.getAddress().getNumberHouse()%>);
+            field_for_numberHouse.setAttribute("value","<%=dealer.getAddress().getNumberHouse()%>");
             <%}%>
 
             var submit_button=document.createElement("button");
@@ -566,9 +457,9 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
     </div>
     <h4>Контактные лица</h4>
     <%
-        int count=0;
+        Integer count=0;
         for (Contact_person contact_person:dealer.getContact_persons()){%>
-    <form action="/change_contact_person" method="post">
+    <form action="/myAccount/change_contact_person" method="post">
     <div id="contact_persons_data<%=count%>">
              <input type="hidden" name="id" value="<%=count%>">
     Менеджер:<span id="manager<%=count%>" class="diller-info-data"><%=contact_person.getName()%></span><br>
@@ -579,7 +470,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
     </form>
     <a id="contact_persons_button" class="more" href="#" title="Изменить" onclick="changeContactPersonsData(<%=count%>)">Изменить</a>
     <%if(count>0){%>
-    <a  href="/delete_contact_person?count=<%=count%>" class="more" title="Удалить" >Удалить</a>
+    <a  href="/myAccount/delete_contact_person?count=<%=EncoderId.encodId(count.toString())%>" class="more" title="Удалить" >Удалить</a>
     <%}
             count++;
         }%>
@@ -652,6 +543,8 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
         КП: <span class="model-info-data"><%=transmission%></span><br>
     </div>
 <br/>
+    <a id="car_change_button" href="/myAccount/change_car?car=<%=EncoderId.encodId(car.getIdCar().toString())%>" class="more" title="Изменить" >Изменить</a>
+    <a id="car_delete_button" href="/myAccount/delete_car?car=<%=EncoderId.encodId(car.getIdCar().toString())%>" class="more" title="Удалить" >Удалить</a>
 
     <a title="Подробнее" href="/carPage?idCar=<%=car.getIdCar()%>" class="more">
         Подробнее...
@@ -671,8 +564,9 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 <!-- Модальное окно -->
 <div id="modal_form">
     <span id="modal_close">X</span>
-    <form action="/add_contact_person" method="post">
+    <form action="/myAccount/change_contact_person" method="post">
         <h3>Введите пожалуйста данные</h3>
+         <input type="hidden" name="id" value="">
         <p>Имя менеджера<br />
             <input  type="text" name="manager" value="" size="40" />
         </p>
@@ -691,6 +585,34 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 <div id="overlay"></div>
 
 
+<script type="text/javascript">
+    // Создаем новый объект связанных списков
+    var syncList1 = new syncList;
+
+    // Определяем значения подчиненных списков (2 и 3 селектов)
+    syncList1.dataList = {
+
+        /* Определяем элементы второго списка в зависимости
+         от выбранного значения в первом списке */
+
+        '': {
+            '': 'Вы не выбрали марку'
+
+        },
+
+        'Volkswagen': {
+            '':'Все модели',
+            'Passat': 'Passat',
+            'Jeta': 'Jeta'
+
+        }
+
+
+    };
+
+    // Включаем синхронизацию связанных списков
+    syncList1.sync("id_make1", "id_model1");
+</script>
 
 </body>
 </html>

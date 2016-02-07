@@ -136,7 +136,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 </div>
 
 
-
+<%if(dealer!=null){%>
 <div class="info">
 <div class="town"><u>Город:</u><br> <span class="info-data"><%=dealer.getAddress().getCity()%></span></div>
 <div class="phone-number"><u>Телефон:</u><br> <span class="info-data">
@@ -147,7 +147,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 <div class="diller"><u>Дилер:</u><br> <a title="Диллер" href="  "><span class="info-data"><%=dealer.getNameDealer()%></span></a></div>
 
 </div>
-
+<%}%>
 <!-- <a title="Подробнее"href="http" class="more"> 
 Подробнее 
 </a> -->

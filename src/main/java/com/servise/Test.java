@@ -4,6 +4,7 @@ import com.dao.CarDAO;
 import com.dao.DealerDao;
 import com.email.SendEmailText;
 import com.helpers.PasswordHelper;
+import com.modelClass.Address;
 import com.modelClass.Contact_person;
 import javafx.util.converter.LocalDateTimeStringConverter;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -20,12 +21,15 @@ import java.util.List;
  */
 public class Test {
     public static void main(String... arg) throws IOException {
-        DealerDao dealerDao = new DealerDao();
-        Contact_person contact_person = new Contact_person();
-        contact_person.setEmail("dgfhdgf");
-        contact_person.setPhone("0501214455");
-        contact_person.setName("Сергей");
-        dealerDao.changeContactPersonsData("1",null,contact_person);
+//        DealerDao dealerDao = new DealerDao();
+//        Contact_person contact_person = new Contact_person();
+//        contact_person.setEmail("dgfhdgf");
+//        contact_person.setPhone("0501214455");
+//        contact_person.setName("Сергей");
+//        System.out.println(contact_person.getName().toLowerCase());
+//        dealerDao.updateCountOfCar("1");
+//        dealerDao.changeDealersAddress("1","124","94A","Клочковская");
+//        dealerDao.changeContactPersonsData("1",null,contact_person);
 //        System.out.println(dealerDao.deleteContactPersonById("1", 0));
 //        List<String> strings = new ArrayList<>();
 //        strings.add("1");
