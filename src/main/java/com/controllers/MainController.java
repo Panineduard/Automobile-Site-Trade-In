@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Created by Эдуард on 29.11.15.
@@ -18,6 +19,7 @@ import java.util.List;
 public class MainController {
     @RequestMapping("/")
     public ModelAndView printWelcome(HttpServletRequest request) {
+
         int countOfCars=4;
         CarDAO carDAO = new CarDAO();
         List<Car> cars=null;

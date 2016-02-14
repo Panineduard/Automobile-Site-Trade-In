@@ -27,7 +27,7 @@
 </div>
 
 
-<script src="res/js/index.js"></script>
+
 
 <form action="/">
   <button type="submit">На главную страницу</button>

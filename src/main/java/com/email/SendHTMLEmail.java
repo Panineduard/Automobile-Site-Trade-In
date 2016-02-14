@@ -19,7 +19,7 @@ import java.util.Properties;
  */
 public class SendHTMLEmail
 {
-    public static void successfulRegistration (String id,String email){
+    public static void successfulRegistration (String id,String email,String text){
         // Recipient's email ID needs to be mentioned.
         String to;
         if(email.isEmpty()){
@@ -53,7 +53,12 @@ public class SendHTMLEmail
             // Send the actual HTML message, as big as you like
             // Send message
             MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
-            helper.setText("<a href='http://localhost:8080/ConfirmationOfRegistration?id="+id+"'>"+StandartMasege.getMessage(18)+"</a>", true);
+            if(text==null){
+                helper.setText("<a href='http://localhost:8080/ConfirmationOfRegistration?id="+id+"'>"+StandartMasege.getMessage(18)+"</a>", true);
+            }
+            else {
+                helper.setText(text,true);
+            }
 //            Transport transport =session.getTransport("smtp");
             Transport.send(helper.getMimeMessage());
         }

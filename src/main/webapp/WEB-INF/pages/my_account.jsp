@@ -4,6 +4,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.modelClass.Contact_person" %>
 <%@ page import="com.helpers.EncoderId" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.Instant" %>
+<%@ page import="java.time.ZoneId" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -115,97 +118,52 @@
                   <option value="" selected="selected">выберите марку</option>
                   <option value="" selected="selected">все</option>
                   <option value="131">Acura </option>
-                  <%--<option value="722">Alfa Romeo </option>--%>
-                  <%--<option value="273">Aston Martin </option>--%>
                   <option value="1408"class="cat-top">Audi </option>
-                  <%--<option value="266">Bentley </option>--%>
                   <option value="469"class="cat-top">BMW </option>
-
-                  <%--<option value="1780">Bugatti </option>--%>
-                  <%--<option value="565">Buick </option>--%>
-                  <%--<option value="21">BYD </option>--%>
-                  <%--<option value="990">Cadillac </option>--%>
-                  <%----%>
-                  <%--<option value="77">Chery </option>--%>
                   <option value="583"class="cat-top">Chevrolet</option>
-                  <%--<option value="957">Chrysler </option>--%>
                   <option value="1004"class="cat-top">Citroen</option>
-                  <%--<option value="344">Dacia </option>--%>
 
                   <option value="1639"class="cat-top">Daewoo</option>
-                  <%--<option value="417">Daihatsu (70)</option>--%>
-                  <%----%>
-                  <%--<option value="546">Dodge </option>--%>
-                  <%----%>
-                  <%--<option value="263">Ferrari </option>--%>
+
                   <option value="689"class="cat-top">Fiat </option>
 
                   <option value="1723"class="cat-top">Ford </option>
 
-                  <%--<option value="48">Geely </option>--%>
-                  <%--<option value="224">GMC </option>--%>
-
-                  <%--<option value="96">Great Wall </option>--%>
 
                   <option value="1697"class="cat-top">Honda </option>
 
-                  <%--<option value="288">Hummer (27)</option>--%>
                   <option value="927"class="cat-top">Hyundai </option>
                   <option value="297"class="cat-top">Infiniti </option>
 
-                  <%--<option value="914">Isuzu </option>--%>
-                  <%--<option value="18">JAC </option>--%>
-                  <%--<option value="331">Jaguar </option>--%>
-                  <%--<option value="1072">Jeep </option>--%>
 
                   <option value="1569"class="cat-top">KIA </option>
 
-                  <%--<option value="258">Lamborghini </option>--%>
-                  <%--<option value="1858">Lancia </option>--%>
-                  <%--<option value="986"class="cat-top">Land Rover </option>--%>
-
-                  <%--<option value="310"class="cat-top">Lexus </option>--%>
-                  <%--<option value="29">Lifan (55)</option>--%>
-                  <%--<option value="375">Lincoln (31)</option>--%>
-                  <%--<option value="252">Maserati (13)</option>--%>
-                  <%--<option value="1797">Maybach (15)</option>--%>
                   <option value="1872"class="cat-top">Mazda</option>
                   <option value="1121"class="cat-top">Mercedes</option>
-                  <%--<option value="2977">MG (73)</option>--%>
-                  <%--<option value="148">MINI (56)</option>--%>
+
                   <option value="1094"class="cat-top">Mitsubishi</option>
                   <option value="1522"class="cat-top">Nissan</option>
                   <option value="1374"class="cat-top">Opel</option>
                   <option value="1032"class="cat-top">Peugeot</option>
                   <option value="398">Porsche (224)</option>
                   <option value="1826"class="cat-top">Renault</option>
-                  <%--<option value="243">Rolls Royce (16)</option>--%>
-                  <%--<option value="447">Rover (97)</option>--%>
-                  <%--<option value="980">Saab (51)</option>--%>
-                  <%--<option value="43">Samand (62)</option>--%>
-                  <%--<option value="138">Samsung (8)</option>--%>
+
                   <option value="1058">Seat (458)</option>
                   <option value="1081"class="cat-top">Skoda </option>
-                  <%--<option value="3000">SMA (11)</option>--%>
-                  <%--<option value="2974">Smart (312)</option>--%>
-                  <%--<option value="680"class="cat-top">SsangYong (734)</option>--%>
+
                   <option value="519"class="cat-top">Subaru </option>
                   <option value="431"class="cat-top">Suzuki </option>
 
-                  <%--<option value="2001">Tesla (7)</option>--%>
                   <option value="1594"class="cat-top">Toyota</option>
 
                   <option value="Volkswagen"class="cat-top">Volkswagen</option>
                   <option value="1479"class="cat-top">Volvo</option>
 
-                  <%--<option value="180">Богдан (102)</option>--%>
                   <option value="1659"class="cat-top">ВАЗ </option>
                   <option value="1799"class="cat-top">ГАЗ </option>
                   <option value="576"class="cat-top">ЗАЗ </option>
 
-                  <%--<option value="634"class="cat-top">Москвич (843)</option>--%>
-                  <%--<option value="7183">СМЗ (7)</option>--%>
-                  <%--<option value="1782">УАЗ (411)</option>--%>
+
                 </select></p>
 <p>МОДЕЛЬ<br>
 <select id="id_model1" class="form-control" name="model1">
@@ -354,60 +312,65 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 <h3>Мое меню:</h3>
 <div class="auto">
 
-    <script>
+    <script type="text/javascript">
+                $(document).ready(function() {
 
-        function changeAddress(){
-            var address=document.getElementById("address");
-            var dealer_data=document.getElementById("dealer_data");
-            dealer_data.removeChild(address);
-            var form=document.createElement("form");
-            form.setAttribute("action","/myAccount/changeAddress");
-            form.setAttribute("method","post")
+                    $('a#address_button').click( function(event){
+                        var address=document.getElementById("address");
+                        var dealer_data=document.getElementById("dealer_data");
+                        dealer_data.removeChild(address);
+                        var form=document.createElement("form");
+                        form.setAttribute("action","/myAccount/changeAddress");
+                        form.setAttribute("method","post");
 
-            var city=document.createElement("span");
-            <%if(!dealer.getAddress().getCity().isEmpty()){%>
-            var node = document.createTextNode(<%=dealer.getAddress().getCity() %>);
-            <%}%>
-            city.appendChild(node);
+                        var city=document.createElement("span");
+                        <%if(!dealer.getAddress().getCity().isEmpty()){%>
+                        var node = document.createTextNode(<%=dealer.getAddress().getCity() %>);
+                        <%}%>
+                        city.appendChild(node);
 
-            var field_for_index=document.createElement("input");
-            field_for_index.setAttribute("type","text");
-            field_for_index.setAttribute("placeholder","Индекс");
-            field_for_index.setAttribute("name","index");
-            <%if(!dealer.getAddress().getIndex().isEmpty()){%>
-            field_for_index.setAttribute("value","<%=dealer.getAddress().getIndex() %>");
-<%}%>
-            var field_for_street=document.createElement("input");
-            field_for_street.setAttribute("type","text");
-            field_for_street.setAttribute("placeholder","Улица");
-            field_for_street.setAttribute("name","street");
-            <%if(!dealer.getAddress().getStreet().isEmpty()){%>
-            field_for_street.setAttribute("value","<%=dealer.getAddress().getStreet()%>");
-<%}%>
-            var field_for_numberHouse=document.createElement("input");
-            field_for_numberHouse.setAttribute("type","text");
-            field_for_numberHouse.setAttribute("placeholder","Номер дома");
-            field_for_numberHouse.setAttribute("name","house_number");
-            <%if(!dealer.getAddress().getNumberHouse().isEmpty()){%>
-            field_for_numberHouse.setAttribute("value","<%=dealer.getAddress().getNumberHouse()%>");
-            <%}%>
+                        var field_for_index=document.createElement("input");
+                        field_for_index.setAttribute("type","text");
+                        field_for_index.setAttribute("placeholder","Индекс");
+                        field_for_index.setAttribute("name","index");
+                        <%if(!dealer.getAddress().getIndex().isEmpty()){%>
+                        field_for_index.setAttribute("value","<%=dealer.getAddress().getIndex() %>");
+                        <%}%>
+                        var field_for_street=document.createElement("input");
+                        field_for_street.setAttribute("type","text");
+                        field_for_street.setAttribute("placeholder","Улица");
+                        field_for_street.setAttribute("name","street");
+                        <%if(!dealer.getAddress().getStreet().isEmpty()){%>
+                        field_for_street.setAttribute("value","<%=dealer.getAddress().getStreet()%>");
+                        <%}%>
+                        var field_for_numberHouse=document.createElement("input");
+                        field_for_numberHouse.setAttribute("type","text");
+                        field_for_numberHouse.setAttribute("placeholder","Номер дома");
+                        field_for_numberHouse.setAttribute("name","house_number");
+                        <%if(!dealer.getAddress().getNumberHouse().isEmpty()){%>
+                        field_for_numberHouse.setAttribute("value","<%=dealer.getAddress().getNumberHouse()%>");
+                        <%}%>
 
-            var submit_button=document.createElement("button");
-            submit_button.setAttribute("type","submit");
-            var button_text = document.createTextNode("Сохранить");
-            submit_button.appendChild(button_text);
-            form.appendChild(city);
-            form.appendChild(document.createElement("br"));
-            form.appendChild(field_for_index);
-            form.appendChild(document.createElement("br"));
-            form.appendChild(field_for_street);
-            form.appendChild(document.createElement("br"));
-            form.appendChild(field_for_numberHouse);
-            form.appendChild(document.createElement("br"));
-            form.appendChild(submit_button);
-            dealer_data.appendChild(form);
-            dealer_data.removeChild(document.getElementById("address_button"));
-        }
+                        var submit_button=document.createElement("button");
+                        submit_button.setAttribute("type","submit");
+                        var button_text = document.createTextNode("Сохранить");
+                        submit_button.appendChild(button_text);
+                        form.appendChild(city);
+                        form.appendChild(document.createElement("br"));
+                        form.appendChild(field_for_index);
+                        form.appendChild(document.createElement("br"));
+                        form.appendChild(field_for_street);
+                        form.appendChild(document.createElement("br"));
+                        form.appendChild(field_for_numberHouse);
+                        form.appendChild(document.createElement("br"));
+                        form.appendChild(submit_button);
+                        dealer_data.appendChild(form);
+                        dealer_data.removeChild(document.getElementById("address_button"));
+
+                    });
+                });
+
+
         function changeContactPersonsData(id){
             var contact_person_data=document.getElementById("contact_persons_data".concat(id));
             var old_manager=document.getElementById("manager".concat(id));
@@ -453,7 +416,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
         , ул.
 
     <%=dealer.getAddress().getStreet()+" "%> <%=dealer.getAddress().getNumberHouse()%></span>
-    <a id="address_button" href="#" class="more" title="Изменить" onclick="changeAddress()">Изменить</a>
+    <a id="address_button" href="#" class="more" title="Изменить" >Изменить</a>
     </div>
     <h4>Контактные лица</h4>
     <%
@@ -477,12 +440,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 
 </div>
 <br/>
-<!-- <div class="info">
-<div class="town">Город:<br> Харьков</div>
-<div class="phone-number">Телефон:<br> +38 057 705 20 25</div>
-<div class="diller">Дилер:<br> ТОВ "Автодом Харків"</div> 
 
-</div> -->
 <br/>
 <ul id="menu-diller">
   <li><a href="">Изменить инфо</a></li>
@@ -545,7 +503,11 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 <br/>
     <a id="car_change_button" href="/myAccount/change_car?car=<%=EncoderId.encodId(car.getIdCar().toString())%>" class="more" title="Изменить" >Изменить</a>
     <a id="car_delete_button" href="/myAccount/delete_car?car=<%=EncoderId.encodId(car.getIdCar().toString())%>" class="more" title="Удалить" >Удалить</a>
-
+    <%if(LocalDateTime.ofInstant(Instant.ofEpochMilli(car.getDateProvide().getTime()), ZoneId.systemDefault())
+            .isBefore(LocalDateTime.now().minusMonths(1))){
+    %>
+    <a id="car_change_button" href="/myAccount/update_car?car=<%=EncoderId.encodId(car.getIdCar().toString())%>" class="more" title="Обновить" >Обновить</a>
+    <%}%>
     <a title="Подробнее" href="/carPage?idCar=<%=car.getIdCar()%>" class="more">
         Подробнее...
     </a>

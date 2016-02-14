@@ -83,6 +83,6 @@ public class Dealer {
     }
 
     public String toString() {
-        return "" + countOfCar;
+        return "" + numberDealer;
     }
 }

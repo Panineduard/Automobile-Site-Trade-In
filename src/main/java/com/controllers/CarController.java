@@ -7,6 +7,7 @@ import com.dao.DealerDao;
 import com.modelClass.Car;
 import com.servise.ChangeImgSize;
 import com.servise.StandartMasege;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * Created by Эдуард on 30.11.15.
@@ -103,6 +106,13 @@ public class CarController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "*/update_car")
+    public ModelAndView updateCarsDateProvide(@ModelAttribute("car")String id){
+        CarDAO carDAO=new CarDAO();
+        carDAO.updateDataProvideDyId(new Long(EncoderId.decodeID(id)));
+        ModelAndView modelAndView=new ModelAndView("my_account");
+        return ViewHalper.addingDealerAndCarsInView(modelAndView);
+    }
 
     @RequestMapping(value = "/lookForCars",method = RequestMethod.POST)
     public ModelAndView getCarsPages(@ModelAttribute("make")String make,@ModelAttribute("model")String model,
@@ -118,23 +128,54 @@ public class CarController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/addCarWithPhoto",method = RequestMethod.POST)
+    @RequestMapping(value = {"*/addCarWithPhoto","/addCarWithPhoto"},method = RequestMethod.POST)
     public ModelAndView uploadCarsFile(@ModelAttribute("uploadForm") FileUploadForm uploadForm,Model map,
                                           @ModelAttribute("make")String make,@ModelAttribute("model")String model,
                                           @ModelAttribute("prise")String prise,@ModelAttribute("year_prov")String year_prov,
                                           @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox,
                                           @ModelAttribute("mileage")String mileage,@ModelAttribute("comment")String comment,
-                                          @ModelAttribute("engine_capacity")String engine_capacity) {
+                                          @ModelAttribute("engine_capacity")String engine_capacity,@ModelAttribute("id_car")String idCar,
+                                       HttpServletRequest request) {
         String nullMsg="Data not available.";
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String idDealer = auth.getName();
+        boolean update=false;
+        List<String>photoPath;
         if (!idDealer.isEmpty()) {
             Car car = new Car();
             CarDAO carDAO=new CarDAO();
-            DealerDao dealerDao = new DealerDao();
 
 
-            car.setIdDealer(idDealer);
+            if(!idCar.isEmpty()){
+              car=carDAO.getCarById(idCar);
+                update=true;
+                int deletePhotoNumber=0;
+                List<String> paths=new ArrayList();
+                photoPath=car.getPhotoPath();
+                nextStep:for (String path:photoPath){
+
+                  if(request.getParameter("photo"+deletePhotoNumber)==null)
+                  {   deletePhotoNumber++;
+                      continue nextStep;}
+                  if(deletePhotoNumber==new Integer(request.getParameter("photo"+deletePhotoNumber))){
+                      try {
+                          File file = new File(path);
+                          if(file.delete())//return true if file deleted
+                          {paths.add(path);
+                              }
+                      } catch (Exception e) {
+                          continue;
+                      }
+                  }
+                  deletePhotoNumber++;
+              }
+                paths.forEach(p -> photoPath.remove(p));
+                car.setPhotoPath(photoPath);
+                 }
+            else {
+                car.setIdDealer(idDealer);
+            }
+
 
             if (!make.isEmpty()) {
                 car.setBrand(make);
@@ -163,13 +204,22 @@ public class CarController {
                     car.setMileage(new Integer(mileage));
                 }
                 else car.setMileage(0);
-
+             if(!update){
                 if (carDAO.setCar(car, uploadForm.getFiles()) != -1L) {
                     ModelAndView modelAndView=new ModelAndView("my_account");
                     modelAndView.addObject("msg", StandartMasege.getMessage(1));
+                    DealerDao dealerDao = new DealerDao();
+                    dealerDao.updateCountOfCar(car.getIdDealer());
                     return ViewHalper.addingDealerAndCarsInView(modelAndView);
                 }
-
+             }
+                if (update){
+                    if (carDAO.updateCarById(car,uploadForm.getFiles())){
+                        ModelAndView modelAndView=new ModelAndView("my_account");
+                        modelAndView.addObject("msg", StandartMasege.getMessage(1));
+                        return ViewHalper.addingDealerAndCarsInView(modelAndView);
+                    }
+                }
 
             }}}}}}
 

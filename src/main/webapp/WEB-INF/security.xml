@@ -11,6 +11,7 @@
         <intercept-url pattern="/myAccount" access="ROLE_USER" />
         <intercept-url pattern="/myAccount/*" access="ROLE_USER" />
         <intercept-url pattern="/addCar" access="ROLE_USER"/>
+        <intercept-url pattern="/addCarWithPhoto" access="ROLE_USER"/>
         <intercept-url pattern="/feedback" access="ROLE_USER"/>
         <intercept-url pattern="/ConfirmationOfRegistration" access="ROLE_ANONYMOUS"/>
 

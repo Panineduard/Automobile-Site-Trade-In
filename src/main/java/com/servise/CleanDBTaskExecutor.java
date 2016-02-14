@@ -31,5 +31,8 @@ public class CleanDBTaskExecutor {
                 .forEach(n -> dealerDao.deleteLoginAndDealerById(n.getNumberDealer()) );
 
     }
-
+    public  void sendEmailToOwnersOldCars()
+    {
+        System.out.println("hello");
+    }
 }

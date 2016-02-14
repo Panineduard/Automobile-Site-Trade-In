@@ -101,14 +101,17 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
 
     return model;
 }
-    @RequestMapping(value = "/myAccount")
+    @RequestMapping(value = {"/myAccount","*/myAccount"})
     public ModelAndView accountModel(){
+
             ModelAndView modelAndView = new ModelAndView("my_account");
             return ViewHalper.addingDealerAndCarsInView(modelAndView);
     }
 
     @RequestMapping(value = "/feedback")
     public ModelAndView getFeedbackForm(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        auth.getPrincipal();
         ModelAndView modelAndView = new ModelAndView("feedback");
         return modelAndView;
     }

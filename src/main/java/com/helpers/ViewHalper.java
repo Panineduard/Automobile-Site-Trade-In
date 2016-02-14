@@ -20,10 +20,15 @@
         public static ModelAndView addingDealerAndCarsInView(ModelAndView view){
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String idDealer = auth.getName();
+            if(idDealer.equals("administrator")){
+                ModelAndView adminView=new ModelAndView("admin_page");
+                return adminView;
+            }
 //            System.out.println("ID DEALER FROM AUTH"+idDealer);
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tr=session.beginTransaction();
             Dealer dealer= session.get(Dealer.class, idDealer);
+
             List<Car> cars;
             try {
                 Query query = session.createQuery("from Car car where car.idDealer = :code ");

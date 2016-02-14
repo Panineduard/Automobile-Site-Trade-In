@@ -1,5 +1,6 @@
 package com.servise;
 
+import com.dao.AdminServiceDAO;
 import com.dao.CarDAO;
 import com.dao.DealerDao;
 import com.email.SendEmailText;
@@ -15,13 +16,25 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * Created by ������ on 12.08.15.
  */
 public class Test {
     public static void main(String... arg) throws IOException {
+
+//        ResourceBundle resourceBundle =  ResourceBundle.getBundle("messages");
+//        AdminServiceDAO adminServiceDAO = new AdminServiceDAO();
+//        System.out.println(adminServiceDAO.getAllDealers());
+
+
+//        CarDAO carDAO=new CarDAO();
+//        carDAO.getOldCarOwnersEmails(1);
 //        DealerDao dealerDao = new DealerDao();
+//        System.out.println(dealerDao.updateCountOfCar("1"));
+//        dealerDao.deleteLoginAndDealerById("2");
 //        Contact_person contact_person = new Contact_person();
 //        contact_person.setEmail("dgfhdgf");
 //        contact_person.setPhone("0501214455");

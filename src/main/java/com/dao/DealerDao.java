@@ -67,21 +67,15 @@ public Integer updateCountOfCar(String idDealer){
 
    try {
        tr= session.beginTransaction();
-       Query query = session.createQuery("select countOfCar from Dealer where numberDealer = :number ");
-
-    query.setParameter("number", idDealer);
-
-    List countOfCars = query.list();
-
-    Integer countOfCar = (Integer) countOfCars.get(0);
-    countOfCar++;
-
-    query = session.createQuery("update Dealer set countOfCar = :countOfCar " +
+       Query query = session.createQuery("from Car where idDealer=:number");
+       query.setParameter("number", idDealer);
+       Integer countOfCar = query.list().size();
+       query = session.createQuery("update Dealer set countOfCar = :countOfCar " +
             " where numberDealer = :numberDealer");
-    query.setParameter("countOfCar", countOfCar);
-    query.setParameter("numberDealer", idDealer);
-    query.executeUpdate();
-    tr.commit();
+       query.setParameter("countOfCar", countOfCar);
+       query.setParameter("numberDealer", idDealer);
+       query.executeUpdate();
+       tr.commit();
        return countOfCar;
    }
    catch (Exception e){
@@ -197,7 +191,7 @@ public Integer updateCountOfCar(String idDealer){
             session.merge(login);
             new File(Setting.getClientsFolder()+numberDealer).mkdir();
             session.beginTransaction().commit();
-            SendHTMLEmail.successfulRegistration(EncoderId.encodId(numberDealer),email);
+            SendHTMLEmail.successfulRegistration(EncoderId.encodId(numberDealer),email,null);
             return StandartMasege.getMessage(12) +
                     " \n "+StandartMasege.getMessage(13);
         }
@@ -262,6 +256,16 @@ public Integer updateCountOfCar(String idDealer){
             if (session.isOpen()){
                 session.close();
             }
+        }
+    }
+    public void addLegalsDealer(OfficialDealers officialDealers){
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr =session.beginTransaction();
+        session.merge(officialDealers);
+        tr.commit();
+        if(session.isOpen()){
+            session.close();
+
         }
     }
 }
