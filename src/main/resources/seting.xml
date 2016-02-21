@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<setting>
+
+        <emailTo>panin.eduard.a@gmail.com</emailTo>
+        <fromEmailAddr>veselayagora1@gmail.com</fromEmailAddr>
+        <password>p1120772</password>
+        <username>veselayagora1@gmail.com</username>
+        <RECIPIENT_EMAIL>veselaya_gora@mail.ru</RECIPIENT_EMAIL>
+        <host>http://localhost:8080/</host>
+        <ClientsFolder>C:/ClientsFolder/</ClientsFolder>
+
+
+</setting>
+

@@ -7,17 +7,16 @@ import com.email.SendEmailText;
 import com.helpers.PasswordHelper;
 import com.modelClass.Address;
 import com.modelClass.Contact_person;
+import com.setting.Setting;
 import javafx.util.converter.LocalDateTimeStringConverter;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.task.TaskExecutor;
 
+import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by ������ on 12.08.15.
@@ -25,12 +24,30 @@ import java.util.ResourceBundle;
 public class Test {
     public static void main(String... arg) throws IOException {
 
+        //----------------------Collection sort-------------------
+//        List <Integer> integers=new ArrayList<>();
+//        Random random=new Random();
+//        for (int i=0;i<30;i++){
+//            integers.add(random.nextInt(100));
+//        }
+//        System.out.println(integers);
+//        Collections.sort(integers, (Integer i1, Integer i2) -> -(i1.compareTo(i2)));
+//        System.out.println(integers);
+        //------------------------------------------------------------------
+
+//        System.out.println(StandartMasege.getMessage(15));
+//        System.out.println(Setting.getEmailTo());
+//        boolean f=Setting.isAbsolutePath();
+//        System.out.println(f);
 //        ResourceBundle resourceBundle =  ResourceBundle.getBundle("messages");
+//
+//        System.out.println(resourceBundle.getString("1"));
 //        AdminServiceDAO adminServiceDAO = new AdminServiceDAO();
 //        System.out.println(adminServiceDAO.getAllDealers());
 
-
+//        System.out.println(Setting.getHost());
 //        CarDAO carDAO=new CarDAO();
+//        System.out.println(carDAO.getModelByBrand("Vohgfhlkswagen"));
 //        carDAO.getOldCarOwnersEmails(1);
 //        DealerDao dealerDao = new DealerDao();
 //        System.out.println(dealerDao.updateCountOfCar("1"));
@@ -60,8 +77,9 @@ public class Test {
 //        LocalDateTime localDateTime=LocalDateTime.now();
 //        LocalDateTime localDateTime1 = localDateTime.plusDays(2);
 ////        System.out.println(localDateTime1.isAfter(localDateTime));
-//CleanDBTaskExecutor cdb =new CleanDBTaskExecutor();
-//        cdb.serviceMethod();
+
+     TaskExecutorClass cdb =new TaskExecutorClass();
+        cdb.sendEmailToOwnersOldCars();
 //DealerDao dealerDao=new DealerDao();
 //        System.out.println(dealerDao.getIdDealersWithoutAuth());
 

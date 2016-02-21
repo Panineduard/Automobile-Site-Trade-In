@@ -25,15 +25,16 @@
     </bean>
     <bean id="messageSource"
                 class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basename" value="messages" />
+        <property name="basename" value="messages_ru_RU" />
         <property name="fallbackToSystemLocale" value="false"/>
         <property name="fileEncodings" value="UTF-8"/>
         <property name="defaultEncoding" value="UTF-8" />
     </bean>
 
+
     <!--<task:annotation-driven  />-->
 
-    <!--<bean id="CleanDBTaskExecutor" class="com.servise.CleanDBTaskExecutor"/>-->
+    <!--<bean id="TaskExecutorClass" class="com.servise.TaskExecutorClass>-->
 
 
 

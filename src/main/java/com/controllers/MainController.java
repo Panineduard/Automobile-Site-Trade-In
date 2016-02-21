@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -18,7 +19,7 @@ import java.util.ResourceBundle;
 @Controller
 public class MainController {
     @RequestMapping("/")
-    public ModelAndView printWelcome(HttpServletRequest request) {
+    public ModelAndView printWelcome(HttpSession session) {
 
         int countOfCars=4;
         CarDAO carDAO = new CarDAO();
@@ -30,11 +31,11 @@ public class MainController {
 
 
         if(cars!=null&&cars.size()<countOfCars){
-            model.addObject("cars",carDAO.getLastCars(cars.size()));
+            session.setAttribute("cars",carDAO.getLastCars(cars.size()));
             return model;
         }
         if (cars!=null&&cars.size()>=countOfCars){
-            model.addObject("cars",carDAO.getLastCars(countOfCars));
+           session.setAttribute("cars",carDAO.getLastCars(countOfCars));
             return model;
         }
 //        model.addObject("cars",carDAO.getLastCars(countOfCars));

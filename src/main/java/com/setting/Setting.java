@@ -1,50 +1,54 @@
 package com.setting;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
+
 /**
  * Created by Эдуард on 03.01.16.
  */
-public final class Setting {
+public class Setting {
     private Setting(){}
-    //her you set Email were get leter from user
-    private static String emailTo = "panin.eduard.a@gmail.com";
-    private static String fromEmailAddr = "veselayagora1@gmail.com";
-    private static  String password ="p1120772";
-    private static String username = "veselayagora1@gmail.com";
-    private static String ClientsFolder="C:\\ClientsFolder\\";
-    private static String RECIPIENT_EMAIL="veselaya_gora@mail.ru";
-    private static String THE_ABSOLUTE_PATH_OF_THE_MESSAGE_FILE="D:\\Java\\Java projects\\volkswagenTradeWithoutSecurity\\src\\main\\webapp\\WEB-INF\\pages\\messages.txt";
-    private static boolean  IS_ABSOLUTE_PATH=true;
-    public static String getClientsFolder() {
-        return ClientsFolder;
+    private String path =this.getClass().getClassLoader().getResource("seting.xml").getPath();
+    private static SettingJavax settingJavax = null;
+    static {
+        File file = new File(new Setting().path);
+        JAXBContext jaxbContext = null;
+
+        Unmarshaller jaxbUnmarshaller = null;
+        try {
+            jaxbContext = JAXBContext.newInstance(SettingJavax.class);
+            jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            settingJavax = (SettingJavax) jaxbUnmarshaller.unmarshal(file);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
     }
 
-
     public static String getEmailTo() {
-        return emailTo;
+        return settingJavax.get_mail_to();
     }
 
     public static String getFromEmailAddr() {
-        return fromEmailAddr;
+        return settingJavax.get_from_mail_address();
     }
 
     public static String getPassword() {
-        return password;
+        return settingJavax.get_password();
     }
 
     public static String getUsername() {
-        return username;
+        return settingJavax.get_username();
+    }
+
+    public static String getClientsFolder() {
+        return settingJavax.get_clients_folder();
     }
 
     public static String getRecipientEmail() {
-        return RECIPIENT_EMAIL;
+        return settingJavax.get_RECIPIENT_MAIL();
     }
+    public static  String getHost(){return settingJavax.get_host();}
 
-
-    public static String getTheAbsolutrPathOfTheMessageFile() {
-        return THE_ABSOLUTE_PATH_OF_THE_MESSAGE_FILE;
-    }
-
-    public static boolean isAbsolutePath() {
-        return IS_ABSOLUTE_PATH;
-    }
 }

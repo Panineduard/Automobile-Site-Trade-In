@@ -1,18 +1,20 @@
 package com.dao;
 
 import com.dao.configuration.files.HibernateUtil;
+import com.modelClass.AuthorizedDealers;
 import com.modelClass.CarBrand;
 import com.modelClass.Dealer;
+import com.servise.StandartMasege;
+import org.apache.commons.io.IOUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -27,28 +29,39 @@ public class AdminServiceDAO {
         List<Dealer> dealers=query.list();
         return dealers;
     }
-    public boolean setModelsByBrand(File models, String brand){
-        List <String>modelsName=new ArrayList<>();
-        try(Stream<String> stream=new BufferedReader(new FileReader(models)).lines()) {
+    public void setModelsByBrand(MultipartFile models, String brand) throws IOException {
+        List<String> modelsName = new ArrayList<>();
+        CarBrand carBrand = new CarBrand();
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(models.getBytes());
+        String myString = IOUtils.toString(byteArrayInputStream);
+        Stream<String> stream = new BufferedReader(new StringReader(myString)).lines();
+        modelsName.add(StandartMasege.getMessage(29));
+        {
             stream
                     .forEach(s1 -> {
                         modelsName.add(new String(s1));
                     });
-            CarBrand carBrand=new CarBrand();
+
             carBrand.setBrand(brand);
             carBrand.setModels(modelsName);
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            Transaction tr=session.beginTransaction();
-            session.merge(carBrand);
-            tr.commit();
-            if(session.isOpen()){
-                session.close();
-            }
-            return true;
-        } catch (Exception e) {
-            return false;
+        }
+
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr = session.beginTransaction();
+        session.merge(carBrand);
+        tr.commit();
+        if (session.isOpen()) {
+            session.close();
         }
 
 
+    }
+
+    public List<AuthorizedDealers> getAuthorizedDealers() {
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query query =session.createQuery("from  AuthorizedDealers d ");
+        List<AuthorizedDealers> dealers=query.list();
+        return dealers;
     }
 }

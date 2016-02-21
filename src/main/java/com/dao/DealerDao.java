@@ -3,24 +3,19 @@ package com.dao;
 import com.dao.configuration.files.HibernateUtil;
 import com.email.SendHTMLEmail;
 import com.helpers.EncoderId;
-import com.helpers.HttpHelper;
+
 import com.helpers.PasswordHelper;
 import com.modelClass.*;
 import com.servise.StandartMasege;
 import com.setting.Setting;
-import javassist.tools.rmi.ObjectNotFoundException;
-import net.sf.cglib.core.Local;
+import com.setting.SettingJavax;
 import org.apache.commons.io.FileUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -30,12 +25,12 @@ public class DealerDao {
     public List<Dealer>getIdDealersWithoutAuth(){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        LocalDateTime localDateTime = LocalDateTime.now();
+
         Query query =session.createQuery("from  Dealer d where d.registration=false ");
         List<Dealer> dealers=query.list();
         return dealers;
     }
-public boolean updateRegistrationAndRoleById(String id){
+    public boolean updateRegistrationAndRoleById(String id){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
 
         String idDealer=EncoderId.decodeID(id);
@@ -50,9 +45,15 @@ public boolean updateRegistrationAndRoleById(String id){
                 Query query =  session.createQuery("update Dealer d set d.registration =:registration where numberDealer=:id ");
                 Query query1=session.createQuery("update  Login l set l.role =:role where l.idDealer =:id");
                 query.setParameter("registration", true);
+
                 query.setParameter("id", idDealer);
                 query1.setParameter("id", idDealer);
+                if(idDealer.equals("administrator")){
+                    query1.setParameter("role", ListRole.ROLE_ADMIN);
+                }
+                else {
                 query1.setParameter("role", ListRole.ROLE_USER);
+                }
                 query1.executeUpdate();
                 query.executeUpdate();
                 tr.commit();
@@ -61,7 +62,7 @@ public boolean updateRegistrationAndRoleById(String id){
             return false;
     }
     }
-public Integer updateCountOfCar(String idDealer){
+    public Integer updateCountOfCar(String idDealer){
     Session session= HibernateUtil.getSessionFactory().getCurrentSession();
     Transaction tr=null;
 
@@ -114,7 +115,6 @@ public Integer updateCountOfCar(String idDealer){
     session.beginTransaction();
     Dealer dealer= session.get(Dealer.class, id);
 
-//    session.close();
     return dealer;
 
 }
@@ -146,11 +146,7 @@ public Integer updateCountOfCar(String idDealer){
         catch (HibernateException e){
             return false;
         }
-        finally {
-            if(session.isOpen()){
-                session.close();
-            }
-        }
+
 
 
 
@@ -191,7 +187,8 @@ public Integer updateCountOfCar(String idDealer){
             session.merge(login);
             new File(Setting.getClientsFolder()+numberDealer).mkdir();
             session.beginTransaction().commit();
-            SendHTMLEmail.successfulRegistration(EncoderId.encodId(numberDealer),email,null);
+            String htmlMessage="<a href='"+ Setting.getHost()+"/ConfirmationOfRegistration?id="+EncoderId.encodId(numberDealer)+"'>"+StandartMasege.getMessage(18)+"</a>";
+            SendHTMLEmail.sendHtmlMessage(email,htmlMessage,StandartMasege.getMessage(17));
             return StandartMasege.getMessage(12) +
                     " \n "+StandartMasege.getMessage(13);
         }
@@ -258,14 +255,38 @@ public Integer updateCountOfCar(String idDealer){
             }
         }
     }
-    public void addLegalsDealer(OfficialDealers officialDealers){
+    public boolean addLegalsDealer(AuthorizedDealers officialDealers){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr =session.beginTransaction();
-        session.merge(officialDealers);
-        tr.commit();
+        boolean returnValue=false;
+        Query query=session.createQuery("from AuthorizedDealers where dealer_number =:id");
+        query.setParameter("id", officialDealers.getDealer_number());
+
+        if(query.list().isEmpty())
+        {
+            session.merge(officialDealers);
+            returnValue=true;
+            tr.commit();
+        }
+
         if(session.isOpen()){
             session.close();
 
         }
+        return returnValue;
+    }
+    public void deleteLegalsDealer(String idDealer) {
+        if (idDealer != null) {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Transaction tr=session.beginTransaction();
+            Query query = session.createQuery("delete AuthorizedDealers where dealer_number=:idDealer");
+            query.setParameter("idDealer", idDealer);
+            query.executeUpdate();
+            tr.commit();
+            if(session.isOpen()){
+                session.close();
+            }
+        }
+
     }
 }

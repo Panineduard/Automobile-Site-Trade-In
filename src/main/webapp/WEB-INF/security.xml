@@ -8,12 +8,18 @@
     <http auto-config="true">
         <intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <access-denied-handler error-page="/403" />
-        <intercept-url pattern="/myAccount" access="ROLE_USER" />
-        <intercept-url pattern="/myAccount/*" access="ROLE_USER" />
-        <intercept-url pattern="/addCar" access="ROLE_USER"/>
-        <intercept-url pattern="/addCarWithPhoto" access="ROLE_USER"/>
-        <intercept-url pattern="/feedback" access="ROLE_USER"/>
+        <intercept-url pattern="/myAccount" access="ROLE_USER,ROLE_ADMIN" />
+        <intercept-url pattern="/myAccount/*" access="ROLE_USER,ROLE_ADMIN" />
+        <intercept-url pattern="/addCar" access="ROLE_USER,ROLE_ADMIN"/>
+        <intercept-url pattern="*/delete_car" access="ROLE_USER,ROLE_ADMIN"/>
+        <intercept-url pattern="/addCarWithPhoto" access="ROLE_USER,ROLE_ADMIN"/>
+        <intercept-url pattern="/feedback" access="ROLE_USER,ROLE_ADMIN"/>
         <intercept-url pattern="/ConfirmationOfRegistration" access="ROLE_ANONYMOUS"/>
+        <intercept-url pattern="/update_dealers_list" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/addDealerNumber" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/updateModelByBrand" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/deleteDealer" access="ROLE_ADMIN"/>
+
 
         <form-login login-page='/login'/>
         <logout invalidate-session="true" logout-success-url="/" logout-url="/j_spring_security_logout"/>

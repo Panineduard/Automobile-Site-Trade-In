@@ -2,15 +2,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
-       <bean id="xmlScheduledTasks" class="com.servise.CleanDBTaskExecutor" />
+       <bean id="xmlScheduledTasks" class="com.servise.TaskExecutorClass" />
        <task:scheduler id="taskScheduler" pool-size="10" />
        <!--it`s scheduled clean DB every day hwo not confirmed email-->
        <task:scheduled-tasks>
-              <task:scheduled ref="xmlScheduledTasks" method="serviceMethod" cron="0 0 12 * * ?"/>
+              <task:scheduled ref="xmlScheduledTasks" method="cleanDbWithoutAuth" cron="0 0 12 * * ?"/>
        </task:scheduled-tasks>
        <!--her wer send massage to owners car -->
+       <task:scheduled-tasks>
+              <task:scheduled ref="xmlScheduledTasks" method="sendEmailToOwnersOldCars" cron="0 0 12 30 * ?"/>
+       </task:scheduled-tasks>
        <!--<task:scheduled-tasks>-->
-              <!--<task:scheduled ref="xmlScheduledTasks" method="sendEmailToOwnersOldCars" cron="*/5 * * * * ?"/>-->
+              <!--<task:scheduled ref="xmlScheduledTasks" method="deleteOldCar" cron="0 0 10 L * ?"/>-->
        <!--</task:scheduled-tasks>-->
 
 </beans>

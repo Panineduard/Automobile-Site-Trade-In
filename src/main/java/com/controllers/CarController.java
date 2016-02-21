@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.helpers.ViewHalper;
 
@@ -24,9 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by Эдуард on 30.11.15.
@@ -99,7 +98,32 @@ public class CarController {
         }
     }
 
+    @RequestMapping(value = "/getModelByBrand",method = RequestMethod.GET, headers="Accept=application/json")
+    public @ResponseBody List<String> getModelForm(@ModelAttribute("model")String model){
+        System.out.println(model);
+        CarDAO carDAO=new CarDAO();
+        return carDAO.getModelByBrand(model);
 
+    }
+
+
+    @RequestMapping(value = "/ascending_price")
+    public ModelAndView sortedCarsAp(HttpSession session){
+        List<Car>cars = (List<Car>)session.getAttribute("cars");
+        if(cars!=null){ Collections.sort(cars,(Car c1,Car c2)->c1.getPrise().compareTo(c2.getPrise()));
+        session.setAttribute("cars",cars);}
+        ModelAndView modelAndView = new ModelAndView("index");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/by_prices_descending")
+    public ModelAndView sortedCarsDown(HttpSession session){
+        List<Car>cars = (List<Car>)session.getAttribute("cars");
+        if(cars!=null){        Collections.sort(cars,(Car c1,Car c2)->-(c1.getPrise().compareTo(c2.getPrise())));
+            session.setAttribute("cars",cars);}
+        ModelAndView modelAndView = new ModelAndView("index");
+        return modelAndView;
+    }
     @RequestMapping(value = "/addCar")
     public ModelAndView getLoginForm(){
         ModelAndView modelAndView = new ModelAndView("pageForCar");
@@ -118,9 +142,13 @@ public class CarController {
     public ModelAndView getCarsPages(@ModelAttribute("make")String make,@ModelAttribute("model")String model,
                                      @ModelAttribute("price_from")String price_from,@ModelAttribute("price_to")String price_to,
                                      @ModelAttribute("year_from")String year_from,@ModelAttribute("year_to")String year_to,
-                                     @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox,HttpSession session){
+                                     @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox,
+                                     @ModelAttribute("region")String region,HttpSession session){
         CarDAO carDAO= new CarDAO();
-        List<Car> cars =carDAO.getCarsByParameters(make,model,price_from,price_to,year_from,year_to,engine,gearbox);
+        if(model.equals(StandartMasege.getMessage(29))){
+            model="";
+        }
+        List<Car> cars =carDAO.getCarsByParameters(make,model,price_from,price_to,year_from,year_to,engine,gearbox,region);
         ModelAndView modelAndView = new ModelAndView("index");
         session.setAttribute("cars",cars);
         session.removeAttribute("page");
@@ -135,7 +163,7 @@ public class CarController {
                                           @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox,
                                           @ModelAttribute("mileage")String mileage,@ModelAttribute("comment")String comment,
                                           @ModelAttribute("engine_capacity")String engine_capacity,@ModelAttribute("id_car")String idCar,
-                                       HttpServletRequest request) {
+                                          @ModelAttribute("region")String region,@ModelAttribute("equipment")String equipment,HttpServletRequest request) {
         String nullMsg="Data not available.";
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String idDealer = auth.getName();
@@ -195,9 +223,9 @@ public class CarController {
             if (!gearbox.isEmpty()) {
                 car.setTransmission(gearbox);
 
-                if (!comment.isEmpty()) {
-                    car.setDescription(comment);
-                }
+                if (!comment.isEmpty())car.setDescription(comment);
+                if (!equipment.isEmpty())car.setEquipment(equipment);
+                if(!region.isEmpty())car.setRegion(region);
                 if(!engine_capacity.isEmpty()){car.setEngineCapacity(engine_capacity);}
                 else {car.setEngineCapacity(nullMsg);}
                 if(!mileage.isEmpty()){

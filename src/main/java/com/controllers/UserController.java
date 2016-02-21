@@ -5,6 +5,7 @@ import com.dao.DealerDao;
 import com.email.SendEmailText;
 import com.helpers.EncoderId;
 import com.helpers.PasswordHelper;
+import com.modelClass.Address;
 import com.modelClass.Car;
 import com.modelClass.Contact_person;
 import com.modelClass.Dealer;
@@ -57,6 +58,8 @@ public class UserController {
                                      ModelMap modelMap) {
                 String captcha =(String)session.getAttribute("CAPTCHA");
         PasswordHelper passwordHelper = new PasswordHelper();
+
+
         if(captcha==null || (captcha!=null && !passwordHelper.matches(input_captcha, captcha))){
             ModelAndView modelAndView = new ModelAndView("registration");
             modelAndView.addAllObjects(modelMap);
@@ -66,6 +69,7 @@ public class UserController {
         String returnMessage;
         DealerDao dealerDao = new DealerDao();
        try{ if (pasword.equals(checkPasword)){
+
             returnMessage= dealerDao.setDealer(numberDealer, nameDealer,email,name,personPhone,pasword,city);
 
         }

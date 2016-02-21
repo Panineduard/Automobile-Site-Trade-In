@@ -2,6 +2,7 @@ package com.modelClass;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "Cars_brand")
 public class CarBrand {
+    @Id
     private String brand;
     @ElementCollection
     private List<String> models;

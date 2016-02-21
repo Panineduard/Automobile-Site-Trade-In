@@ -129,7 +129,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 Двигатель: <span class="model-info-data"><%=car.getEngineCapacity()%></span><br>
 Топливо: <span class="model-info-data"><%=EnginesType%></span><br>
 КП: <span class="model-info-data"><%=transmission%></span><br>
-Комплектация: <span class="model-info-data">Comfortline</span><br>
+Комплектация: <span class="model-info-data"><%=car.getEquipment()%></span><br>
 Дополнительно: <br><span class="model-info-data-coment">
 <%=car.getDescription()%>
 </span>

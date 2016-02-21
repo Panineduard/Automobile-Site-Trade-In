@@ -15,11 +15,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="/res/css/style_my_acount.css">
-    <script type="text/javascript" src="/res/js/linkedselect.js"></script>
+    <%--<script type="text/javascript" src="/res/js/linkedselect.js"></script>--%>
 
     <!-- <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'> -->
 <title> Автомобили с пробегом </title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <%--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>--%>
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="/res/js/get_model_by_brand.js"></script>
     <style type="text/css">
         /* Окно */
         #modal_form {
@@ -97,7 +99,7 @@
 </header>
 <ul id="menu">
   <li><a title="На главную" href="/">На главную</a></li>
-  <li><a title="Мои автомобили" href="">Мои автомобили</a></li>
+  <%--<li><a title="Мои автомобили" href="">Мои автомобили</a></li>--%>
   <li><a title="Добавить авто" href="/addCar">+ Добавить авто</a></li>
     <c:url var="logoutAction" value="/j_spring_security_logout"></c:url>
 
@@ -111,71 +113,56 @@
 
 <div id="layout">
 <div id="baner-left">
-<form action="/lookForCars" method="post">
-<div id="search">
-<p>МАРКА<br>
-<select id="id_make1" class="form-control" name="make1">
-                  <option value="" selected="selected">выберите марку</option>
-                  <option value="" selected="selected">все</option>
-                  <option value="131">Acura </option>
-                  <option value="1408"class="cat-top">Audi </option>
-                  <option value="469"class="cat-top">BMW </option>
-                  <option value="583"class="cat-top">Chevrolet</option>
-                  <option value="1004"class="cat-top">Citroen</option>
-
-                  <option value="1639"class="cat-top">Daewoo</option>
-
-                  <option value="689"class="cat-top">Fiat </option>
-
-                  <option value="1723"class="cat-top">Ford </option>
-
-
-                  <option value="1697"class="cat-top">Honda </option>
-
-                  <option value="927"class="cat-top">Hyundai </option>
-                  <option value="297"class="cat-top">Infiniti </option>
-
-
-                  <option value="1569"class="cat-top">KIA </option>
-
-                  <option value="1872"class="cat-top">Mazda</option>
-                  <option value="1121"class="cat-top">Mercedes</option>
-
-                  <option value="1094"class="cat-top">Mitsubishi</option>
-                  <option value="1522"class="cat-top">Nissan</option>
-                  <option value="1374"class="cat-top">Opel</option>
-                  <option value="1032"class="cat-top">Peugeot</option>
-                  <option value="398">Porsche (224)</option>
-                  <option value="1826"class="cat-top">Renault</option>
-
-                  <option value="1058">Seat (458)</option>
-                  <option value="1081"class="cat-top">Skoda </option>
-
-                  <option value="519"class="cat-top">Subaru </option>
-                  <option value="431"class="cat-top">Suzuki </option>
-
-                  <option value="1594"class="cat-top">Toyota</option>
-
-                  <option value="Volkswagen"class="cat-top">Volkswagen</option>
-                  <option value="1479"class="cat-top">Volvo</option>
-
-                  <option value="1659"class="cat-top">ВАЗ </option>
-                  <option value="1799"class="cat-top">ГАЗ </option>
-                  <option value="576"class="cat-top">ЗАЗ </option>
-
-
+    <form action="/lookForCars" method="post">
+        <div id="search">
+            <p>МАРКА<br>
+                <select id="id_make1" class="form-control" name="make" onchange="p_delete(this.value);">
+                    <option value="" selected="selected">вcе марки</option>
+                    <option value="Acura">Acura </option>
+                    <option value="Alfa_Romeo">Alfa Romeo </option>
+                    <option value="Audi"class="cat-top">Audi </option>
+                    <option value="BMW"class="cat-top">BMW </option>
+                    <option value="Chevrolet"class="cat-top">Chevrolet</option>
+                    <option value="Citroen"class="cat-top">Citroen</option>
+                    <option value="Daewoo"class="cat-top">Daewoo</option>
+                    <option value="Fiat"class="cat-top">Fiat </option>
+                    <option value="Ford"class="cat-top">Ford </option>
+                    <option value="Honda"class="cat-top">Honda </option>
+                    <option value="Hyundai"class="cat-top">Hyundai </option>
+                    <option value="Infiniti"class="cat-top">Infiniti </option>
+                    <option value="KIA"class="cat-top">KIA </option>
+                    <option value="Mazda"class="cat-top">Mazda</option>
+                    <option value="Mercedes"class="cat-top">Mercedes</option>
+                    <option value="Mitsubishi"class="cat-top">Mitsubishi</option>
+                    <option value="Nissan"class="cat-top">Nissan</option>
+                    <option value="Opel"class="cat-top">Opel</option>
+                    <option value="Peugeot"class="cat-top">Peugeot</option>
+                    <option value="Porsche">Porsche </option>
+                    <option value="Renault"class="cat-top">Renault</option>
+                    <option value="Seat">Seat </option>
+                    <option value="Skoda"class="cat-top">Skoda </option>
+                    <option value="Subaru"class="cat-top">Subaru </option>
+                    <option value="Suzuki"class="cat-top">Suzuki </option>
+                    <option value="Toyota"class="cat-top">Toyota</option>
+                    <option value="Volkswagen"class="cat-top">Volkswagen</option>
+                    <option value="Volvo"class="cat-top">Volvo</option>
+                    <option value="ВАЗ"class="cat-top">ВАЗ </option>
+                    <option value="ГАЗ"class="cat-top">ГАЗ </option>
+                    <option value="ЗАЗ"class="cat-top">ЗАЗ </option>
+                </select>
+            </p>
+            <p>МОДЕЛЬ<br>
+                <select id="id_model" name="model">
+                    <option value="" selected="selected">выберите марку</option>
                 </select></p>
-<p>МОДЕЛЬ<br>
-<select id="id_model1" class="form-control" name="model1">
-                  <option value="" selected="selected">укажите марку</option>
-                </select></p>
-<p>ЦЕНА<br>
-<input id="id_price_from" type="text" placeholder="от" class="form-control" name="price_from" />
-<input id="id_price_to" type="text" placeholder="до" class="form-control" name="price_to" />
-</p>
-<p>ГОД ВЫПУСКА<br>
-<select id="id_year_from" class="form-control" name="year_from">
+            <p>ЦЕНА<br>
+                <input id="id_price_from" type="text" placeholder="от" class="form-control" name="price_from" />
+                <input id="id_price_to" type="text" placeholder="до" class="form-control" name="price_to" />
+            </p>
+            <p>ГОД ВЫПУСКА<br>
+                <select id="id_year_from" class="form-control" name="year_from">
                     <option value="" selected="selected">c</option>
+                    <option value="2016">2016</option>
                     <option value="2015">2015</option>
                     <option value="2014">2014</option>
                     <option value="2013">2013</option>
@@ -213,9 +200,11 @@
                     <option value="1981">1981</option>
                     <option value="1980">1980</option>
 
-                 </select>
- <select id="id_year_to" class="form-control" name="year_to">
+                </select>
+
+                <select id="id_year_to" class="form-control" name="year_to">
                     <option value="" selected="selected">по</option>
+                    <option value="2016">2016</option>
                     <option value="2015">2015</option>
                     <option value="2014">2014</option>
                     <option value="2013">2013</option>
@@ -253,57 +242,58 @@
                     <option value="1981">1981</option>
                     <option value="1980">1980</option>
 
-                  </select></p>
-<p>ТИП ДВИГАТЕЛЯ</br>
-<select id="id_engine" class="form-control" name="engine">
-                      <option value="" selected="selected">все</option>
-                      <option value="1948">Бензин</option>
-                      <option value="1987">Дизель</option>
-                      <option value="2022">Электро</option>
-                      <option value="1988">Гибрид</option>
-                    </select></p>
-ТИП КПП<br>
-<select id="id_gearbox" class="form-control" name="gearbox">
-                      <option value="" selected="selected">все</option>
-                      <option value="2009">Автоматическая</option>
-                      <option value="2008">Механическая</option>
-                    </select>
+                </select></p>
+            <p>ТИП ДВИГАТЕЛЯ</br>
+                <select id="id_engine" class="form-control" name="engine">
+                    <option value="">все</option>
+                    <option value="gasoline">Бензин</option>
+                    <option value="disel">Дизель</option>
+                    <option value="elektro">Электро</option>
+                    <option value="hybrid">Гибрид</option>
+                    <option value="other">Другое</option>
+                </select></p>
+            ТИП КПП<br>
+            <select id="id_gearbox" class="form-control" name="gearbox">
+                <option value="">все</option>
+                <option value="another" >Другое</option>
+                <option value="auto">Автоматическая</option>
+                <option value="mechanical">Механическая</option>
+            </select>
 
-<p>РЕГИОН<br>
-<select id="id_region" class="form-control" name="region">
-                      <option value="" selected="selected">все</option>
-                      <!---<select class="e-form" id="regionCenters" name="state[0]">-->
-                        <option value="0">Любой</option>
-                        <option value="1">Винница</option>
-                        <option value="11">Днепропетровск</option>
-                        <option value="13">Донецк</option>
-                        <option value="2">Житомир</option>
-                        <option value="14">Запорожье</option>
-                        <option value="15">Ивано-Франковск</option>
-                        <option value="10">Киев</option>
-                        <option value="16">Кировоград</option>
-                        <option value="17">Луганск</option>
-                        <option value="18">Луцк</option>
-                        <option value="5">Львов</option>
-                        <option value="19">Николаев</option>
-                        <option value="12">Одесса</option>
-                        <option value="20">Полтава</option>
-                        <option value="9">Ровно</option>
-                        <option value="21">Симферополь</option>
-                        <option value="8">Сумы</option>
-                        <option value="3">Тернополь</option>
-                        <option value="22">Ужгород</option>
-                        <option value="7">Харьков</option>
-                        <option value="23">Херсон</option>
-                        <option value="4">Хмельницкий</option>
-                        <option value="24">Черкассы</option>
-                        <option value="6">Чернигов</option>
-                        <option value="25">Черновцы</option>
-                      </select></p>
-					  <button type="submit" class="btn btn-primary btn-lg ">Подобрать авто</button>
-</div>
-					  </form>
-</div>
+            <p>РЕГИОН<br>
+                <select id="id_region" class="form-control" name="region">
+                    <option value="" selected="selected">все</option>
+                    <!---<select class="e-form" id="regionCenters" name="state[0]">-->
+                    <option value="0">Любой</option>
+                    <option value="1">Винница</option>
+                    <option value="11">Днепропетровск</option>
+                    <option value="13">Донецк</option>
+                    <option value="2">Житомир</option>
+                    <option value="14">Запорожье</option>
+                    <option value="15">Ивано-Франковск</option>
+                    <option value="10">Киев</option>
+                    <option value="16">Кировоград</option>
+                    <option value="17">Луганск</option>
+                    <option value="18">Луцк</option>
+                    <option value="5">Львов</option>
+                    <option value="19">Николаев</option>
+                    <option value="12">Одесса</option>
+                    <option value="20">Полтава</option>
+                    <option value="9">Ровно</option>
+                    <option value="21">Симферополь</option>
+                    <option value="8">Сумы</option>
+                    <option value="3">Тернополь</option>
+                    <option value="22">Ужгород</option>
+                    <option value="7">Харьков</option>
+                    <option value="23">Херсон</option>
+                    <option value="4">Хмельницкий</option>
+                    <option value="24">Черкассы</option>
+                    <option value="6">Чернигов</option>
+                    <option value="25">Черновцы</option>
+                </select></p>
+            <button type="submit" class="btn btn-primary btn-lg ">Подобрать авто</button>
+        </div>
+    </form></div>
 <div id="baner-right">
 some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 777777777777 77777 77777777 77777777 7777777 7777777
 </div>
@@ -325,29 +315,30 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 
                         var city=document.createElement("span");
                         <%if(!dealer.getAddress().getCity().isEmpty()){%>
-                        var node = document.createTextNode(<%=dealer.getAddress().getCity() %>);
-                        <%}%>
+                        var node = document.createTextNode("<%=dealer.getAddress().getCity() %>");
                         city.appendChild(node);
+                        <%}%>
+
 
                         var field_for_index=document.createElement("input");
                         field_for_index.setAttribute("type","text");
                         field_for_index.setAttribute("placeholder","Индекс");
                         field_for_index.setAttribute("name","index");
-                        <%if(!dealer.getAddress().getIndex().isEmpty()){%>
+                        <%if(dealer.getAddress().getIndex()!=null){%>
                         field_for_index.setAttribute("value","<%=dealer.getAddress().getIndex() %>");
                         <%}%>
                         var field_for_street=document.createElement("input");
                         field_for_street.setAttribute("type","text");
                         field_for_street.setAttribute("placeholder","Улица");
                         field_for_street.setAttribute("name","street");
-                        <%if(!dealer.getAddress().getStreet().isEmpty()){%>
+                        <%if(dealer.getAddress().getStreet()!=null){%>
                         field_for_street.setAttribute("value","<%=dealer.getAddress().getStreet()%>");
                         <%}%>
                         var field_for_numberHouse=document.createElement("input");
                         field_for_numberHouse.setAttribute("type","text");
                         field_for_numberHouse.setAttribute("placeholder","Номер дома");
                         field_for_numberHouse.setAttribute("name","house_number");
-                        <%if(!dealer.getAddress().getNumberHouse().isEmpty()){%>
+                        <%if(dealer.getAddress().getNumberHouse()!=null){%>
                         field_for_numberHouse.setAttribute("value","<%=dealer.getAddress().getNumberHouse()%>");
                         <%}%>
 
@@ -546,35 +537,6 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 </div>
 <div id="overlay"></div>
 
-
-<script type="text/javascript">
-    // Создаем новый объект связанных списков
-    var syncList1 = new syncList;
-
-    // Определяем значения подчиненных списков (2 и 3 селектов)
-    syncList1.dataList = {
-
-        /* Определяем элементы второго списка в зависимости
-         от выбранного значения в первом списке */
-
-        '': {
-            '': 'Вы не выбрали марку'
-
-        },
-
-        'Volkswagen': {
-            '':'Все модели',
-            'Passat': 'Passat',
-            'Jeta': 'Jeta'
-
-        }
-
-
-    };
-
-    // Включаем синхронизацию связанных списков
-    syncList1.sync("id_make1", "id_model1");
-</script>
 
 </body>
 </html>

@@ -3,7 +3,9 @@ package com.dao;
 import com.dao.configuration.files.HibernateUtil;
 import com.modelClass.Car;
 
+import com.modelClass.CarBrand;
 import com.modelClass.Dealer;
+import com.servise.StandartMasege;
 import com.setting.Setting;
 import javassist.tools.rmi.ObjectNotFoundException;
 import org.hibernate.HibernateException;
@@ -139,12 +141,17 @@ public class CarDAO {
     }
 //this method found cars for all or one parameters
     public  List<Car> getCarsByParameters(String make,String model,String price_from,String price_to,String year_from,
-                                          String year_to,String engine,String gearbox){
+                                          String year_to,String engine,String gearbox,String region){
         List<Car> carsList;
         Session session =HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         String requestDb ="";
-        boolean fMake = false,fModel = false,fPrise_from = false,fPrise_to = false,fYear_from = false,fYear_to = false,fEngine = false,fGearbox=false;
+        boolean fMake = false,fModel = false,fPrise_from = false,fPrise_to = false,fYear_from = false,fYear_to = false,
+                fRegion=false, fEngine = false,fGearbox=false;
+        if(!region.isEmpty()){
+            fRegion=true;
+            requestDb=requestDb+"and c.region=:region";
+        }
         if(!make.isEmpty()){
             fMake=true;
         requestDb=requestDb+" and c.brand=:make";
@@ -205,6 +212,9 @@ public class CarDAO {
         if(fGearbox){
             query.setParameter("gearbox", gearbox);
         }
+        if (fRegion){
+            query.setParameter("region",region);
+        }
         List list=query.list();
 //        session.beginTransaction().commit();
         carsList=list;
@@ -212,7 +222,7 @@ public class CarDAO {
     }
     public List<Car> getLastCars(Integer countLastCar){
        try {
-           Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
         session.beginTransaction();
         Query query1 = session.createQuery("select max (idCar) from Car ");
@@ -232,7 +242,7 @@ public class CarDAO {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         Query query = session.createQuery("from Car c where c.idCar=:id");
-        query.setParameter("id",idCar);
+        query.setParameter("id", idCar);
         Car car =(Car)query.uniqueResult();
         return car;
     }
@@ -271,7 +281,7 @@ public class CarDAO {
             pathPhoto=setPhotoFiles(car,multipartFiles);
         }
         List<String>photos=car.getPhotoPath();
-        pathPhoto.forEach(p->photos.add(p));
+        pathPhoto.forEach(p -> photos.add(p));
         car.setPhotoPath(photos);
         session.update(car);
         tr.commit();
@@ -292,6 +302,25 @@ public class CarDAO {
         dealers.forEach(n -> emails.add(n.getContact_persons().get(0).getEmail()));
         return emails;
     }
+    public void deleteOldCar(Integer period_in_month){
+        Calendar calendar=Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -period_in_month);
+        Date date =calendar.getTime();
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr=session.beginTransaction();
+        Query query = session.createQuery(" from Car where dateProvide<=:date");
+        query.setParameter("date", date);
+        List<Car>cars=query.list();
+        if(!cars.isEmpty()){
+            cars.forEach ( c-> {
+                c.getPhotoPath().forEach(p -> new File(p).delete());
+                session.delete(c);
+                tr.commit();
+        });
+        }
+        if(session.isOpen()){
+            session.close();
+        }}
     public  void updateDataProvideDyId(Long id){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr=session.beginTransaction();
@@ -307,12 +336,34 @@ public class CarDAO {
     public void  deleteCarsByDealersID(String idDealer){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr=session.beginTransaction();
-        Query query=session.createQuery("delete from Car where idDealer=:idDealer");
-        query.setParameter("idDealer",idDealer);
-        query.executeUpdate();
-        tr.commit();
-        if(session.isOpen()){
-            session.close();
+        Query query=session.createQuery("from Car where idDealer=:idDealer");
+        query.setParameter("idDealer", idDealer);
+        try {
+            session.delete(query.list().get(0));
+            tr.commit();
+        }
+          catch (IndexOutOfBoundsException e){
+              System.out.println("Car DAO 319 line IndexOutOfBoundsException ");
+          }
+
+
+      finally {
+            if(session.isOpen()){
+                session.close();
+            }
         }
     }
+    public List<String>getModelByBrand(String brand){
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction transaction=session.beginTransaction();
+        CarBrand carBrand= session.get(CarBrand.class, brand);
+
+        if (carBrand==null){
+            List<String> model=new ArrayList<>();
+            model.add(StandartMasege.getMessage(25));
+            return model;
+        }
+        return carBrand.getModels();
+    }
+
 }

@@ -13,7 +13,7 @@ import java.util.List;
 @Table (name = "CARS")
 public class Car {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.TABLE)
     private Long idCar;
     @ElementCollection
     private List<String> photoPath = new ArrayList<String>();
@@ -28,6 +28,7 @@ public class Car {
     private Integer mileage;
     private String engineCapacity;
     private String region;
+    private String equipment;
     @Temporal (TemporalType.DATE)
     private Date dateProvide;
     @Lob
@@ -151,6 +152,14 @@ public class Car {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public String getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(String equipment) {
+        this.equipment = equipment;
     }
 
     public String toString(){

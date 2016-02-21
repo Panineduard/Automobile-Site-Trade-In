@@ -21,6 +21,8 @@
         <mapping class="com.modelClass.Car"/>
         <mapping class="com.modelClass.Dealer"/>
         <mapping class="com.modelClass.Address"/>
+        <mapping class="com.modelClass.CarBrand"/>
+        <mapping class="com.modelClass.AuthorizedDealers"/>
 
 
 

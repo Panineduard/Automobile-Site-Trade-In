@@ -5,14 +5,11 @@
 <html>
 <head>
     <title>Добавить авто</title>
-    <%--<script src="/res/assets/plugins/jQuery.min.js"></script>--%>
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+
+    <script type="text/javascript" src="/res/js/get_model_by_brand.js"></script>
     <script src="/res/assets/plugins/jquery-1.10.2.js"></script>
-<script>
-    function one(){
 
-    }
-
-</script>
     <script>
         $(document).ready(function() {
             //add more file components if Add is clicked
@@ -76,7 +73,7 @@
 
     </script>
 
-    <script type="text/javascript" src="/res/js/linkedselect.js"></script>
+    <%--<script type="text/javascript" src="/res/js/linkedselect.js"></script>--%>
     <link rel="stylesheet" type="text/css" href="/res/css/style_addCar.css">
 </head>
 
@@ -144,7 +141,7 @@
 <%}%>
     <div class="col-sm-6 form-group">
     <h2>Марка</h2>
-    <select id="id_make1" class="form-control" name="make">
+    <select id="id_make1" class="form-control" onchange="p_delete(this.value);" name="make">
         <%if(presentCar){%>
 
         <option value="<%=car.getBrand()%>" selected="selected"><%=car.getBrand()%></option>
@@ -152,44 +149,50 @@
         else {%>
 <option value="" selected="selected">выберите марку</option>
         <%}%>
-<option value="acura">Acura </option>
-<option value="audi"class="cat-top">Audi </option>
-<option value="469"class="cat-top">BMW </option>
-<option value="583"class="cat-top">Chevrolet (3632)</option>
-<option value="1004"class="cat-top">Citroen (1767)</option>
-<option value="1639"class="cat-top">Daewoo (4922)</option>
-<option value="689"class="cat-top">Fiat </option>
-<option value="1723"class="cat-top">Ford </option>
-<option value="1697"class="cat-top">Honda </option>
-<option value="927"class="cat-top">Hyundai </option>
-<option value="297"class="cat-top">Infiniti </option>
-<option value="1569"class="cat-top">KIA </option>
-<option value="1872"class="cat-top">Mazda (2612)</option>
-<option value="1121"class="cat-top">Mercedes (5145)</option>
-<option value="1094"class="cat-top">Mitsubishi (3545)</option>
-<option value="1522"class="cat-top">Nissan (3801)</option>
-<option value="1374"class="cat-top">Opel (5878)</option>
-<option value="1032"class="cat-top">Peugeot (2410)</option>
-<option value="398">Porsche (224)</option>
-<option value="1826"class="cat-top">Renault (4661)</option>
-<option value="Seat">Seat </option>
-<option value="Skoda"class="cat-top">Skoda </option>
-<option value="519"class="cat-top">Subaru </option>
-<option value="431"class="cat-top">Suzuki (661)</option>
-<option value="1594"class="cat-top">Toyota (3687)</option>
-<option value="Volkswagen"class="cat-top">Volkswagen</option>
-<option value="1479"class="cat-top">Volvo</option>
-<option value="1659"class="cat-top">ВАЗ</option>
-<option value="1799"class="cat-top">ГАЗ</option>
-<option value="576"class="cat-top">ЗАЗ (3524)</option>
-</select>
+        <option value="Acura">Acura </option>
+        <option value="Alfa_Romeo">Alfa Romeo </option>
+        <option value="Audi"class="cat-top">Audi </option>
+        <option value="BMW"class="cat-top">BMW </option>
+        <option value="Chevrolet"class="cat-top">Chevrolet</option>
+        <option value="Citroen"class="cat-top">Citroen</option>
+        <option value="Daewoo"class="cat-top">Daewoo</option>
+        <option value="Fiat"class="cat-top">Fiat </option>
+        <option value="Ford"class="cat-top">Ford </option>
+        <option value="Honda"class="cat-top">Honda </option>
+        <option value="Hyundai"class="cat-top">Hyundai </option>
+        <option value="Infiniti"class="cat-top">Infiniti </option>
+        <option value="KIA"class="cat-top">KIA </option>
+        <option value="Mazda"class="cat-top">Mazda</option>
+        <option value="Mercedes"class="cat-top">Mercedes</option>
+        <option value="Mitsubishi"class="cat-top">Mitsubishi</option>
+        <option value="Nissan"class="cat-top">Nissan</option>
+        <option value="Opel"class="cat-top">Opel</option>
+        <option value="Peugeot"class="cat-top">Peugeot</option>
+        <option value="Porsche">Porsche </option>
+        <option value="Renault"class="cat-top">Renault</option>
+        <option value="Seat">Seat </option>
+        <option value="Skoda"class="cat-top">Skoda </option>
+        <option value="Subaru"class="cat-top">Subaru </option>
+        <option value="Suzuki"class="cat-top">Suzuki </option>
+        <option value="Toyota"class="cat-top">Toyota</option>
+        <option value="Volkswagen"class="cat-top">Volkswagen</option>
+        <option value="Volvo"class="cat-top">Volvo</option>
+        <option value="ВАЗ"class="cat-top">ВАЗ </option>
+        <option value="ГАЗ"class="cat-top">ГАЗ </option>
+        <option value="ЗАЗ"class="cat-top">ЗАЗ </option>
+    </select>
 </div>
 
 <h2>Модель</h2>
 <div class="col-sm-6 form-group">
-<select id="id_model1" class="form-control" name="model">
-<option value="" selected="selected">укажите марку</option>
-</select>
+    <select id="id_model" name="model">
+        <%if(presentCar){%>
+        <option value="<%=car.getModel()%>" selected="selected"><%=car.getModel()%></option>
+        <%}
+        else {%>
+        <option value="" selected="selected">выберите марку</option>
+        <%}%>
+    </select></p>
 </div>
 
 <h2>Цена, $ <br>
@@ -350,11 +353,44 @@
 <option value="auto">Автоматическая</option>
 <option value="mechanical">Механическая</option>
 </select>
-
+    <p>РЕГИОН<br>
+        <select id="id_region" class="form-control" name="region">
+            <option value="0">Не определено</option>
+            <option value="1">Винница</option>
+            <option value="11">Днепропетровск</option>
+            <option value="13">Донецк</option>
+            <option value="2">Житомир</option>
+            <option value="14">Запорожье</option>
+            <option value="15">Ивано-Франковск</option>
+            <option value="10">Киев</option>
+            <option value="16">Кировоград</option>
+            <option value="17">Луганск</option>
+            <option value="18">Луцк</option>
+            <option value="5">Львов</option>
+            <option value="19">Николаев</option>
+            <option value="12">Одесса</option>
+            <option value="20">Полтава</option>
+            <option value="9">Ровно</option>
+            <option value="21">Симферополь</option>
+            <option value="8">Сумы</option>
+            <option value="3">Тернополь</option>
+            <option value="22">Ужгород</option>
+            <option value="7">Харьков</option>
+            <option value="23">Херсон</option>
+            <option value="4">Хмельницкий</option>
+            <option value="24">Черкассы</option>
+            <option value="6">Чернигов</option>
+            <option value="25">Черновцы</option>
+        </select></p>
     <h2>Комплектация: <br>
+        <%if(presentCar){%>
+        <input type="text" size="20" class="form-control"  name="equipment" value="<%=car.getEquipment()%>"></h2>
+        <%}
+        else {%>
         <input type="text" size="20" class="form-control"  name="equipment" ></h2>
+        <%}%>
 
-<h2>Описание</h2><br>
+    <h2>Описание</h2><br>
     <%if(presentCar){%>
     <textarea name="comment"  class="form-control" required="required" cols="40" rows="7"><%=car.getDescription()%></textarea></h2>
     <%}
@@ -396,8 +432,11 @@
     <h6>Добавить больше фото</h6>
     <br>
     <br>
-<button type="submit" >Добавить авто</button><br>
-
+    <%if(presentCar){%>
+    <button type="submit" >Изменить</button><br>
+<%}else {%>
+    <button type="submit" >Добавить авто</button><br>
+    <%}%>
 </form:form>
 
         </div>
@@ -406,38 +445,6 @@
 <footer>Подвал </footer>
 
 
-<script type="text/javascript">
-    // Создаем новый объект связанных списков
-    var syncList1 = new syncList;
-
-    // Определяем значения подчиненных списков (2 и 3 селектов)
-    syncList1.dataList = {
-
-        /* Определяем элементы второго списка в зависимости
-         от выбранного значения в первом списке */
-
-        '': {
-            '': 'Вы не выбрали марку',
-
-        },
-
-        'Volkswagen': {
-            <%if(presentCar){%>
-            '<%=car.getModel()%>':'<%=car.getModel()%>',
-            <%}%>
-            'Passat': 'Passat',
-            'Jeta': 'Jeta',
-            'Polo': 'Polo'
-
-
-        }
-
-
-    };
-
-    // Включаем синхронизацию связанных списков
-    syncList1.sync("id_make1", "id_model1");
-</script>
 
 
 
