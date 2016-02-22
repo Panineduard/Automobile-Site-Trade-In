@@ -4,6 +4,7 @@ import com.dao.AdminServiceDAO;
 import com.dao.CarDAO;
 import com.dao.DealerDao;
 import com.email.SendEmailText;
+import com.helpers.EncoderId;
 import com.helpers.PasswordHelper;
 import com.modelClass.Address;
 import com.modelClass.Contact_person;
@@ -23,7 +24,7 @@ import java.util.*;
  */
 public class Test {
     public static void main(String... arg) throws IOException {
-
+        System.out.println(EncoderId.decodeID("wXFQaSYY3eM1izeB"));
         //----------------------Collection sort-------------------
 //        List <Integer> integers=new ArrayList<>();
 //        Random random=new Random();
@@ -78,8 +79,8 @@ public class Test {
 //        LocalDateTime localDateTime1 = localDateTime.plusDays(2);
 ////        System.out.println(localDateTime1.isAfter(localDateTime));
 
-     TaskExecutorClass cdb =new TaskExecutorClass();
-        cdb.sendEmailToOwnersOldCars();
+//     TaskExecutorClass cdb =new TaskExecutorClass();
+//        cdb.sendEmailToOwnersOldCars();
 //DealerDao dealerDao=new DealerDao();
 //        System.out.println(dealerDao.getIdDealersWithoutAuth());
 
