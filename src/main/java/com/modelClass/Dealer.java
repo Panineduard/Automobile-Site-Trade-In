@@ -21,7 +21,8 @@ public class Dealer {
     private int countOfCar;
     @Temporal(TemporalType.DATE)
     private Date dateRegistration;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
+    //////////--------------------------------------------------------------------/////////////////
     private List<Contact_person> contact_persons=new ArrayList<>();
 
 

@@ -39,7 +39,6 @@ import java.util.Map;
 public class UserController {
     @RequestMapping(value = "/replacing_the_page_number", method = RequestMethod.GET)
     public ModelAndView replacePage(@RequestParam("page") Integer page,HttpSession session){
-        System.out.println("Номер страницы= "+page);
         session.setAttribute("page", page);
         ModelAndView modelAndView = new ModelAndView("index");
         return modelAndView;

@@ -7,7 +7,7 @@
         <username>veselayagora1@gmail.com</username>
         <RECIPIENT_EMAIL>veselaya_gora@mail.ru</RECIPIENT_EMAIL>
         <host>http://localhost:8080/</host>
-        <ClientsFolder>C:/ClientsFolder/</ClientsFolder>
+        <ClientsFolder>ClientsFolder/tmp/</ClientsFolder>
 
 
 </setting>

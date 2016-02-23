@@ -15,7 +15,7 @@ public class Car {
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE)
     private Long idCar;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> photoPath = new ArrayList<String>();
     private String brand;
     private String model;

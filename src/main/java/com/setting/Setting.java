@@ -43,6 +43,10 @@ public class Setting {
     }
 
     public static String getClientsFolder() {
+        File folder = new File(settingJavax.get_clients_folder());
+        if(!folder.exists()) {
+            folder.mkdirs();
+        }
         return settingJavax.get_clients_folder();
     }
 
