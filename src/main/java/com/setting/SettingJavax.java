@@ -24,6 +24,10 @@ public class SettingJavax {
     private String RECIPIENT_EMAIL;
     @XmlElement
     private String host;
+    @XmlElement
+    private Integer IMG_WIDTH;
+    @XmlElement
+    private Integer IMG_HEIGHT;
 
     public void setHost(String host) {
         this.host = host;
@@ -82,5 +86,21 @@ public class SettingJavax {
 
     public String get_host() {
         return host;
+    }
+
+    public Integer get_IMG_WIDTH() {
+        return IMG_WIDTH;
+    }
+
+    public void set_IMG_WIDTH(Integer IMG_WIDTH) {
+        this.IMG_WIDTH = IMG_WIDTH;
+    }
+
+    public Integer get_IMG_HEIGHT() {
+        return IMG_HEIGHT;
+    }
+
+    public void set_IMG_HEIGHT(Integer IMG_HEIGHT) {
+        this.IMG_HEIGHT = IMG_HEIGHT;
     }
 }

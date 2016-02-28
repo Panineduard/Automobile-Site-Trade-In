@@ -54,5 +54,8 @@ public class Setting {
         return settingJavax.get_RECIPIENT_MAIL();
     }
     public static  String getHost(){return settingJavax.get_host();}
+    public static Integer get_IMG_WIDTH(){return settingJavax.get_IMG_WIDTH();}
+    public static Integer get_IMG_HEIGHT(){return settingJavax.get_IMG_HEIGHT();}
+
 
 }

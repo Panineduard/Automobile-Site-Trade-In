@@ -1,19 +1,20 @@
 package com.dao;
 
 import com.dao.configuration.files.HibernateUtil;
-import com.email.SendHTMLEmail;
+import com.servise.SendHTMLEmail;
 import com.helpers.EncoderId;
 
 import com.helpers.PasswordHelper;
 import com.modelClass.*;
 import com.servise.StandartMasege;
 import com.setting.Setting;
-import com.setting.SettingJavax;
 import org.apache.commons.io.FileUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +23,12 @@ import java.util.*;
 /**
  * Created by Эдуард on 25.09.15.
  */
+@Repository
 public class DealerDao {
+    @Autowired
+    SendHTMLEmail sendHTMLEmail;
+    @Autowired
+    StandartMasege standartMasege;
     public List<Dealer> getIdDealersWithoutAuth() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -153,7 +159,7 @@ public class DealerDao {
 
     public String setDealer(String numberDealer, String nameDealer, String email, String name, String personPhone, String password, String city) {
         if (getDealerName(numberDealer) != null) {
-            return StandartMasege.getMessage(11);
+            return standartMasege.getMessage(11);
         }
         if (!nameDealer.isEmpty() || !numberDealer.isEmpty() || !email.isEmpty() || !name.isEmpty() || !password.isEmpty() || !city.isEmpty()) {
             Dealer dealer = new Dealer();
@@ -185,12 +191,15 @@ public class DealerDao {
             session.merge(login);
             new File(Setting.getClientsFolder() + numberDealer).mkdir();
             session.beginTransaction().commit();
-            String htmlMessage = "<a href='" + Setting.getHost() + "/ConfirmationOfRegistration?id=" + EncoderId.encodId(numberDealer) + "'>" + StandartMasege.getMessage(18) + "</a>";
-            SendHTMLEmail.sendHtmlMessage(email, htmlMessage, StandartMasege.getMessage(17));
-            return StandartMasege.getMessage(12) +
-                    " \n " + StandartMasege.getMessage(13);
+            if(session.isOpen()){
+                session.close();
+            }
+            String htmlMessage = "<a href='" + Setting.getHost() + "/ConfirmationOfRegistration?id=" + EncoderId.encodId(numberDealer) + "'>" + standartMasege.getMessage(18) + "</a>";
+            sendHTMLEmail.sendHtmlMessage(email, htmlMessage, standartMasege.getMessage(17));
+            return standartMasege.getMessage(12) +
+                    " \n " + standartMasege.getMessage(13);
         }
-        return StandartMasege.getMessage(14);
+        return standartMasege.getMessage(14);
 
 
     }

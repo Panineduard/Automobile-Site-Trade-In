@@ -1,18 +1,22 @@
-package com.servise;
+package com.controllers;
 
 import com.dao.AdminServiceDAO;
 import com.dao.CarDAO;
 import com.dao.DealerDao;
-import com.email.SendEmailText;
 import com.helpers.EncoderId;
 import com.helpers.PasswordHelper;
 import com.modelClass.Address;
 import com.modelClass.Contact_person;
 import com.setting.Setting;
+import com.setting.TestClass;
 import javafx.util.converter.LocalDateTimeStringConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
@@ -22,9 +26,16 @@ import java.util.*;
 /**
  * Created by ������ on 12.08.15.
  */
+//@Component
 public class Test {
+
+//    @Autowired
+//    TestClass testClass;
+//    public String test(){
+//        return testClass.getName();
+//    }
     public static void main(String... arg) throws IOException {
-        System.out.println(EncoderId.decodeID("wXFQaSYY3eM1izeB"));
+
         //----------------------Collection sort-------------------
 //        List <Integer> integers=new ArrayList<>();
 //        Random random=new Random();

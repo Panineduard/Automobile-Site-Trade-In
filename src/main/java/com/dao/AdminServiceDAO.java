@@ -9,6 +9,7 @@ import org.apache.commons.io.IOUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -22,6 +23,8 @@ import java.util.stream.Stream;
  * Created by volkswagen1 on 14.02.2016.
  */
 public class AdminServiceDAO {
+    @Autowired
+    StandartMasege standartMasege;
     public List<Dealer> getAllDealers(){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -35,7 +38,7 @@ public class AdminServiceDAO {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(models.getBytes());
         String myString = IOUtils.toString(byteArrayInputStream);
         Stream<String> stream = new BufferedReader(new StringReader(myString)).lines();
-        modelsName.add(StandartMasege.getMessage(29));
+        modelsName.add(standartMasege.getMessage(29));
         {
             stream
                     .forEach(s1 -> {

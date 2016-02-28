@@ -2,15 +2,17 @@ package com.controllers;
 
 import com.dao.CarDAO;
 import com.dao.DealerDao;
-import com.email.SendEmailText;
+
 import com.helpers.EncoderId;
 import com.helpers.PasswordHelper;
+import com.helpers.SearchOptions;
 import com.modelClass.Address;
 import com.modelClass.Car;
 import com.modelClass.Contact_person;
 import com.modelClass.Dealer;
 import com.servise.StandartMasege;
 import com.sun.deploy.net.HttpResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,14 +37,14 @@ import java.util.Map;
  */
 @Controller
 @SessionAttributes("login")
-
 public class UserController {
-    @RequestMapping(value = "/replacing_the_page_number", method = RequestMethod.GET)
-    public ModelAndView replacePage(@RequestParam("page") Integer page,HttpSession session){
-        session.setAttribute("page", page);
-        ModelAndView modelAndView = new ModelAndView("index");
-        return modelAndView;
-    }
+    @Autowired
+    StandartMasege standartMasege;
+    @Autowired
+    DealerDao dealerDao;
+    @Autowired
+    CarDAO carDAO;
+
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView getRegistrationForm(){
@@ -62,39 +64,39 @@ public class UserController {
         if(captcha==null || (captcha!=null && !passwordHelper.matches(input_captcha, captcha))){
             ModelAndView modelAndView = new ModelAndView("registration");
             modelAndView.addAllObjects(modelMap);
-            modelAndView.addObject("msg",StandartMasege.getMessage(22)+"<br>"+StandartMasege.getMessage(23));
+            modelAndView.addObject("msg",standartMasege.getMessage(22)+"<br>"+standartMasege.getMessage(23));
             return modelAndView;
         }
         String returnMessage;
-        DealerDao dealerDao = new DealerDao();
+//        DealerDao dealerDao = new DealerDao();
        try{ if (pasword.equals(checkPasword)){
 
             returnMessage= dealerDao.setDealer(numberDealer, nameDealer,email,name,personPhone,pasword,city);
 
         }
         else {
-            returnMessage = StandartMasege.getMessage(6);
+            returnMessage = standartMasege.getMessage(6);
         }
         ModelAndView model = new ModelAndView("successfulRegistration");
-        model.addObject("msg", StandartMasege.getMessage(7) +" "+ name + " " + returnMessage);
+        model.addObject("msg", standartMasege.getMessage(7) +" "+ name + " " + returnMessage);
         return model;}
         catch (NumberFormatException e){
 
            ModelAndView model1 = new ModelAndView("registration");
-           model1.addObject("msg", StandartMasege.getMessage(8));
+           model1.addObject("msg", standartMasege.getMessage(8));
            return model1;
         }
     }
 
 @RequestMapping(value = "/ConfirmationOfRegistration", method = RequestMethod.GET)
 public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
-    DealerDao dealerDao = new DealerDao();
+//    DealerDao dealerDao = new DealerDao();
     String msg;
     ModelAndView model;
     if(dealerDao.updateRegistrationAndRoleById(idDealer))
     {
         model = new ModelAndView("successfulRegistration");
-        msg=StandartMasege.getMessage(9);
+        msg=standartMasege.getMessage(9);
         model.addObject("msg",msg );
     }
     else {
@@ -113,8 +115,8 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
 
     @RequestMapping(value = "/feedback")
     public ModelAndView getFeedbackForm(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        auth.getPrincipal();
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        auth.getPrincipal();
         ModelAndView modelAndView = new ModelAndView("feedback");
         return modelAndView;
     }
@@ -123,10 +125,10 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
     public ModelAndView getDealer(@RequestParam ("idCar") String idCar){
         ModelAndView modelAndView= new ModelAndView("auto");
         Car car=null;
-        CarDAO carDAO =new CarDAO();
+//        CarDAO carDAO =new CarDAO();
         if(!idCar.isEmpty()){
             car=carDAO.getCarById(idCar);
-            DealerDao dealerDao=new DealerDao();
+//            DealerDao dealerDao=new DealerDao();
             modelAndView.addObject("car", car);
             modelAndView.addObject("dealer",dealerDao.getDealerById(car.getIdDealer()));
         }
@@ -141,7 +143,7 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String idDealer=auth.getName();
         Contact_person contact_person = new Contact_person();
-        DealerDao dealerDao= new DealerDao();
+//        DealerDao dealerDao= new DealerDao();
         if(!manager.isEmpty()){contact_person.setName(manager);}
         if(!phone.isEmpty()){contact_person.setPhone(phone);}
         if(!email.isEmpty()){contact_person.setEmail(email);}
@@ -155,7 +157,7 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
                                                  @RequestParam("house_number") String house_number){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String idDealer=auth.getName();
-        DealerDao dealerDao= new DealerDao();
+//        DealerDao dealerDao= new DealerDao();
         if(index.isEmpty()){index="";}
         if(street.isEmpty()){street="";}
         if(house_number.isEmpty()){house_number="";}
@@ -167,7 +169,7 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
     public ModelAndView deleteContactPerson(@RequestParam("count")String id ,HttpSession session){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String idDealer=auth.getName();
-        DealerDao dealerDao= new DealerDao();
+//        DealerDao dealerDao= new DealerDao();
         Integer idPerson = new Integer(EncoderId.decodeID(id));
         if(idPerson!=null){
         dealerDao.deleteContactPersonById(idDealer,idPerson);

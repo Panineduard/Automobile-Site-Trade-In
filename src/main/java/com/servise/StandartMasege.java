@@ -8,8 +8,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.stereotype.Component;
 
 
+import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
@@ -26,14 +28,13 @@ import java.util.stream.Stream;
 /**
  * Created by volkswagen1 on 11.01.2016.
  */
+@Component
 public class StandartMasege {
-    static MessageSource resources;
-    static {
-        resources = new ClassPathXmlApplicationContext("spring-app.xml");
-    }
+   @Autowired
+   MessageSource messageSource;//=new ClassPathXmlApplicationContext("spring-app.xml");
+   public String  getMessage(Integer p){
 
-    public static String  getMessage(Integer p){
-        String message = resources.getMessage(p.toString(), null, "The file with messages was not found", null);
+        String message = messageSource.getMessage(p.toString(), null, "Messages was not found",Locale.getDefault());
         return message;
     }
 

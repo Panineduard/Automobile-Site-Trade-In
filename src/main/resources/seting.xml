@@ -8,6 +8,9 @@
         <RECIPIENT_EMAIL>veselaya_gora@mail.ru</RECIPIENT_EMAIL>
         <host>http://localhost:8080/</host>
         <ClientsFolder>ClientsFolder/tmp/</ClientsFolder>
+        <!--this is size images in client folder-->
+        <IMG_WIDTH>300</IMG_WIDTH>
+        <IMG_HEIGHT>300</IMG_HEIGHT>
 
 
 </setting>

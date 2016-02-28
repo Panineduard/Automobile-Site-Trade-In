@@ -99,6 +99,7 @@
 </header>
 <ul id="menu">
   <li><a title="На главную" href="/">На главную</a></li>
+    <li><a href="/feedback">Обратная связь</a></li>
   <%--<li><a title="Мои автомобили" href="">Мои автомобили</a></li>--%>
   <li><a title="Добавить авто" href="/addCar">+ Добавить авто</a></li>
     <c:url var="logoutAction" value="/j_spring_security_logout"></c:url>

@@ -18,9 +18,14 @@ function p_delete(e){
                 var model=document.getElementById("id_model");
 
                 var manager=document.createElement("OPTION");
-                manager.setAttribute("value",data[i]);
-////
-                manager.innerHTML=data[i];
+                if(i===0){
+                    manager.setAttribute("value",'');
+                }
+                    else{
+                    manager.setAttribute("value",data[i]);
+                }
+
+                    manager.innerHTML=data[i];
                 model.appendChild(manager);
 //                  alert("привет");
 //

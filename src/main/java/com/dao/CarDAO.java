@@ -1,10 +1,12 @@
 package com.dao;
 
 import com.dao.configuration.files.HibernateUtil;
+import com.helpers.SearchOptions;
 import com.modelClass.Car;
 
 import com.modelClass.CarBrand;
 import com.modelClass.Dealer;
+import com.servise.ChangeImgSize;
 import com.servise.StandartMasege;
 import com.setting.Setting;
 import javassist.tools.rmi.ObjectNotFoundException;
@@ -12,17 +14,26 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
 /**
  * Created by Эдуард on 02.10.15.
  */
+@Repository
 public class CarDAO {
+@Autowired
+StandartMasege standartMasege;
+@Autowired
+ChangeImgSize changeImgSize;
 
-    private static List<String> setPhotoFiles(Car car,List<MultipartFile> multipartFiles){
+    private List<String> setPhotoFiles(Car car,List<MultipartFile> multipartFiles){
         List<String> pathPhoto=new ArrayList<>();
         int numberPhoto=car.getPhotoPath().size();
         for (MultipartFile file:multipartFiles){
@@ -30,16 +41,27 @@ public class CarDAO {
             int pointPosition= file.getOriginalFilename().indexOf('.');
             String formatFile =file.getOriginalFilename().substring(pointPosition);
             BufferedOutputStream stream=null;
+
             try {
+                File convFile = new File( file.getOriginalFilename());
+                file.transferTo(convFile);
+                BufferedImage bufferedImage =  ImageIO.read(convFile);
+                bufferedImage=changeImgSize.resizeImage(bufferedImage,Setting.get_IMG_WIDTH(),Setting.get_IMG_HEIGHT());
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(bufferedImage,"jpg",baos);
+                baos.flush();
+
+
                 File file1 = new File(Setting.getClientsFolder()+car.getIdDealer(),car.getIdCar()+"-"+numberPhoto+formatFile);
                 pathPhoto.add(file1.getAbsolutePath());
-                byte[] bytes = file.getBytes();
+                byte[] bytes = baos.toByteArray();
+                baos.close();
                 stream =new BufferedOutputStream(new FileOutputStream(file1));
                 stream.write(bytes);
                 numberPhoto++;
             }
             catch (FileNotFoundException e){
-                System.out.println("Error");
+                System.out.println("Error from setPhotoFiles CarDao");
                 return null;
             }
             catch (IOException e){
@@ -139,86 +161,109 @@ public class CarDAO {
         }
         return carId ;
     }
-//this method found cars for all or one parameters
-    public  List<Car> getCarsByParameters(String make,String model,String price_from,String price_to,String year_from,
-                                          String year_to,String engine,String gearbox,String region){
+//this method found cars for all or one parameters if prise 1 it is ascending_price if prise 2 by_prices_descending 0 nothing
+    public  ResultCars getCarsByParameters(SearchOptions options, int page){
+        //String make,String model,String price_from,String price_to,String year_from,String year_to,String engine,String gearbox,String region,
         List<Car> carsList;
         Session session =HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         String requestDb ="";
         boolean fMake = false,fModel = false,fPrise_from = false,fPrise_to = false,fYear_from = false,fYear_to = false,
                 fRegion=false, fEngine = false,fGearbox=false;
-        if(!region.isEmpty()){
+        String priseQuery=" ";
+        if(options.getPrise()==1){
+                priseQuery="ORDER BY c.prise ";
+        }
+        if (options.getPrise()==2){
+            priseQuery="ORDER BY c.prise DESC";
+        }
+        if(!options.getRegion().isEmpty()){
             fRegion=true;
             requestDb=requestDb+"and c.region=:region";
         }
-        if(!make.isEmpty()){
+        if(!options.getMake().isEmpty()){
             fMake=true;
         requestDb=requestDb+" and c.brand=:make";
         }
-        if(!model.isEmpty()){
+        if(!options.getModel().isEmpty()){
             fModel=true;
             requestDb+= " and c.model=:model";
         }
-        if(!price_from.isEmpty()){
+        if(!options.getPrice_from().isEmpty()){
             fPrise_from=true;
             requestDb+=" and c.prise>:prise_from";
         }
-        if(!price_to.isEmpty()){
+        if(!options.getPrice_to().isEmpty()){
             fPrise_to=true;
             requestDb+=" and c.prise<:prise_to";
         }
-        if(!engine.isEmpty()){
+        if(!options.getEngine().isEmpty()){
             fEngine=true;
             requestDb+=" and c.enginesType =:engine ";
         }
-        if(!gearbox.isEmpty()){
+        if(!options.getGearbox().isEmpty()){
             fGearbox=true;
             requestDb+=" and c.transmission =:gearbox";
 
         }
-        if(!year_from.isEmpty()){
+        if(!options.getYear_from().isEmpty()){
             fYear_from=true;
             requestDb+=" and  c.yearMade >:year_from";
         }
-        if(!year_to.isEmpty()){
+        if(!options.getYear_to().isEmpty()){
             fYear_to=true;
             requestDb+=" and c.yearMade <:year_to ";
         }
+        Query query1=session.createQuery("select count(*)from Car c where c.id>=:id "+requestDb);
+//Query query=session.createQuery("from Car where rownum between '10' ");
+        Query query =session.createQuery("from Car  c where c.id>=:id "+requestDb+priseQuery).setFirstResult(page-1).setMaxResults(page+9);
 
-        Query query =session.createQuery("from Car  c where c.id>=:id "+requestDb);
         query.setParameter("id",0L);
+        query1.setParameter("id",0L);
         if(fMake){
-            query.setParameter("make",make);
+            query.setParameter("make",options.getMake());
+            query1.setParameter("make",options.getMake());
         }
         if(fModel){
-            query.setParameter("model",model);
+            query.setParameter("model",options.getModel());
+            query1.setParameter("model",options.getModel());
+
         }
         if(fPrise_from){
-            query.setParameter("prise_from",new Integer(price_from));
+            query.setParameter("prise_from",new Integer(options.getPrice_from()));
+            query1.setParameter("prise_from",new Integer(options.getPrice_from()));
         }
         if(fPrise_to){
-            query.setParameter("prise_to",new Integer(price_to));
+            query.setParameter("prise_to",new Integer(options.getPrice_to()));
+            query1.setParameter("prise_to",new Integer(options.getPrice_to()));
         }
         if(fEngine){
-            query.setParameter("engine",engine);
+            query.setParameter("engine",options.getEngine());
+            query1.setParameter("engine",options.getEngine());
         }
         if(fYear_from){
-            query.setParameter("year_from",new Integer(year_from));
+            query.setParameter("year_from",new Integer(options.getYear_from()));
+            query1.setParameter("year_from",new Integer(options.getYear_from()));
         }
         if(fYear_to){
-            query.setParameter("year_to",new Integer(year_to));
+            query.setParameter("year_to",new Integer(options.getYear_to()));
+            query1.setParameter("year_to",new Integer(options.getYear_to()));
         }
         if(fGearbox){
-            query.setParameter("gearbox", gearbox);
+            query.setParameter("gearbox", options.getGearbox());
+            query1.setParameter("gearbox", options.getGearbox());
         }
         if (fRegion){
-            query.setParameter("region",region);
+            query.setParameter("region",options.getRegion());
+            query1.setParameter("region",options.getRegion());
         }
-        List list=query.list();
-//        session.beginTransaction().commit();
-        carsList=list;
-        return carsList;
+        carsList=query.list();
+        ResultCars result=new ResultCars();
+        result.setCars(carsList);
+        result.setPage(page);
+        result.setPages((Long)query1.list().get(0)/10+1);
+        if(session.isOpen())session.close();
+        return result ;
     }
     public List<Car> getLastCars(Integer countLastCar){
        try {
@@ -360,7 +405,7 @@ public class CarDAO {
 
         if (carBrand==null){
             List<String> model=new ArrayList<>();
-            model.add(StandartMasege.getMessage(25));
+            model.add(standartMasege.getMessage(25));
             return model;
         }
         return carBrand.getModels();

@@ -1,4 +1,4 @@
-package com.email;
+package com.controllers.email;
 
 
 import com.setting.Setting;

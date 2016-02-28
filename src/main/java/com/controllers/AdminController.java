@@ -13,6 +13,7 @@ import com.setting.SettingJavax;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,8 @@ import java.util.stream.Stream;
  */
 @Controller
 public class AdminController {
+    @Autowired
+    StandartMasege standartMasege;
     @RequestMapping("/update_dealers_list")
     public ModelAndView getAdminPage(){
         ModelAndView modelAndView = new ModelAndView("admin_page");
@@ -57,9 +60,9 @@ public class AdminController {
         authorizedDealer.setDealer_number(dealersNumber);
         ModelAndView modelAndView = new ModelAndView("admin_page");
         if(dealerDao.addLegalsDealer(authorizedDealer)){
-            modelAndView.addObject("msg",StandartMasege.getMessage(28));
+            modelAndView.addObject("msg",standartMasege.getMessage(28));
         }
-        else  modelAndView.addObject("msg",StandartMasege.getMessage(30));
+        else  modelAndView.addObject("msg",standartMasege.getMessage(30));
 
         return modelAndView;
     }
@@ -86,10 +89,10 @@ public class AdminController {
 
         try {
             adminServiceDAO.setModelsByBrand(uploadForm.getFiles().get(0),brand);
-            msg=StandartMasege.getMessage(26);
+            msg=standartMasege.getMessage(26);
         }
         catch (IOException e){
-            msg=StandartMasege.getMessage(27);
+            msg=standartMasege.getMessage(27);
         }
 
         ModelAndView modelAndView=new ModelAndView("admin_page");
@@ -104,7 +107,7 @@ public class AdminController {
         DealerDao dealerDao = new DealerDao();
         dealerDao.deleteLoginAndDealerById(EncoderId.decodeID(id));
         ModelAndView modelAndView = new ModelAndView("admin_page");
-        modelAndView.addObject("msg", StandartMasege.getMessage(24));
+        modelAndView.addObject("msg", standartMasege.getMessage(24));
         return modelAndView;
 
 

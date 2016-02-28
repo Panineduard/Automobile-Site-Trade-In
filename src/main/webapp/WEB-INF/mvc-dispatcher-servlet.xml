@@ -9,10 +9,10 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
+    <context:annotation-config />
     <context:component-scan base-package="com.controllers"/>
 
 
-    <context:annotation-config />
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
@@ -23,19 +23,36 @@
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
+    <bean id="SendHTMLEmail" class="com.servise.SendHTMLEmail">
+        <property name="mailSender" ref="mailSender"/>
+    </bean>
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" >
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="username" value="veselayagora1@gmail.com" />
+        <property name="password" value="p1120772" />
+        <property name="defaultEncoding" value="UTF-8"/>
+
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+            </props>
+        </property>
+    </bean>
+    <bean name="CarDAO" class="com.dao.CarDAO"/>
+    <bean name="DealerDao" class="com.dao.DealerDao"/>
+
     <bean id="messageSource"
-                class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basename" value="messages_ru_RU" />
-        <property name="fallbackToSystemLocale" value="false"/>
-        <property name="fileEncodings" value="UTF-8"/>
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:messages"/>
         <property name="defaultEncoding" value="UTF-8" />
+        <property name="useCodeAsDefaultMessage" value="false"/>
     </bean>
 
-
-    <!--<task:annotation-driven  />-->
-
-    <!--<bean id="TaskExecutorClass" class="com.servise.TaskExecutorClass>-->
-
+    <bean name="standartMasege" class="com.servise.StandartMasege" />
+    <bean name="changeImgSize" class="com.servise.ChangeImgSize"/>
 
 
     <mvc:resources location="/resources/**" mapping="/res/**"/>

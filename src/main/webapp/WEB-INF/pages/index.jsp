@@ -2,6 +2,7 @@
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="com.modelClass.Car" %>
 <%@ page import="java.util.List" %>
+<%@ page import="org.springframework.ui.ModelMap" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -58,7 +59,6 @@
  <h5>Сортировка:</h5>
  <a href="/ascending_price">По возрастанию цены</a>
  <a href="/by_prices_descending">По убыванию цены</a>
-
 <%--<h5>Результаты поиска: </h5>--%>
 <div id="layout">
   <div id="baner-left">
@@ -252,29 +252,31 @@
       <%
         List<Car> cars=null;
         int numberPage=1;
-        int countButtons=0;
+        long countButtons=0L;
         if (session.getAttribute("page")!=null) {
           numberPage = (Integer) session.getAttribute("page");
         }
         if(request.getSession().getAttribute("cars")!=null){
           cars=(List<Car>)request.getSession().getAttribute("cars");
         }
-
+        if(request.getSession().getAttribute("pages")!=null){
+          countButtons=(Long)request.getSession().getAttribute("pages");
+        }
 
         if(cars!=null){
-          countButtons=cars.size()/10+1;
-          int numberCarFrom=0;
-          int numberCarTo=0;
-
-           if(numberPage==countButtons){
-             numberCarFrom=(numberPage-1)*10;
-             numberCarTo=cars.size();}
-           if(numberPage<countButtons){
-             numberCarFrom=(numberPage-1)*10;
-             numberCarTo=numberPage*10;
-           }
-        for (int i=numberCarFrom;i<numberCarTo;i++){
-          Car car=cars.get(i);
+//          countButtons=cars.size()/10+1;
+//          int numberCarFrom=0;
+//          int numberCarTo=0;
+//
+//           if(numberPage==countButtons){
+//             numberCarFrom=(numberPage-1)*10;
+//             numberCarTo=cars.size();}
+//           if(numberPage<countButtons){
+//             numberCarFrom=(numberPage-1)*10;
+//             numberCarTo=numberPage*10;
+//           }
+        for (Car car:cars){
+//          Car car=cars.get(i);
           String path;
             if(car.getPhotoPath().get(0).equals("null")) {
               path="/res/img/notAvailable.png";
@@ -344,6 +346,8 @@
   int numberFirstPage=1;
 
     if(numberPage>7)numberFirstPage=numberPage-6;
+
+  request.getSession().setAttribute("parameter",request.getParameterMap());
 
 %>
   <div class="page">

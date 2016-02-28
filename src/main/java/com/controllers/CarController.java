@@ -1,21 +1,22 @@
 package com.controllers;
 
+import com.dao.ResultCars;
 import com.helpers.EncoderId;
 import com.helpers.FileUploadForm;
 import com.dao.CarDAO;
 import com.dao.DealerDao;
+import com.helpers.SearchOptions;
 import com.modelClass.Car;
 import com.servise.ChangeImgSize;
 import com.servise.StandartMasege;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import com.helpers.ViewHalper;
 
@@ -32,8 +33,16 @@ import java.util.*;
  */
 @Controller
 public class CarController {
+    @Autowired
+    CarDAO carDAO;
+    @Autowired
+    DealerDao dealerDao;
+    @Autowired
+    StandartMasege standartMasege;
+    @Autowired
+    ChangeImgSize changeImgSize;
     @RequestMapping(value = "/getPhoto", method = RequestMethod.GET)
-    public void getRegistrationForm(HttpServletRequest req, HttpServletResponse response){
+    public void getPhoto(HttpServletRequest req, HttpServletResponse response){
         String path_of_photo=(String)req.getParameter("pathPhoto");
         Integer imgHeight=0;
         Integer imgWidth =0;
@@ -61,14 +70,10 @@ public class CarController {
 
                 try {
                     File file=new File(path_of_photo);
-//                    byte[] chars = new byte[(int)file.length()];
-//                    fileInputStream=new FileInputStream(path_of_photo);
-//                    fileInputStream.read(chars);
-//                    fileInputStream.close();
                     BufferedImage bufferedImage =  ImageIO.read(file);
 //
                     if(imgHeight!=0||imgWidth!=0){
-                        bufferedImage = ChangeImgSize.resizeImage(bufferedImage, imgWidth, imgHeight);
+                        bufferedImage = changeImgSize.resizeImage(bufferedImage, imgWidth, imgHeight);
                     }
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -92,7 +97,7 @@ public class CarController {
 
             }
             catch (IOException r){
-                System.out.println("Ошибка потока");
+                System.out.println("Ошибка потока getPhoto");
             }
         }
         }
@@ -100,8 +105,8 @@ public class CarController {
 
     @RequestMapping(value = "/getModelByBrand",method = RequestMethod.GET, headers="Accept=application/json")
     public @ResponseBody List<String> getModelForm(@ModelAttribute("model")String model){
-        System.out.println(model);
-        CarDAO carDAO=new CarDAO();
+//        System.out.println(model);
+//        CarDAO carDAO=new CarDAO();
         return carDAO.getModelByBrand(model);
 
     }
@@ -109,18 +114,49 @@ public class CarController {
 
     @RequestMapping(value = "/ascending_price")
     public ModelAndView sortedCarsAp(HttpSession session){
-        List<Car>cars = (List<Car>)session.getAttribute("cars");
-        if(cars!=null){ Collections.sort(cars,(Car c1,Car c2)->c1.getPrise().compareTo(c2.getPrise()));
-        session.setAttribute("cars",cars);}
+        ResultCars result;
+        SearchOptions options=(SearchOptions)session.getAttribute("options");
+        Integer page=(Integer)session.getAttribute("page");
+        if (options!=null){
+            if (page==null){page=1;}
+            if(options.getPrise()!=1){
+            options.setPrise(1);
+            result= carDAO.getCarsByParameters(options,page);
+            session.setAttribute("cars",result.getCars());
+            session.setAttribute("page",result.getPage());
+            }
+        }
+        else {
+            List<Car>cars = (List<Car>)session.getAttribute("cars");
+            if(cars!=null){ Collections.sort(cars,(Car c1,Car c2)->c1.getPrise().compareTo(c2.getPrise()));
+                session.setAttribute("cars",cars);
+        }
+        }
         ModelAndView modelAndView = new ModelAndView("index");
         return modelAndView;
     }
 
     @RequestMapping(value = "/by_prices_descending")
     public ModelAndView sortedCarsDown(HttpSession session){
+        ResultCars result;
+        SearchOptions options=(SearchOptions)session.getAttribute("options");
+        Integer page=(Integer)session.getAttribute("page");
+        if (options!=null){
+            if (page==null){page=1;}
+            if(options.getPrise()!=2){
+                options.setPrise(2);
+                result= carDAO.getCarsByParameters(options,page);
+                session.setAttribute("cars",result.getCars());
+                session.setAttribute("page",result.getPage());
+            }
+        }
+        else {
         List<Car>cars = (List<Car>)session.getAttribute("cars");
         if(cars!=null){        Collections.sort(cars,(Car c1,Car c2)->-(c1.getPrise().compareTo(c2.getPrise())));
-            session.setAttribute("cars",cars);}
+            session.setAttribute("cars",cars);
+        }
+        }
+
         ModelAndView modelAndView = new ModelAndView("index");
         return modelAndView;
     }
@@ -132,30 +168,47 @@ public class CarController {
 
     @RequestMapping(value = "*/update_car")
     public ModelAndView updateCarsDateProvide(@ModelAttribute("car")String id){
-        CarDAO carDAO=new CarDAO();
+//        CarDAO carDAO=new CarDAO();
         carDAO.updateDataProvideDyId(new Long(EncoderId.decodeID(id)));
         ModelAndView modelAndView=new ModelAndView("my_account");
         return ViewHalper.addingDealerAndCarsInView(modelAndView);
     }
-
+//@ModelAttribute("make")String make,@ModelAttribute("model")String model,
+// @ModelAttribute("price_from")String price_from,@ModelAttribute("price_to")String price_to,
+// @ModelAttribute("year_from")String year_from,@ModelAttribute("year_to")String year_to,
+// @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox,
+// @ModelAttribute("region")String region,
     @RequestMapping(value = "/lookForCars",method = RequestMethod.POST)
-    public ModelAndView getCarsPages(@ModelAttribute("make")String make,@ModelAttribute("model")String model,
-                                     @ModelAttribute("price_from")String price_from,@ModelAttribute("price_to")String price_to,
-                                     @ModelAttribute("year_from")String year_from,@ModelAttribute("year_to")String year_to,
-                                     @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox,
-                                     @ModelAttribute("region")String region,HttpSession session){
-        CarDAO carDAO= new CarDAO();
-        if(model.equals(StandartMasege.getMessage(29))){
-            model="";
-        }
-        List<Car> cars =carDAO.getCarsByParameters(make,model,price_from,price_to,year_from,year_to,engine,gearbox,region);
+    public ModelAndView lookForCars(
+            @ModelAttribute("make")String make,@ModelAttribute("model")String model,
+            @ModelAttribute("price_from")String price_from,@ModelAttribute("price_to")String price_to,
+            @ModelAttribute("year_from")String year_from,@ModelAttribute("year_to")String year_to,
+            @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox,
+            @ModelAttribute("region")String region,
+            @ModelAttribute("page")String page,HttpSession session,ModelMap firstSearchOptions){
         ModelAndView modelAndView = new ModelAndView("index");
-        session.setAttribute("cars",cars);
-        session.removeAttribute("page");
-//        modelAndView.addObject("cars",cars);
+        modelAndView.addAllObjects(firstSearchOptions);
+        if(page.isEmpty()){
+            page="1";
+        }
+        SearchOptions options=new SearchOptions(make,model,price_from,price_to,year_from,year_to,engine,gearbox,region,0);
+        ResultCars cars =carDAO.getCarsByParameters(options,new Integer(page));
+        session.setAttribute("options",options);
+        session.setAttribute("cars",cars.getCars());
+        session.setAttribute("page",cars.getPage());
+        session.setAttribute("pages", cars.getPages());
         return modelAndView;
     }
-
+    @RequestMapping(value = "/replacing_the_page_number", method = RequestMethod.GET)
+    public ModelAndView replacePage(@RequestParam("page") Integer page,HttpSession session){
+        SearchOptions options=(SearchOptions)session.getAttribute("options");
+        ResultCars result=carDAO.getCarsByParameters(options, page);
+        session.setAttribute("page",  result.getPage());
+        session.setAttribute("cars",  result.getCars());
+        session.setAttribute("pages", result.getPages());
+        ModelAndView modelAndView = new ModelAndView("index");
+        return modelAndView;
+    }
     @RequestMapping(value = {"*/addCarWithPhoto","/addCarWithPhoto"},method = RequestMethod.POST)
     public ModelAndView uploadCarsFile(@ModelAttribute("uploadForm") FileUploadForm uploadForm,Model map,
                                           @ModelAttribute("make")String make,@ModelAttribute("model")String model,
@@ -171,7 +224,7 @@ public class CarController {
         List<String>photoPath;
         if (!idDealer.isEmpty()) {
             Car car = new Car();
-            CarDAO carDAO=new CarDAO();
+//            CarDAO carDAO=new CarDAO();
 
 
             if(!idCar.isEmpty()){
@@ -235,8 +288,8 @@ public class CarController {
              if(!update){
                 if (carDAO.setCar(car, uploadForm.getFiles()) != -1L) {
                     ModelAndView modelAndView=new ModelAndView("my_account");
-                    modelAndView.addObject("msg", StandartMasege.getMessage(1));
-                    DealerDao dealerDao = new DealerDao();
+                    modelAndView.addObject("msg", standartMasege.getMessage(1));
+//                    DealerDao dealerDao = new DealerDao();
                     dealerDao.updateCountOfCar(car.getIdDealer());
                     return ViewHalper.addingDealerAndCarsInView(modelAndView);
                 }
@@ -244,7 +297,7 @@ public class CarController {
                 if (update){
                     if (carDAO.updateCarById(car,uploadForm.getFiles())){
                         ModelAndView modelAndView=new ModelAndView("my_account");
-                        modelAndView.addObject("msg", StandartMasege.getMessage(1));
+                        modelAndView.addObject("msg", standartMasege.getMessage(1));
                         return ViewHalper.addingDealerAndCarsInView(modelAndView);
                     }
                 }
@@ -255,13 +308,13 @@ public class CarController {
 
         ModelAndView modelAndView=new ModelAndView("pageForCar");
 
-        modelAndView.addObject("msg", StandartMasege.getMessage(2));
+        modelAndView.addObject("msg", standartMasege.getMessage(2));
         return modelAndView;
 
     }
     @RequestMapping(value = "*/change_car",method = RequestMethod.GET)
     public ModelAndView responseCar(@ModelAttribute("car")String carId){
-        CarDAO carDAO = new CarDAO();
+//        CarDAO carDAO = new CarDAO();
         Car car=carDAO.getCarById(EncoderId.decodeID(carId));
         ModelAndView modelAndView=new ModelAndView("pageForCar");
         modelAndView.addObject("car",car);
@@ -269,21 +322,21 @@ public class CarController {
     }
     @RequestMapping(value = "*/delete_car",method = RequestMethod.GET)
     public ModelAndView deleteCar(@ModelAttribute("car")String car){
-        CarDAO carDAO = new CarDAO();
+//        CarDAO carDAO = new CarDAO();
         ModelAndView modelAndView=new ModelAndView("my_account");
         if(carDAO.deleteCarById(EncoderId.decodeID(car))){
-            modelAndView.addObject("msg",StandartMasege.getMessage(20));
+            modelAndView.addObject("msg",standartMasege.getMessage(20));
             return ViewHalper.addingDealerAndCarsInView(modelAndView);
         }
         else {
-            modelAndView.addObject("msg",StandartMasege.getMessage(21));
+            modelAndView.addObject("msg",standartMasege.getMessage(21));
             return ViewHalper.addingDealerAndCarsInView(modelAndView);
         }
 
     }
     @RequestMapping(value = "*/change_car",method = RequestMethod.POST)
     public ModelAndView changeCar(@ModelAttribute("car")String car){
-        CarDAO carDAO = new CarDAO();
+//        CarDAO carDAO = new CarDAO();
         Car car1=carDAO.getCarById(EncoderId.decodeID(car));
         ModelAndView modelAndView=new ModelAndView("pageForCar");
         modelAndView.addObject("car",car);
