@@ -202,10 +202,13 @@ public class CarController {
     @RequestMapping(value = "/replacing_the_page_number", method = RequestMethod.GET)
     public ModelAndView replacePage(@RequestParam("page") Integer page,HttpSession session){
         SearchOptions options=(SearchOptions)session.getAttribute("options");
-        ResultCars result=carDAO.getCarsByParameters(options, page);
-        session.setAttribute("page",  result.getPage());
-        session.setAttribute("cars",  result.getCars());
-        session.setAttribute("pages", result.getPages());
+        if(options!=null){
+            ResultCars result=carDAO.getCarsByParameters(options, page);
+            session.setAttribute("page",  result.getPage());
+            session.setAttribute("cars",  result.getCars());
+            session.setAttribute("pages", result.getPages());
+        }
+
         ModelAndView modelAndView = new ModelAndView("index");
         return modelAndView;
     }

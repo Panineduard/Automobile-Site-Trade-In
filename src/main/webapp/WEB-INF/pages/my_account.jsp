@@ -15,78 +15,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="/res/css/style_my_acount.css">
-    <%--<script type="text/javascript" src="/res/js/linkedselect.js"></script>--%>
+<link rel="stylesheet" type="text/css" href="/res/css/modal_window.css">
 
-    <!-- <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'> -->
+
 <title> Автомобили с пробегом </title>
     <%--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>--%>
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <script type="text/javascript" src="/res/js/get_model_by_brand.js"></script>
-    <style type="text/css">
-        /* Окно */
-        #modal_form {
-            width: 300px;
-            height: 300px; /* Размеры должны быть фиксированы */
-            border-radius: 5px;
-            border: 3px #000 solid;
-            background: #fff;
-            position: fixed; /* чтобы окно было в видимой зоне в любом месте */
-            top: 45%; /* отступаем сверху 45%, остальные 5% подвинет скрипт */
-            left: 50%; /* половина экрана слева */
-            margin-top: -150px;
-            margin-left: -150px; /* тут вся магия центровки css, отступаем влево и вверх минус половину ширины и высоты соответственно =) */
-            display: none; /* в обычном состоянии окна не должно быть */
-            opacity: 0; /* полностью прозрачно для анимирования */
-            z-index: 5; /* окно должно быть наиболее большем слое */
-            padding: 20px 10px;
-        }
-        /* Кнопка закрыть для тех кто в танке) */
-        #modal_form #modal_close {
-            width: 21px;
-            height: 21px;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-            display: block;
-        }
-        /* Подложка */
-        #overlay {
-            z-index: 3; /* подложка должна быть выше слоев элементов сайта, но ниже слоя модального окна */
-            position: fixed; /* всегда перекрывает весь сайт */
-            background-color: #000; /* черная */
-            opacity: 0.8; /* но немного прозрачна */
-            width: 100%;
-            height: 100%; /* размером во весь экран */
-            top: 0;
-            left: 0; /* сверху и слева 0, обязательные свойства! */
-            cursor: pointer;
-            display: none; /* в обычном состоянии её нет) */
-        }
-    </style>
-    <script type="text/javascript">
-        $(document).ready(function() { // вся магия после загрузки страницы
-            $('a#go').click( function(event){ // ловим клик по ссылки с id="go"
-                event.preventDefault(); // выключаем стандартную роль элемента
-                $('#overlay').fadeIn(400, // сначала плавно показываем темную подложку
-                        function(){ // после выполнения предъидущей анимации
-                            $('#modal_form')
-                                    .css('display', 'block') // убираем у модального окна display: none;
-                                    .animate({opacity: 1, top: '50%'}, 200); // плавно прибавляем прозрачность одновременно со съезжанием вниз
-                        });
-            });
-            /* Закрытие модального окна, тут делаем то же самое но в обратном порядке */
-            $('#modal_close, #overlay').click( function(){ // ловим клик по крестику или подложке
-                $('#modal_form')
-                        .animate({opacity: 0, top: '45%'}, 200,  // плавно меняем прозрачность на 0 и одновременно двигаем окно вверх
-                        function(){ // после анимации
-                            $(this).css('display', 'none'); // делаем ему display: none;
-                            $('#overlay').fadeOut(400); // скрываем подложку
-                        }
-                );
-            });
-        });
-    </script>
+    <script type="text/javascript" src="/res/js/modal_window.js"></script>
+
+
 </head>
 
 <body>

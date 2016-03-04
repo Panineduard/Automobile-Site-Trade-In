@@ -19,8 +19,14 @@ public class LoginLogautController {
     @RequestMapping(value = "/login")
     public ModelAndView login(HttpServletRequest request){
             ModelAndView modelAndView = new ModelAndView("checkLogin");
-            modelAndView.addObject("msg","<h1>"+ standartMasege.getMessage(3)+"<h1>");
+            modelAndView.addObject("msg",standartMasege.getMessage(3));
             return modelAndView;
+    }
+    @RequestMapping(value = "/login_invalid")
+    public ModelAndView loginInvalid(){
+        ModelAndView modelAndView = new ModelAndView("checkLogin");
+        modelAndView.addObject("msg",standartMasege.getMessage(34));
+        return modelAndView;
     }
 
     @RequestMapping(value = "/logout")

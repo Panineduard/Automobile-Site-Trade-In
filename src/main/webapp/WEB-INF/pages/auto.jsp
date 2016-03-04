@@ -7,17 +7,73 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+  <script type="text/javascript" src="/res/js/jquery-1.2.6.min.js"></script>
+  <script type="text/javascript" src="/res/js/jquery-easing-1.3.pack.js"></script>
+  <script type="text/javascript" src="/res/js/jquery-easing-compatibility.1.2.pack.js"></script>
+  <script type="text/javascript" src="/res/js/coda-slider.1.1.1.pack.js"></script>
 
-  <script language = "JavaScript">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/res/css/style_auto.css">
+  <link rel="stylesheet" type="text/css" href="/res/css/style_for_slider.css">
+
+  <script type="text/javascript">
     function setBigImageSlide(group) {
       var images = document.getElementById(group).src;
       var image = document.getElementById("bigimgslide").src=images;
     }
   </script>
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="/res/css/style_auto.css">
-<!-- <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'> -->
+  <script type="text/javascript">
+
+    $(document).ready(function() { // вся магия после загрузки страницы
+      $('a#go').click( function(event){ // ловим клик по ссылки с id="go"
+
+        event.preventDefault(); // выключаем стандартную роль элемента
+        $('#overlay').fadeIn(400, // сначала плавно показываем темную подложку
+                function(){ // после выполнения предъидущей анимации
+                  $('#modal_form')
+
+                          .css('display', 'block') // убираем у модального окна display: none;
+                          .animate({opacity: 1, top: '20%'}, 200); // плавно прибавляем прозрачность одновременно со съезжанием вниз
+
+                });
+      });
+      /* Закрытие модального окна, тут делаем то же самое но в обратном порядке */
+      $('#modal_close, #overlay').click( function(){ // ловим клик по крестику или подложке
+        $('#modal_form')
+                .animate({opacity: 0, top: '45%'}, 200,  // плавно меняем прозрачность на 0 и одновременно двигаем окно вверх
+                function(){ // после анимации
+                  $(this).css('display', 'none'); // делаем ему display: none;
+                  $('#overlay').fadeOut(400); // скрываем подложку
+                }
+        );
+      });
+    });
+  </script>
+  <script type="text/javascript">
+    var theInt = null;
+    var $crosslink, $navthumb;
+    var curclicked = 0;
+    $(function(){
+
+      $("#main-photo-slider").codaSlider();
+
+
+      $navthumb = $(".nav-thumb");
+
+      $navthumb
+              .click(function() {
+
+                var $this = $(this);
+              });
+
+    });
+
+  </script>
+
+
+
+  <!-- <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'> -->
 <title> Автомобили с пробегом </title>
 </head>
 
@@ -37,7 +93,7 @@
   <li><a title="Выход" href= "${logoutAction}">Выход</a></li>
   <li><a title="Обратная связь" href="/feedback">Обратная связь</a></li>
   <%}%>
-</ul>  
+</ul>
 <div id="layout">
 <div id="baner-left">
 jgjj kjkjkjb kbkjbkjb
@@ -82,7 +138,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 <div class="auto">
 
 
-<div class= "model" > 
+<div class= "model" >
 <%=car.getBrand()%>  <%=car.getModel()%>
 </div>
 
@@ -91,8 +147,8 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 
 
   <div id="panes">
-  <a title="Vokswagen Passat B8"href="http"  >
- <img  id='bigimgslide' class="foto-380x250" src="<%=path%>" align="left">
+  <a title="<%=car.getBrand()%>  <%=car.getModel()%>" href="#" id="go" >
+  <img  id='bigimgslide' class="foto-380x250" src="<%=path%>" align="left">
   </a>
   </div>
   <%
@@ -108,7 +164,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
   %>
 <div class="small-foto">
 
-  <a title="Vokswagen Passat B8"  >
+<a title="<%=car.getBrand()%>  <%=car.getModel()%>" href="#" >
 <img  id=<%=idPhoto%>  class="foto-85x56" onclick='setBigImageSlide(<%=idPhoto%>)'  src="<%=paths%>" align="left" alt="">
 </a>
 
@@ -148,15 +204,75 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 
 </div>
 <%}%>
-<!-- <a title="Подробнее"href="http" class="more"> 
-Подробнее 
+<!-- <a title="Подробнее"href="http" class="more">
+Подробнее
 </a> -->
 </div>
 </div>
 
-
-
 </div>
+
+
+
+
+
+<%--<p><a href="#" id="go">Ссылка с окном</a></p>--%>
+
+
+
+
+<!-- Модальное окно -->
+<div id="modal_form">
+  <span id="modal_close"></span>
+  <div id="page-wrap">
+
+    <div class="slider-wrap">
+      <div id="main-photo-slider" class="csw">
+        <div class="panelContainer">
+          <%
+            int i=1;
+            for (String photo:car.getPhotoPath()) {
+          String paths;
+          if(photo.equals("null")) {
+          paths="/res/img/notAvailable.png";
+          }
+          else {
+          paths = "/getPhoto?pathPhoto="+photo;
+          }%>
+          <div class="panel" title="Panel <%=i%>">
+            <div class="wrapper">
+              <img src="<%=paths%>"  width="850" height="500" alt="temp" />
+            </div>
+          </div>
+          <%i++;
+          }%>
+
+        </div>
+      </div>
+
+
+      <div id="movers-row">
+        <%
+          int j=1;
+          for (String photo:car.getPhotoPath()) {
+            String paths;
+            if(photo.equals("null")) {
+              paths="/res/img/notAvailable.png";
+            }
+            else {
+              paths = "/getPhoto?pathPhoto="+photo;
+            }%>
+        <div><a href="#<%=j%>" class="cross-link"><img src="<%=paths%>" width="80" height="50" class="nav-thumb" alt="temp-thumb" /></a></div>
+<%j++;
+}%>
+    </div>
+
+  </div>
+</div>
+</div>
+<div id="overlay"></div>
+
+
 
 <footer>Подвал </footer>
 </body>
