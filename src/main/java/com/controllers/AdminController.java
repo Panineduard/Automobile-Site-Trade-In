@@ -39,17 +39,17 @@ import java.util.stream.Stream;
 public class AdminController {
     @Autowired
     StandartMasege standartMasege;
+    @Autowired
+    AdminServiceDAO adminServiceDAO;
     @RequestMapping("/update_dealers_list")
     public ModelAndView getAdminPage(){
         ModelAndView modelAndView = new ModelAndView("admin_page");
-        AdminServiceDAO adminServiceDAO=new AdminServiceDAO();
         modelAndView.addObject("dealers",adminServiceDAO.getAllDealers());
         return modelAndView;
     }
     @RequestMapping("/update_authorized_dealers_list")
     public ModelAndView getAdminPageWithAuthorizedDealers(){
         ModelAndView modelAndView = new ModelAndView("admin_page");
-        AdminServiceDAO adminServiceDAO=new AdminServiceDAO();
         modelAndView.addObject("authorized_dealers",adminServiceDAO.getAuthorizedDealers());
         return modelAndView;
     }
@@ -84,20 +84,23 @@ public class AdminController {
 
     @RequestMapping(value = "/updateModelByBrand", method = RequestMethod.POST)
      public ModelAndView getRegistrationForm(@ModelAttribute("uploadForm")  FileUploadForm uploadForm,@ModelAttribute("Brand") String brand) throws IOException {
-        AdminServiceDAO adminServiceDAO = new AdminServiceDAO();
-        String msg;
-
-        try {
-            adminServiceDAO.setModelsByBrand(uploadForm.getFiles().get(0),brand);
-            msg=standartMasege.getMessage(26);
-        }
-        catch (IOException e){
-            msg=standartMasege.getMessage(27);
-        }
-
         ModelAndView modelAndView=new ModelAndView("admin_page");
-        modelAndView.addObject("msg",msg);
-        return modelAndView;
+        if(!brand.isEmpty()) {
+            uploadForm.getFiles()
+                    .forEach(f -> {
+                        if (f != null) {
+                            try {
+                                adminServiceDAO.setModelsByBrand(f, brand);
+                                modelAndView.addObject("msg", standartMasege.getMessage(26));
+
+                            } catch (IOException e) {
+                                modelAndView.addObject("msg", standartMasege.getMessage(27));
+                            }
+                        }
+                    });
+        }
+        else {modelAndView.addObject("msg", standartMasege.getMessage(27));}
+            return modelAndView;
 
     }
     @RequestMapping(value = "/deleteDealer", method = RequestMethod.POST)

@@ -21,7 +21,9 @@
       if(userfile.value.substring(userfile.value.lastIndexOf('.')+1,userfile.value.length).toLowerCase()!='txt')
       {
         alert('Необходимо выбрать файл file.txt');
-        document.getElementById('userfile').outerHTML =  '<input name="ModelFile" type="file" id="userfile" onChange="chng()">';
+        var usFile=document.getElementById('userfile');
+        document.getElementById('file').removeChild(usFile);
+        document.getElementById('file').outerHTML =  '<input type="file" id="userfile" name="files[0]"  onChange="chng()" > <br>';
       };
     }
   </script>
@@ -131,7 +133,9 @@
     <br>только *.txt<br>
     <tr>
       <td>
-    <input type="file" id="userfile" name="files[0]"  onChange="chng()" > <br>
+        <div id="file">
+        <input type="file" id="userfile" name="files[0]"  onChange="chng()" > <br>
+        </div>
         </td>
       </tr>
     <input type="submit"  value="отправить " >

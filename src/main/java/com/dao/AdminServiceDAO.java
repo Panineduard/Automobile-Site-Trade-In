@@ -10,6 +10,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -22,6 +23,7 @@ import java.util.stream.Stream;
 /**
  * Created by volkswagen1 on 14.02.2016.
  */
+@Repository
 public class AdminServiceDAO {
     @Autowired
     StandartMasege standartMasege;

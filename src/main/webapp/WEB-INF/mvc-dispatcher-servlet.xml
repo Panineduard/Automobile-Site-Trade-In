@@ -43,6 +43,7 @@
     </bean>
     <bean name="CarDAO" class="com.dao.CarDAO"/>
     <bean name="DealerDao" class="com.dao.DealerDao"/>
+    <bean name="AdminServiceDAO" class="com.dao.AdminServiceDAO"/>
 
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
