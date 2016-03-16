@@ -1,8 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.modelClass.Car" %>
-<%@ page import="com.modelClass.Dealer" %>
-<%@ page import="com.modelClass.Contact_person" %>
-<%@ page import="com.modelClass.ListRole" %>
+<%@ page import="com.modelClass.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -109,11 +106,11 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
     Dealer dealer = (Dealer)request.getAttribute("dealer");
     Car car= (Car) request.getAttribute("car");
     String path;
-    if(car.getPhotoPath().get(0).equals("null")) {
+    if(car.getPhotoPath().size()==0) {
       path="/res/img/notAvailable.png";
     }
     else {
-      path = "/getPhoto?pathPhoto="+car.getPhotoPath().get(0);
+      path = "/getPhoto?pathPhoto="+car.getPhotoPath().get(0).getPath();
 
     }
 
@@ -127,7 +124,10 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
       EnginesType = "Электро";
     } else if (car.getEnginesType().equals("hybrid")) {
       EnginesType = "Гибрид";
+    } else if (car.getEnginesType().equals("gas")){
+      EnginesType = "Газ/бензин";
     }
+
     if (car.getTransmission().equals("auto")) {
       transmission = "Автомат";
     } else if (car.getTransmission().equals("mechanical")) {
@@ -153,14 +153,11 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
   </div>
   <%
     int idPhoto=0;
-    for (String photo:car.getPhotoPath()) {
+    for (PhotoPath photo:car.getPhotoPath()) {
       String paths;
-      if(photo.equals("null")) {
-        paths="/res/img/notAvailable.png";
-      }
-      else {
-        paths = "/getPhoto?pathPhoto="+photo;
-      }
+
+        paths = "/getPhoto?pathPhoto="+photo.getPath();
+
   %>
 <div class="small-foto">
 
@@ -231,17 +228,13 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
         <div class="panelContainer">
           <%
             int i=1;
-            for (String photo:car.getPhotoPath()) {
-          String paths;
-          if(photo.equals("null")) {
-          paths="/res/img/notAvailable.png";
-          }
-          else {
-          paths = "/getPhoto?pathPhoto="+photo;
-          }%>
+            for (PhotoPath photo:car.getPhotoPath()) {
+            String paths;
+              paths = "/getPhoto?pathPhoto="+photo.getPath();
+          %>
           <div class="panel" title="Panel <%=i%>">
             <div class="wrapper">
-              <img src="<%=paths%>"  width="850" height="500" alt="temp" />
+              <img src="<%=paths%>"  width="850" height="645" alt="temp" />
             </div>
           </div>
           <%i++;
@@ -254,14 +247,10 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
       <div id="movers-row">
         <%
           int j=1;
-          for (String photo:car.getPhotoPath()) {
+          for (PhotoPath photo:car.getPhotoPath()) {
             String paths;
-            if(photo.equals("null")) {
-              paths="/res/img/notAvailable.png";
-            }
-            else {
-              paths = "/getPhoto?pathPhoto="+photo;
-            }%>
+            paths = "/getPhoto?pathPhoto="+photo;
+            %>
         <div><a href="#<%=j%>" class="cross-link"><img src="<%=paths%>" width="80" height="50" class="nav-thumb" alt="temp-thumb" /></a></div>
 <%j++;
 }%>

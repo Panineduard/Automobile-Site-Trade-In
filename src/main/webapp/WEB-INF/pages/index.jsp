@@ -3,6 +3,7 @@
 <%@ page import="com.modelClass.Car" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.springframework.ui.ModelMap" %>
+<%@ page import="com.helpers.SearchOptions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -33,6 +34,25 @@
 
 <ul id="menu">
   <%
+    List<Car> cars=null;
+    SearchOptions options =(SearchOptions)request.getSession().getAttribute("options");
+    boolean optionPresent=false;
+    int numberPage=1;
+    long countButtons=0L;
+    if (session.getAttribute("page")!=null) {
+      numberPage = (Integer) session.getAttribute("page");
+    }
+    if(request.getSession().getAttribute("cars")!=null){
+      cars=(List<Car>)request.getSession().getAttribute("cars");
+    }
+    if(request.getSession().getAttribute("pages")!=null){
+      countButtons=(Long)request.getSession().getAttribute("pages");
+    }
+    if(options!=null){
+
+        optionPresent=true;
+
+    }
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     String idDealer = auth.getName();
     if(idDealer!="anonymousUser"){%>
@@ -66,7 +86,11 @@
       <div id="search">
         <p>МАРКА<br>
           <select id="id_make1" class="form-control" name="make" onchange="p_delete(this.value);">
+            <%if(optionPresent){%>
+            <option value="<%=options.getMake()%>" ><%=options.getMake()%></option>
+            <%}else {%>
             <option value="" selected="selected">вcе марки</option>
+            <%}%>
             <option value="Acura">Acura </option>
             <option value="Alfa_Romeo">Alfa Romeo </option>
             <option value="Audi"class="cat-top">Audi </option>
@@ -102,15 +126,30 @@
 </p>
         <p>МОДЕЛЬ<br>
           <select id="id_model" name="model">
+            <%if(optionPresent){%>
+            <option value="<%=options.getModel()%>" ><%=options.getModel()%></option>
+            <%}else {%>
             <option value="" selected="selected">выберите марку</option>
+            <%}%>
           </select></p>
         <p>ЦЕНА<br>
+          <%if(optionPresent){%>
+          <input id="id_price_from" type="text" placeholder="от" value="<%=options.getPrice_from()%>" class="form-control" name="price_from" />
+          <input id="id_price_to" type="text" placeholder="до" value="<%=options.getPrice_to()%>" class="form-control" name="price_to" />
+          <%}
+          else {%>
           <input id="id_price_from" type="text" placeholder="от" class="form-control" name="price_from" />
           <input id="id_price_to" type="text" placeholder="до" class="form-control" name="price_to" />
+          <%}%>
+
         </p>
         <p>ГОД ВЫПУСКА<br>
           <select id="id_year_from" class="form-control" name="year_from">
-            <option value="" selected="selected">c</option>
+            <%if(optionPresent){%>
+            <option value="<%=options.getYear_from()%>"><%=options.getYear_from()%></option>
+            <option value="" >все</option>
+            <%}else {%>
+            <option value="" selected="selected">c</option><%}%>
             <option value="2016">2016</option>
             <option value="2015">2015</option>
             <option value="2014">2014</option>
@@ -152,7 +191,12 @@
                  </select>
 
           <select id="id_year_to" class="form-control" name="year_to">
-            <option value="" selected="selected">по</option>
+            <%if(optionPresent){%>
+            <option value="<%=options.getYear_to()%>"><%=options.getYear_to()%></option>
+            <option value="" >все</option>
+            <%}else {%>
+            <option value="" >по</option>
+            <%}%>
             <option value="2016">2016</option>
             <option value="2015">2015</option>
             <option value="2014">2014</option>
@@ -199,6 +243,7 @@
             <option value="disel">Дизель</option>
             <option value="elektro">Электро</option>
             <option value="hybrid">Гибрид</option>
+            <option value="gas">Газ/бензин</option>
             <option value="other">Другое</option>
           </select></p>
         ТИП КПП<br>
@@ -250,35 +295,19 @@
   <div id="result">
 
       <%
-        List<Car> cars=null;
-        int numberPage=1;
-        long countButtons=0L;
-        if (session.getAttribute("page")!=null) {
-          numberPage = (Integer) session.getAttribute("page");
-        }
-        if(request.getSession().getAttribute("cars")!=null){
-          cars=(List<Car>)request.getSession().getAttribute("cars");
-        }
-        if(request.getSession().getAttribute("pages")!=null){
-          countButtons=(Long)request.getSession().getAttribute("pages");
-        }
-
         if(cars!=null){
-//          countButtons=cars.size()/10+1;
-//          int numberCarFrom=0;
-//          int numberCarTo=0;
-//
-//           if(numberPage==countButtons){
-//             numberCarFrom=(numberPage-1)*10;
-//             numberCarTo=cars.size();}
-//           if(numberPage<countButtons){
-//             numberCarFrom=(numberPage-1)*10;
-//             numberCarTo=numberPage*10;
-//           }
+
+            if(cars.size()==0){
+            %>
+          <h1>По Вашему запросу ничего не найдено</h1>
+            <%
+              }
+
+          else {
         for (Car car:cars){
-//          Car car=cars.get(i);
+
           String path;
-            if(car.getPhotoPath().get(0).equals("null")) {
+            if(car.getPhotoPath().size()==0) {
               path="/res/img/notAvailable.png";
             }
             else {
@@ -296,6 +325,8 @@
             EnginesType = "Электро";
           } else if (car.getEnginesType().equals("hybrid")) {
             EnginesType = "Гибрид";
+          } else if (car.getEnginesType().equals("gas")){
+            EnginesType = "Газ/бензин";
           }
           if (car.getTransmission().equals("auto")) {
             transmission = "Автомат";
@@ -336,6 +367,7 @@
     </div>
 
     <%}
+    }
     }%>
 
 

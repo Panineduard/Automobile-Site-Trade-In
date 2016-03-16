@@ -10,6 +10,7 @@ import com.modelClass.Contact_person;
 import com.setting.Setting;
 import com.setting.TestClass;
 import javafx.util.converter.LocalDateTimeStringConverter;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Service;
 
 import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -34,7 +37,11 @@ public class Test {
 //    public String test(){
 //        return testClass.getName();
 //    }
-    public static void main(String... arg) throws IOException {
+    public static void main(String... arg) throws IOException, NoSuchAlgorithmException {
+
+        System.out.println();
+
+        System.out.println(DigestUtils.md5Hex(""+System.currentTimeMillis() + new Random().nextInt()));
 
         //----------------------Collection sort-------------------
 //        List <Integer> integers=new ArrayList<>();
@@ -58,7 +65,7 @@ public class Test {
 //        System.out.println(adminServiceDAO.getAllDealers());
 
 //        System.out.println(Setting.getHost());
-//        CarDAO carDAO=new CarDAO();
+//        CarDaoInterface carDAO=new CarDaoInterface();
 //        System.out.println(carDAO.getModelByBrand("Vohgfhlkswagen"));
 //        carDAO.getOldCarOwnersEmails(1);
 //        DealerDao dealerDao = new DealerDao();
@@ -81,7 +88,7 @@ public class Test {
 //        strings.remove(1);
 //        System.out.println(strings);
 
-//        CarDAO carDAO = new CarDAO();
+//        CarDaoInterface carDAO = new CarDaoInterface();
 
 //
 //        System.out.println(carDAO.deleteCarById("1"));
@@ -98,7 +105,7 @@ public class Test {
 
 //        AutoClineDB autoClineDB=new AutoClineDB();
 //        autoClineDB.beepForAnHour();
-//        CarDAO carDAO=new CarDAO();
+//        CarDaoInterface carDAO=new CarDaoInterface();
 //        DealerDao dealerDao = new DealerDao();
 //
 //        System.out.println(carDAO.getCarById("1"));
@@ -107,7 +114,7 @@ public class Test {
 //        System.out.println(passwordHelper.encode("1"));
 //        System.out.println(passwordHelper.encode(passwordHelper.encode("1")));
 //        DealerDao dealerDao=new DealerDao();
-//        CarDAO carDAO = new CarDAO();
+//        CarDaoInterface carDAO = new CarDaoInterface();
 //        System.out.println(carDAO.getLastCars(3));
 
 //        dealerDao.updateRegistrationAndRoleById("3");

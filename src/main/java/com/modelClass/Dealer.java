@@ -21,8 +21,7 @@ public class Dealer {
     private int countOfCar;
     @Temporal(TemporalType.DATE)
     private Date dateRegistration;
-    @ElementCollection(fetch = FetchType.EAGER)
-    //////////--------------------------------------------------------------------/////////////////
+    @OneToMany(cascade = CascadeType.ALL ,fetch=FetchType.EAGER)
     private List<Contact_person> contact_persons=new ArrayList<>();
 
 

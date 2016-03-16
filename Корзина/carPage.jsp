@@ -2,6 +2,7 @@
 <%@ page import="com.modelClass.Dealer" %>
 <%@ page import="com.modelClass.Car" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.modelClass.PhotoPath" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -75,7 +76,7 @@
 
     <div id="panes" class ="main-foto">
       <%
-        for (String photo:car.getPhotoPath()) {
+        for (PhotoPath photo:car.getPhotoPath()) {
       %>
       <div><img  class="foto-380x250" align="left" src="/getPhoto?pathPhoto=<%=photo%> ">
     </div>
@@ -87,7 +88,7 @@
     <div id="prod_nav" class="small-foto">
       <ul>
         <%
-          for (String photo1:car.getPhotoPath()) {
+          for (PhotoPath photo1:car.getPhotoPath()) {
         %>
         <li><a title="Vokswagen Passat B8"  href="#1"><img  class="foto-85x56" src="/getPhoto?pathPhoto=<%=photo1%>" align="left" alt=""> </a></li>
         <%}%>

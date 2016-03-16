@@ -1,6 +1,13 @@
 package com.modelClass;
 
+
+
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,9 +21,15 @@ import java.util.List;
 public class Car {
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE)
+    @Column(name = "idcar")
     private Long idCar;
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> photoPath = new ArrayList<String>();
+
+
+    @OneToMany(cascade = CascadeType.ALL ,fetch=FetchType.EAGER)
+    private List<PhotoPath> photoPaths;
+
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    private List<String> photoPath = new ArrayList<String>();
     private String brand;
     private String model;
     private Integer yearMade;
@@ -34,13 +47,21 @@ public class Car {
     @Lob
     private String description;
 
-    public List<String> getPhotoPath() {
-        return photoPath;
+    public List<PhotoPath> getPhotoPath() {
+        return photoPaths;
     }
 
-    public void setPhotoPath(List<String> photoPath) {
-        this.photoPath = photoPath;
+    public void setPhotoPath(List<PhotoPath> photoPaths) {
+        this.photoPaths = photoPaths;
     }
+//
+//    public List<String> getPhotoPath() {
+//        return photoPath;
+//    }
+
+//    public void setPhotoPath(List<String> photoPath) {
+//        this.photoPath = photoPath;
+//    }
 
     public String getDescription() {
         return description;

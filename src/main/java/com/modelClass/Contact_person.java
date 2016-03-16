@@ -1,17 +1,30 @@
 package com.modelClass;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 
 /**
  * Created by ������ on 30.08.15.
  */
-@Embeddable
-public class Contact_person {
+//@Embeddable
+    @Entity
+    @Table(name = "ContactPerson")
+     public class Contact_person {
 
-
+    @Id
+    @GeneratedValue
+    private Long idContactPerson;
+    private String idDealer;
     private String name;
     private String phone;
     private String email;
+
+    public String getIdDealer() {
+        return idDealer;
+    }
+
+    public void setIdDealer(String idDealer) {
+        this.idDealer = idDealer;
+    }
 
     public String getName() {
         return name;

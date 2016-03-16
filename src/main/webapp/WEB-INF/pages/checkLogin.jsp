@@ -21,6 +21,7 @@
       <input type="password" placeholder="Пароль" name="j_password">
       <button type="submit">Войти</button>
     </form>
+    <a href="/lost_password">Забыли пароль</a>
 
   </div>
 

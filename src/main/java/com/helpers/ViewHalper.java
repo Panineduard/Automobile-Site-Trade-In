@@ -9,6 +9,7 @@
     import org.hibernate.Transaction;
     import org.springframework.security.core.Authentication;
     import org.springframework.security.core.context.SecurityContextHolder;
+    import org.springframework.stereotype.Component;
     import org.springframework.web.servlet.ModelAndView;
 
     import java.util.List;
@@ -16,8 +17,9 @@
     /**
      * Created by Эдуард on 25.12.15.
      */
+    @Component
     public class ViewHalper {
-        public static ModelAndView addingDealerAndCarsInView(ModelAndView view){
+        public ModelAndView addingDealerAndCarsInView(ModelAndView view){
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String idDealer = auth.getName();
             if(idDealer.equals("administrator")){

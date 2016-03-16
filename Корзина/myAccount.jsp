@@ -68,7 +68,7 @@
 
         for (Car car:cars) {
 
-          String path = car.getPhotoPath().get(0);
+          String path = car.getPhotoPath().get(0).getPath();
 
       %>
       <p><div><img width="300" height="200" src="/getPhoto?pathPhoto=<%=path%> ">;
@@ -92,7 +92,7 @@
 
           for (Car car:cars) {
 
-            String path = car.getPhotoPath().get(0);
+            String path = car.getPhotoPath().get(0).getPath();
         %>
 
         <li><a href="#1"><img src="/getPhoto?pathPhoto=<%=path%>" width="160" alt=""><strong>Class aptent</strong> $ 199</a></li>

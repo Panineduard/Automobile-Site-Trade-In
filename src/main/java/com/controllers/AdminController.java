@@ -41,6 +41,10 @@ public class AdminController {
     StandartMasege standartMasege;
     @Autowired
     AdminServiceDAO adminServiceDAO;
+    @Autowired
+    DealerDao dealerDao;
+    @Autowired
+    CarDAO carDAO;
     @RequestMapping("/update_dealers_list")
     public ModelAndView getAdminPage(){
         ModelAndView modelAndView = new ModelAndView("admin_page");
@@ -55,7 +59,6 @@ public class AdminController {
     }
     @RequestMapping("/addDealerNumber")
     public ModelAndView addAuthorizedDealers(@ModelAttribute ("dealer_number")String dealersNumber)  {
-        DealerDao dealerDao=new DealerDao();
         AuthorizedDealers authorizedDealer=new AuthorizedDealers();
         authorizedDealer.setDealer_number(dealersNumber);
         ModelAndView modelAndView = new ModelAndView("admin_page");
@@ -68,15 +71,13 @@ public class AdminController {
     }
     @RequestMapping("/deleteAuthorizedDealer")
     public ModelAndView deleteAuthorizedDealers(@ModelAttribute ("idDealer")String dealersNumber) {
-        if(dealersNumber!=null){DealerDao dealerDao=new DealerDao();
+        if(dealersNumber!=null){
         dealerDao.deleteLegalsDealer(EncoderId.decodeID(dealersNumber));}
-
         ModelAndView modelAndView = new ModelAndView("admin_page");
         return modelAndView;
     }
     @RequestMapping("/deleteOldCars")
     public ModelAndView deleteOldCars(@ModelAttribute ("month")Integer month) {
-        CarDAO carDAO=new CarDAO();
         carDAO.deleteOldCar(month);
         ModelAndView modelAndView = new ModelAndView("admin_page");
         return modelAndView;
@@ -105,9 +106,7 @@ public class AdminController {
     }
     @RequestMapping(value = "/deleteDealer", method = RequestMethod.POST)
     public ModelAndView deleteDealer(@ModelAttribute("idDealer") String id){
-        CarDAO carDAO=new CarDAO();
         carDAO.deleteCarsByDealersID(EncoderId.decodeID(id));
-        DealerDao dealerDao = new DealerDao();
         dealerDao.deleteLoginAndDealerById(EncoderId.decodeID(id));
         ModelAndView modelAndView = new ModelAndView("admin_page");
         modelAndView.addObject("msg", standartMasege.getMessage(24));

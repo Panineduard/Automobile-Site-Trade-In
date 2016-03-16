@@ -39,7 +39,7 @@
   <li><a title="На главную" href="/">На главную</a></li>
     <li><a href="/feedback">Обратная связь</a></li>
   <%--<li><a title="Мои автомобили" href="">Мои автомобили</a></li>--%>
-  <li><a title="Добавить авто" href="/addCar">+ Добавить авто</a></li>
+  <li><a title="Добавить авто" href="/addCar">Добавить авто</a></li>
     <c:url var="logoutAction" value="/j_spring_security_logout"></c:url>
 
     <li><a title="Выход"  href="${logoutAction}">Выход</a></li>
@@ -187,6 +187,7 @@
                     <option value="">все</option>
                     <option value="gasoline">Бензин</option>
                     <option value="disel">Дизель</option>
+                    <option value="gas">Газ/бензин</option>
                     <option value="elektro">Электро</option>
                     <option value="hybrid">Гибрид</option>
                     <option value="other">Другое</option>
@@ -373,10 +374,9 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 
 <br/>
 <ul id="menu-diller">
-  <li><a href="">Изменить инфо</a></li>
   <li><a href="/addCar">Добавить авто</a></li>
-  <li><a href="#" id="go">Добавить контактное лицо</a></li>
-  <li><a href="">какая нибуть ссылка</a></li>
+  <li><a href="" id="go">Добавить контактное лицо</a></li>
+  <%--<li><a href="">какая нибуть ссылка</a></li>--%>
 </ul>  
 </div>
 <h3>Мои автомобили:</h3>
@@ -384,7 +384,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
     <% if(cars!=null){
         for (Car car:cars){
         String path;
-        if(car.getPhotoPath().get(0).equals("null")) {
+        if(car.getPhotoPath().size()==0) {
             path="/res/img/notAvailable.png";
         }
         else {

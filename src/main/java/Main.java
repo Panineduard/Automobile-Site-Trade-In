@@ -1,10 +1,17 @@
 
 
+import com.captcha.util.Util;
+import com.dao.CarDAO;
+import com.dao.DealerDao;
 import com.dao.configuration.files.HibernateUtil;
+import com.helpers.SearchOptions;
 import com.modelClass.*;
+import org.apache.commons.io.FileUtils;
 import org.hibernate.Session;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +20,19 @@ import java.util.List;
  * Created by Эдуард on 11.08.15.
  */
 public class Main {
-    public static void main(String...args) throws SQLException {
+    public static void main(String...args)  {
+
+        DealerDao dealerDao=new DealerDao();
+
+//        dealerDao.deleteLoginAndDealerById("1");
+        CarDAO carDAO=new CarDAO();
+        System.out.println(carDAO.getCarsByParameters(new SearchOptions("","","","","","","","","",0),1));
+//        carDAO.deleteCarsByDealersID("1");
+//        carDAO.deleteCarById("58");
+//        carDAO.deletePhotoByCarsId(4L,74l);
 
 //
-//        CarDAO carDAO = new CarDAO();
+//        CarDaoInterface carDAO = new CarDaoInterface();
 //        Long idFoundDealer = (121L);
 //        List<Car> cars ;
 //        cars=carDAO.getCarByIdDealer(idFoundDealer);
@@ -87,14 +103,14 @@ public class Main {
 ////
 //            session.getTransaction().commit();
 
-//        CarDAO carDAO = new CarDAO();
+//        CarDaoInterface carDAO = new CarDaoInterface();
 //        System.out.println(carDAO.getCarByIdDealer(121L).get(0).getBrand());
 
 
 
-        Car car1 = new Car();
-        car1 =session.get(Car.class,2L);
-        System.out.println(car1.getBrand());
+//        Car car1 = new Car();
+//        car1 =session.get(Car.class,2L);
+//        System.out.println(car1.getBrand());
 //        System.out.println(car1.getPhoto());
 //
 //

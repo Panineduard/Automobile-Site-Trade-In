@@ -9,8 +9,8 @@
         <host>http://localhost:8080/</host>
         <ClientsFolder>ClientsFolder/tmp/</ClientsFolder>
         <!--this is size images in client folder-->
-        <IMG_WIDTH>600</IMG_WIDTH>
-        <IMG_HEIGHT>500</IMG_HEIGHT>
+        <IMG_WIDTH>800</IMG_WIDTH>
+        <IMG_HEIGHT>600</IMG_HEIGHT>
 
 
 </setting>

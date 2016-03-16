@@ -40,7 +40,7 @@ public class CaptchaGenServlet extends HttpServlet {
             Color bg = new Color(0,255,255);
             Color fg = new Color(0,100,0);
 //            Jokerman,Arial
-            Font font = new Font("Jokerman", Font.BOLD, 20);
+            Font font = new Font("Arial", Font.BOLD, 20);
             BufferedImage cpimg =new BufferedImage(width,height,BufferedImage.OPAQUE);
             Graphics g = cpimg.createGraphics();
 
