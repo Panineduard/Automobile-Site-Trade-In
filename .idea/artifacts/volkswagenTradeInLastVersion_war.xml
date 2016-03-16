@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="volkswagenTradeInLastVersion:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="vw-trade-in.war">
-      <element id="artifact" artifact-name="volkswagenTradeInLastVersion:war exploded" />
-    </root>
-  </artifact>
-</component>
