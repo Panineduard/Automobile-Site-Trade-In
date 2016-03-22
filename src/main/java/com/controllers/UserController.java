@@ -139,7 +139,7 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
     if(dealerDao.updateRegistrationAndRoleById(idDealer))
     {
         model = new ModelAndView("successfulRegistration");
-        msg=standartMasege.getMessage(9)+"<br><li><a href='/myAccount'>"+standartMasege.getMessage(3)+"</a></li>";
+        msg=standartMasege.getMessage(9)+"<br><ul id='menu'><li><a style='text-align: center' href='/myAccount'>"+standartMasege.getMessage(3)+"</a></li></ul>";
         model.addObject("msg",msg );
     }
     else {

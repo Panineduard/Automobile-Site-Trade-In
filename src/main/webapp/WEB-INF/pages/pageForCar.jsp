@@ -353,12 +353,12 @@
                     <option value="hybrid">Гибрид</option>
                     <option value="other">Другое</option>
                 </select>
-                <h2>Обьем двигателя, л <br>
+                <h2 >Обьем двигателя, л (В формате 2.0)<br>
                     <%if(presentCar){%>
-                    <input type="text" value="<%=car.getEngineCapacity()%>" size="20" class="form-control" required="required" name="engine_capacity" pattern="^[ 0-9]+$"></h2>
+                    <input type="text" value="<%=car.getEngineCapacity()%>" size="3" class="form-control" required="required" name="engine_capacity" pattern="\d+(,\d{1})?+\d+(\.\d{1})?"></h2>
                 <%}
                 else {%>
-                <input type="text" size="20" class="form-control" required="required" name="engine_capacity" pattern="^[ 0-9]+$"></h2>
+                <input type="text" size="20" class="form-control" required="required" name="engine_capacity" pattern="\d+(,\d{1})?+\d+(\.\d{1})?"></h2>
                 <%}%>
 
                 <h2>Тип КПП</h2>

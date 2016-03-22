@@ -349,6 +349,7 @@ ChangeImgSize changeImgSize;
                 }
             }
             session.delete(car);
+//            session.flush();
             tr.commit();
             return true;
         }
