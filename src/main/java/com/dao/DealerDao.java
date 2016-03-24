@@ -18,6 +18,9 @@ import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -96,7 +99,9 @@ public class DealerDao {
     public Dealer getDealerById(String id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction=session.beginTransaction();
-        Dealer dealer = session.get(Dealer.class, id);
+
+          Dealer dealer = session.get(Dealer.class, id);
+
         transaction.commit();
         if (session.isOpen()) {
             session.close();
@@ -108,10 +113,19 @@ public class DealerDao {
     public List<Dealer> getIdDealersWithoutAuth() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
+try {
+    Query query = session.createQuery("from  Dealer d where d.registration=false ");
+    List<Dealer> dealers = query.list();
+    return dealers;
+}
+catch (Exception e){
+    return null;
+}
+        finally {
+    if(session.isOpen())session.close();
+        }
 
-        Query query = session.createQuery("from  Dealer d where d.registration=false ");
-        List<Dealer> dealers = query.list();
-        return dealers;
+
     }
 
     public void  setKeyHolder(KeyHolder key){
@@ -335,6 +349,7 @@ public class DealerDao {
         dealer.setContact_persons(contact_persons);
         session.merge(dealer);
         tr.commit();
+        if(session.isOpen())session.close();
         return true;
     }
 
@@ -368,6 +383,26 @@ public class DealerDao {
                 session.close();
             }
         }
+    }
+    public void deleteOldKeyHolders(){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr = session.beginTransaction();
+     try {
+         Calendar calendar=Calendar.getInstance();
+
+        calendar.add(Calendar.HOUR, -24);
+        Date date =calendar.getTime();
+        Query query= session.createQuery("delete from KeyHolder where dateOfCreation<=:date");
+        query.setParameter("date",date);
+        query.executeUpdate();
+        tr.commit();
+     }
+     catch (Exception e){
+         if(tr!=null)tr.rollback();
+     }
+     finally {
+         if(session.isOpen())session.close();
+     }
     }
 
     public void deleteLegalsDealer(String idDealer) {

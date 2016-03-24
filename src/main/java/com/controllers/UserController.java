@@ -18,10 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import com.helpers.ViewHalper;
 import sun.plugin.liveconnect.SecurityContextHelper;
@@ -30,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.IdentityHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -50,6 +48,16 @@ public class UserController {
     @Autowired
     ViewHalper viewHalper;
 
+    @RequestMapping(value = "/getSearchOptions",method = RequestMethod.GET, headers="Accept=application/json")
+    public @ResponseBody
+    SearchOptions getModelForm(HttpSession session){
+//        System.out.println(model);
+//        CarDaoInterface carDAO=new CarDaoInterface();
+//        return new SearchOptions("a","b","c","d","e","f","g","j","k",0);
+        SearchOptions options = (SearchOptions)session.getAttribute("options");
+//        System.out.println(options);
+      return options;
+    }
 
     @RequestMapping(value = "/lost_password", method = RequestMethod.GET)
     public ModelAndView getLostPassword(HttpServletRequest request){
@@ -139,7 +147,7 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
     if(dealerDao.updateRegistrationAndRoleById(idDealer))
     {
         model = new ModelAndView("successfulRegistration");
-        msg=standartMasege.getMessage(9)+"<br><ul id='menu'><li><a style='text-align: center' href='/myAccount'>"+standartMasege.getMessage(3)+"</a></li></ul>";
+        msg=standartMasege.getMessage(9)+"<br><ul id='menu'><li><a href='/myAccount'>"+standartMasege.getMessage(3)+"</a></li></ul>";
         model.addObject("msg",msg );
     }
     else {

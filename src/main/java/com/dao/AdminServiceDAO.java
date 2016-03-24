@@ -4,6 +4,7 @@ import com.dao.configuration.files.HibernateUtil;
 import com.modelClass.AuthorizedDealers;
 import com.modelClass.CarBrand;
 import com.modelClass.Dealer;
+import com.modelClass.Region;
 import com.servise.StandartMasege;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.Query;
@@ -54,6 +55,33 @@ public class AdminServiceDAO {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr = session.beginTransaction();
         session.merge(carBrand);
+        tr.commit();
+        if (session.isOpen()) {
+            session.close();
+        }
+
+
+    }
+    public void setRegions(MultipartFile regions) throws IOException {
+
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(regions.getBytes());
+        String myString = IOUtils.toString(byteArrayInputStream);
+        Stream<String> stream = new BufferedReader(new StringReader(myString)).lines();
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr = session.beginTransaction();
+        {
+            stream
+                    .forEach(s1 -> {
+                       Region region= new Region();
+                        region.setName(s1);
+                        session.merge(region);
+
+                    });
+
+
+        }
+
+
         tr.commit();
         if (session.isOpen()) {
             session.close();

@@ -17,16 +17,17 @@ import java.util.HashSet;
 public class TaskExecutorClass {
     @Autowired
     StandartMasege standartMasege;
+    @Autowired DealerDao dealerDao;
 
 //    @Scheduled(cron="*/5 * * * * ?")
     public void cleanDbWithoutAuth()
     {
-        DealerDao dealerDao =new DealerDao();
         dealerDao.getIdDealersWithoutAuth()
                 .stream()
                 .filter(n ->LocalDateTime.ofInstant(Instant.ofEpochMilli(n.getDateRegistration()
                         .getTime()), ZoneId.systemDefault()).isBefore(LocalDateTime.now().minusDays(1)))
                 .forEach(n -> dealerDao.deleteLoginAndDealerById(n.getNumberDealer()) );
+        dealerDao.deleteOldKeyHolders();
 
     }
     public  void sendEmailToOwnersOldCars()

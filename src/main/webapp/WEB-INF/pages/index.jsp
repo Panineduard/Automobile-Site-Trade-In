@@ -20,8 +20,35 @@
   <link rel="stylesheet" type="text/css" href="/res/css/style1.css">
   <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
   <script type="text/javascript" src="/res/js/get_model_by_brand.js"></script>
+<script>
+  function getSearchOptions(){
+    $.get( "/getSearchOptions", { model: e})
+            .done(function( data ) {
+
+//                alert(data.length);
+//                alert( "Data Loaded: " + data[1] );
+              for(var i=0;i<data.length;i++){
+                var model=document.getElementById("id_model");
+
+                var manager=document.createElement("OPTION");
+                if(i===0){
+                  manager.setAttribute("value",'');
+                }
+                else{
+                  manager.setAttribute("value",data[i]);
+                }
+
+                manager.innerHTML=data[i];
+                model.appendChild(manager);
+//                  alert("привет");
+//
+              }
+            });
+
+  }
 
 
+</script>
   <title> Автомобили с прбегом </title>
 </head>
 <body>
@@ -239,7 +266,7 @@
         <p>ТИП ДВИГАТЕЛЯ</br>
           <select id="id_engine" class="form-control" name="engine">
             <option value="">все</option>
-            <option value="gasoline">Бензин</option>
+            <option value="Бензин">Бензин</option>
             <option value="disel">Дизель</option>
             <option value="elektro">Электро</option>
             <option value="hybrid">Гибрид</option>

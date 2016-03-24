@@ -192,7 +192,6 @@ public class CarController {
         }
         SearchOptions options=new SearchOptions(make,model,price_from,price_to,year_from,year_to,engine,gearbox,region,0);
         ResultCars cars =carDAO.getCarsByParameters(options,new Integer(page));
-        System.out.println(cars);
         session.setAttribute("options",options);
         session.setAttribute("cars",cars.getCars());
         session.setAttribute("page",cars.getPage());
