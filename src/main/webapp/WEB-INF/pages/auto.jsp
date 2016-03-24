@@ -234,7 +234,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
           %>
           <div class="panel" title="Panel <%=i%>">
             <div class="wrapper">
-              <img src="<%=paths%>"  width="850" height="645" alt="temp" />
+              <img src="<%=paths%>"  width="800" height="600" alt="temp" />
             </div>
           </div>
           <%i++;

@@ -12,6 +12,7 @@
 	opacity: 0; /* пoлнoстью прoзрaчнo для aнимирoвaния */
 	z-index: 6; /* oкнo дoлжнo быть нaибoлее бoльшем слoе */
 	padding: 20px 10px;
+height: 100%;/* эксперимент*/
 }
 /* Кнoпкa зaкрыть для тех ктo в тaнке) */
 #modal_form #modal_close {
@@ -55,7 +56,11 @@
 /*
 	PAGE STRUCTURE
 */
-#page-wrap 									{ width: 900px; margin: 45px auto; position: relative; min-height: 770px;
+#page-wrap 									{
+	width: 900px;
+	margin: 45px auto;
+	position: relative;
+	height:570px;
 	background: url(/res/img/background.png) top center; }
 
 
@@ -74,7 +79,7 @@ blockquote									{ padding: 0 20px; margin-left: 20px; border-left: 20px solid
 .slider-wrap								{ width: 950px; position: absolute; top: 30px; left: 25px; }
 .stripViewer .panelContainer
 .panel ul									{ text-align: left; margin: 0 15px 0 30px; }
-.stripViewer								{ position: relative; overflow: hidden; width: 850px; height: 645px; }
+.stripViewer								{ position: relative; overflow: hidden; width: 850px; height: 100%; }
 .stripViewer .panelContainer				        { position: relative; left: 0; top: 4px;; }
 .stripViewer .panelContainer .panel			{ float: left; height: 100%; position: relative; width: 900px; }
 .stripNavL, .stripNavR, .stripNav			{ display: none; }

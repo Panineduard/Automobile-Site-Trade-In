@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="wv:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="vw-trade-in.war">
+      <element id="artifact" artifact-name="wv:war exploded" />
+    </root>
+  </artifact>
+</component>
