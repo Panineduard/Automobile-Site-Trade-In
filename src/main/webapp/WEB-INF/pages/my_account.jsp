@@ -7,6 +7,7 @@
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.Instant" %>
 <%@ page import="java.time.ZoneId" %>
+<%@ page import="com.helpers.SearchOptions" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -19,11 +20,14 @@
 
 
 <title> Автомобили с пробегом </title>
-    <%--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>--%>
+    <script>
+        var engine_parameter=['все','Бензин','Дизель','Электро','Гибрид','Газ/бензин','Другое'];
+        var gearbox_parameter=['все','Другое','Автоматическая','Механическая'];
+    </script>
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <script type="text/javascript" src="/res/js/get_model_by_brand.js"></script>
+    <script type="text/javascript" src="/res/js/write_parameters_with_search_parameters.js" charset="utf-8"></script>
     <script type="text/javascript" src="/res/js/modal_window.js"></script>
-
 
 </head>
 
@@ -45,9 +49,13 @@
     <li><a title="Выход"  href="${logoutAction}">Выход</a></li>
 </ul>
 <%
+    SearchOptions options =(SearchOptions)request.getSession().getAttribute("options");
+    boolean optionPresent=false;
     Dealer dealer = (Dealer)request.getAttribute("dealer");
     List<Car> cars= (List<Car>) request.getAttribute("cars");
-
+    if(options!=null){
+        optionPresent=true;
+    }
 %>
 
 <div id="layout">
@@ -55,39 +63,8 @@
     <form action="/lookForCars" method="post">
         <div id="search">
             <p>МАРКА<br>
-                <select id="id_make1" class="form-control" name="make" onchange="p_delete(this.value);">
-                    <option value="" selected="selected">вcе марки</option>
-                    <option value="Acura">Acura </option>
-                    <option value="Alfa_Romeo">Alfa Romeo </option>
-                    <option value="Audi"class="cat-top">Audi </option>
-                    <option value="BMW"class="cat-top">BMW </option>
-                    <option value="Chevrolet"class="cat-top">Chevrolet</option>
-                    <option value="Citroen"class="cat-top">Citroen</option>
-                    <option value="Daewoo"class="cat-top">Daewoo</option>
-                    <option value="Fiat"class="cat-top">Fiat </option>
-                    <option value="Ford"class="cat-top">Ford </option>
-                    <option value="Honda"class="cat-top">Honda </option>
-                    <option value="Hyundai"class="cat-top">Hyundai </option>
-                    <option value="Infiniti"class="cat-top">Infiniti </option>
-                    <option value="KIA"class="cat-top">KIA </option>
-                    <option value="Mazda"class="cat-top">Mazda</option>
-                    <option value="Mercedes"class="cat-top">Mercedes</option>
-                    <option value="Mitsubishi"class="cat-top">Mitsubishi</option>
-                    <option value="Nissan"class="cat-top">Nissan</option>
-                    <option value="Opel"class="cat-top">Opel</option>
-                    <option value="Peugeot"class="cat-top">Peugeot</option>
-                    <option value="Porsche">Porsche </option>
-                    <option value="Renault"class="cat-top">Renault</option>
-                    <option value="Seat">Seat </option>
-                    <option value="Skoda"class="cat-top">Skoda </option>
-                    <option value="Subaru"class="cat-top">Subaru </option>
-                    <option value="Suzuki"class="cat-top">Suzuki </option>
-                    <option value="Toyota"class="cat-top">Toyota</option>
-                    <option value="Volkswagen"class="cat-top">Volkswagen</option>
-                    <option value="Volvo"class="cat-top">Volvo</option>
-                    <option value="ВАЗ"class="cat-top">ВАЗ </option>
-                    <option value="ГАЗ"class="cat-top">ГАЗ </option>
-                    <option value="ЗАЗ"class="cat-top">ЗАЗ </option>
+                <select id="id_make" class="form-control" name="make" onchange="p_delete(this.value,' ');">
+                    <option value = "" >вcе марки</option>
                 </select>
             </p>
             <p>МОДЕЛЬ<br>
@@ -95,143 +72,36 @@
                     <option value="" selected="selected">выберите марку</option>
                 </select></p>
             <p>ЦЕНА<br>
+                <%if(optionPresent){%>
+                <input id="id_price_from" type="text" placeholder="от" value="<%=options.getPrice_from()%>" class="form-control" name="price_from" />
+                <input id="id_price_to" type="text" placeholder="до" value="<%=options.getPrice_to()%>" class="form-control" name="price_to" />
+                <%}
+                else {%>
                 <input id="id_price_from" type="text" placeholder="от" class="form-control" name="price_from" />
                 <input id="id_price_to" type="text" placeholder="до" class="form-control" name="price_to" />
+                <%}%>
+
             </p>
             <p>ГОД ВЫПУСКА<br>
                 <select id="id_year_from" class="form-control" name="year_from">
-                    <option value="" selected="selected">c</option>
-                    <option value="2016">2016</option>
-                    <option value="2015">2015</option>
-                    <option value="2014">2014</option>
-                    <option value="2013">2013</option>
-                    <option value="2012">2012</option>
-                    <option value="2011">2011</option>
-                    <option value="2010">2010</option>
-                    <option value="2009">2009</option>
-                    <option value="2008">2008</option>
-                    <option value="2007">2007</option>
-                    <option value="2006">2006</option>
-                    <option value="2005">2005</option>
-                    <option value="2004">2004</option>
-                    <option value="2003">2003</option>
-                    <option value="2002">2002</option>
-                    <option value="2001">2001</option>
-                    <option value="2000">2000</option>
-                    <option value="1999">1999</option>
-                    <option value="1998">1998</option>
-                    <option value="1997">1997</option>
-                    <option value="1996">1996</option>
-                    <option value="1995">1995</option>
-                    <option value="1994">1994</option>
-                    <option value="1993">1993</option>
-                    <option value="1992">1992</option>
-                    <option value="1991">1991</option>
-                    <option value="1990">1990</option>
-                    <option value="1989">1989</option>
-                    <option value="1988">1988</option>
-                    <option value="1987">1987</option>
-                    <option value="1986">1986</option>
-                    <option value="1985">1985</option>
-                    <option value="1984">1984</option>
-                    <option value="1983">1983</option>
-                    <option value="1982">1982</option>
-                    <option value="1981">1981</option>
-                    <option value="1980">1980</option>
-
+                    <option value="" >c</option>
                 </select>
-
                 <select id="id_year_to" class="form-control" name="year_to">
-                    <option value="" selected="selected">по</option>
-                    <option value="2016">2016</option>
-                    <option value="2015">2015</option>
-                    <option value="2014">2014</option>
-                    <option value="2013">2013</option>
-                    <option value="2012">2012</option>
-                    <option value="2011">2011</option>
-                    <option value="2010">2010</option>
-                    <option value="2009">2009</option>
-                    <option value="2008">2008</option>
-                    <option value="2007">2007</option>
-                    <option value="2006">2006</option>
-                    <option value="2005">2005</option>
-                    <option value="2004">2004</option>
-                    <option value="2003">2003</option>
-                    <option value="2002">2002</option>
-                    <option value="2001">2001</option>
-                    <option value="2000">2000</option>
-                    <option value="1999">1999</option>
-                    <option value="1998">1998</option>
-                    <option value="1997">1997</option>
-                    <option value="1996">1996</option>
-                    <option value="1995">1995</option>
-                    <option value="1994">1994</option>
-                    <option value="1993">1993</option>
-                    <option value="1992">1992</option>
-                    <option value="1991">1991</option>
-                    <option value="1990">1990</option>
-                    <option value="1989">1989</option>
-                    <option value="1988">1988</option>
-                    <option value="1987">1987</option>
-                    <option value="1986">1986</option>
-                    <option value="1985">1985</option>
-                    <option value="1984">1984</option>
-                    <option value="1983">1983</option>
-                    <option value="1982">1982</option>
-                    <option value="1981">1981</option>
-                    <option value="1980">1980</option>
-
+                    <option value="" >по</option>
                 </select></p>
-            <p>ТИП ДВИГАТЕЛЯ</br>
-                <select id="id_engine" class="form-control" name="engine">
-                    <option value="">все</option>
-                    <option value="gasoline">Бензин</option>
-                    <option value="disel">Дизель</option>
-                    <option value="gas">Газ/бензин</option>
-                    <option value="elektro">Электро</option>
-                    <option value="hybrid">Гибрид</option>
-                    <option value="other">Другое</option>
-                </select></p>
-            ТИП КПП<br>
-            <select id="id_gearbox" class="form-control" name="gearbox">
-                <option value="">все</option>
-                <option value="another" >Другое</option>
-                <option value="auto">Автоматическая</option>
-                <option value="mechanical">Механическая</option>
-            </select>
-
+            <p>ТИП ДВИГАТЕЛЯ<br>
+                <select id="id_engine" class="form-control" name="engine"></select>
+            </p>
+            <p>ТИП КПП<br>
+            <select id="id_gearbox" class="form-control" name="gearbox"></select>
+            </p>
             <p>РЕГИОН<br>
-                <select id="id_region" class="form-control" name="region">
-                    <option value="" selected="selected">все</option>
-                    <!---<select class="e-form" id="regionCenters" name="state[0]">-->
-                    <option value="0">Любой</option>
-                    <option value="1">Винница</option>
-                    <option value="11">Днепропетровск</option>
-                    <option value="13">Донецк</option>
-                    <option value="2">Житомир</option>
-                    <option value="14">Запорожье</option>
-                    <option value="15">Ивано-Франковск</option>
-                    <option value="10">Киев</option>
-                    <option value="16">Кировоград</option>
-                    <option value="17">Луганск</option>
-                    <option value="18">Луцк</option>
-                    <option value="5">Львов</option>
-                    <option value="19">Николаев</option>
-                    <option value="12">Одесса</option>
-                    <option value="20">Полтава</option>
-                    <option value="9">Ровно</option>
-                    <option value="21">Симферополь</option>
-                    <option value="8">Сумы</option>
-                    <option value="3">Тернополь</option>
-                    <option value="22">Ужгород</option>
-                    <option value="7">Харьков</option>
-                    <option value="23">Херсон</option>
-                    <option value="4">Хмельницкий</option>
-                    <option value="24">Черкассы</option>
-                    <option value="6">Чернигов</option>
-                    <option value="25">Черновцы</option>
-                </select></p>
+                <select id="id_region"  class="form-control" name="region">
+                    <option value = "" >вcе регионы</option>
+                </select>
+            </p>
             <button type="submit" class="btn btn-primary btn-lg ">Подобрать авто</button>
+            <a href="/resetSearchOptions"><button type="button" class="btn btn-primary btn-lg">Сбросить</button></a>
         </div>
     </form></div>
 <div id="baner-right">
@@ -351,6 +221,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
     </div>
     <h4>Контактные лица</h4>
     <%
+        EncoderId encoderId=new EncoderId();
         Integer count=0;
         for (Contact_person contact_person:dealer.getContact_persons()){%>
     <form action="/myAccount/change_contact_person" method="post">
@@ -364,7 +235,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
     </form>
     <a id="contact_persons_button" class="more" href="#" title="Изменить" onclick="changeContactPersonsData(<%=count%>)">Изменить</a>
     <%if(count>0){%>
-    <a  href="/myAccount/delete_contact_person?count=<%=EncoderId.encodId(count.toString())%>" class="more" title="Удалить" >Удалить</a>
+    <a  href="/myAccount/delete_contact_person?count=<%=encoderId.encodId(count.toString())%>" class="more" title="Удалить" >Удалить</a>
     <%}
             count++;
         }%>
@@ -376,8 +247,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 <ul id="menu-diller">
   <li><a href="/addCar">Добавить авто</a></li>
   <li><a href="" id="go">Добавить контактное лицо</a></li>
-  <%--<li><a href="">какая нибуть ссылка</a></li>--%>
-</ul>  
+</ul>
 </div>
 <h3>Мои автомобили:</h3>
 
@@ -411,12 +281,12 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
     %>
 <div class="auto">
 <div class="model">
-    <a title=<%=car.getBrand()+" "%><%=car.getModel()%> href="/carPage?idCar=<%=car.getIdCar()%>" >
+    <a title=<%=car.getBrand()+" "%><%=car.getModel()%> href="/carPage?idCar=<%=encoderId.encodId(car.getIdCar().toString())%>" >
         <%=car.getBrand()+" "%><%=car.getModel()%>
     </a></div>
 
 <div class= "foto-185x120">
-    <a title= <%=car.getBrand()+" "%><%=car.getModel()%> href="/carPage?idCar=<%=car.getIdCar()%>" class= "foto-185x120" >
+    <a title= <%=car.getBrand()+" "%><%=car.getModel()%> href="/carPage?idCar=<%=encoderId.encodId(car.getIdCar().toString())%>" class= "foto-185x120" >
         <img src="<%=path%>" align="left">
     </a>
 </div>
@@ -431,14 +301,14 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
         КП: <span class="model-info-data"><%=transmission%></span><br>
     </div>
 <br/>
-    <a id="car_change_button" href="/myAccount/change_car?car=<%=EncoderId.encodId(car.getIdCar().toString())%>" class="more" title="Изменить" >Изменить</a>
-    <a id="car_delete_button" href="/myAccount/delete_car?car=<%=EncoderId.encodId(car.getIdCar().toString())%>" class="more" title="Удалить" >Удалить</a>
+    <a id="car_change_button" href="/myAccount/change_car?car=<%=encoderId.encodId(car.getIdCar().toString())%>" class="more" title="Изменить" >Изменить</a>
+    <a id="car_delete_button" href="/myAccount/delete_car?car=<%=encoderId.encodId(car.getIdCar().toString())%>" class="more" title="Удалить" >Удалить</a>
     <%if(LocalDateTime.ofInstant(Instant.ofEpochMilli(car.getDateProvide().getTime()), ZoneId.systemDefault())
             .isBefore(LocalDateTime.now().minusMonths(1))){
     %>
-    <a id="car_change_button" href="/myAccount/update_car?car=<%=EncoderId.encodId(car.getIdCar().toString())%>" class="more" title="Обновить" >Обновить</a>
+    <a id="car_change_button" href="/myAccount/update_car?car=<%=encoderId.encodId(car.getIdCar().toString())%>" class="more" title="Обновить" >Обновить</a>
     <%}%>
-    <a title="Подробнее" href="/carPage?idCar=<%=car.getIdCar()%>" class="more">
+    <a title="Подробнее" href="/carPage?idCar=<%=encoderId.encodId(car.getIdCar().toString())%>" class="more">
         Подробнее...
     </a>
 </div>

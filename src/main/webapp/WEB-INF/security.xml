@@ -8,17 +8,36 @@
     <http auto-config="true">
         <intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <access-denied-handler error-page="/403" />
+        <intercept-url pattern="/ConfirmationOfRegistration" access="ROLE_ANONYMOUS"/>
+        <!--UserController-->
         <intercept-url pattern="/myAccount" access="ROLE_USER,ROLE_ADMIN" />
         <intercept-url pattern="/myAccount/*" access="ROLE_USER,ROLE_ADMIN" />
-        <intercept-url pattern="/addCar" access="ROLE_USER,ROLE_ADMIN"/>
-        <intercept-url pattern="*/delete_car" access="ROLE_USER,ROLE_ADMIN"/>
-        <intercept-url pattern="/addCarWithPhoto" access="ROLE_USER,ROLE_ADMIN"/>
         <intercept-url pattern="/feedback" access="ROLE_USER,ROLE_ADMIN"/>
-        <intercept-url pattern="/ConfirmationOfRegistration" access="ROLE_ANONYMOUS"/>
+        <intercept-url pattern="*/change_contact_person" access="ROLE_USER,ROLE_ADMIN"/>
+        <intercept-url pattern="*/changeAddress" access="ROLE_USER,ROLE_ADMIN"/>
+        <intercept-url pattern="*/delete_contact_person" access="ROLE_USER,ROLE_ADMIN"/>
+        <!--CarController-->
+        <intercept-url pattern="/getCarsOptions" access="ROLE_USER,ROLE_ADMIN"/>
+        <intercept-url pattern="/addCar" access="ROLE_USER,ROLE_ADMIN"/>
+        <intercept-url pattern="*/update_car" access="ROLE_USER,ROLE_ADMIN"/>
+        <intercept-url pattern="/delete_photo" access="ROLE_USER,ROLE_ADMIN"/>
+        <intercept-url pattern="/addCarWithPhoto" access="ROLE_USER,ROLE_ADMIN"/>
+        <intercept-url pattern="*/addCarWithPhoto" access="ROLE_USER,ROLE_ADMIN"/>
+        <intercept-url pattern="*/change_car" access="ROLE_USER,ROLE_ADMIN"/>
+        <intercept-url pattern="*/delete_car" access="ROLE_USER,ROLE_ADMIN"/>
+        <!--AdminController-->
         <intercept-url pattern="/update_dealers_list" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/update_authorized_dealers_list" access="ROLE_ADMIN"/>
         <intercept-url pattern="/addDealerNumber" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/deleteAuthorizedDealer" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/deleteOldCars" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/updateBrands" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/updateRegions" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/updateYears" access="ROLE_ADMIN"/>
         <intercept-url pattern="/updateModelByBrand" access="ROLE_ADMIN"/>
         <intercept-url pattern="/deleteDealer" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/sendEmailToOwnersOldCars" access="ROLE_ADMIN"/>
+
 
 
         <form-login login-page='/login' authentication-failure-url="/login_invalid"/>

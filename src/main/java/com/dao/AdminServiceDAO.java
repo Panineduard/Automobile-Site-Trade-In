@@ -1,10 +1,7 @@
 package com.dao;
 
 import com.dao.configuration.files.HibernateUtil;
-import com.modelClass.AuthorizedDealers;
-import com.modelClass.CarBrand;
-import com.modelClass.Dealer;
-import com.modelClass.Region;
+import com.modelClass.*;
 import com.servise.StandartMasege;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.Query;
@@ -69,17 +66,24 @@ public class AdminServiceDAO {
         Stream<String> stream = new BufferedReader(new StringReader(myString)).lines();
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr = session.beginTransaction();
-        {
+        Query query = session.createQuery("delete from Region ");
+        query.executeUpdate();
+        final int[] id = {1};
+
             stream
                     .forEach(s1 -> {
-                       Region region= new Region();
+                        Region region = new Region();
                         region.setName(s1);
+                        region.setId(id[0]);
+                        id[0]++;
+
+
                         session.merge(region);
 
                     });
 
 
-        }
+
 
 
         tr.commit();
@@ -90,6 +94,69 @@ public class AdminServiceDAO {
 
     }
 
+    public void setBrands(MultipartFile multipartFile) throws IOException{
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        ByteArrayInputStream byteArrayInputStream = null;
+        byteArrayInputStream = new ByteArrayInputStream(multipartFile.getBytes());
+        String myString = null;
+        myString = IOUtils.toString(byteArrayInputStream);
+        Stream<String> stream = new BufferedReader(new StringReader(myString)).lines();
+
+        Transaction tr = session.beginTransaction();
+        Query query = session.createQuery("delete from Brand ");
+        query.executeUpdate();
+        final int[] id = {1};
+        stream
+                .forEach(s1 -> {
+                    Brand brand=new Brand();
+                    brand.setBrand(s1);
+                    brand.setId(id[0]);
+                    session.merge(brand);
+                    id[0]++;
+                });
+        tr.commit();
+
+        if (session.isOpen()) {
+            session.close();
+        }
+    }
+    public void setYears(MultipartFile regions) throws IOException {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+           ByteArrayInputStream byteArrayInputStream = null;
+
+               byteArrayInputStream = new ByteArrayInputStream(regions.getBytes());
+           String myString = null;
+               myString = IOUtils.toString(byteArrayInputStream);
+           Stream<String> stream = new BufferedReader(new StringReader(myString)).lines();
+
+        Transaction tr = session.beginTransaction();
+        Query query = session.createQuery("delete from Years ");
+        query.executeUpdate();
+        stream
+                .forEach(s1 -> {
+                    Years years = new Years();
+                    years.setYear(new Integer(s1));
+                    session.merge(years);
+                });
+        tr.commit();
+
+           if (session.isOpen()) {
+               session.close();
+           }
+    }
+    public List<Region> getRegions()  {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr = session.beginTransaction();
+        Query query = session.createQuery("from Region ");
+        List<Region> regions=query.list();
+        tr.commit();
+        if (session.isOpen()) {
+            session.close();
+        }
+
+      return regions;
+    }
     public List<AuthorizedDealers> getAuthorizedDealers() {
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -97,4 +164,5 @@ public class AdminServiceDAO {
         List<AuthorizedDealers> dealers=query.list();
         return dealers;
     }
+
 }

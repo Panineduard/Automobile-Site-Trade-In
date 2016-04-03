@@ -2,11 +2,8 @@ package com.dao;
 
 import com.dao.configuration.files.HibernateUtil;
 import com.helpers.SearchOptions;
-import com.modelClass.Car;
+import com.modelClass.*;
 
-import com.modelClass.CarBrand;
-import com.modelClass.Dealer;
-import com.modelClass.PhotoPath;
 import com.servise.ChangeImgSize;
 import com.servise.StandartMasege;
 import com.setting.Setting;
@@ -128,6 +125,23 @@ ChangeImgSize changeImgSize;
         }
         return cars;
     }
+    public  List<Integer> getYears(){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        List<Integer>years=null;
+      try {
+
+
+        Transaction tr=session.beginTransaction();
+        Query query=session.createQuery("from Years ");
+        years=query.list();
+          tr.commit();
+      }
+      finally {
+          if(session.isOpen()){session.close();}
+          return years;
+      }
+
+    }
     //This method return -1 if something from data equally 0
     public Long setCar(Car car,List<MultipartFile> multipartFiles){
         //check block fo null and empty
@@ -212,10 +226,10 @@ ChangeImgSize changeImgSize;
                 fRegion=false, fEngine = false,fGearbox=false;
         String priseQuery=" ";
         if(options.getPrise()==1){
-                priseQuery="ORDER BY c.prise ";
+                priseQuery=" ORDER BY c.prise ";
         }
         if (options.getPrise()==2){
-            priseQuery="ORDER BY c.prise DESC";
+            priseQuery=" ORDER BY c.prise DESC";
         }
         if(options.getRegion()!=null&&!options.getRegion().isEmpty()){
             fRegion=true;
@@ -474,5 +488,24 @@ ChangeImgSize changeImgSize;
             return model;
         }
         return carBrand.getModels();
+    }
+
+    public List<Brand> getBrands() {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            List<Brand>brands=null;
+            try {
+
+
+                Transaction tr=session.beginTransaction();
+                Query query=session.createQuery("from Brand ");
+                brands=query.list();
+                tr.commit();
+            }
+            finally {
+                if(session.isOpen()){session.close();}
+                return brands;
+            }
+
+
     }
 }

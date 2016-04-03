@@ -1,5 +1,6 @@
 package com.controllers;
 
+import com.dao.AdminServiceDAO;
 import com.dao.CarDAO;
 import com.dao.DealerDao;
 
@@ -38,6 +39,8 @@ import java.util.Random;
 @SessionAttributes("login")
 public class UserController {
     @Autowired
+    EncoderId encoderId;
+    @Autowired
     SendHTMLEmail sendHTMLEmail;
     @Autowired
     StandartMasege standartMasege;
@@ -47,25 +50,18 @@ public class UserController {
     CarDAO carDAO;
     @Autowired
     ViewHalper viewHalper;
+    @Autowired
+    AdminServiceDAO adminServiceDAO;
 
-    @RequestMapping(value = "/getSearchOptions",method = RequestMethod.GET, headers="Accept=application/json")
-    public @ResponseBody
-    SearchOptions getModelForm(HttpSession session){
-//        System.out.println(model);
-//        CarDaoInterface carDAO=new CarDaoInterface();
-//        return new SearchOptions("a","b","c","d","e","f","g","j","k",0);
-        SearchOptions options = (SearchOptions)session.getAttribute("options");
-//        System.out.println(options);
-      return options;
-    }
 
+//Methods for all users
     @RequestMapping(value = "/lost_password", method = RequestMethod.GET)
     public ModelAndView getLostPassword(HttpServletRequest request){
         String key=request.getParameter("key");
         if(key==null){return new ModelAndView("lost_password");}
         KeyHolder keyHolder=dealerDao.getKeyDHolderByKeyAndDeleteKey(key);
         if(keyHolder!=null){
-            dealerDao.changePasswordByIdDealer(keyHolder.getIdDealer(),keyHolder.getPass());
+            dealerDao.changePasswordByIdDealer(keyHolder.getIdDealer(), keyHolder.getPass());
             ModelAndView modelAndView = new ModelAndView("successfulRegistration");
             modelAndView.addObject("msg", standartMasege.getMessage(39));
             return modelAndView;
@@ -74,15 +70,15 @@ public class UserController {
 
     }
     @RequestMapping(value = "/lost_password", method = RequestMethod.POST)
-    public ModelAndView changeLostPassword(@RequestParam("email")String email,@RequestParam("password")String password){
+    public ModelAndView changeLostPassword(@RequestParam("dealers_number")String dealers_number,@RequestParam("email")String email,@RequestParam("password")String password){
         if(email==null||password==null){
             return new ModelAndView("index");
         }
-            String idDealer=dealerDao.getIdDealerByEmail(email);
-            if(idDealer!=null){
-                String key=DigestUtils.md5Hex(idDealer+System.currentTimeMillis() + new Random().nextInt());
+            ;
+            if(dealerDao.checkIdDealerByEmail(email,dealers_number)){
+                String key=DigestUtils.md5Hex(dealers_number+System.currentTimeMillis() + new Random().nextInt());
                 PasswordHelper passwordHelper=new PasswordHelper();
-                dealerDao.setKeyHolder(new KeyHolder(idDealer,key,passwordHelper.encode(password)));
+                dealerDao.setKeyHolder(new KeyHolder(dealers_number,key,passwordHelper.encode(password)));
                 String msg ="<a href='"+ Setting.getHost()+"/lost_password?key="+key+"'>"+standartMasege.getMessage(35)+"</a>";
                 sendHTMLEmail.sendHtmlMessage(email,msg,standartMasege.getMessage(36));
                 ModelAndView modelAndView = new ModelAndView("successfulRegistration");
@@ -119,11 +115,8 @@ public class UserController {
             return modelAndView;
         }
         String returnMessage;
-//        DealerDao dealerDao = new DealerDao();
        try{ if (pasword.equals(checkPasword)){
-
             returnMessage= dealerDao.setDealer(numberDealer, nameDealer,email,name,personPhone,pasword,city);
-
         }
         else {
             returnMessage = standartMasege.getMessage(6);
@@ -141,7 +134,6 @@ public class UserController {
 
 @RequestMapping(value = "/ConfirmationOfRegistration", method = RequestMethod.GET)
 public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
-//    DealerDao dealerDao = new DealerDao();
     String msg;
     ModelAndView model;
     if(dealerDao.updateRegistrationAndRoleById(idDealer))
@@ -151,42 +143,28 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
         model.addObject("msg",msg );
     }
     else {
-
         model=new ModelAndView("zerroPage");
     }
-
     return model;
 }
-    @RequestMapping(value = {"/myAccount","*/myAccount"})
-    public ModelAndView accountModel(){
 
+
+    //Methods for registration users
+
+    @RequestMapping(value = {"/myAccount","*/myAccount"})
+    public ModelAndView accountModel(HttpSession session){
+            session.removeAttribute("chCar");
             ModelAndView modelAndView = new ModelAndView("my_account");
             return viewHalper.addingDealerAndCarsInView(modelAndView);
     }
 
     @RequestMapping(value = "/feedback")
     public ModelAndView getFeedbackForm(){
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        auth.getPrincipal();
         ModelAndView modelAndView = new ModelAndView("feedback");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/carPage",method = RequestMethod.GET)
-    public ModelAndView getDealer(@RequestParam ("idCar") String idCar){
-        ModelAndView modelAndView= new ModelAndView("auto");
-        Car car=null;
-//        CarDaoInterface carDAO =new CarDaoInterface();
-        if(!idCar.isEmpty()){
-            car=carDAO.getCarById(idCar);
-//            DealerDao dealerDao=new DealerDao();
-            modelAndView.addObject("car", car);
-            modelAndView.addObject("dealer",dealerDao.getDealerById(car.getIdDealer()));
-        }
 
-
-        return modelAndView;
-    }
     @RequestMapping(value = "*/change_contact_person", method = RequestMethod.POST)
     public ModelAndView changeContactPersonsData(@RequestParam("manager") String manager,@RequestParam("phone") String phone,
                                                  @RequestParam("id") Integer idPerson, @RequestParam("email") String email){
@@ -194,7 +172,6 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String idDealer=auth.getName();
         Contact_person contact_person = new Contact_person();
-//        DealerDao dealerDao= new DealerDao();
         contact_person.setIdDealer(idDealer);
         if(!manager.isEmpty()){contact_person.setName(manager);}
         if(!phone.isEmpty()){contact_person.setPhone(phone);}
@@ -221,8 +198,7 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
     public ModelAndView deleteContactPerson(@RequestParam("count")String id ,HttpSession session){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String idDealer=auth.getName();
-//        DealerDao dealerDao= new DealerDao();
-        Integer idPerson = new Integer(EncoderId.decodeID(id));
+        Integer idPerson = new Integer(encoderId.decodeID(id));
         if(idPerson!=null){
         dealerDao.deleteContactPersonById(idDealer,idPerson);
         }

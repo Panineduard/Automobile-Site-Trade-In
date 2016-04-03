@@ -32,6 +32,8 @@ public class DealerDao {
     SendHTMLEmail sendHTMLEmail;
     @Autowired
     StandartMasege standartMasege;
+    @Autowired
+    EncoderId encoderId;
     public KeyHolder getKeyDHolderByKeyAndDeleteKey(String key){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr=session.beginTransaction();
@@ -56,21 +58,23 @@ public class DealerDao {
         }
     }
 
-    public String getIdDealerByEmail(String email){
+    public boolean checkIdDealerByEmail(String email,String idDealer){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr=session.beginTransaction();
        try {
-        Query query =session.createQuery("select idDealer from Contact_person where email=:email ");
+        Query query =session.createQuery("select idDealer from Contact_person where email=:email and idDealer=:id");
         query.setParameter("email", email);
+        query.setParameter("id", idDealer);
         String result = (String)query.list().get(0);
-           tr.commit();
-           return result;
+        tr.commit();
+           if(result!=null||!result.isEmpty())return true;
+           else return false;
        }
        catch (Exception e){
            if (tr!=null){
                tr.rollback();
            }
-           return null;
+           return false;
        }
         finally {
            if(session.isOpen()){session.close();}
@@ -99,15 +103,19 @@ public class DealerDao {
     public Dealer getDealerById(String id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction=session.beginTransaction();
-
+        try {
           Dealer dealer = session.get(Dealer.class, id);
-
-        transaction.commit();
-        if (session.isOpen()) {
-            session.close();
-        }
+          transaction.commit();
         return dealer;
-
+        }
+        catch (Exception e){
+            return null;
+        }
+        finally {
+            if (session.isOpen()) {
+                session.close();
+            }
+        }
     }
 
     public List<Dealer> getIdDealersWithoutAuth() {
@@ -183,7 +191,7 @@ catch (Exception e){
             if(session.isOpen()){
                 session.close();
             }
-            String htmlMessage = "<a href='" + Setting.getHost() + "/ConfirmationOfRegistration?id=" + EncoderId.encodId(numberDealer) + "'>" + standartMasege.getMessage(18) + "</a>";
+            String htmlMessage = "<a href='" + Setting.getHost() + "/ConfirmationOfRegistration?id=" + encoderId.encodId(numberDealer) + "'>" + standartMasege.getMessage(18) + "</a>";
             sendHTMLEmail.sendHtmlMessage(email, htmlMessage, standartMasege.getMessage(17));
             return standartMasege.getMessage(12) +
                     " \n " + standartMasege.getMessage(13);
@@ -280,7 +288,7 @@ catch (Exception e){
     public boolean updateRegistrationAndRoleById(String id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
-        String idDealer = EncoderId.decodeID(id);
+        String idDealer = encoderId.decodeID(id);
         Transaction tr = session.beginTransaction();
         Query queryCheck = session.createQuery("from Dealer where numberDealer=:idD");
         queryCheck.setParameter("idD", idDealer);

@@ -2,10 +2,10 @@
 /**
  * Created by volkswagen1 on 17.02.2016.
  */
-function p_delete(e){
-    var model=document.getElementById("id_model");
-    while (model.firstChild) {
-        model.removeChild(model.firstChild);
+function p_delete(e,model){
+    var models=document.getElementById("id_model");
+    while (models.firstChild) {
+        models.removeChild(models.firstChild);
     }
 
 
@@ -15,20 +15,23 @@ function p_delete(e){
 //                alert(data.length);
 //                alert( "Data Loaded: " + data[1] );
             for(var i=0;i<data.length;i++){
-                var model=document.getElementById("id_model");
-
-                var manager=document.createElement("OPTION");
-                if(i===0){
-                    manager.setAttribute("value",'');
+                //var model=document.getElementById("id_model");
+                if(i==0){
+                    //manager.setAttribute("value",'');
+                    $('#id_model').append('<option  value="">'+data[i]+' </option>');
                 }
+
+                //var manager=document.createElement("OPTION");
+
                     else{
-                    manager.setAttribute("value",data[i]);
+                    if(model==data[i]){
+                    $('#id_model').append('<option selected="selected" value="'+data[i]+'">'+data[i]+' </option>');
+                    }
+                    else{
+                        $('#id_model').append('<option value="'+data[i]+'">'+data[i]+' </option>');
+                    }
+                    //manager.setAttribute("value",data[i]);
                 }
-
-                    manager.innerHTML=data[i];
-                model.appendChild(manager);
-//                  alert("привет");
-//
             }
         });
 //     // 1. Создаём новый объект XMLHttpRequest

@@ -9,6 +9,7 @@ import com.helpers.FileUploadForm;
 import com.modelClass.AuthorizedDealers;
 import com.modelClass.CarBrand;
 import com.servise.StandartMasege;
+import com.servise.TaskExecutorClass;
 import com.setting.SettingJavax;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.Session;
@@ -45,6 +46,16 @@ public class AdminController {
     DealerDao dealerDao;
     @Autowired
     CarDAO carDAO;
+    @Autowired
+    EncoderId encoderId;
+    @Autowired
+    TaskExecutorClass taskExecutorClass;
+    @RequestMapping("/sendEmailToOwnersOldCars")
+    public ModelAndView sendEmailToOwnersOldCars(){
+        taskExecutorClass.sendEmailToOwnersOldCars();
+        ModelAndView modelAndView = new ModelAndView("admin_page");
+        return modelAndView;
+    }
     @RequestMapping("/update_dealers_list")
     public ModelAndView getAdminPage(){
         ModelAndView modelAndView = new ModelAndView("admin_page");
@@ -72,7 +83,7 @@ public class AdminController {
     @RequestMapping("/deleteAuthorizedDealer")
     public ModelAndView deleteAuthorizedDealers(@ModelAttribute ("idDealer")String dealersNumber) {
         if(dealersNumber!=null){
-        dealerDao.deleteLegalsDealer(EncoderId.decodeID(dealersNumber));}
+        dealerDao.deleteLegalsDealer(encoderId.decodeID(dealersNumber));}
         ModelAndView modelAndView = new ModelAndView("admin_page");
         return modelAndView;
     }
@@ -83,6 +94,50 @@ public class AdminController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/updateBrands", method = RequestMethod.POST)
+    public ModelAndView updateBrands(@ModelAttribute("uploadForm")  FileUploadForm uploadForm) {
+        ModelAndView modelAndView=new ModelAndView("admin_page");
+        try {
+            adminServiceDAO.setBrands(uploadForm.getFiles().get(0));
+            modelAndView.addObject("msg", standartMasege.getMessage(43));
+        } catch (IOException e1) {
+            modelAndView.addObject("msg", standartMasege.getMessage(41));
+        }
+        return modelAndView;
+
+    }
+    @RequestMapping(value = "/updateRegions", method = RequestMethod.POST)
+    public ModelAndView updateRegions(@ModelAttribute("uploadForm")  FileUploadForm uploadForm) throws IOException {
+        ModelAndView modelAndView=new ModelAndView("admin_page");
+
+            uploadForm.getFiles()
+                    .forEach(f -> {
+                        if (f != null) {
+                            try {
+                                adminServiceDAO.setRegions(f);
+                                modelAndView.addObject("msg", standartMasege.getMessage(40));
+
+                            } catch (IOException e) {
+                                modelAndView.addObject("msg", standartMasege.getMessage(41));
+                            }
+                        }
+                    });
+
+        return modelAndView;
+
+    }
+    @RequestMapping(value = "/updateYears", method = RequestMethod.POST)
+    public ModelAndView updateYears(@ModelAttribute("uploadForm")  FileUploadForm uploadForm) {
+        ModelAndView modelAndView=new ModelAndView("admin_page");
+        try {
+            adminServiceDAO.setYears(uploadForm.getFiles().get(0));
+            modelAndView.addObject("msg", standartMasege.getMessage(42));
+        } catch (IOException e1) {
+            modelAndView.addObject("msg", standartMasege.getMessage(41));
+        }
+           return modelAndView;
+
+    }
     @RequestMapping(value = "/updateModelByBrand", method = RequestMethod.POST)
      public ModelAndView getRegistrationForm(@ModelAttribute("uploadForm")  FileUploadForm uploadForm,@ModelAttribute("Brand") String brand) throws IOException {
         ModelAndView modelAndView=new ModelAndView("admin_page");
@@ -106,8 +161,8 @@ public class AdminController {
     }
     @RequestMapping(value = "/deleteDealer", method = RequestMethod.POST)
     public ModelAndView deleteDealer(@ModelAttribute("idDealer") String id){
-        carDAO.deleteCarsByDealersID(EncoderId.decodeID(id));
-        dealerDao.deleteLoginAndDealerById(EncoderId.decodeID(id));
+        carDAO.deleteCarsByDealersID(encoderId.decodeID(id));
+        dealerDao.deleteLoginAndDealerById(encoderId.decodeID(id));
         ModelAndView modelAndView = new ModelAndView("admin_page");
         modelAndView.addObject("msg", standartMasege.getMessage(24));
         return modelAndView;

@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Table(name = "REGION")
 public class Region {
     @Id
-    @GeneratedValue(strategy= GenerationType.TABLE)
-    @Column(name = "id")
+//    @GeneratedValue()
+//    @Column(name = "id")
     private int id;
 
     private String name;

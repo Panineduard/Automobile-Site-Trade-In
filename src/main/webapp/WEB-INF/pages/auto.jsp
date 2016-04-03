@@ -98,13 +98,15 @@ jgjj kjkjkjb kbkjbkjb
 <div id="baner-right">
 some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 777777777777 77777 77777777 77777777 7777777 7777777
 </div>
-<!-- <div id="baner-right">
-some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 777777777777 77777 77777777 77777777 7777777 7777777
-</div> -->
+
 
   <%
     Dealer dealer = (Dealer)request.getAttribute("dealer");
     Car car= (Car) request.getAttribute("car");
+    if(car==null||dealer==null){
+    String redirectURL = "/";
+    response.sendRedirect(redirectURL);
+    }else {
     String path;
     if(car.getPhotoPath().size()==0) {
       path="/res/img/notAvailable.png";
@@ -253,6 +255,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
             %>
         <div><a href="#<%=j%>" class="cross-link"><img src="<%=paths%>" width="80" height="50" class="nav-thumb" alt="temp-thumb" /></a></div>
 <%j++;
+}
 }%>
     </div>
 

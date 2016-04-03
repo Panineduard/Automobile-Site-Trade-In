@@ -27,6 +27,9 @@
         <mapping class="com.modelClass.CarBrand"/>
         <mapping class="com.modelClass.AuthorizedDealers"/>
         <mapping class="com.modelClass.KeyHolder"/>
+        <mapping class="com.modelClass.Region"/>
+        <mapping class="com.modelClass.Years"/>
+        <mapping class="com.modelClass.Brand"/>
 
 
 

@@ -45,6 +45,8 @@
     <bean name="DealerDao" class="com.dao.DealerDao"/>
     <bean name="AdminServiceDAO" class="com.dao.AdminServiceDAO"/>
     <bean name="viewHalper" class="com.helpers.ViewHalper"/>
+    <bean name="encoderId" class="com.helpers.EncoderId"/>
+    <bean name="taskExecutorClass" class="com.servise.TaskExecutorClass"/>
 
 
     <bean id="messageSource"

@@ -47,6 +47,7 @@
       <p>Ведите адрес электронной почты который указан при регистрации</p>
       <form name = "user_form" action="/lost_password" method="post" onsubmit="return validate_form ( );">
         <p><label>E-mail: <input name="email" type="email" required></label></p>
+        <p><label>Номер диллера<input name="dealers_number" type="text"></label></p>
         <p><label>Новый пароль<input name="password" type="password"></label></p>
         <p><label>Подтвердите пароль<input name="password_check" type="password"></label></p>
         <p><input type="submit" value= "Изменить пароль"></p>

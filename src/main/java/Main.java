@@ -6,6 +6,7 @@ import com.dao.DealerDao;
 import com.dao.configuration.files.HibernateUtil;
 import com.helpers.SearchOptions;
 import com.modelClass.*;
+import com.servise.TaskExecutorClass;
 import org.apache.commons.io.FileUtils;
 import org.hibernate.Session;
 
@@ -22,11 +23,11 @@ import java.util.List;
 public class Main {
     public static void main(String...args)  {
 
-        DealerDao dealerDao=new DealerDao();
+//        DealerDao dealerDao=new DealerDao();
 
 //        dealerDao.deleteLoginAndDealerById("1");
-        CarDAO carDAO=new CarDAO();
-        System.out.println(carDAO.getCarsByParameters(new SearchOptions("","","","","","","","","",0),1));
+//        CarDAO carDAO=new CarDAO();
+//        System.out.println(carDAO.getCarsByParameters(new SearchOptions("","","","","","","","","",0),1));
 //        carDAO.deleteCarsByDealersID("1");
 //        carDAO.deleteCarById("58");
 //        carDAO.deletePhotoByCarsId(4L,74l);
