@@ -338,9 +338,23 @@ public class CarController {
                 if(!engine_capacity.isEmpty()){car.setEngineCapacity(engine_capacity);}
                 else {car.setEngineCapacity(nullMsg);}
                 if(!mileage.isEmpty()){
-                    car.setMileage(new Integer(mileage));
+                    mileage=mileage.replaceAll("[\\s]{1,}", "").toLowerCase().trim();
+                    if (mileage.matches("[-+]?\\d+")){
+                        StringBuffer sb=new StringBuffer(mileage);
+                        int step=3;
+                        for (int i =0;i<(mileage.length()/3);i++){
+                            sb.insert(sb.length() - step, " ");
+                            step=step+4;
+                        }
+                        mileage=sb.toString();
+                        mileage=mileage.trim();
+                        car.setMileage(mileage);
+                    }
+                    else {
+                        car.setMileage("???");
+                    }
                 }
-                else car.setMileage(0);
+                else car.setMileage("0");
              if(!update){
                 if (carDAO.setCar(car, uploadForm.getFiles()) != -1L) {
                     ModelAndView modelAndView=new ModelAndView("my_account");

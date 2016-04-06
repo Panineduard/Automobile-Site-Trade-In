@@ -173,7 +173,7 @@
 
                 <h2>Пробег, км <br>
                     <%if(presentCar){%>
-                    <input type="text" size="20" class="form-control" value="<%=car.getMileage()%>" required="required" name="mileage"
+                    <input type="text" size="20" class="form-control" value="<%=car.getMileage().replaceAll("[\\s]{1,}", "").trim()%>" required="required" name="mileage"
                            pattern="^[ 0-9]+$"></h2>
                 <%}
                 else {%>

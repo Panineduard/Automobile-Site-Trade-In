@@ -38,7 +38,7 @@ public class Car {
     private Integer prise;
     private String idDealer;
     private Long views;
-    private Integer mileage;
+    private String mileage;
     private String engineCapacity;
     private String region;
     private String equipment;
@@ -151,11 +151,11 @@ public class Car {
         this.enginesType = enginesType;
     }
 
-    public Integer getMileage() {
+    public String getMileage() {
         return mileage;
     }
 
-    public void setMileage(Integer mileage) {
+    public void setMileage(String mileage) {
         this.mileage = mileage;
     }
 

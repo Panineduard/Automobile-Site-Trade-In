@@ -22,6 +22,20 @@ import java.util.List;
  */
 public class Main {
     public static void main(String...args)  {
+//
+//        String h="    ";
+//        h=h.replaceAll("[\\s]{1,}", "").toLowerCase().trim();
+//        if (h.matches("[-+]?\\d+")){
+//            StringBuffer sb=new StringBuffer(h);
+//            int step=3;
+//            for (int i =0;i<(h.length()/3);i++){
+//                sb.insert(sb.length() - step, " ");
+//                step=step+4;
+//            }
+//            h=sb.toString();
+//            h=h.trim();
+//            System.out.println(h);
+//        }
 
 //        DealerDao dealerDao=new DealerDao();
 
