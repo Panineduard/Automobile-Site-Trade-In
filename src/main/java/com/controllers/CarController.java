@@ -49,6 +49,7 @@ public class CarController {
     ChangeImgSize changeImgSize;
     @Autowired
     ViewHalper viewHalper;
+    private String path =this.getClass().getClassLoader().getResource("notAvailable.png").getPath();
 
     //free methods
 
@@ -87,9 +88,12 @@ public class CarController {
 
 
         if(req.getParameter("pathPhoto")!=null&&!req.getParameter("pathPhoto").isEmpty()){
-            try {
+
                 try {
                     File file=new File(path_of_photo);
+                    if(file.length()==0){
+                        file=new File(path);
+                    }
                     BufferedImage bufferedImage =  ImageIO.read(file);
                     if(imgHeight!=0||imgWidth!=0){
                         bufferedImage = changeImgSize.resizeImage(bufferedImage, imgWidth, imgHeight);
@@ -110,10 +114,10 @@ public class CarController {
                 catch(FileNotFoundException fe){
                     fe.printStackTrace();
                 }
-            }
-            catch (IOException r){
+                catch (IOException r){
+                    r.printStackTrace();
                 System.out.println("Ошибка потока getPhoto");
-            }
+                }
         }
         }
     }

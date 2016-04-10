@@ -44,7 +44,12 @@ ChangeImgSize changeImgSize;
                 File convFile = new File( file.getOriginalFilename());
                 file.transferTo(convFile);
                 BufferedImage bufferedImage =  ImageIO.read(convFile);
-                bufferedImage=changeImgSize.resizeImage(bufferedImage,Setting.get_IMG_WIDTH(),Setting.get_IMG_HEIGHT());
+                if(bufferedImage.getHeight()>=bufferedImage.getWidth()){
+                    bufferedImage=changeImgSize.resizeImage(bufferedImage,Setting.get_IMG_HEIGHT(),Setting.get_IMG_WIDTH());
+                }
+                else {
+                    bufferedImage=changeImgSize.resizeImage(bufferedImage,Setting.get_IMG_WIDTH(),Setting.get_IMG_HEIGHT());
+                }
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ImageIO.write(bufferedImage,"jpg",baos);
                 baos.flush();
@@ -326,11 +331,11 @@ ChangeImgSize changeImgSize;
     public List<Car> getLastCars(Integer countLastCar){
        try {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        Query query1 = session.createQuery("select max (idCar) from Car ");
-        Long maxIdOfCar = (Long)query1.list().get(0);
-        Query query = session.createQuery("from Car c where c.idCar>= :maxId ");
-        query.setParameter("maxId",maxIdOfCar-countLastCar);
+        Transaction tr=session.beginTransaction();
+//        Query query1 = session.createQuery("select max (idCar) from Car ");
+//        Long maxIdOfCar = (Long)query1.list().get(0);
+        Query query = session.createQuery("from Car c where c.idCar>= :id ORDER BY c.dateProvide DESC ").setMaxResults(countLastCar);
+        query.setParameter("id",0L);
         List<Car> cars = (List<Car>)query.list();
 
         return cars;

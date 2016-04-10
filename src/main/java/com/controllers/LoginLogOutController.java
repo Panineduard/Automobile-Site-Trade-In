@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by volkswagen1 on 27.12.2015.
  */
 @Controller
-public class LoginLogautController {
+public class LoginLogOutController {
     @Autowired
     StandartMasege standartMasege;
 
