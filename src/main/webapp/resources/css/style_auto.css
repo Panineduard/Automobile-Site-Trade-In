@@ -60,7 +60,11 @@ border-radius: 4px 4px 4px 4px;
 		margin-top:5px;
 		margin-left:5px;
 		}
-		
+#panes{
+	position: absolute;
+	height: 250px;
+	width: 380px;
+}
 #result {
 	/* background-color: #C7E3E4; */
 	margin: 5px 205px 5px 205px;
@@ -86,8 +90,8 @@ border-radius: 4px 4px 4px 4px;
 .info{
 	/* color:red; */
 	/* border:red; */
+	margin-top: 20%;
 	overflow:hidden;
-	margin-top:100px;
 	font:600 14px/20px san-serif;
 	background-color:#8498C9;
 	border-radius: 4px 4px 4px 4px;
@@ -129,7 +133,7 @@ footer {
 .foto-380x250 {
       /* float:left;  */
 	  height: 250px;
-      width: 380px;
+      /*width: 380px;*/
 	  margin:5px;
 	  padding:5px;
 	  /* border: 1px solid red; */
@@ -137,7 +141,7 @@ footer {
 }
 .foto-85x56{
 	height: 56px;
-      width: 85px;
+      /*width: 85px;*/
 	  margin:10px 5px 5px 5px;
 	
 }
@@ -163,10 +167,19 @@ footer {
 	
 	
 }
+.small-photo{
+	position: relative;
+
+	top: 250px;
+}
 
 	.small-foto{
+		position: relative;
+		float: left;
+		/*top: -55px; /!* Сдвигаем текст вверх *!/*/
+		/*left: 5px; /!* Сдвигаем текст вправо *!/*/
 		margin:10px 5px 5px 5px;
-	  padding:5px;
+	  /*padding:5px;*/
 	}	
 	.model-info-data{
 		font: bold 16px  serif;

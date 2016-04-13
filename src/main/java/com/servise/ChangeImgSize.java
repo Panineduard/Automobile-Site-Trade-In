@@ -19,4 +19,14 @@ public class ChangeImgSize {
         g.dispose();
         return resizedImage;
     }
+    public BufferedImage resizeImage(BufferedImage originalImage,Integer resizePercentage){
+        Integer IMG_WIDTH=(originalImage.getWidth()*resizePercentage)/100;
+        Integer IMG_HEIGHT=(originalImage.getHeight()*resizePercentage)/100;
+        int type = originalImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
+        BufferedImage resizedImage = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, type);
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(originalImage, 0, 0, IMG_WIDTH, IMG_HEIGHT, null);
+        g.dispose();
+        return resizedImage;
+    }
 }

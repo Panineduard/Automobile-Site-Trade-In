@@ -258,8 +258,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
             path="/res/img/notAvailable.png";
         }
         else {
-            path = "/getPhoto?pathPhoto="+car.getPhotoPath().get(0)+"&Width=200&Height=200";
-
+            path = "/getPhoto?pathPhoto="+car.getPhotoPath().get(0)+"&percentage_of_reduction=30";
         }
         String EnginesType="нет данных";
         String transmission ="нет данных";

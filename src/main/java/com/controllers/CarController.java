@@ -71,13 +71,12 @@ public class CarController {
     @RequestMapping(value = "/getPhoto", method = RequestMethod.GET)
     public void getPhoto(HttpServletRequest req, HttpServletResponse response){
         String path_of_photo=(String)req.getParameter("pathPhoto");
-        Integer imgHeight=0;
-        Integer imgWidth =0;
+
+        Integer percentage=0;
         try {
 
-        if(req.getParameter("Height")!=null||req.getParameter("Width")!=null){
-            imgHeight=new Integer(req.getParameter("Height"));
-            imgWidth=new Integer(req.getParameter("Width"));
+        if(req.getParameter("percentage_of_reduction")!=null){
+            percentage=new Integer(req.getParameter("percentage_of_reduction"));
 
         }
         }
@@ -95,8 +94,8 @@ public class CarController {
                         file=new File(path);
                     }
                     BufferedImage bufferedImage =  ImageIO.read(file);
-                    if(imgHeight!=0||imgWidth!=0){
-                        bufferedImage = changeImgSize.resizeImage(bufferedImage, imgWidth, imgHeight);
+                    if(percentage!=0){
+                        bufferedImage = changeImgSize.resizeImage(bufferedImage,percentage);
                     }
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();

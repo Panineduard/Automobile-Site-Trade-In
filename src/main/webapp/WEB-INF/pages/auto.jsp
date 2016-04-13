@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.modelClass.*" %>
+<%@ page import="com.setting.Setting" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -23,11 +24,19 @@
   <script type="text/javascript">
 
     $(document).ready(function() { // вся магия после загрузки страницы
+
+
       $('a#go').click( function(event){ // ловим клик по ссылки с id="go"
 
         event.preventDefault(); // выключаем стандартную роль элемента
         $('#overlay').fadeIn(400, // сначала плавно показываем темную подложку
                 function(){ // после выполнения предъидущей анимации
+                  var big_photo=$('#big-photo1');
+                  if(big_photo.height()>big_photo.width()){
+                    big_photo
+                            .css('position','relative')
+                            .css('right','-25%');
+                  }
                   $('#modal_form')
 
                           .css('display', 'block') // убираем у модального окна display: none;
@@ -61,7 +70,24 @@
       $navthumb
               .click(function() {
 
+                var photo=$(this);
                 var $this = $(this);
+                var big_photo=$('#big-photo1');
+                big_photo
+                        .css('position','relative')
+                        .css('right','0%');
+                if(photo.width()<photo.height()){
+                  $('.panel')
+                          .css('position','relative')
+//                          .css('right','-3%');
+                          .animate({right: '-4%'}, 500);
+                }
+                else{
+                  $('.panel')
+                          .css('position','relative')
+                          .animate({right: '0%'}, 500);
+//                .css('right','0%');
+                }
               });
 
     });
@@ -112,7 +138,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
       path="/res/img/notAvailable.png";
     }
     else {
-      path = "/getPhoto?pathPhoto="+car.getPhotoPath().get(0).getPath();
+      path = "/getPhoto?pathPhoto="+car.getPhotoPath().get(0).getPath()+"&percentage_of_reduction=50";
 
     }
 
@@ -153,25 +179,26 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
   <img  id='bigimgslide' class="foto-380x250" src="<%=path%>" align="left">
   </a>
   </div>
+  <div class="small-photo">
   <%
     int idPhoto=0;
     for (PhotoPath photo:car.getPhotoPath()) {
       String paths;
 
-        paths = "/getPhoto?pathPhoto="+photo.getPath();
+        paths = "/getPhoto?pathPhoto="+photo.getPath()+"&percentage_of_reduction=50";
 
   %>
 <div class="small-foto">
 
 <a title="<%=car.getBrand()%>  <%=car.getModel()%>" href="#" >
-<img  id=<%=idPhoto%>  class="foto-85x56" onclick='setBigImageSlide(<%=idPhoto%>)'  src="<%=paths%>" align="left" alt="">
+<img  id=<%=idPhoto%>  class="foto-85x56" onclick='setBigImageSlide(<%=idPhoto%>)'  src="<%=paths%>" alt="">
 </a>
 
 </div>
   <%
       idPhoto++;
     }%>
-
+  </div>
 </div>
 
 
@@ -234,9 +261,9 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
             String paths;
               paths = "/getPhoto?pathPhoto="+photo.getPath();
           %>
-          <div class="panel" title="Panel <%=i%>">
+          <div  class="panel" title="фото номер <%=i%>">
             <div class="wrapper">
-              <img src="<%=paths%>"  width="800" height="600" alt="temp" />
+              <img id="big-photo<%=i%>" src="<%=paths%>"  style="height: 600px" alt="temp" />
             </div>
           </div>
           <%i++;
@@ -253,7 +280,8 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
             String paths;
             paths = "/getPhoto?pathPhoto="+photo;
             %>
-        <div><a href="#<%=j%>" class="cross-link"><img src="<%=paths%>" width="80" height="50" class="nav-thumb" alt="temp-thumb" /></a></div>
+        <%----%>
+        <div><a class="cross-link" href="#<%=j%>" > <img src="<%=paths%>"  height="50" class="nav-thumb" alt="temp-thumb" /></a></div>
 <%j++;
 }
 }%>
@@ -267,6 +295,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
 
 
 <footer>Подвал </footer>
+
 </body>
 </html>
 

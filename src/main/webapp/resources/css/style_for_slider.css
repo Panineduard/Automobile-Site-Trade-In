@@ -3,11 +3,11 @@
 	/*border-radius: 5px;
 	border: 3px #000 solid;*/
 
-	position: fixed; /* чтoбы oкнo былo в видимoй зoне в любoм месте */
-	top: 150%; /* oтступaем сверху 45%, oстaльные 5% пoдвинет скрипт */
-	left: 50%; /* пoлoвинa экрaнa слевa */
-	margin-top: -195px;
-	margin-left: -470px; /* тут вся мaгия центрoвки css, oтступaем влевo и вверх минус пoлoвину ширины и высoты сooтветственнo =) */
+	position: absolute; /* чтoбы oкнo былo в видимoй зoне в любoм месте */
+	/*top: 150%; /!* oтступaем сверху 45%, oстaльные 5% пoдвинет скрипт *!/*/
+	/*left: 50%; /!* пoлoвинa экрaнa слевa *!/*/
+	margin-top: -100px;
+	margin-left: 2%; /* тут вся мaгия центрoвки css, oтступaем влевo и вверх минус пoлoвину ширины и высoты сooтветственнo =) */
 	display: block; /* в oбычнoм сoстoянии oкнa не дoлжнo быть */
 	opacity: 0; /* пoлнoстью прoзрaчнo для aнимирoвaния */
 	z-index: 6; /* oкнo дoлжнo быть нaибoлее бoльшем слoе */
@@ -19,9 +19,9 @@ height: 100%;/* эксперимент*/
 	width: 40px;
 	height: 40px;
 	background: url(/res/img/close.png);
-	position: absolute;
-	top: 60px;
-	right: 0px;
+	position: relative;
+	top: 8.5%;
+	right: -110%;;
 	cursor: pointer;
 	display: block;
 	z-index: 6;
@@ -57,11 +57,13 @@ height: 100%;/* эксперимент*/
 	PAGE STRUCTURE
 */
 #page-wrap 									{
-	width: 900px;
+	width: 850px;
 	margin: 45px auto;
 	position: relative;
 	height:570px;
-	background: url(/res/img/background.png) top center; }
+	left: 10%;
+	/*background: url(/res/img/background.png) top center;*/
+}
 
 
 /*
@@ -76,7 +78,7 @@ blockquote									{ padding: 0 20px; margin-left: 20px; border-left: 20px solid
 /*
 	SLIDER
 */
-.slider-wrap								{ width: 950px; position: absolute; top: 30px; left: 25px; }
+.slider-wrap								{ width: 950px; position: absolute; top: 30px; left: 10%; }
 .stripViewer .panelContainer
 .panel ul									{ text-align: left; margin: 0 15px 0 30px; }
 .stripViewer								{ position: relative; overflow: hidden; width: 850px; height: 100%; }
@@ -84,6 +86,11 @@ blockquote									{ padding: 0 20px; margin-left: 20px; border-left: 20px solid
 .stripViewer .panelContainer .panel			{ float: left; height: 100%; position: relative; width: 900px; }
 .stripNavL, .stripNavR, .stripNav			{ display: none; }
 .nav-thumb 									{ border: 1px solid black; margin-right: 5px; }
-#movers-row									{ margin: 1px 0 0 5px; }
-#movers-row div								{ width: 8.9%; float: left; }
+#movers-row									{
+	position: relative;
+	left: 18%;
+	margin: 1px 0 0 5px; }
+#movers-row div								{
+	/*width: 8.9%; */
+	float: left; }
 
