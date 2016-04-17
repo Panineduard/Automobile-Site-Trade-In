@@ -35,20 +35,21 @@ public class CaptchaGenServlet extends HttpServlet {
 
         try {
 
-            int width=100;      int height=40;
+            int width=150;      int height=50;
 
-            Color bg = new Color(0,255,255);
+            Color bg = new Color(218,225,243);
             Color fg = new Color(0,100,0);
 //            Jokerman,Arial
-            Font font = new Font("Arial", Font.BOLD, 20);
+            Font font = new Font("Bradley Hand ITC", Font.BOLD, 30);
             BufferedImage cpimg =new BufferedImage(width,height,BufferedImage.OPAQUE);
             Graphics g = cpimg.createGraphics();
 
             g.setFont(font);
             g.setColor(bg);
+
             g.fillRect(0, 0, width, height);
             g.setColor(fg);
-            g.drawString(captchaStr, 10, 25);
+            g.drawString(captchaStr, 5, 35);
             PasswordHelper passwordHelper=new PasswordHelper();
             HttpSession session = request.getSession(true);
             session.setAttribute("CAPTCHA", passwordHelper.encode(captchaStr));//Her we add Captcha in session!!!!

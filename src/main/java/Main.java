@@ -22,6 +22,10 @@ import java.util.List;
  */
 public class Main {
     public static void main(String...args)  {
+       DealerDao dealerDao = new DealerDao();
+        dealerDao.updateCountOfCar("1");
+//        CarDAO carDAO=new CarDAO();
+//        System.out.println(carDAO.getLastCars(10));
 //
 //        String h="    ";
 //        h=h.replaceAll("[\\s]{1,}", "").toLowerCase().trim();

@@ -1,3 +1,4 @@
+<%@ page import="com.setting.Setting" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -10,32 +11,55 @@
 </head>
 
 <body>
-<div class="body"></div>
-<div class="wrapper">
-  <div class="container">
-    <h2>${msg}</h2>
+<header>
+  <h1><a class="header"title="На главную" href=""><%=Setting.getProjectName()%></a></h1>
+  <h2>Автомобили с пробегом <br>
+    <Small>Только официальные дилеры</Small></h2>
+  <!-- <h5>Результаты поиска: </h5><br>  -->
+</header>
+<ul id="menu">
+  <li><a title="На главную" href="/">На главную</a></li>
+  <li><a title="Мои автомобили" href="registration" method="get">Регистрация</a></li>
+
+</ul>
+
+<div id="layout">
+  <!-- <div id="baner-left">
+  пваыпвпаырвпы вяиваиваи випаваиви вапваипваи
+  </div>
+  <div id="baner-right">
+  some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 777777777777 77777 77777777 77777777 7777777 7777777
+  </div> -->
+
+  <div id="result">
+    <div class="auto">
+      <h2 style="right: -5%; position: relative; font-size: xx-large;">${msg}</h2>
 
       <c:url value="/j_spring_security_check" var="loginUrl" />
-    <form class="form" action="${loginUrl}"  method="post">
-      <input type="text" placeholder="Номер диллера" name="j_username">
-      <input type="password" placeholder="Пароль" name="j_password">
-      <button type="submit">Войти</button>
-    </form>
-    <a href="/lost_password">Забыли пароль</a>
+      <form class="form" action="${loginUrl}"  method="post">
 
+        <fieldset class="register-group">
+
+          <label>
+            <input type="text" placeholder="Номер диллера" name="j_username">
+          </label>
+
+          <label>
+            <input type="password" placeholder="Пароль" name="j_password">
+          </label>
+
+        </fieldset>
+
+
+        <button class="btn-default" type="submit">Войти</button>
+
+      </form>
+      <a class="lost_password" href="/lost_password">Забыли пароль</a>
+    </div>
   </div>
-
-
 </div>
 
-
-
-
-<form action="/">
-  <button type="submit">На главную страницу</button>
-</form>
-
-
+<footer>Подвал </footer>
 </body>
 <script type="text/javascript">
 
@@ -53,4 +77,6 @@
 
   }
 </script>
+
+
 </html>

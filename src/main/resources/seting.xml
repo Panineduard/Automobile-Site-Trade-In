@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <setting>
-
+        <nameOfOurProject>Best car for you</nameOfOurProject>
         <emailTo>panin.eduard.a@gmail.com</emailTo>
         <fromEmailAddr>veselayagora1@gmail.com</fromEmailAddr>
         <password>p1120772</password>

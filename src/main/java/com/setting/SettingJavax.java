@@ -11,6 +11,8 @@ import java.util.List;
 @XmlRootElement(name="setting")
 public class SettingJavax {
     @XmlElement
+    private String nameOfOurProject;
+    @XmlElement
     private String emailTo;
     @XmlElement
     private String fromEmailAddr ;
@@ -28,6 +30,10 @@ public class SettingJavax {
     private Integer IMG_WIDTH;
     @XmlElement
     private Integer IMG_HEIGHT;
+
+    public void setProjectName(String projectName) {
+        this.nameOfOurProject = projectName;
+    }
 
     public void setHost(String host) {
         this.host = host;
@@ -58,7 +64,9 @@ public class SettingJavax {
     }
 
 
-
+    public String get_project_name() {
+        return nameOfOurProject;
+    }
 
     public String get_mail_to() {
         return emailTo;

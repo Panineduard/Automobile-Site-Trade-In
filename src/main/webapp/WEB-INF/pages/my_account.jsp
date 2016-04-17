@@ -8,6 +8,7 @@
 <%@ page import="java.time.Instant" %>
 <%@ page import="java.time.ZoneId" %>
 <%@ page import="com.helpers.SearchOptions" %>
+<%@ page import="com.setting.Setting" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -33,7 +34,7 @@
 
 <body>
 <header>
-<h1><a class="header"title="На главную" href="">NAME OF OUR PROJECT</a></h1>
+<h1><a class="header"title="На главную" href=""><%=Setting.getProjectName()%></a></h1>
 <h2>Автомобили с пробегом <br>
 <Small>Только официальные дилеры</Small></h2>
     <h2>${msg}</h2>

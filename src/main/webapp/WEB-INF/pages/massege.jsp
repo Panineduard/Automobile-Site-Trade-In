@@ -1,3 +1,4 @@
+<%@ page import="com.setting.Setting" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,7 +10,7 @@
 
 <body>
 <header>
-<h1><a class="header"title="На главную" href="">NAME OF OUR PROJECT</a></h1>
+<h1><a class="header"title="На главную" href=""><%=Setting.getProjectName()%></a></h1>
 <h2>Автомобили с пробегом <br>
 <Small>Только официальные дилеры</Small></h2>
 <!-- <h5>Результаты поиска: </h5><br>  -->

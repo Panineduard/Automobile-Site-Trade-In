@@ -30,6 +30,8 @@ public class CarDAO implements CarDaoInterface {
 @Autowired
 StandartMasege standartMasege;
 @Autowired
+DealerDao dealerDao;
+@Autowired
 ChangeImgSize changeImgSize;
     private List<PhotoPath> setPhotoFiles(Car car,List<MultipartFile> multipartFiles){
         List<PhotoPath> pathPhoto=new ArrayList<>();
@@ -275,7 +277,7 @@ ChangeImgSize changeImgSize;
         }
         Query query1=session.createQuery("select count(*)from Car c where c.id>=:id "+requestDb);
 //Query query=session.createQuery("from Car where rownum between '10' ");
-        Query query =session.createQuery("from Car  c where c.id>=:id "+requestDb+priseQuery).setFirstResult(page-1).setMaxResults(page+9);
+        Query query =session.createQuery("from Car  c where c.id>=:id "+requestDb+priseQuery).setFirstResult((page-1)*10).setMaxResults(page*10);
 
         query.setParameter("id",0L);
         query1.setParameter("id",0L);
@@ -359,6 +361,7 @@ ChangeImgSize changeImgSize;
         Transaction tr=session.beginTransaction();
         try {
             Car car= session.load(Car.class, id);
+
             for (PhotoPath path:car.getPhotoPath()) {
                 try {
                     File file = new File(path.getPath());
@@ -370,6 +373,7 @@ ChangeImgSize changeImgSize;
             session.delete(car);
 //            session.flush();
             tr.commit();
+            dealerDao.updateCountOfCar(car.getIdDealer());
             return true;
         }
         catch (org.hibernate.ObjectNotFoundException e){

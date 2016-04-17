@@ -1,6 +1,7 @@
 
 <%@ page import="com.modelClass.Car" %>
 <%@ page import="com.helpers.EncoderId" %>
+<%@ page import="com.setting.Setting" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -118,7 +119,7 @@
 
 <body>
 <header>
-    <h1><a class="header"title="На главную" href="">NAME OF OUR PROJECT</a></h1>
+    <h1><a class="header"title="На главную" href=""><%=Setting.getProjectName()%></a></h1>
     <h2>Автомобили с пробегом <br>
         <Small>Только официальные дилеры</Small></h2>
 </header>

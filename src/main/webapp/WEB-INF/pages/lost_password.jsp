@@ -1,3 +1,4 @@
+<%@ page import="com.setting.Setting" %>
 <%--
   Created by IntelliJ IDEA.
   User: volkswagen1
@@ -28,7 +29,7 @@
     }
 
   </script>
-  <h1><a class="header"title="На главную" href="">NAME OF OUR PROJECT</a></h1>
+  <h1><a class="header"title="На главную" href=""><%=Setting.getProjectName()%></a></h1>
   <h2>Автомобили с пробегом <br>
     <Small>Только официальные дилеры</Small></h2>
   <!-- <h5>Результаты поиска: </h5><br>  -->
@@ -46,11 +47,11 @@
     <div class="auto">
       <p>Ведите адрес электронной почты который указан при регистрации</p>
       <form name = "user_form" action="/lost_password" method="post" onsubmit="return validate_form ( );">
-        <p><label>E-mail: <input name="email" type="email" required></label></p>
-        <p><label>Номер диллера<input name="dealers_number" type="text"></label></p>
-        <p><label>Новый пароль<input name="password" type="password"></label></p>
-        <p><label>Подтвердите пароль<input name="password_check" type="password"></label></p>
-        <p><input type="submit" value= "Изменить пароль"></p>
+        <p style="position: relative;left: 87px;"><label>E-mail: <input name="email" type="email" required></label></p>
+        <p style="position: relative;left: 35px;"><label>Номер диллера<input name="dealers_number" type="text"></label></p>
+        <p style="position: relative;left: 42px;"><label>Новый пароль<input name="password" type="password"></label></p>
+        <p style="position: relative;left: 1px;"><label>Подтвердите пароль<input name="password_check" type="password"></label></p>
+        <p style="position: relative;left: 30%;"><input type="submit" value= "Изменить пароль"></p>
       </form>
     </div>
 

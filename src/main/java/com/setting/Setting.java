@@ -25,7 +25,6 @@ public class Setting {
             e.printStackTrace();
         }
     }
-
     public static String getEmailTo() {
         return settingJavax.get_mail_to();
     }
@@ -56,6 +55,7 @@ public class Setting {
     public static  String getHost(){return settingJavax.get_host();}
     public static Integer get_IMG_WIDTH(){return settingJavax.get_IMG_WIDTH();}
     public static Integer get_IMG_HEIGHT(){return settingJavax.get_IMG_HEIGHT();}
+    public static  String getProjectName(){return settingJavax.get_project_name();}
 
 
 }

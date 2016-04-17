@@ -33,35 +33,38 @@ StandartMasege standartMasege;
         List<Car> cars =(List<Car>)session.getAttribute("cars");
         ModelAndView model = new ModelAndView("index");//this is constructor were is view field
         if (cars!=null){
+            if (cars.contains(null)){
+                cars.remove(null);
+                session.setAttribute("cars", cars);
+            }
+
            return model;
         }
         else {
-            int countOfCars = 4;
-
-            if (carDAO.getLastCars(countOfCars) != null) {
-                cars = carDAO.getLastCars(countOfCars);
-            }
+            int countOfCars = 5;
+            session.setAttribute("cars", carDAO.getLastCars(countOfCars));
 
 
-            if (cars != null && cars.size() < countOfCars) {
-                cars = carDAO.getLastCars(cars.size());
-                if (cars != null) {
-                    Collections.sort(cars, (Car c1, Car c2) -> -c1.getIdCar().compareTo(c2.getIdCar()));
-                }
-                session.setAttribute("cars", cars);
+//            if (cars != null && cars.size() < countOfCars) {
+//                cars = carDAO.getLastCars(cars.size());
+//                if (cars != null) {
+//                    Collections.sort(cars, (Car c1, Car c2) -> -c1.getIdCar().compareTo(c2.getIdCar()));
+//                }
+//                session.setAttribute("cars", cars);
+//                return model;
+//            }
+//            if (cars != null && cars.size() >= countOfCars) {
+//
+//                cars = carDAO.getLastCars(countOfCars);
+//                if (cars != null) {
+//                    Collections.sort(cars, (Car c1, Car c2) -> -c1.getIdCar().compareTo(c2.getIdCar()));
+//                }
+//                session.setAttribute("cars", cars);
+//                return model;
+//            }
+
                 return model;
-            }
-            if (cars != null && cars.size() >= countOfCars) {
 
-                cars = carDAO.getLastCars(countOfCars);
-                if (cars != null) {
-                    Collections.sort(cars, (Car c1, Car c2) -> -c1.getIdCar().compareTo(c2.getIdCar()));
-                }
-                session.setAttribute("cars", cars);
-                return model;
-            } else {
-                return model;
-            }
         }
     }
 

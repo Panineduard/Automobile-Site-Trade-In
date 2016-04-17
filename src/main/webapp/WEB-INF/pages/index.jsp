@@ -5,6 +5,7 @@
 <%@ page import="org.springframework.ui.ModelMap" %>
 <%@ page import="com.helpers.SearchOptions" %>
 <%@ page import="com.helpers.EncoderId" %>
+<%@ page import="com.setting.Setting" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -31,7 +32,7 @@
 </head>
 <body>
 <header>
-  <h1>NAME OF OUR PROJECT</h1>
+  <h1><%=Setting.getProjectName()%></h1>
   <h2>Автомобили с пробегом <br>
     <Small>Только официальные дилеры</Small></h2>
   <!-- <h5>Результаты поиска: </h5><br>  -->

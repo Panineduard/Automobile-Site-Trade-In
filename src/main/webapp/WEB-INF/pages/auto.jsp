@@ -102,7 +102,7 @@
 
 <body>
 <header>
-<h1><a class="header"title="На главную" href="">NAME OF OUR PROJECT</a></h1>
+<h1><a class="header"title="На главную" href="/"><%=Setting.getProjectName()%></a></h1>
 <h2>Автомобили с пробегом <br>
 <Small>Только официальные дилеры</Small></h2>
 <!-- <h5>Результаты поиска: </h5><br>  -->

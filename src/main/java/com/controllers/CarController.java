@@ -26,6 +26,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.Option;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
@@ -92,6 +93,7 @@ public class CarController {
                     File file=new File(path_of_photo);
                     if(file.length()==0){
                         file=new File(path);
+                        percentage=0;
                     }
                     BufferedImage bufferedImage =  ImageIO.read(file);
                     if(percentage!=0){
@@ -144,13 +146,19 @@ public class CarController {
                 result= carDAO.getCarsByParameters(options,page);
                 session.setAttribute("cars",result.getCars());
                 session.setAttribute("page",result.getPage());
+                session.setAttribute("options",options);
             }
         }
         else {
-            List<Car>cars = (List<Car>)session.getAttribute("cars");
-            if(cars!=null){ Collections.sort(cars,(Car c1,Car c2)->c1.getPrise().compareTo(c2.getPrise()));
-                session.setAttribute("cars",cars);
-            }
+            options=new SearchOptions("","","","","","","","","",1);
+            result=carDAO.getCarsByParameters(options,1);
+            session.setAttribute("cars", result.getCars());
+            session.setAttribute("page",result.getPage());
+            session.setAttribute("options",options);
+//            List<Car>cars = (List<Car>)session.getAttribute("cars");
+//            if(cars!=null){ Collections.sort(cars,(Car c1,Car c2)->c1.getPrise().compareTo(c2.getPrise()));
+//                session.setAttribute("cars",cars);
+//            }
         }
         ModelAndView modelAndView = new ModelAndView("index");
         return modelAndView;
@@ -168,13 +176,18 @@ public class CarController {
                 result= carDAO.getCarsByParameters(options,page);
                 session.setAttribute("cars",result.getCars());
                 session.setAttribute("page",result.getPage());
+                session.setAttribute("options",options);
             }
         }
         else {
-            List<Car>cars = (List<Car>)session.getAttribute("cars");
-            if(cars!=null){        Collections.sort(cars,(Car c1,Car c2)->-(c1.getPrise().compareTo(c2.getPrise())));
-                session.setAttribute("cars",cars);
-            }
+            options=new SearchOptions("","","","","","","","","",2);
+            result=carDAO.getCarsByParameters(options,1);
+//            List<Car>cars = (List<Car>)session.getAttribute("cars");
+//            if(cars!=null){        Collections.sort(cars,(Car c1,Car c2)->-(c1.getPrise().compareTo(c2.getPrise())));
+                session.setAttribute("cars",result.getCars());
+                session.setAttribute("page",result.getPage());
+                session.setAttribute("options",options);
+//            }
         }
 
         ModelAndView modelAndView = new ModelAndView("index");
@@ -193,7 +206,14 @@ public class CarController {
         if(page.isEmpty()){
             page="1";
         }
-        SearchOptions options=new SearchOptions(make,model,price_from,price_to,year_from,year_to,engine,gearbox,region,0);
+        SearchOptions options=(SearchOptions)session.getAttribute("options");
+        if(options!=null){
+            options=new SearchOptions(make,model,price_from,price_to,year_from,year_to,engine,gearbox,region,options.getPrise());
+        }
+        else {
+            options =new SearchOptions(make,model,price_from,price_to,year_from,year_to,engine,gearbox,region,0);
+        }
+
         ResultCars cars =carDAO.getCarsByParameters(options,new Integer(page));
         session.setAttribute("options",options);
         session.setAttribute("cars",cars.getCars());
@@ -238,7 +258,13 @@ public class CarController {
     }
     @RequestMapping(value = "/resetSearchOptions", method = RequestMethod.GET)
     public ModelAndView resetSearchOptions(HttpSession session){
+//        session.removeAttribute("options");
+
+        session.removeAttribute("cars");
         session.removeAttribute("options");
+        session.removeAttribute("pages");
+        session.removeAttribute("page");
+        session.setAttribute("cars",carDAO.getLastCars(5));
         return new ModelAndView("index");
     }
 

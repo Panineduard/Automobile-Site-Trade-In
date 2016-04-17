@@ -1,0 +1,200 @@
+/* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+@import url(http://fonts.googleapis.com/css?family=Exo:100,200,400);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
+
+
+
+.header div span{
+    color: #5379fa !important;
+}
+
+.login{
+    padding: 10px;
+    z-index: 2;
+    margin: 2px;
+}
+
+.login input[type=text]{
+    width: 250px;
+    height: 30px;
+    background: transparent;
+    border: 1px solid #415A98;
+    border-radius: 2px;
+    color:#415A98 ;
+    font-family: 'Exo', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 4px;
+    margin: 2px;
+}
+.login input[type=email]{
+    width: 250px;
+    height: 30px;
+    background: transparent;
+    border: 1px solid #415A98;
+    border-radius: 2px;
+    color: #415A98;
+    font-family: 'Exo', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 4px;
+}
+.login input[type=password]{
+    width: 250px;
+    height: 30px;
+    background: transparent;
+    border: 1px solid #415A98;
+    border-radius: 2px;
+    color: #415A98;
+    font-family: 'Exo', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 4px;
+    margin-top: 10px;
+}
+
+.login input[type=button]{
+    width: 260px;
+    height: 35px;
+    background: #fff;
+    border: 1px solid #fff;
+    cursor: pointer;
+    border-radius: 2px;
+    color: #a18d6c;
+    font-family: 'Exo', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 6px;
+    margin-top: 10px;
+}
+
+.login input[type=button]:hover{
+    opacity: 0.8;
+}
+
+.login input[type=button]:active{
+    opacity: 0.6;
+}
+
+.login input[type=text]:focus{
+    outline: none;
+    border: 1px solid #415A98;
+}
+.login input[type=email]:focus{
+    outline: none;
+    border: 1px solid #415A98;
+}
+.login input[type=password]:focus{
+    outline: none;
+    border: 1px solid #415A98;
+}
+
+.login input[type=button]:focus{
+    outline: none;
+}
+
+::-webkit-input-placeholder{
+    color: rgba(132, 152, 201, .5);
+}
+
+/*::-moz-input-placeholder{*/
+/*color: rgba(132, 152, 201, .5);*/
+/*}*/
+#captcha_id{
+    margin-top: 3%;
+    margin-top: 10px;
+    height: 50px;
+}
+#captcha_refresh{
+    position: relative;
+    top: -10px;
+    left: 10px;
+}
+header{
+    text-align:left;
+    padding:5px;
+    background-color:#8498C9;
+    /* border:1px solid red; */
+    border-radius: 4px;
+
+
+}
+footer{
+    margin-top:5px;
+    border-radius: 4px;
+    background:#8498C9;
+    padding:3px;
+}
+
+a{
+    text-decoration:none;
+
+}
+.header{
+    text-decoration:none;
+
+}
+
+body{
+    background-color:#DAE1F3;
+}
+ul#menu {
+    padding: 0;
+}
+
+ul#menu li {
+    display: inline;
+}
+
+ul#menu li a {
+    background-color:  #7784A6;
+    color: #DAE1F3;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px 4px 4px 4px;
+}
+
+
+ul#menu li a:hover {
+    background-color: #415A98;
+    color:white;
+}
+ul#menu-diller li{
+    display:inline;
+}
+ul#menu-diller li a {
+    background-color:  #7784A6;
+    color: #DAE1F3;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px 4px 4px 4px;
+
+}
+ul#menu-diller li a:hover {
+    background-color: #415A98;
+    color:white;
+}
+
+#layout{overflow:hidden;
+    background: #C0CEF3;
+    border-radius: 4px;
+    width:1280px;
+}
+
+
+
+#result {
+    /* background-color: #C7E3E4; */
+    margin: 5px 205px 5px 205px;
+
+
+}
+
+.auto{
+    margin:5px;
+    border:1px solid #415A98;
+    border-radius: 4px 4px 4px 4px;
+    background-color:#DAE1F3;
+    width:800px;
+    padding:5px;
+}

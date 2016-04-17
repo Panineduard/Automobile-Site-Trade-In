@@ -322,17 +322,15 @@ catch (Exception e){
 
         try {
             tr = session.beginTransaction();
-            Query query = session.createQuery("from Car where idDealer=:number");
-            query.setParameter("number", idDealer);
-            Integer countOfCar = query.list().size();
-            query = session.createQuery("update Dealer set countOfCar = :countOfCar " +
+            Query query ;
+            query = session.createQuery("update Dealer set countOfCar = (select count(*)from Car c where c.idDealer>=:numberDealer)" +
                     " where numberDealer = :numberDealer");
-            query.setParameter("countOfCar", countOfCar);
             query.setParameter("numberDealer", idDealer);
             query.executeUpdate();
             tr.commit();
-            return countOfCar;
+            return 1;
         } catch (Exception e) {
+            e.printStackTrace();
             if (tr != null) tr.rollback();
             return -1;
         } finally {
