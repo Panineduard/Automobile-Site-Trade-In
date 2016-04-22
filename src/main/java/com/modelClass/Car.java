@@ -24,13 +24,14 @@ public class Car {
     @Column(name = "idcar")
     private Long idCar;
 
-
+//    (cascade = CascadeType.ALL ,fetch=FetchType.LAZY)
     @OneToMany(cascade = CascadeType.ALL ,fetch=FetchType.EAGER)
     private List<PhotoPath> photoPaths;
 
 //    @ElementCollection(fetch = FetchType.EAGER)
 //    private List<String> photoPath = new ArrayList<String>();
     private String brand;
+    private String mainPhotoUrl;
     private String model;
     private Integer yearMade;
     private String transmission;
@@ -45,7 +46,16 @@ public class Car {
     @Temporal (TemporalType.DATE)
     private Date dateProvide;
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String description;
+
+    public String getMainPhotoUrl() {
+        return mainPhotoUrl;
+    }
+
+    public void setMainPhotoUrl(String mainPhotoUrl) {
+        this.mainPhotoUrl = mainPhotoUrl;
+    }
 
     public List<PhotoPath> getPhotoPath() {
         return photoPaths;

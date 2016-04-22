@@ -110,6 +110,7 @@
 <ul id="menu">
   <li><a title="На главную" href="/">На главную</a></li>
   <li><a title="К результатам" href="/">Вернуться к результатам поиска</a></li>
+  <li><a href="/about_us" >О нас</a></li>
   <%if (request.isUserInRole("ROLE_USER")){%>
   <li><a title="Мои автомобили" href="/myAccount">Мои автомобили</a></li>
   <c:url var="logoutAction" value="/j_spring_security_logout"></c:url>

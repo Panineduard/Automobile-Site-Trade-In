@@ -1,6 +1,6 @@
 package interfaceModel.dao;
 
-import com.dao.ResultCars;
+import com.helpers.ResultCars;
 import com.helpers.SearchOptions;
 import com.modelClass.Car;
 import org.springframework.web.multipart.MultipartFile;

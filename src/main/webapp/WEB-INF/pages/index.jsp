@@ -6,6 +6,7 @@
 <%@ page import="com.helpers.SearchOptions" %>
 <%@ page import="com.helpers.EncoderId" %>
 <%@ page import="com.setting.Setting" %>
+<%@ page import="com.servise.StandartMasege" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -20,7 +21,10 @@
   <style></style>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/res/css/style1.css">
+  <link rel="stylesheet" type="text/css" href="/res/css/modal_window.css">
   <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+  <script type="text/javascript" src="/res/js/modal_window.js"></script>
+
   <script>
     var engine_parameter=['все','Бензин','Дизель','Электро','Гибрид','Газ/бензин','Другое'];
     var gearbox_parameter=['все','Другое','Автоматическая','Механическая'];
@@ -76,10 +80,14 @@
   %>
   <% if(idDealer=="anonymousUser"){%>
   <li><a href="registration" method="get">Регистрация</a></li>
+
+
   <%}else{ %>
   <li><a href="/feedback">Обратная связь</a></li>
   <% } %>
-  <li><a href="#home">На главную</a></li>
+  <li><a href="" id="go">Сообщить об ошибке</a></li>
+  <li><a href="/about_us" >О нас</a></li>
+  <%--<li><a href="#home">На главную</a></li>--%>
 </ul>
 <h5>Недавно добавлены: </h5>
 
@@ -158,11 +166,11 @@
         for (Car car:cars){
 
           String path;
-            if(car.getPhotoPath().size()==0) {
+            if(car.getMainPhotoUrl()==null) {
               path="/res/img/notAvailable.png";
             }
             else {
-              path = "/getPhoto?pathPhoto="+car.getPhotoPath().get(0)+"&percentage_of_reduction=20";
+              path = "/getPhoto?pathPhoto="+car.getMainPhotoUrl()+"&percentage_of_reduction=20";
             }
 
           String EnginesType="нет данных";
@@ -252,8 +260,37 @@
 </div>
 
 <footer>Подвал </footer>
+<script>
+  var successful="Спасибо за отзыв, мы постараемся исправить это в ближайщее время.";
+  var unsuccessful="Введите корректный email.";
+</script>
+<script type="text/javascript" charset=utf-8" src="/res/js/feedback-sender.js"></script>
+<!-- Модальное окно -->
+<div id="modal_form">
+  <img id="modal_close" src="../res/img/close.png" style="
+    width: 40px;
+    height: 40px;
+    left: 91%;
+    top: -9%;"/>
+  <%--<span id="modal_close">X</span>--%>
+  <%--action="/save_message" method="post"--%>
+  <form id="feedback" >
+    <h3>Введите пожалуйста данные</h3>
+    <%--<input type="hidden" name="id" value="">--%>
+    <p>Электронный адресс<br />
+      <input  type="email" class="email"  size="40" />
+    </p>
+    <p>Сообщение<br />
+      <textarea name="message" class="message" maxlength="380" required="required" cols="40" rows="7"></textarea>
+    </p>
 
+    <p style="text-align: center; padding-bottom: 10px;">
+      <input id="send_feedback" type="button" value="Отправить" />
+    </p>
 
+  </form>
+</div>
+<div id="overlay"></div>
 
 </body>
 </html>

@@ -1,11 +1,4 @@
 <%@ page import="com.setting.Setting" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Эдуард
-  Date: 07.11.15
-  Time: 23:55
-  To change this template use File | Settings | File Templates.
---%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -25,10 +18,9 @@
 </header>
 <ul id="menu">
   <li><a title="На главную" href="/">На главную</a></li>
-  <li><a href="/about_us" >О нас</a></li>
-  <!-- <li><a title="Мои автомобили" href="">Мои автомобили</a></li> -->
+  <li><a title="Войти" href="/myAccount">Войти</a></li>
   <!-- <li><a title="Добавить авто" href="">+ Добавить авто</a></li> -->
-  <li><a title="Выход"  href="registration" method="get">Регистация</a></li>
+  <li><a title="Регистрация" href="registration" method="get">Регистация</a></li>
 </ul>
 
 
@@ -40,8 +32,7 @@
 
 
       <div class="diller-info">
-        <p><h1>${msg}</h1>
-        <%--${file}--%>
+        <p>Сообщение
         </p>
       </div>
 
@@ -50,6 +41,12 @@
 </div>
 
 
+
+
+<footer>Подвал </footer>
+
+
+
+
 </body>
 </html>
-

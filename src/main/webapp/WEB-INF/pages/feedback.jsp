@@ -21,11 +21,11 @@
 
     <script type="text/javascript" src="/res/js/linkedselect.js"></script>
     <!-- BOOTSTRAP CORE STYLE CSS -->
-    <link href="/res/assets/css/bootstrap.css" rel="stylesheet"/>
+    <link href="/res/css/bootstrap.css" rel="stylesheet"/>
     <%--<!-- FONTAWESOME STYLE CSS -->--%>
-    <link href="/res/assets/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="/res/css/font-awesome.min.css" rel="stylesheet"/>
     <%--<!-- VEGAS STYLE CSS -->--%>
-    <link href="/res/assets/plugins/vegas/jquery.vegas.min.css" rel="stylesheet"/>
+    <link href="/res/css/jquery.vegas.min.css" rel="stylesheet"/>
     <%--<!-- CUSTOM STYLE CSS -->--%>
     <link href="/res/assets/css/style.css" rel="stylesheet"/>
 
@@ -110,8 +110,6 @@
                 <div class="col-md-8 col-md-offset-2 ">
                     <h5>
                         Сайт написан без комерческой основы. Регистрация на сайте только для диллеров Volkswagen.
-
-
                     </h5>
                 </div>
             </div>
@@ -135,7 +133,7 @@
                     Основатель идеи данного сайта, и процесса реализации
                 </div>
                 <div class="team-member">
-                    <img src="/res/assets/img/team/Agrizkov.jpg" class="img-circle" alt="">
+                    <img src="/res/img/team/Agrizkov.jpg" class="img-circle" alt="">
                     <h3><strong>АРТ ДИРЕКТОР</strong></h3>
                 </div>
             </div>
@@ -144,7 +142,7 @@
                     Начинающий разработчик ПО на Java
                 </div>
                 <div class="team-member">
-                    <img src="/res/assets/img/team/Panin.jpg" class="img-circle" alt="">
+                    <img src="/res/img/team/Panin.jpg" class="img-circle" alt="">
                     <h3><strong>РАЗРАБОТЧИК</strong></h3>
                 </div>
 
@@ -187,14 +185,7 @@
 
     </div>
 </section>
-<!--END CONTACT SECTION-->
 
-
-<%--<!--FOOTER SECTION -->--%>
-<%--<div class="for-full-back" id="footer">--%>
-<%--2015  by: <a href="http://binarytheme.com" target="_blank" style="color:#fff" ></a>--%>
-
-<%--</div>--%>
 <%--<!-- END FOOTER SECTION -->--%>
 
 <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->

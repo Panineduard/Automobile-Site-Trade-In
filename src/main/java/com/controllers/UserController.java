@@ -1,6 +1,7 @@
 package com.controllers;
 
 import com.dao.AdminServiceDAO;
+import com.dao.AnonymousUserDAO;
 import com.dao.CarDAO;
 import com.dao.DealerDao;
 
@@ -52,6 +53,8 @@ public class UserController {
     ViewHalper viewHalper;
     @Autowired
     AdminServiceDAO adminServiceDAO;
+    @Autowired
+    AnonymousUserDAO anonymousUserDAO;
 
 
 //Methods for all users
@@ -80,7 +83,7 @@ public class UserController {
                 PasswordHelper passwordHelper=new PasswordHelper();
                 dealerDao.setKeyHolder(new KeyHolder(dealers_number,key,passwordHelper.encode(password)));
                 String msg ="<a href='"+ Setting.getHost()+"/lost_password?key="+key+"'>"+standartMasege.getMessage(35)+"</a>";
-                sendHTMLEmail.sendHtmlMessage(email,msg,standartMasege.getMessage(36));
+                sendHTMLEmail.sendHtmlMessage(email, msg, standartMasege.getMessage(36));
                 ModelAndView modelAndView = new ModelAndView("successfulRegistration");
                 modelAndView.addObject("msg",standartMasege.getMessage(37));
                 return modelAndView;
@@ -146,6 +149,25 @@ public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
         model=new ModelAndView("zerroPage");
     }
     return model;
+}
+
+    @RequestMapping(value = "/save_message",method = RequestMethod.POST)
+    public ModelAndView saveMessage(@RequestParam("email")String email,@RequestParam("message")String message){
+
+        String checkEmail1 = "[a-z][a-z[0-9]\u005F\u002E\u002D]*[a-z||0-9]";
+        String checkEmail2 = "([a-z]){2,4}";
+        if(email.matches(checkEmail1 + "@" + checkEmail1 + "\\u002E" + checkEmail2)){
+            if(message.length()>380){
+                message=message.substring(0,380);
+            }
+            anonymousUserDAO.saveLetter(new Letter(email, message));
+        }
+        return new ModelAndView("index");
+
+}
+@RequestMapping(value = "/about_us",method = RequestMethod.GET)
+public ModelAndView getAboutUsPage(){
+    return new ModelAndView("about-us-page");
 }
 
 

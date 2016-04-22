@@ -48,7 +48,8 @@
 </header>
 <ul id="menu">
     <li><a title="На главную" href="/">На главную</a></li>
-    <li><a title="Мои автомобили" href="">Сообщить об ошибке</a></li>
+    <li><a title="Мои автомобили" id="go" href="">Сообщить об ошибке</a></li>
+    <li><a href="/about_us" >О нас</a></li>
 
 </ul>
 <div id="layout">
@@ -123,7 +124,40 @@
 </div>
 
 <footer>Подвал </footer>
+<link rel="stylesheet" type="text/css" href="/res/css/modal_window.css">
+<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="/res/js/modal_window.js"></script>
+<script>
+    var successful="Спасибо за отзыв, мы постараемся исправить это в ближайщее время.";
+    var unsuccessful="Введите корректный email.";
+</script>
+<script type="text/javascript" charset=utf-8" src="/res/js/feedback-sender.js"></script>
+<!-- Модальное окно -->
+<div id="modal_form">
+    <img id="modal_close" src="../res/img/close.png" style="
+    width: 40px;
+    height: 40px;
+    left: 91%;
+    top: -9%;"/>
+    <%--<span id="modal_close">X</span>--%>
+    <%--action="/save_message" method="post"--%>
+    <form id="feedback" >
+        <h3>Введите пожалуйста данные</h3>
+        <%--<input type="hidden" name="id" value="">--%>
+        <p>Электронный адресс<br />
+            <input  type="email" class="email"  size="40" />
+        </p>
+        <p>Сообщение<br />
+            <textarea name="message" class="message" maxlength="380" required="required" cols="40" rows="7"></textarea>
+        </p>
 
+        <p style="text-align: center; padding-bottom: 10px;">
+            <input id="send_feedback" type="button" value="Отправить" />
+        </p>
+
+    </form>
+</div>
+<div id="overlay"></div>
 
 </body>
 

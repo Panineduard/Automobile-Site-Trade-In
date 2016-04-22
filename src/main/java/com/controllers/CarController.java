@@ -1,7 +1,7 @@
 package com.controllers;
 
 import com.dao.AdminServiceDAO;
-import com.dao.ResultCars;
+import com.helpers.ResultCars;
 import com.helpers.EncoderId;
 import com.helpers.FileUploadForm;
 import com.dao.CarDAO;
@@ -11,7 +11,6 @@ import com.modelClass.*;
 import com.servise.ChangeImgSize;
 import com.servise.StandartMasege;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -26,7 +25,6 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.html.Option;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;

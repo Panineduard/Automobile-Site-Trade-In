@@ -21,6 +21,7 @@
   <li><a title="На главную" href="/">На главную</a></li>
   <li><a title="Мои автомобили" href="registration" method="get">Регистрация</a></li>
 
+
 </ul>
 
 <div id="layout">

@@ -90,7 +90,7 @@ JavaMailSenderImpl mailSender;
 //            // Set From: header field of the header.
 //            message.setFrom(new InternetAddress(from));
 //            // Set To: header field of the header.
-//            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+//            message.addRecipient(Letter.RecipientType.TO, new InternetAddress(to));
 //            // Set Subject: header field
 //            message.setSubject(subject);
 //            // Send the actual HTML message, as big as you like

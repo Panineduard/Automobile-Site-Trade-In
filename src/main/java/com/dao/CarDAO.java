@@ -1,6 +1,7 @@
 package com.dao;
 
 import com.dao.configuration.files.HibernateUtil;
+import com.helpers.ResultCars;
 import com.helpers.SearchOptions;
 import com.modelClass.*;
 
@@ -8,7 +9,6 @@ import com.servise.ChangeImgSize;
 import com.servise.StandartMasege;
 import com.setting.Setting;
 import interfaceModel.dao.CarDaoInterface;
-import javassist.tools.rmi.ObjectNotFoundException;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -81,6 +81,7 @@ ChangeImgSize changeImgSize;
                 }
             }
         }
+        car.setMainPhotoUrl(pathPhoto.get(0).getPath());
         return pathPhoto;
     }
     public boolean deletePhotoByCarsId(long idCar,long idPhoto){
@@ -223,7 +224,7 @@ ChangeImgSize changeImgSize;
         return carId ;
     }
     //this method found cars for all or one parameters if prise 1 it is ascending_price if prise 2 by_prices_descending 0 nothing
-    public  ResultCars getCarsByParameters(SearchOptions options, int page){
+    public ResultCars getCarsByParameters(SearchOptions options, int page){
         //String make,String model,String price_from,String price_to,String year_from,String year_to,String engine,String gearbox,String region,
         List<Car> carsList;
         Session session =HibernateUtil.getSessionFactory().getCurrentSession();

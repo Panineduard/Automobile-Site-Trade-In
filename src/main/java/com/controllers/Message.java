@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Created by Эдуард on 29.11.15.
  */
 @Controller
-public class Maseging {
+public class Message {
     @Autowired
     SendHTMLEmail sendHTMLEmail;
     @Autowired

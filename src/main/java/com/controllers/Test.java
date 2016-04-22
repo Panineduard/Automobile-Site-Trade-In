@@ -1,12 +1,14 @@
 package com.controllers;
 
 import com.dao.AdminServiceDAO;
+import com.dao.AnonymousUserDAO;
 import com.dao.CarDAO;
 import com.dao.DealerDao;
 import com.helpers.EncoderId;
 import com.helpers.PasswordHelper;
 import com.modelClass.Address;
 import com.modelClass.Contact_person;
+import com.modelClass.Letter;
 import com.setting.Setting;
 import com.setting.TestClass;
 import javafx.util.converter.LocalDateTimeStringConverter;
@@ -38,10 +40,12 @@ public class Test {
 //        return testClass.getName();
 //    }
     public static void main(String... arg) throws IOException, NoSuchAlgorithmException {
-
-        System.out.println();
-
-        System.out.println(DigestUtils.md5Hex(""+System.currentTimeMillis() + new Random().nextInt()));
+        AnonymousUserDAO anonymousUserDAO=new AnonymousUserDAO();
+        anonymousUserDAO.saveLetter(new Letter("fff","Привет"));
+//
+//        System.out.println();
+//
+//        System.out.println(DigestUtils.md5Hex(""+System.currentTimeMillis() + new Random().nextInt()));
 
         //----------------------Collection sort-------------------
 //        List <Integer> integers=new ArrayList<>();

@@ -1,5 +1,5 @@
 /**
- * Created by volkswagen1 on 26.03.2016.
+ * Created by Panin Eduard on 26.03.2016.
  */
 
 $(document).ready(function getRegions() {

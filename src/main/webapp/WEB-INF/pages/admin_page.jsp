@@ -4,6 +4,7 @@
 <%@ page import="com.helpers.EncoderId" %>
 <%@ page import="com.modelClass.AuthorizedDealers" %>
 <%@ page import="org.springframework.beans.factory.annotation.Autowired" %>
+<%@ page import="com.modelClass.Letter" %>
 <%--
   Created by IntelliJ IDEA.
   User: volkswagen1
@@ -89,6 +90,7 @@
 <li><a  href="/sendEmailToOwnersOldCars">Отправить письма владельцам старых авто</a></li>
 
 <li><a  href="/update_authorized_dealers_list">Обновить список разрешонных диллеров</a></li>
+<li><a  href="/get_messages">Просмотр сообщений ошибки</a></li>
 
 <br>
 
@@ -139,6 +141,56 @@
     }%>
   </table>
 <br><br><br>
+<table>
+  <caption>Сообщения</caption>
+  <tr>
+    <th class="number">№пп</th>
+    <th>Email</th>
+    <th>Сообщение</th>
+    <th>Действия</th>
+  </tr>
+  <%
+
+    List<Letter>letters=(List<Letter>) request.getAttribute("messages");
+    if(letters!=null){
+      int count=1;
+      for (Letter letter:letters){
+  %>
+  <tr>
+    <td><%=count%></td>
+    <td><%=letter.getEmail()%></td>
+    <td><%=letter.getMassage()%></td>
+    <td>
+      <p>
+      <form action="/delete_message" method="get">
+        <input type="hidden" name="id" value="<%=encoderId.encodId(letter.getId().toString())%>">
+        <input type="hidden" name="all" value="null">
+        <button type="submit">Удалить</button>
+      </form>
+      </p>
+
+    </td>
+  </tr>
+  <%
+        count++; }
+    }%>
+  <tr>
+    <td>----</td>
+    <td>----</td>
+    <td>----</td>
+    <td>
+      <p>
+      <form action="/delete_message" method="get">
+        <input type="hidden" name="id" value="">
+        <input type="hidden" name="all" value="<%=encoderId.encodId("all")%>">
+        <button type="submit">Удалить все письма</button>
+      </form>
+      </p>
+
+    </td>
+  </tr>
+</table>
+<br><br>
 <form:form action="/updateBrands" method="post" modelAttribute="uploadForm" enctype="multipart/form-data">
   Список марок
   <br>только *.txt<br>

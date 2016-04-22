@@ -2,7 +2,7 @@
     border-radius: 10px;
     background: #000;
     background: rgba(0,0,0,.7);
-    background: url(images/loading.html) no-repeat center center;
+    background: url(../assets/plugins/vegas/images/loading.html) no-repeat center center;
     height: 32px;
     left: 20px;
     position: fixed;
@@ -12,7 +12,7 @@
 }
 
 .vegas-overlay {
-    background: transparent url(overlays/01.png);
+    background: transparent url(../assets/plugins/vegas/overlays/01.png);
     opacity: .5;
     z-index: -1;
 }

@@ -108,7 +108,7 @@ public class AdminServiceDAO {
         final int[] id = {1};
         stream
                 .forEach(s1 -> {
-                    Brand brand=new Brand();
+                    Brand brand = new Brand();
                     brand.setBrand(s1);
                     brand.setId(id[0]);
                     session.merge(brand);
@@ -164,5 +164,49 @@ public class AdminServiceDAO {
         List<AuthorizedDealers> dealers=query.list();
         return dealers;
     }
+    public boolean deleteLetter(String id,String all){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction transaction=session.beginTransaction();
+        try {
+            if(all!=null&&all.equals("all")){
+                session.createQuery("delete from Letter ")
+                        .executeUpdate();
+                transaction.commit();
+            }
+            else {
+                Long idb;
+                if(id!=null&&!id.isEmpty()){
+                    idb=new Long(id);
 
+
+                session.createQuery("delete from Letter where id=:id")
+                        .setParameter("id",idb)
+                        .executeUpdate();
+                    transaction.commit();
+                }
+            }
+
+
+
+
+            return true;
+        }
+        catch (Exception e){
+            return false; }
+        finally {
+            if(session.isOpen()){
+                session.close();
+            }
+        }
+    }
+
+    public List<Letter> getMessages() {
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr=session.beginTransaction();
+        List<Letter> result= session.createQuery("from Letter ").list();
+        if(session.isOpen()){
+            session.close();
+        }
+        return result;
+    }
 }

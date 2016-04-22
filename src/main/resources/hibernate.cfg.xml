@@ -30,6 +30,7 @@
         <mapping class="com.modelClass.Region"/>
         <mapping class="com.modelClass.Years"/>
         <mapping class="com.modelClass.Brand"/>
+        <mapping class="com.modelClass.Letter"/>
 
 
 

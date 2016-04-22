@@ -1,22 +1,15 @@
 package com.controllers;
 
 import com.dao.CarDAO;
-import com.dao.ResultCars;
-import com.helpers.SearchOptions;
 import com.modelClass.Car;
 import com.servise.StandartMasege;
-import com.setting.TestClass;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by Эдуард on 29.11.15.

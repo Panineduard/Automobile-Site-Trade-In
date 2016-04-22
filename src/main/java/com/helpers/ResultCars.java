@@ -1,4 +1,4 @@
-package com.dao;
+package com.helpers;
 
 import com.modelClass.Car;
 

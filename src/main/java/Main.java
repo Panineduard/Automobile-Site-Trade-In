@@ -1,6 +1,7 @@
 
 
 import com.captcha.util.Util;
+import com.dao.AnonymousUserDAO;
 import com.dao.CarDAO;
 import com.dao.DealerDao;
 import com.dao.configuration.files.HibernateUtil;
@@ -22,8 +23,16 @@ import java.util.List;
  */
 public class Main {
     public static void main(String...args)  {
-       DealerDao dealerDao = new DealerDao();
-        dealerDao.updateCountOfCar("1");
+        String all="all";
+        System.out.println(all);
+        if(all!=null&&all.trim()=="all"){
+            System.out.println(all);
+
+        }
+
+
+//       DealerDao dealerDao = new DealerDao();
+//        dealerDao.updateCountOfCar("1");
 //        CarDAO carDAO=new CarDAO();
 //        System.out.println(carDAO.getLastCars(10));
 //

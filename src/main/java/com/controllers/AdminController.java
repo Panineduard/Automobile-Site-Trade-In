@@ -8,6 +8,7 @@ import com.helpers.EncoderId;
 import com.helpers.FileUploadForm;
 import com.modelClass.AuthorizedDealers;
 import com.modelClass.CarBrand;
+import com.modelClass.Letter;
 import com.servise.StandartMasege;
 import com.servise.TaskExecutorClass;
 import com.setting.SettingJavax;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -166,8 +168,16 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView("admin_page");
         modelAndView.addObject("msg", standartMasege.getMessage(24));
         return modelAndView;
-
-
-
+    }
+    @RequestMapping(value = "/delete_message",method = RequestMethod.GET)
+    public ModelAndView deleteMessage(@RequestParam("id")String id,@RequestParam("all")String all){
+            adminServiceDAO.deleteLetter(encoderId.decodeID(id), encoderId.decodeID(all));
+      return new ModelAndView("admin_page").addObject("msg",standartMasege.getMessage(45));
+    }
+    @RequestMapping(value = "/get_messages",method = RequestMethod.GET)
+    public ModelAndView getMessages(){
+        ModelAndView modelAndView=new ModelAndView("admin_page");
+        modelAndView.addObject("messages",adminServiceDAO.getMessages());
+        return modelAndView;
     }
 }
