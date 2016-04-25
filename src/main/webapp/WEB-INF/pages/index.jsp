@@ -25,6 +25,11 @@
   <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
   <script type="text/javascript" src="/res/js/modal_window.js"></script>
 
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#result').animate({opacity: 1},1000);
+    });
+  </script>
   <script>
     var engine_parameter=['все','Бензин','Дизель','Электро','Гибрид','Газ/бензин','Другое'];
     var gearbox_parameter=['все','Другое','Автоматическая','Механическая'];
@@ -147,9 +152,9 @@
       </div>
     </form>
   </div>
-  <div id="baner-right">
-    some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 777777777777 77777 77777777 77777777 7777777 7777777
-  </div>
+  <%--<div id="baner-right">--%>
+    <%--some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 777777777777 77777 77777777 77777777 7777777 7777777--%>
+  <%--</div>--%>
 
   <div id="result">
 
@@ -263,6 +268,8 @@
 <script>
   var successful="Спасибо за отзыв, мы постараемся исправить это в ближайщее время.";
   var unsuccessful="Введите корректный email.";
+  var empty_field ="Вы оставили пустые поля!"
+
 </script>
 <script type="text/javascript" charset=utf-8" src="/res/js/feedback-sender.js"></script>
 <!-- Модальное окно -->
@@ -271,17 +278,18 @@
     width: 40px;
     height: 40px;
     left: 91%;
-    top: -9%;"/>
+    top: -9%;
+    "/>
   <%--<span id="modal_close">X</span>--%>
   <%--action="/save_message" method="post"--%>
   <form id="feedback" >
     <h3>Введите пожалуйста данные</h3>
     <%--<input type="hidden" name="id" value="">--%>
     <p>Электронный адресс<br />
-      <input  type="email" class="email"  size="40" />
+      <input style="width: 280px;" type="email" class="email"  size="40" />
     </p>
     <p>Сообщение<br />
-      <textarea name="message" class="message" maxlength="380" required="required" cols="40" rows="7"></textarea>
+      <textarea style="width: 280px;" name="message" class="message" maxlength="380" required="required" cols="37" rows="8"></textarea>
     </p>
 
     <p style="text-align: center; padding-bottom: 10px;">

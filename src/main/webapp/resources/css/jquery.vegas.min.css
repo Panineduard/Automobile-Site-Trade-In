@@ -1,15 +1,15 @@
-.vegas-loading {
-    border-radius: 10px;
-    background: #000;
-    background: rgba(0,0,0,.7);
-    background: url(../assets/plugins/vegas/images/loading.html) no-repeat center center;
-    height: 32px;
-    left: 20px;
-    position: fixed;
-    top: 20px;
-    width: 32px;
-    z-index: 0;
-}
+/*.vegas-loading {*/
+    /*border-radius: 10px;*/
+    /*background: #000;*/
+    /*background: rgba(0,0,0,.7);*/
+    /*background: url(../assets/plugins/vegas/images/loading.html) no-repeat center center;*/
+    /*height: 32px;*/
+    /*left: 20px;*/
+    /*position: fixed;*/
+    /*top: 20px;*/
+    /*width: 32px;*/
+    /*z-index: 0;*/
+/*}*/
 
 .vegas-overlay {
     background: transparent url(../assets/plugins/vegas/overlays/01.png);

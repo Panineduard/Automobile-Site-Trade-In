@@ -36,28 +36,28 @@
                     $(".navbar-fixed-top").removeClass("navbar-pad-original");
                 }
             });
-            /*====================================
-            VAGAS SLIDESHOW SCRIPTS
-            ======================================*/
-            $(function () {
-                $.vegas('slideshow', {
-                    backgrounds: [
-                        {src: 'res/img/1.jpg', fade: 1000, delay: 9000}, //CHANGE THESE IMAGES WITH YOUR ORIGINAL IMAGES
-                  //THESE IMAGES ARE FOR DEMO PURPOSE ONLY YOU, CAN NOT USE THEM WITHOUT AUTHORS PERMISSION
-                                         
-                    ]
-                })('overlay', {
-                    /** SLIDESHOW OVERLAY IMAGE **/
-                    src: 'res/assets/plugins/vegas/overlays/02.png' // THERE ARE TOTAL 01 TO 15 .png IMAGES AT THE PATH GIVEN, WHICH YOU CAN USE HERE
-                });
+            ///*====================================
+            //VAGAS SLIDESHOW SCRIPTS
+            //======================================*/
+            //$(function () {
+            //    $.vegas('slideshow', {
+            //        backgrounds: [
+            //            {src: 'res/img/1.jpg', fade: 1000, delay: 9000}, //CHANGE THESE IMAGES WITH YOUR ORIGINAL IMAGES
+            //      //THESE IMAGES ARE FOR DEMO PURPOSE ONLY YOU, CAN NOT USE THEM WITHOUT AUTHORS PERMISSION
+            //
+            //        ]
+            //    })('overlay', {
+            //        /** SLIDESHOW OVERLAY IMAGE **/
+            //        src: 'res/assets/plugins/vegas/overlays/02.png' // THERE ARE TOTAL 01 TO 15 .png IMAGES AT THE PATH GIVEN, WHICH YOU CAN USE HERE
+            //    });
+            //
+            //});
 
-            });
-
-            $(function () { 
-                $('.carousel').carousel({
-                    interval: 2000 //TIME IN MILLI SECONDS
-                });
-            });
+            //$(function () {
+            //    $('.carousel').carousel({
+            //        interval: 2000 //TIME IN MILLI SECONDS
+            //    });
+            //});
             /*====================================
                WRITE YOUR SCRIPTS BELOW 
            ======================================*/

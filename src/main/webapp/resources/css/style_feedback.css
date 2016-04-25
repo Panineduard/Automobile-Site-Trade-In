@@ -1,0 +1,136 @@
+﻿
+/*=============================================================
+    Authour URI: www.binarytheme.com
+    License: Commons Attribution 3.0
+
+    http://creativecommons.org/licenses/by/3.0/
+
+    100% To use For Personal And Commercial Use.
+    IN EXCHANGE JUST GIVE US CREDITS AND TELL YOUR FRIENDS ABOUT US
+   
+    ========================================================  */
+
+
+/*=======================================
+    GENERAL STYLES
+==================================================*/
+
+body {
+          font-family:'Open Sans', sans-serif;
+    font-size:14px;
+}
+
+
+
+.text-center {
+    text-align:center;
+}
+
+
+p {
+    font-weight:300;
+    line-height:30px;
+    padding-bottom:20px;
+}
+
+
+
+
+section {
+    padding-top:50px;
+}
+
+
+
+/*=======================================
+    NAV BAR STYLES
+==================================================*/
+/* ADDED PADDING IN NAVBAR */
+.navbar {
+    padding:10px;
+     -webkit-transition: background .8s ease-out,padding .8s ease-out;
+        -moz-transition: background .8s ease-out,padding .8s ease-out;
+        transition: background .8s ease-out,padding .8s ease-out;
+}
+
+
+/*TO MAKING NAV BAR LINKS WHITE COLORED */
+.navbar-inverse .navbar-nav > li > a {
+color: #FFF;
+}
+
+.navbar-inverse .navbar-brand {
+color: #FFF;
+}
+
+.navbar-inverse {
+background-color: rgba(20, 173, 124, 1);
+border-color: rgba(20, 173, 124, 1)
+}
+ 
+/*=======================================
+    HOME SECTION STYLES
+==================================================*/
+
+
+#home {
+    padding-top:130px;
+    padding-bottom:200px;
+    color:#fff;
+}
+.head-main {
+    font-size:50px ;
+    font-weight:900;
+    
+}
+
+.head-last {
+    font-size:20px ;
+    font-weight:300;
+    padding:5px 20px 20px 20px;
+}
+
+.btn-lg, .btn-group-lg > .btn {
+border-radius: 0px; 
+
+}
+
+
+
+/*=======================================
+    CLIENT TESTIMONIAL STYLES
+==================================================*/
+
+h4 i{
+   padding:5px;
+}
+
+
+
+
+/*=======================================
+    CONTACT STYLES
+==================================================*/
+#contact-inner {
+    padding-bottom:60px;
+    padding-bottom:50px;
+}
+
+/*=======================================
+    COLOR CODES
+==================================================*/
+
+#add {
+    font-size:30px;
+    line-height:40px;
+    text-align: center;
+    background: white;
+}
+#contact-inner .form-control {
+    height: 55px;
+}
+
+
+
+
+

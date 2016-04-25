@@ -34,7 +34,7 @@
 
   <div id="result">
     <div class="auto">
-      <h2 style=" right: -5%; position: relative; font-size: xx-large;">${msg}</h2>
+      <h2 style="text-align: center; right: -5%; position: relative; font-size: xx-large;">${msg}</h2>
 
       <c:url value="/j_spring_security_check" var="loginUrl" />
       <form class="form" action="${loginUrl}"  method="post">

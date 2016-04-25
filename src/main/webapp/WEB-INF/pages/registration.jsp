@@ -130,6 +130,7 @@
 <script>
     var successful="Спасибо за отзыв, мы постараемся исправить это в ближайщее время.";
     var unsuccessful="Введите корректный email.";
+    var empty_field ="Вы оставили пустые поля!"
 </script>
 <script type="text/javascript" charset=utf-8" src="/res/js/feedback-sender.js"></script>
 <!-- Модальное окно -->
@@ -145,10 +146,10 @@
         <h3>Введите пожалуйста данные</h3>
         <%--<input type="hidden" name="id" value="">--%>
         <p>Электронный адресс<br />
-            <input  type="email" class="email"  size="40" />
+            <input  type="email" class="email" required="required" size="40" />
         </p>
         <p>Сообщение<br />
-            <textarea name="message" class="message" maxlength="380" required="required" cols="40" rows="7"></textarea>
+            <textarea style="resize: inherit" name="message" class="message" maxlength="380" required="required" cols="37" rows="8"></textarea>
         </p>
 
         <p style="text-align: center; padding-bottom: 10px;">
