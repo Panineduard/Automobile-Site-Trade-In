@@ -1,9 +1,6 @@
 package com.modelClass;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -14,7 +11,7 @@ import java.util.List;
 public class CarBrand {
     @Id
     private String brand;
-    @ElementCollection
+    @ElementCollection(fetch=FetchType.EAGER)
     private List<String> models;
 
     public String getBrand() {

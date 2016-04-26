@@ -284,7 +284,7 @@ public class CarController {
 
     @RequestMapping(value = "*/update_car")
     public ModelAndView updateCarsDateProvide(@ModelAttribute("car")String id){
-        carDAO.updateDataProvideDyId(new Long(encoderId.decodeID(id)));
+        carDAO.updateDateProvideDyId(new Long(encoderId.decodeID(id)));
         ModelAndView modelAndView=new ModelAndView("my_account");
         return viewHalper.addingDealerAndCarsInView(modelAndView);
     }
@@ -339,7 +339,11 @@ public class CarController {
                 car.setModel(model);
 
             if (!prise.isEmpty()) {
-                car.setPrise(new Integer(prise));
+                prise=prise.replaceAll("[\\s]{1,}", "").toLowerCase().trim();
+                if (prise.matches("[-+]?\\d+")) {
+                    car.setPrise(new Integer(prise));
+                }
+                else car.setPrise(0);
 
             if (!year_prov.isEmpty()) {
                 car.setYearMade(new Integer(year_prov));

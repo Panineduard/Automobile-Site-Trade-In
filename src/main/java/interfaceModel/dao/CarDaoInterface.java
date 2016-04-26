@@ -22,8 +22,8 @@ public interface CarDaoInterface {
     public boolean deleteCarById(String idCar);
     public boolean updateCarById(Car car,List<MultipartFile> multipartFiles);
     public HashSet<String> getOldCarOwnersEmails(Integer period_in_month);
-    public void deleteOldCar(Integer period_in_month);
-    public  void updateDataProvideDyId(Long id);
+    public boolean deleteOldCar(Integer period_in_month);
+    public  void updateDateProvideDyId(Long id);
     public void  deleteCarsByDealersID(String idDealer);
     public List<String>getModelByBrand(String brand);
 

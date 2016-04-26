@@ -71,4 +71,7 @@ public class SearchOptions {
     public void setPrise(int prise) {
         this.prise = prise;
     }
+    public String toString(){
+        return prise+" "+price_from+" "+price_to+" "+year_from+" "+year_to+" "+engine+" "+gearbox+" "+region;
+    }
 }

@@ -8,6 +8,8 @@ import com.modelClass.*;
 import com.servise.ChangeImgSize;
 import com.servise.StandartMasege;
 import com.setting.Setting;
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 import interfaceModel.dao.CarDaoInterface;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -21,9 +23,9 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
-
 /**
- * Created by Эдуард on 02.10.15.
+ * @author Panin Eduard on 02.10.15.
+ * @version 1.0
  */
 @Repository
 public class CarDAO implements CarDaoInterface {
@@ -84,6 +86,11 @@ ChangeImgSize changeImgSize;
         car.setMainPhotoUrl(pathPhoto.get(0).getPath());
         return pathPhoto;
     }
+    /**
+     * @param idCar accepts a parameter cars id
+     * @param idPhoto accepts a parameter photos id
+     * @return true if successful completion return false if one of parameters null
+     * */
     public boolean deletePhotoByCarsId(long idCar,long idPhoto){
         if(idCar==0&&idPhoto==0)return false;
     Session session=HibernateUtil.getSessionFactory().getCurrentSession();
@@ -91,7 +98,7 @@ ChangeImgSize changeImgSize;
       try {
           Car car= session.load(Car.class, idCar);
 
-          PhotoPath photoPath=session.load(PhotoPath.class,idPhoto);
+          PhotoPath photoPath=session.load(PhotoPath.class, idPhoto);
 
               File file = new File(photoPath.getPath());
               file.delete();//return true if file deleted
@@ -118,7 +125,14 @@ ChangeImgSize changeImgSize;
             }
         }
     }
-    public List<Car> getCarByIdDealer(String idD){
+    /**
+     *we can get Cars List by dealers id.
+     * @param idD can`t be null. It is String dealers id
+     * @return List of cars
+     * @see Car
+     * */
+    @Nullable
+    public List<Car> getCarByIdDealer(@NotNull String idD){
        List <Car> cars = new ArrayList<Car>();
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -131,8 +145,16 @@ ChangeImgSize changeImgSize;
         catch (NullPointerException n){
             cars=null;
         }
+        finally {
+            if(session.isOpen()){
+                session.close();
+            }
+        }
         return cars;
     }
+    /**
+     * This method does not has parameters
+     * @return List of Integers value with years wat can be in database*/
     public  List<Integer> getYears(){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         List<Integer>years=null;
@@ -150,7 +172,12 @@ ChangeImgSize changeImgSize;
       }
 
     }
-    //This method return -1 if something from data equally 0
+    /**
+     * @param car input parameter can be Car.class
+     * @see Car
+     * @param multipartFiles it is List of MultipartFile
+     * @see MultipartFile
+     * @return cars id from DB in this car or return -1 if something from data equally 0 */
     public Long setCar(Car car,List<MultipartFile> multipartFiles){
         //check block fo null and empty
              if(car.getBrand().isEmpty()){
@@ -223,11 +250,30 @@ ChangeImgSize changeImgSize;
         }
         return carId ;
     }
-    //this method found cars for all or one parameters if prise 1 it is ascending_price if prise 2 by_prices_descending 0 nothing
-    public ResultCars getCarsByParameters(SearchOptions options, int page){
+
+    /**this method found cars for all or one parameters if prise 1 it is ascending_price if prise 2 by_prices_descending 0 nothing
+     *
+     * @param options it is object SearchOptions.class
+     * @see SearchOptions
+     * @param page input here what page you want get now it is int value
+     * @return object ResultCars.class
+     * @see ResultCars
+     */
+    @Nullable
+    public ResultCars getCarsByParameters(@NotNull SearchOptions options, int page){
         //String make,String model,String price_from,String price_to,String year_from,String year_to,String engine,String gearbox,String region,
+       if(options==null){
+           return null;
+       }
+        else {
+           Session session =HibernateUtil.getSessionFactory().getCurrentSession();
+
+
+           try {
+
+
         List<Car> carsList;
-        Session session =HibernateUtil.getSessionFactory().getCurrentSession();
+
         session.beginTransaction();
         String requestDb ="";
         boolean fMake = false,fModel = false,fPrise_from = false,fPrise_to = false,fYear_from = false,fYear_to = false,
@@ -319,21 +365,34 @@ ChangeImgSize changeImgSize;
             query.setParameter("region",options.getRegion());
             query1.setParameter("region",options.getRegion());
         }
-        carsList=query.list();
+//           System.out.println(query.list());
+        carsList=(List<Car>)query.list();
         ResultCars result=new ResultCars();
         result.setCars(carsList);
         result.setPage(page);
         result.setPages((Long)query1.list().get(0)/10+1);
-        if(session.isOpen())session.close();
         return result ;
+    }
+   finally {
+               if(session.isOpen())session.close();
+
+           }
+}
     }
 
 
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    /**
+     * @param countLastCar input how many cars return this method if parameter is 0 method return all cfrs from DB
+     * @return List of cars and sorted it by date provide
+     * @see Car
+     * */
+    @Nullable
     public List<Car> getLastCars(Integer countLastCar){
-       try {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+       try {
+
         Transaction tr=session.beginTransaction();
 //        Query query1 = session.createQuery("select max (idCar) from Car ");
 //        Long maxIdOfCar = (Long)query1.list().get(0);
@@ -346,21 +405,51 @@ ChangeImgSize changeImgSize;
        catch (Exception e){
           return null;
        }
+        finally {
+           if(session.isOpen()){
+               session.close();
+           }
+       }
     }
+/**
+*@param  id this parameter must be only number if id is null method returns null
+*@return object Car.class
+*@see Car
+*/
+@Nullable
     public Car getCarById(String id){
+        if(id==null)return null;
+        else {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            try {
         Long idCar =new Long(id);
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         Query query = session.createQuery("from Car c where c.idCar=:id");
         query.setParameter("id", idCar);
         Car car =(Car)query.uniqueResult();
         return car;
+            }
+            catch (NumberFormatException f){
+                f.printStackTrace();
+                return null;
+            }
+            finally {
+                if(session.isOpen()){session.close();}
+            }
+        }
     }
+    /**
+     *@param idCar this parameter must be only number if id is null method returns null
+     *@return true if successful completion return false if something happened(see StackTrace)
+    */
     public boolean deleteCarById(String idCar){
-        Long id =new Long(idCar);
+        if(idCar==null)return false;
+        else {
+
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr=session.beginTransaction();
         try {
+            Long id =new Long(idCar);
             Car car= session.load(Car.class, id);
 
             for (PhotoPath path:car.getPhotoPath()) {
@@ -377,7 +466,12 @@ ChangeImgSize changeImgSize;
             dealerDao.updateCountOfCar(car.getIdDealer());
             return true;
         }
+        catch (NumberFormatException f){
+            f.printStackTrace();
+            return false;
+        }
         catch (org.hibernate.ObjectNotFoundException e){
+            e.printStackTrace();
             return false;
         }
        finally {
@@ -385,9 +479,20 @@ ChangeImgSize changeImgSize;
                 session.close();
             }
         }
+        }
     }
+/**
+ * This method just update car in DB with new parameters
+ * @param car it is object Car.class
+ * @see Car
+ * @param multipartFiles it is list of MultipartFile
+ * @see MultipartFile
+ * @return true if successful completion return false if something happened(see StackTrace)*/
     public boolean updateCarById(Car car,List<MultipartFile> multipartFiles){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        try {
+
+
         Transaction tr=session.beginTransaction();
         List<PhotoPath> pathPhoto=new ArrayList<>();
         if (multipartFiles.size()>0) {
@@ -399,98 +504,158 @@ ChangeImgSize changeImgSize;
         session.update(car);
         tr.commit();
         return true;
+        }
+        finally {
+            if(session.isOpen())session.close();
+        }
     }
-    public HashSet<String> getOldCarOwnersEmails(Integer period_in_month){
+    /**
+     * method look for old car owners mail
+     *@param period_in_month it is int period of month from today
+     *@return empty HashSet if can not fined data in DB
+     */
+    public HashSet<String> getOldCarOwnersEmails(@NotNull Integer period_in_month){
+        HashSet<String> emails=new LinkedHashSet<>();
+        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+        if(period_in_month==null)return emails;
+        else {
+        try {
         Calendar calendar=Calendar.getInstance();
         calendar.add(Calendar.MONTH, -period_in_month);
         Date date =calendar.getTime();
-        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr=session.beginTransaction();
         Query query = session.createQuery("select idDealer from Car where dateProvide<=:date");
         query.setParameter("date", date);
         List <String> dealersIds=query.list();
         List<Dealer> dealers=new ArrayList<>();
-        HashSet<String> emails=new LinkedHashSet<>();
         dealersIds.forEach(n -> dealers.add(session.get(Dealer.class, n)));
         dealers.forEach(n -> emails.add(n.getContact_persons().get(0).getEmail()));
         return emails;
-    }
-    public void deleteOldCar(Integer period_in_month){
-        Calendar calendar=Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -period_in_month);
-        Date date =calendar.getTime();
-        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction tr=session.beginTransaction();
-        Query query = session.createQuery(" from Car where dateProvide<=:date");
-        query.setParameter("date", date);
-        List<Car>cars=query.list();
-        if(!cars.isEmpty()){
-            cars.forEach ( c-> {
-                c.getPhotoPath().forEach(p -> new File(p.getPath()).delete());
-                session.delete(c);
-                tr.commit();
-        });
         }
-        if(session.isOpen()){
-            session.close();
-        }}
-    public  void updateDataProvideDyId(Long id){
-        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction tr=session.beginTransaction();
-        Query query=session.createQuery("update Car set dateProvide=:date where idCar=:id");
-        query.setParameter("date",new Date());
-        query.setParameter("id",id);
-        query.executeUpdate();
-        tr.commit();
-        if(session.isOpen()){
-            session.close();
+        catch (NullPointerException e){
+            e.printStackTrace();
+            return emails;
+        }
+        finally {
+            if(session.isOpen())session.close();
+        }
         }
     }
-    public void  deleteCarsByDealersID(String idDealer){
+    /**
+     * @param period_in_month it is int period of month from today it cant be 0 (default period 1 month)
+     * @return true if successful completion return false if method can`t fined data from DB something happened(see StackTrace)*/
+    public boolean deleteOldCar(Integer period_in_month){
+        if(period_in_month==null)return false;
+        else {
+            if (period_in_month==0)period_in_month=1;
+            Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+            try {
+                Calendar calendar=Calendar.getInstance();
+                calendar.add(Calendar.MONTH, -period_in_month);
+                Date date =calendar.getTime();
+                Transaction tr=session.beginTransaction();
+                Query query = session.createQuery(" from Car where dateProvide<=:date");
+                query.setParameter("date", date);
+                List<Car>cars=query.list();
+                if(cars!=null&&!cars.isEmpty()){
+
+                    cars.forEach ( c-> {
+                        c.getPhotoPath().forEach(p -> new File(p.getPath()).delete());
+                        session.delete(c);
+
+                    });
+                    tr.commit();
+                    return true;
+                }
+                else return false;
+
+            }
+            finally {
+                if(session.isOpen()){
+                    session.close();
+                }
+            }
+        }
+        }
+    /**
+     * Method update date on today by cars id
+     * @param id it is long number cars id */
+    public  void updateDateProvideDyId(Long id){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction tr=session.beginTransaction();
-      try {
-        List<Car>cars=session.createQuery(" from Car where idDealer=:idDealer")
-                .setParameter("idDealer", idDealer)
-                .list();
-          session.createQuery("delete Car where idDealer=:idDealer")
-                  .setParameter("idDealer", idDealer)
-                  .executeUpdate();
-          cars.forEach(car -> {
-              car.getPhotoPath().forEach(path->{
-                  File file = new File(path.getPath());
-                  file.delete();//return true if file deleted
-              });
-              Query query = session.createQuery("delete PhotoPath where idCar=:idCar");
-              query.setParameter("idCar", car.getIdCar());
-              query.executeUpdate();
-
-          });
-
-        tr.commit();
-      }
-
-      catch (HibernateException e){
-          if (tr!=null){
-              tr.rollback();
-          }
-      }
-      catch (Exception e){
-          if (tr!=null){
-              tr.rollback();
-          }
-      }
-
-      finally {
+        try {
+            Transaction tr = session.beginTransaction();
+            Query query = session.createQuery("update Car set dateProvide=:date where idCar=:id");
+            query.setParameter("date", new Date());
+            query.setParameter("id", id);
+            query.executeUpdate();
+            tr.commit();
+        }
+        finally {
             if(session.isOpen()){
                 session.close();
             }
         }
     }
+    /**
+     * method delete all cars from DB and files from folder
+     * @param idDealer it is a dealer id
+     * */
+    public void  deleteCarsByDealersID(String idDealer){
+
+        Optional.ofNullable(idDealer).ifPresent(idD -> {
+            Session session=HibernateUtil.getSessionFactory().getCurrentSession();
+            Transaction tr=session.beginTransaction();
+            try {
+                List<Car>cars=session.createQuery(" from Car where idDealer=:idDealer")
+                        .setParameter("idDealer", idD)
+                        .list();
+                session.createQuery("delete Car where idDealer=:idDealer")
+                        .setParameter("idDealer", idD)
+                        .executeUpdate();
+                cars.forEach(car -> {
+                    car.getPhotoPath().forEach(path->{
+                        File file = new File(path.getPath());
+                        file.delete();//return true if file deleted
+                    });
+                    Query query = session.createQuery("delete PhotoPath where idCar=:idCar");
+                    query.setParameter("idCar", car.getIdCar());
+                    query.executeUpdate();
+
+                });
+
+                tr.commit();
+            }
+
+            catch (HibernateException e){
+                if (tr!=null){
+                    tr.rollback();
+                }
+            }
+            catch (Exception e){
+                if (tr!=null){
+                    tr.rollback();
+                }
+            }
+            finally {
+                if(session.isOpen()){
+                    session.close();
+                }
+            }
+        });
+
+    }
+    /**
+     * @param brand it is String name of model
+     * @return list of string from DB if nosing find return special message
+     * @see StandartMasege*/
     public List<String>getModelByBrand(String brand){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction transaction=session.beginTransaction();
-        CarBrand carBrand= session.get(CarBrand.class, brand);
+        try {
+        session.beginTransaction();
+        CarBrand carBrand= null;
+                if (brand!=null){
+                    carBrand=session.get(CarBrand.class, brand);
+                }
 
         if (carBrand==null){
             List<String> model=new ArrayList<>();
@@ -498,14 +663,17 @@ ChangeImgSize changeImgSize;
             return model;
         }
         return carBrand.getModels();
+        }
+        finally {
+            if(session.isOpen())session.close();
+        }
     }
-
+/**
+ * @return list of brand from DB*/
     public List<Brand> getBrands() {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             List<Brand>brands=null;
             try {
-
-
                 Transaction tr=session.beginTransaction();
                 Query query=session.createQuery("from Brand ");
                 brands=query.list();
@@ -515,7 +683,5 @@ ChangeImgSize changeImgSize;
                 if(session.isOpen()){session.close();}
                 return brands;
             }
-
-
     }
 }

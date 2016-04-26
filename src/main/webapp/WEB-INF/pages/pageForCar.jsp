@@ -11,8 +11,8 @@
     <title>Добавить авто</title>
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <script>
-        var engine_parameter=['все','Бензин','Дизель','Электро','Гибрид','Газ/бензин','Другое'];
-        var gearbox_parameter=['все','Другое','Автоматическая','Механическая'];
+        var engine_parameter=['Бензин','Дизель','Электро','Гибрид','Газ/бензин','Другое'];
+        var gearbox_parameter=['Другое','Автоматическая','Механическая'];
     </script>
     <script type="text/javascript" src="/res/js/get_model_by_brand.js"></script>
     <script type="text/javascript" src="/res/js/write_parameters.js"></script>

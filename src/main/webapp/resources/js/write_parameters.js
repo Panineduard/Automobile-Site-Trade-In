@@ -3,8 +3,8 @@
  */
 
 $(document).ready(function getRegions() {
-    var engine_parameter_val=['','gasoline','disel','elektro','hybrid','gas','other'];
-    var gearbox_parameter_val=['','another','auto','mechanical'];
+    var engine_parameter_val=['gasoline','disel','elektro','hybrid','gas','other'];
+    var gearbox_parameter_val=['another','auto','mechanical'];
     var brand=' ';
     var year_made=' ';
     var region= ' ';

@@ -23,18 +23,15 @@ import java.util.List;
  */
 public class Main {
     public static void main(String...args)  {
-        String all="all";
-        System.out.println(all);
-        if(all!=null&&all.trim()=="all"){
-            System.out.println(all);
-
-        }
+//String prise="45 45";
 
 
 //       DealerDao dealerDao = new DealerDao();
 //        dealerDao.updateCountOfCar("1");
 //        CarDAO carDAO=new CarDAO();
-//        System.out.println(carDAO.getLastCars(10));
+//        System.out.println(carDAO.getModelByBrand(null));
+//        SearchOptions searchOptions=new SearchOptions(new String(),new String(),new String(),new String(),new String(),new String(),new String(),new String(),new String(),0);
+//        System.out.println(carDAO.getCarsByParameters(searchOptions,0));
 //
 //        String h="    ";
 //        h=h.replaceAll("[\\s]{1,}", "").toLowerCase().trim();
