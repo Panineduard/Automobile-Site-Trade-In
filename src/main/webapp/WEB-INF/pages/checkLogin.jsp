@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Вход в акаунт</title>
-
+  <link rel="shortcut icon" href="/res/img/favicon.ico"/>
   <link rel="stylesheet" href="res/css/checkLogin.css">
 </head>
 

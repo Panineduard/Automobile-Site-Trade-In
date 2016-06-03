@@ -38,21 +38,26 @@ ChangeImgSize changeImgSize;
     private List<PhotoPath> setPhotoFiles(Car car,List<MultipartFile> multipartFiles){
         List<PhotoPath> pathPhoto=new ArrayList<>();
         int numberPhoto=car.getPhotoPath().size();
-        for (MultipartFile file:multipartFiles){
 
+        for (MultipartFile file:multipartFiles){
+//
             int pointPosition= file.getOriginalFilename().indexOf('.');
             String formatFile =file.getOriginalFilename().substring(pointPosition);
             BufferedOutputStream stream=null;
-
+//
             try {
                 File convFile = new File( file.getOriginalFilename());
                 file.transferTo(convFile);
                 BufferedImage bufferedImage =  ImageIO.read(convFile);
                 if(bufferedImage.getHeight()>=bufferedImage.getWidth()){
-                    bufferedImage=changeImgSize.resizeImage(bufferedImage,Setting.get_IMG_HEIGHT(),Setting.get_IMG_WIDTH());
+                    Integer width= (int)((double)(bufferedImage.getWidth()) / ((double)bufferedImage.getHeight() / Setting.get_IMG_HEIGHT()));
+                    if(width==0)width=Setting.get_IMG_WIDTH();
+                    bufferedImage=changeImgSize.resizeImage(bufferedImage,width,Setting.get_IMG_HEIGHT());
                 }
                 else {
-                    bufferedImage=changeImgSize.resizeImage(bufferedImage,Setting.get_IMG_WIDTH(),Setting.get_IMG_HEIGHT());
+                    Integer height= (int)((double)(bufferedImage.getHeight()) / ((double)bufferedImage.getWidth() / Setting.get_IMG_WIDTH()));
+                    if(height==0)height=Setting.get_IMG_HEIGHT();
+                    bufferedImage=changeImgSize.resizeImage(bufferedImage,Setting.get_IMG_WIDTH(),height);
                 }
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ImageIO.write(bufferedImage,"jpg",baos);
@@ -60,12 +65,13 @@ ChangeImgSize changeImgSize;
 
 
                 File file1 = new File(Setting.getClientsFolder()+car.getIdDealer(),car.getIdCar()+"-"+numberPhoto+formatFile);
-                pathPhoto.add(new PhotoPath(car.getIdCar(),file1.getAbsolutePath()));
+                pathPhoto.add(new PhotoPath(car.getIdCar(), file1.getAbsolutePath()));
                 byte[] bytes = baos.toByteArray();
                 baos.close();
                 stream =new BufferedOutputStream(new FileOutputStream(file1));
                 stream.write(bytes);
                 numberPhoto++;
+                convFile.delete();
             }
             catch (FileNotFoundException e){
                 System.out.println("Error from setPhotoFiles CarDao");
@@ -76,8 +82,9 @@ ChangeImgSize changeImgSize;
                 return null;
             }
             finally {
+
                 try {
-                    stream.close();
+                    if(stream!=null)stream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -381,8 +388,6 @@ ChangeImgSize changeImgSize;
     }
 
 
-
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     /**
      * @param countLastCar input how many cars return this method if parameter is 0 method return all cfrs from DB
      * @return List of cars and sorted it by date provide
@@ -683,5 +688,29 @@ ChangeImgSize changeImgSize;
                 if(session.isOpen()){session.close();}
                 return brands;
             }
+    }
+/**This method just update views in car object
+ * @param idCar it is long number cars id
+ * */
+    public void updateViews(String idCar) {
+        Session session =HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr;
+        try {
+            tr =session.beginTransaction();
+            Long id = new Long(idCar);
+            if(id.getClass()==Long.class) {
+                System.out.println(id);
+                Query query = session.createQuery("UPDATE Car set views=(views+1) where idCar=:id ").setParameter("id", id);
+                query.executeUpdate();
+                tr.commit();
+            }
+        }
+        finally {
+            if (session.isOpen()){
+                session.close();
+            }
+        }
+
+
     }
 }

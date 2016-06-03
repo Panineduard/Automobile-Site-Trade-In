@@ -20,11 +20,12 @@
 <head>
   <style></style>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/res/css/style1.css">
-  <link rel="stylesheet" type="text/css" href="/res/css/modal_window.css">
+  <link rel="stylesheet" type="text/css" href="<%=Setting.getPath()%>/res/css/style1.css">
+  <link rel="stylesheet" type="text/css" href="<%=Setting.getPath()%>/res/css/modal_window.css">
   <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-  <script type="text/javascript" src="/res/js/modal_window.js"></script>
+  <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/modal_window.js"></script>
 
+  <link rel="shortcut icon" href="/res/img/favicon.ico"/>
   <script type="text/javascript">
     $(document).ready(function(){
       $('#result').animate({opacity: 1},1000);
@@ -34,75 +35,83 @@
     var engine_parameter=['все','Бензин','Дизель','Электро','Гибрид','Газ/бензин','Другое'];
     var gearbox_parameter=['все','Другое','Автоматическая','Механическая'];
   </script>
-  <script type="text/javascript" src="/res/js/get_model_by_brand.js"></script>
-  <script type="text/javascript" src="/res/js/write_parameters_with_search_parameters.js" charset="utf-8"></script>
+  <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/get_model_by_brand.js"></script>
+  <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/write_parameters_with_search_parameters.js" charset="utf-8"></script>
 
   <title> Автомобили с прбегом </title>
 </head>
-<body>
+<body style="background-image: url('res/img/background1.jpg'); background-size: cover;">
 <header>
-  <h1><%=Setting.getProjectName()%></h1>
-  <h2>Автомобили с пробегом <br>
-    <Small>Только официальные дилеры</Small></h2>
-  <!-- <h5>Результаты поиска: </h5><br>  -->
+  <%--<h2 align="center">--%>
+    <%--<Small>Только официальные дилеры</Small></h2>--%>
+
+
+  <p align="center"><a  href="/about_us"><img style="border-radius: 8px" width="70%" src="/res/img/top_pleas.jpg"alt="logo">
+  </a></p>
+  <%--<h1 style="color: #4E10AA; font-family: 'Courier New'" align="center"><%=Setting.getProjectName()%></h1>--%>
+
+    <ul id="menu">
+      <%
+        EncoderId encoderId = new EncoderId();
+        List<Car> cars=null;
+        SearchOptions options =(SearchOptions)request.getSession().getAttribute("options");
+        boolean optionPresent=false;
+        int numberPage=1;
+        long countButtons=0L;
+        if (session.getAttribute("page")!=null) {
+          numberPage = (Integer) session.getAttribute("page");
+        }
+        if(request.getSession().getAttribute("cars")!=null){
+          cars=(List<Car>)request.getSession().getAttribute("cars");
+        }
+        if(request.getSession().getAttribute("pages")!=null){
+          countButtons=(Long)request.getSession().getAttribute("pages");
+        }
+        if(options!=null){
+
+          optionPresent=true;
+
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String idDealer = auth.getName();
+        if(idDealer!="anonymousUser"){%>
+      <li><a href="<%=Setting.getHost()+"/myAccount"%>">Мои автомобили</a></li>
+      <c:url var="logoutAction" value="/j_spring_security_logout"></c:url>
+      <li><a  href= "${logoutAction}">Выход</a></li>
+      <%
+      }
+      else {
+      %>
+      <li><a  href="<%=Setting.getHost()+"/myAccount"%>">Войти</a></li>
+      <%
+        }
+      %>
+      <% if(idDealer=="anonymousUser"){%>
+      <li><a href="registration" method="get">Регистрация</a></li>
+      <%}else{ %>
+      <li><a href="<%=Setting.getHost()+"/feedback"%>">Обратная связь</a></li>
+      <% } %>
+      <li><a href="" id="go">Сообщить об ошибке</a></li>
+      <li><a href="<%=Setting.getHost()+"/about_us"%>" >О нас</a></li>
+      <%--<li><a href="#home">На главную</a></li>--%>
+    </ul>
+
+  <%--<!-- <h5>Результаты поиска: </h5><br>  -->--%>
 </header>
 
-<ul id="menu">
-  <%
-    EncoderId encoderId = new EncoderId();
-    List<Car> cars=null;
-    SearchOptions options =(SearchOptions)request.getSession().getAttribute("options");
-    boolean optionPresent=false;
-    int numberPage=1;
-    long countButtons=0L;
-    if (session.getAttribute("page")!=null) {
-      numberPage = (Integer) session.getAttribute("page");
-    }
-    if(request.getSession().getAttribute("cars")!=null){
-      cars=(List<Car>)request.getSession().getAttribute("cars");
-    }
-    if(request.getSession().getAttribute("pages")!=null){
-      countButtons=(Long)request.getSession().getAttribute("pages");
-    }
-    if(options!=null){
 
-        optionPresent=true;
+<%--<h5>Недавно добавлены: </h5>--%>
+<ul id="menu2">
+  <%--<h5>Сортировка:</h5>--%>
 
-    }
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    String idDealer = auth.getName();
-    if(idDealer!="anonymousUser"){%>
-  <li><a href="/myAccount">Мои автомобили</a></li>
-  <c:url var="logoutAction" value="/j_spring_security_logout"></c:url>
-  <li><a  href= "${logoutAction}">Выход</a></li>
-  <%
-  }
-  else {
-  %>
-  <li><a  href="/myAccount">Войти</a></li>
-  <%
-    }
-  %>
-  <% if(idDealer=="anonymousUser"){%>
-  <li><a href="registration" method="get">Регистрация</a></li>
-
-
-  <%}else{ %>
-  <li><a href="/feedback">Обратная связь</a></li>
-  <% } %>
-  <li><a href="" id="go">Сообщить об ошибке</a></li>
-  <li><a href="/about_us" >О нас</a></li>
-  <%--<li><a href="#home">На главную</a></li>--%>
+  <li><a href="<%=Setting.getPath()%>/ascending_price">По возрастанию цены</a></li>
+  <li><a href="<%=Setting.getPath()%>/by_prices_descending">По убыванию цены</a></li>
 </ul>
-<h5>Недавно добавлены: </h5>
-
- <h5>Сортировка:</h5>
- <a href="/ascending_price">По возрастанию цены</a>
- <a href="/by_prices_descending">По убыванию цены</a>
 <%--<h5>Результаты поиска: </h5>--%>
 <div id="layout">
+
   <div id="baner-left">
-    <form action="/lookForCars" method="post">
+    <form action="<%=Setting.getHost()+"/lookForCars"%>" method="post">
       <div id="search">
         <p>МАРКА<br>
           <select id="id_make" class="form-control" name="make" onchange="p_delete(this.value,' ');">
@@ -148,17 +157,16 @@
           </select>
         </p>
         <button type="submit" class="btn btn-primary btn-lg ">Подобрать авто</button>
-        <a href="/resetSearchOptions"><button type="button" class="btn btn-primary btn-lg">Сбросить</button></a>
+        <a href="<%=Setting.getHost()+"/resetSearchOptions"%>"><button type="button" class="btn btn-primary btn-lg">Сбросить</button></a>
       </div>
     </form>
   </div>
-  <%--<div id="baner-right">--%>
-    <%--some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 777777777777 77777 77777777 77777777 7777777 7777777--%>
-  <%--</div>--%>
+
 
   <div id="result">
 
       <%
+        int countOfCar=0;
         if(cars!=null){
 
             if(cars.size()==0){
@@ -168,14 +176,15 @@
               }
 
           else {
+
         for (Car car:cars){
 
           String path;
             if(car.getMainPhotoUrl()==null) {
-              path="/res/img/notAvailable.png";
+              path=Setting.getHost()+"/res/img/notAvailable.png";
             }
             else {
-              path = "/getPhoto?pathPhoto="+car.getMainPhotoUrl()+"&percentage_of_reduction=20";
+              path = Setting.getHost()+"/getPhoto?pathPhoto="+car.getMainPhotoUrl()+"&percentage_of_reduction=30";
             }
 
           String EnginesType="нет данных";
@@ -198,15 +207,14 @@
           }
       %>
       <div class="auto">
-        <div class="model">
-      <a title=<%=car.getBrand()+" "%><%=car.getModel()%> href="/carPage?idCar=<%=encoderId.encodId(car.getIdCar().toString())%>" >
+        <a title=<%=car.getBrand()+" "%><%=car.getModel()%> href="<%=Setting.getHost()%>/carPage?idCar=<%=encoderId.encodId(car.getIdCar().toString())%>">
+        <div class="model" >
         <%=car.getBrand()+" "%><%=car.getModel()%>
-      </a>
         </div>
-
+        </a>
         <div class= "foto-185x120">
-      <a title= <%=car.getBrand()+" "%><%=car.getModel()%> href="/carPage?idCar=<%=encoderId.encodId(car.getIdCar().toString())%>" class= "foto-185x120" >
-        <img src="<%=path%>" align="left">
+      <a title= <%=car.getBrand()+" "%><%=car.getModel()%> href="<%=Setting.getHost()%>/carPage?idCar=<%=encoderId.encodId(car.getIdCar().toString())%>" class= "foto-185x120" >
+        <img class="car_photo" id="<%="car"+countOfCar%>" src="<%=path%>" align="left">
       </a>
         </div>
 
@@ -220,12 +228,13 @@
       </div>
         <br/>
 
-        <a title="Подробнее" href="/carPage?idCar=<%=encoderId.encodId(car.getIdCar().toString())%>" class="more">
+        <a title="Подробнее" href="<%=Setting.getHost()%>/carPage?idCar=<%=encoderId.encodId(car.getIdCar().toString())%>" class="more">
           Подробнее...
         </a>
     </div>
 
-    <%}
+    <%countOfCar++;
+          }
     }
     }%>
 
@@ -244,7 +253,7 @@
   <div class="page">
     <ul class="pagination">
       <%if(numberPage>7){%>
-      <li><a href="/replacing_the_page_number?page=<%=numberPage-1%>" >«</a></li>
+      <li><a href="<%=Setting.getHost()%>/replacing_the_page_number?page=<%=numberPage-1%>" >«</a></li>
       <%}%>
       <%int maxCount=0;
         for (int i=numberFirstPage;i<=countButtons;i++){
@@ -252,26 +261,28 @@
       %>
       <li><a
               <%if (i==numberPage){%>class="active"<%}%>
-              href="/replacing_the_page_number?page=<%=i%>"><%=i%></a></li>
+              href="<%=Setting.getHost()%>/replacing_the_page_number?page=<%=i%>"><%=i%></a></li>
       <%
           maxCount++;
         }
       if(countButtons>7){%>
-      <li><a  href="/replacing_the_page_number?page=<%=numberPage+1%>">»</a></li>
+      <li><a  href="<%=Setting.getHost()%>/replacing_the_page_number?page=<%=numberPage+1%>">»</a></li>
       <%}%>
     </ul>
   </div>
-
+  <%--<div id="baner-right">--%>
+    <%--Здесь находятся автомобили официальных диллеров. Любой официальный диллер любой марки может зрегестрироватся.--%>
+  <%--</div>--%>
 </div>
 
-<footer>Подвал </footer>
+<footer style="text-align: center" >autoport.kh.ua@gmail.com </footer>
 <script>
   var successful="Спасибо за отзыв, мы постараемся исправить это в ближайщее время.";
   var unsuccessful="Введите корректный email.";
   var empty_field ="Вы оставили пустые поля!"
 
 </script>
-<script type="text/javascript" charset=utf-8" src="/res/js/feedback-sender.js"></script>
+<script type="text/javascript" charset=utf-8" src="<%=Setting.getPath()%>/res/js/feedback-sender.js"></script>
 <!-- Модальное окно -->
 <div id="modal_form">
   <img id="modal_close" src="../res/img/close.png" style="

@@ -5,14 +5,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <script type="text/javascript" src="/res/js/jquery-1.2.6.min.js"></script>
-  <script type="text/javascript" src="/res/js/jquery-easing-1.3.pack.js"></script>
-  <script type="text/javascript" src="/res/js/jquery-easing-compatibility.1.2.pack.js"></script>
-  <script type="text/javascript" src="/res/js/coda-slider.1.1.1.pack.js"></script>
+  <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/jquery-1.2.6.min.js"></script>
+  <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/jquery-easing-1.3.pack.js"></script>
+  <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/jquery-easing-compatibility.1.2.pack.js"></script>
+  <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/coda-slider.1.1.1.pack.js"></script>
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/res/css/style_auto.css">
-  <link rel="stylesheet" type="text/css" href="/res/css/style_for_slider.css">
+  <link rel="shortcut icon" href="/res/img/favicon.ico"/>
+  <link rel="stylesheet" type="text/css" href="<%=Setting.getPath()%>/res/css/style_auto.css">
+  <link rel="stylesheet" type="text/css" href="<%=Setting.getPath()%>/res/css/style_for_slider.css">
 
   <script type="text/javascript">
     function setBigImageSlide(group) {
@@ -119,12 +120,12 @@
   <%}%>
 </ul>
 <div id="layout">
-<div id="baner-left">
-jgjj kjkjkjb kbkjbkjb
-</div>
-<div id="baner-right">
-some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 777777777777 77777 77777777 77777777 7777777 7777777
-</div>
+<%--<div id="baner-left">--%>
+<%--jgjj kjkjkjb kbkjbkjb--%>
+<%--</div>--%>
+<%--<div id="baner-right">--%>
+<%--some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 777777777777 77777 77777777 77777777 7777777 7777777--%>
+<%--</div>--%>
 
 
   <%
@@ -136,7 +137,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
     }else {
     String path;
     if(car.getPhotoPath().size()==0) {
-      path="/res/img/notAvailable.png";
+      path=Setting.getPath()+"/res/img/notAvailable.png";
     }
     else {
       path = "/getPhoto?pathPhoto="+car.getPhotoPath().get(0).getPath()+"&percentage_of_reduction=50";
@@ -264,7 +265,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
           %>
           <div  class="panel" title="фото номер <%=i%>">
             <div class="wrapper">
-              <img id="big-photo<%=i%>" src="<%=paths%>"  style="height: 600px" alt="temp" />
+              <img id="big-photo<%=i%>" src="<%=paths%>"  style="max-height: 100%;max-width: 100%;" alt="temp" />
             </div>
           </div>
           <%i++;

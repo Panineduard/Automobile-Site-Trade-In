@@ -101,7 +101,7 @@ public class AdminController {
         ModelAndView modelAndView=new ModelAndView("admin_page");
         try {
             adminServiceDAO.setBrands(uploadForm.getFiles().get(0));
-            modelAndView.addObject("msg", standartMasege.getMessage(43));
+            modelAndView.addObject("msg",standartMasege.getMessage(43));
         } catch (IOException e1) {
             modelAndView.addObject("msg", standartMasege.getMessage(41));
         }

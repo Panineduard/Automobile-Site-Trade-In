@@ -1,12 +1,15 @@
 
 header{
-	text-align:left;
-	padding:5px;
+	padding:1px;
 	background-color:#8498C9;
 	/* border:1px solid red; */
 	border-radius: 4px 4px 4px 4px;
+
 	
-	
+}
+#search{
+	position: relative;
+	left: 10%;
 }
 footer{
 	margin-top:5px;
@@ -29,21 +32,37 @@ body{
 	background-color:#DAE1F3;
 }
 ul#menu {
-    padding: 0;
+	position: relative;
+	/* margin: auto; */
+	left: 345px;
+	/* position: fixed; */
+	/* float: right; */
+	/* float: right; */
+	width: 700px;
+	/* padding: 0; */
 }
 
-ul#menu li {
+ul#menu li,ul#menu2 li {
     display: inline;
 }
 
 ul#menu li a {
-    background-color:  #7784A6;
+    background-color:  #5D3175;
     color: #DAE1F3;
-    padding: 10px 20px;
+	padding: 5px 20px;
     text-decoration: none;
     border-radius: 4px 4px 4px 4px;
 }
-
+ul#menu2 li a {
+	background-color: #7784A6;
+	color: #DAE1F3;
+	padding: 0.4% 5%;
+	text-decoration: none;
+	border-radius: 4px 4px 4px 4px;
+	position: relative;
+	left: 204px;
+	top: 5px;
+}
 
 ul#menu li a:hover {
     background-color: #415A98;
@@ -51,13 +70,14 @@ ul#menu li a:hover {
 }
 
 #layout{overflow:hidden;
-background: #C0CEF3;
+
+/*background: #C0CEF3;*/
 border-radius: 4px 4px 4px 4px;
 }
 
 
 #baner-left{
-		width:200px;
+	    width: 230px;
 		background-color:#DAE1F3;
 		border-radius: 4px 4px 4px 4px;
 		float:left;
@@ -69,19 +89,21 @@ border-radius: 4px 4px 4px 4px;
 	/* background-color: #C7E3E4; */
 	opacity: 0;
 	margin: 5px 205px 5px 205px;
+	position: relative;
+	left: 32px;
 	
 	
 }
 #baner-right{
-		width:200px;
-		background-color:#DAE1F3;
+	    width: 21%;
+	    background-color:#DAE1F3;
 		border-radius: 4px 4px 4px 4px;
 		float:right;
 		margin-top:5px;
 		margin-right:5px;
 }
 .auto{
-	margin:5px;
+	margin: 5px auto;
 	border:1px solid #415A98;
 	border-radius: 4px 4px 4px 4px;
 	background-color:#DAE1F3;
@@ -147,19 +169,23 @@ a.model-link{
 a.model-link:hover{
 	color:white;
 }
-img {
-      float:left; 
-	  height: 120px;
+img.car_photo {
+	max-width: 100%;
+	max-height: 100%;
+	  /*width: inherit;*/
+      /*float:left; */
+	  /*height: 120px;*/
       /*width: 185px;*/
-	  margin:5px;
-	  padding:5px 5px 5px 5px;
+      /*margin:5px;*/
+      /*padding:5px 5px 5px 5px;*/
 	  /* border: 3px solid red; */
 	  
 }
 .foto-185x120{
-	
-	float:left;
-	width:185px;
+
+	float: left;
+	width: 205px;
+	height: 205px;
 }
 
 div.model-info {
@@ -169,7 +195,9 @@ div.model-info {
 	/* border-radius: 4px 4px 4px 4px; */
 	padding:5px;
 	margin:5px 5px 5px 220px;
-	font:400 14px/30px san-serif;
+	font: 400 15px/30px sans-serif;
+	position: relative;
+	left: 80px
 	}
 	.model-info-data{
 		font: 600 16px  serif;

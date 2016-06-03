@@ -4,9 +4,9 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" type="text/css" href="/res/css/style_my_acount.css">
+  <link rel="stylesheet" type="text/css" href="<%=Setting.getPath()%>/res/css/style_my_acount.css">
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-
+    <link rel="shortcut icon" href="/res/img/favicon.ico"/>
     <!-- <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'> -->
   <title> Автомобили с пробегом </title>
 </head>
@@ -19,8 +19,8 @@
   <!-- <h5>Результаты поиска: </h5><br>  -->
 </header>
 <ul id="menu">
-  <li><a title="На главную" href="/">На главную</a></li>
-  <li><a title="Войти" href="/myAccount">Войти</a></li>
+  <li><a title="На главную" href="<%=Setting.getHost()%>">На главную</a></li>
+  <li><a title="Войти" href="<%=Setting.getHost()+"/myAccount"%>">Войти</a></li>
   <!-- <li><a title="Добавить авто" href="">+ Добавить авто</a></li> -->
   <li><a title="Регистрация" href="registration" method="get">Регистация</a></li>
 </ul>
@@ -59,8 +59,10 @@
         <p>
 
           <%=Setting.getProjectName()%> это некоммерческий проект, который создан в первую очередь для официальных авто дилеров. Это своего рода электронная площадка, на которой официальные дилеры могут размещать автомобили с пробегом!<br></p>
-        <p>
-          Чем Мы отличаемся от других?<br>
+
+          <h3>Чем Мы отличаемся от других?<br></h3>
+          <p>
+
 
           1. Зарегистрированные пользователи это исключительно официальные дилеры.<br>
 
@@ -83,8 +85,9 @@
           <p>
 
           Одним словом, наша цель облегчить поиск автомобиля с пробегом для дилеров и для покупателей, отсекая перекупщиков, сомнительные площадки и т.д.<br>
-
-          Какой план развития?<br>
+          </p>
+          <h3>Какой план развития?<br></h3>
+          <p>
 
           1й Этап – запуск проекта в сети Volkswagen<br>
 
@@ -104,7 +107,8 @@
 
 
 
-<footer>Подвал </footer>
+<footer >
+    <h2 style="text-align: center" >autoport.kh.ua@gmail.com</h2> </footer>
 
 
 

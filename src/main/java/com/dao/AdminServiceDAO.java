@@ -1,8 +1,10 @@
 package com.dao;
 
+import com.controllers.AdminController;
 import com.dao.configuration.files.HibernateUtil;
 import com.modelClass.*;
 import com.servise.StandartMasege;
+import org.apache.commons.codec.CharEncoding;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -36,7 +38,7 @@ public class AdminServiceDAO {
         List<String> modelsName = new ArrayList<>();
         CarBrand carBrand = new CarBrand();
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(models.getBytes());
-        String myString = IOUtils.toString(byteArrayInputStream);
+        String myString = IOUtils.toString(byteArrayInputStream, "Windows-1251");
         Stream<String> stream = new BufferedReader(new StringReader(myString)).lines();
         modelsName.add(standartMasege.getMessage(29));
         {
@@ -62,7 +64,7 @@ public class AdminServiceDAO {
     public void setRegions(MultipartFile regions) throws IOException {
 
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(regions.getBytes());
-        String myString = IOUtils.toString(byteArrayInputStream);
+        String myString = IOUtils.toString(byteArrayInputStream, "Windows-1251");
         Stream<String> stream = new BufferedReader(new StringReader(myString)).lines();
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr = session.beginTransaction();
@@ -81,17 +83,10 @@ public class AdminServiceDAO {
                         session.merge(region);
 
                     });
-
-
-
-
-
         tr.commit();
         if (session.isOpen()) {
             session.close();
         }
-
-
     }
 
     public void setBrands(MultipartFile multipartFile) throws IOException{
@@ -99,9 +94,8 @@ public class AdminServiceDAO {
         ByteArrayInputStream byteArrayInputStream = null;
         byteArrayInputStream = new ByteArrayInputStream(multipartFile.getBytes());
         String myString = null;
-        myString = IOUtils.toString(byteArrayInputStream);
+        myString = IOUtils.toString(byteArrayInputStream, "Windows-1251");
         Stream<String> stream = new BufferedReader(new StringReader(myString)).lines();
-
         Transaction tr = session.beginTransaction();
         Query query = session.createQuery("delete from Brand ");
         query.executeUpdate();

@@ -1,16 +1,18 @@
 <?xml version="1.0"?>
 <setting>
-        <nameOfOurProject>Best car for you</nameOfOurProject>
+        <nameOfOurProject>autoport.website</nameOfOurProject>
         <emailTo>panin.eduard.a@gmail.com</emailTo>
-        <fromEmailAddr>veselayagora1@gmail.com</fromEmailAddr>
+        <fromEmailAddr>autoport.kh.ua@gmail.com</fromEmailAddr>
         <password>p1120772</password>
         <username>veselayagora1@gmail.com</username>
         <RECIPIENT_EMAIL>veselaya_gora@mail.ru</RECIPIENT_EMAIL>
         <host>http://localhost:8080/</host>
+        <!--http://autoport.website-->
         <ClientsFolder>ClientsFolder/tmp/</ClientsFolder>
+        <path></path>
         <!--this is size images in client folder-->
-        <IMG_WIDTH>800</IMG_WIDTH>
-        <IMG_HEIGHT>600</IMG_HEIGHT>
+        <IMG_WIDTH>1024</IMG_WIDTH>
+        <IMG_HEIGHT>1024</IMG_HEIGHT>
 
 
 </setting>

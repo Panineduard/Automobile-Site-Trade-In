@@ -8,6 +8,7 @@ import com.dao.configuration.files.HibernateUtil;
 import com.helpers.SearchOptions;
 import com.modelClass.*;
 import com.servise.TaskExecutorClass;
+import com.setting.Setting;
 import org.apache.commons.io.FileUtils;
 import org.hibernate.Session;
 
@@ -23,6 +24,9 @@ import java.util.List;
  */
 public class Main {
     public static void main(String...args)  {
+        System.out.println(Setting.getPath());
+//        DealerDao dealerDao=new DealerDao();
+//        System.out.println(dealerDao.getDealerName("5"));
 //String prise="45 45";
 
 

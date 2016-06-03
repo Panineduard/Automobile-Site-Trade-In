@@ -67,6 +67,8 @@ border-radius: 4px 4px 4px 4px;
 }
 #result {
 	/* background-color: #C7E3E4; */
+	top: 50px;
+	position: inherit;
 	margin: 5px 205px 5px 205px;
 	
 	
@@ -147,6 +149,8 @@ footer {
 }
 
 .model-info {
+	left: 15%;
+	position: relative;
  	/* color:green; */
 	padding:5px;
 	/* line-height:30px; */
@@ -169,7 +173,8 @@ footer {
 }
 .small-photo{
 	position: relative;
-
+	width: 500px;
+	height: 50px;
 	top: 250px;
 }
 

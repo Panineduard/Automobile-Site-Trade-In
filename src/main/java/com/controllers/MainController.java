@@ -21,7 +21,7 @@ public class MainController {
    CarDAO carDAO;
 @Autowired
 StandartMasege standartMasege;
-    @RequestMapping("/")
+    @RequestMapping(value = {"/index","/ "})
     public ModelAndView printWelcome(HttpSession session) {
         List<Car> cars =(List<Car>)session.getAttribute("cars");
         ModelAndView model = new ModelAndView("index");//this is constructor were is view field
@@ -34,7 +34,7 @@ StandartMasege standartMasege;
            return model;
         }
         else {
-            int countOfCars = 5;
+            int countOfCars = 20;
             session.setAttribute("cars", carDAO.getLastCars(countOfCars));
 
 

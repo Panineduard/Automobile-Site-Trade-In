@@ -233,14 +233,16 @@ public class CarController {
         return modelAndView;
     }
     @RequestMapping(value = "/carPage",method = RequestMethod.GET)
-    public ModelAndView getDealer(@RequestParam ("idCar") String idCar){
+    public ModelAndView getDealer(@RequestParam ("idCar") String idCar,HttpSession session){
         ModelAndView modelAndView= new ModelAndView("auto");
         Car car=null;
         Dealer dealer=null;
         idCar = encoderId.decodeID(idCar);
         if(!idCar.isEmpty()){
+
             car=carDAO.getCarById(idCar);
             if(car!=null) {
+                carDAO.updateViews(idCar);
                 dealer = dealerDao.getDealerById(car.getIdDealer());
             }
             modelAndView.addObject("car", car);

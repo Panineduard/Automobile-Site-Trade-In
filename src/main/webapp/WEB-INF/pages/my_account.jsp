@@ -18,7 +18,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="/res/css/style_my_acount.css">
 <link rel="stylesheet" type="text/css" href="/res/css/modal_window.css">
-
+    <link rel="shortcut icon" href="/res/img/favicon.ico"/>
 
 <title> Автомобили с пробегом </title>
     <script>
@@ -107,9 +107,9 @@
             <a href="/resetSearchOptions"><button type="button" class="btn btn-primary btn-lg">Сбросить</button></a>
         </div>
     </form></div>
-<div id="baner-right">
-some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 777777777777 77777 77777777 77777777 7777777 7777777
-</div>
+<%--<div id="baner-right">--%>
+<%--some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 777777777777 77777 77777777 77777777 7777777 7777777--%>
+<%--</div>--%>
 
 <div id="result">
 <h3>Мое меню:</h3>
@@ -301,6 +301,7 @@ some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 77
         Двигатель: <span class="model-info-data"><%=car.getEngineCapacity()%></span><br>
         Топливо: <span class="model-info-data"><%=EnginesType%></span><br>
         КП: <span class="model-info-data"><%=transmission%></span><br>
+        Просмотры: <span class="model-info-data"><%=car.getViews()%></span><br>
     </div>
 <br/>
     <a id="car_change_button" href="/myAccount/change_car?car=<%=encoderId.encodId(car.getIdCar().toString())%>" class="more" title="Изменить" >Изменить</a>

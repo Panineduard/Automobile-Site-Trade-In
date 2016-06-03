@@ -30,6 +30,16 @@ public class SettingJavax {
     private Integer IMG_WIDTH;
     @XmlElement
     private Integer IMG_HEIGHT;
+    @XmlElement
+    private  String path;
+
+    public String get_path() {
+        return path;
+    }
+
+    public void setPath(String PATH) {
+        this.path = PATH;
+    }
 
     public void setProjectName(String projectName) {
         this.nameOfOurProject = projectName;

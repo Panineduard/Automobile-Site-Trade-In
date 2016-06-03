@@ -5,6 +5,7 @@
 <%@ page import="com.modelClass.AuthorizedDealers" %>
 <%@ page import="org.springframework.beans.factory.annotation.Autowired" %>
 <%@ page import="com.modelClass.Letter" %>
+<%@ page import="com.setting.Setting" %>
 <%--
   Created by IntelliJ IDEA.
   User: volkswagen1
@@ -17,6 +18,7 @@
 
 <html>
 <head>
+  <link rel="shortcut icon" href="/res/img/favicon.ico"/>
   <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
   <script type="text/javascript" src="http://gc.kis.scr.kaspersky-labs.com/1B74BD89-2A22-4B93-B451-1C9E1052A0EC/main.js" charset="UTF-8"></script><script src="http://code.jquery.com/jquery-1.8.3.js"></script>
   <script>
@@ -79,18 +81,18 @@
   <meta name="Description" content="" />
   <meta name="Keywords"  content="" />
 
-  <link rel="stylesheet" type="text/css" media="screen,print" href="/res/css/style_admin_page.css" />
+  <link rel="stylesheet" type="text/css" media="screen,print" href="<%=Setting.getPath()%>/res/css/style_admin_page.css" />
 </head>
 
 <body>
 <h2>${msg}</h2>
 <br>
-<li><a title="На главную" href="/">На главную</a></li>
-<li><a  href="/update_dealers_list">Обновить список диллеров</a></li>
-<li><a  href="/sendEmailToOwnersOldCars">Отправить письма владельцам старых авто</a></li>
+<li><a title="На главную" href="<%=Setting.getPath()%>/">На главную</a></li>
+<li><a  href="<%=Setting.getPath()%>/update_dealers_list">Обновить список диллеров</a></li>
+<li><a  href="<%=Setting.getPath()%>/sendEmailToOwnersOldCars">Отправить письма владельцам старых авто</a></li>
 
-<li><a  href="/update_authorized_dealers_list">Обновить список разрешонных диллеров</a></li>
-<li><a  href="/get_messages">Просмотр сообщений ошибки</a></li>
+<li><a  href="<%=Setting.getPath()%>/update_authorized_dealers_list">Обновить список разрешонных диллеров</a></li>
+<li><a  href="<%=Setting.getPath()%>/get_messages">Просмотр сообщений ошибки</a></li>
 
 <br>
 
@@ -122,11 +124,11 @@
       <td><%=dealer.getCountOfCar()%></td>
       <td>
         <p>
-          <form action="/deleteDealer" method="post">
+          <form action="<%=Setting.getPath()%>/deleteDealer" method="post">
           <input type="hidden" name="idDealer" value="<%=encoderId.encodId(dealer.getNumberDealer())%>">
           <button type="submit">Удалить</button>
            </form>
-        <form action="/" method="post">
+        <form action="<%=Setting.getPath()%>/" method="post">
           <input type="hidden" name="idDealer" value="<%=encoderId.encodId(dealer.getNumberDealer())%>">
           <button type="submit">Блокировать</button>
         </form>
@@ -162,7 +164,7 @@
     <td><%=letter.getMassage()%></td>
     <td>
       <p>
-      <form action="/delete_message" method="get">
+      <form action="<%=Setting.getPath()%>/delete_message" method="get">
         <input type="hidden" name="id" value="<%=encoderId.encodId(letter.getId().toString())%>">
         <input type="hidden" name="all" value="null">
         <button type="submit">Удалить</button>
@@ -180,7 +182,7 @@
     <td>----</td>
     <td>
       <p>
-      <form action="/delete_message" method="get">
+      <form action="<%=Setting.getPath()+"/delete_message"%>" method="get">
         <input type="hidden" name="id" value="">
         <input type="hidden" name="all" value="<%=encoderId.encodId("all")%>">
         <button type="submit">Удалить все письма</button>
@@ -264,7 +266,7 @@
       <p>
       <form action="/deleteAuthorizedDealer" method="post">
         <input type="hidden" name="idDealer" value="<%=encoderId.encodId(authorizedDealer.getDealer_number())%>">
-        <button type="submit">Удалить</button>
+      <button type="submit">Удалить</button>
       </form>
       </p>
 

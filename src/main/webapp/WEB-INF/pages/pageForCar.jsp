@@ -18,7 +18,7 @@
     <script type="text/javascript" src="/res/js/write_parameters.js"></script>
     <script src="/res/assets/plugins/jquery-1.10.2.js"></script>
     <script type="text/javascript" src="/res/js/pageForCar.js"></script>
-
+    <link rel="shortcut icon" href="/res/img/favicon.ico"/>
     <link rel="stylesheet" type="text/css" href="/res/css/style_addCar.css">
     <link rel="stylesheet" type="text/css" href="/res/css/modal_windows_page_for_car.css">
 

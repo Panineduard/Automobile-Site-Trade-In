@@ -40,7 +40,7 @@ public class Setting {
     public static String getUsername() {
         return settingJavax.get_username();
     }
-
+    public static String getPath(){return settingJavax.get_path();}
     public static String getClientsFolder() {
         File folder = new File(settingJavax.get_clients_folder());
         if(!folder.exists()) {

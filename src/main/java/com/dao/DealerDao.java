@@ -8,6 +8,8 @@ import com.helpers.PasswordHelper;
 import com.modelClass.*;
 import com.servise.StandartMasege;
 import com.setting.Setting;
+import com.sun.istack.internal.Nullable;
+import interfaceModel.dao.DealerDaoInterface;
 import org.apache.commons.io.FileUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -27,13 +29,19 @@ import java.util.*;
  * Created by Эдуард on 25.09.15.
  */
 @Repository
-public class DealerDao {
+public class DealerDao implements DealerDaoInterface {
     @Autowired
     SendHTMLEmail sendHTMLEmail;
     @Autowired
     StandartMasege standartMasege;
     @Autowired
     EncoderId encoderId;
+    /**
+     * @param key It is key for KeyHolder object in data base. If param == null this method return null.
+     * @see KeyHolder
+     * @return  KeyHolder object. If method can`t find element return null
+     * After returns this method will delete element KeyHolder in DB */
+    @Nullable
     public KeyHolder getKeyDHolderByKeyAndDeleteKey(String key){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr=session.beginTransaction();
@@ -57,7 +65,10 @@ public class DealerDao {
             if(session.isOpen()){session.close();}
         }
     }
-
+/**
+ * @param email it is email of dealers registration
+ * @param  idDealer it is id dealer fo registration
+ * @return true if parameters is present in database*/
     public boolean checkIdDealerByEmail(String email,String idDealer){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr=session.beginTransaction();
@@ -82,24 +93,25 @@ public class DealerDao {
 
     }
 
-    public String getDealerName(String numberDealer) {
+    private boolean checkDealerById(String numberDealer) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        String nameDealer;
         try {
-            Query query = session.createQuery("select nameDealer from Dealer dealer where dealer.numberDealer =:numberDealer");
+            Query query = session.createQuery("from Dealer dealer where dealer.numberDealer =:numberDealer");
             query.setParameter("numberDealer", numberDealer);
-            nameDealer = (String) query.uniqueResult();
-            return nameDealer;
+            return (query.list().size()>0);
         } catch (NullPointerException p) {
-            return null;
+            return false;
         } finally {
             if (session.isOpen()) {
                 session.close();
             }
         }
     }
-
+/**
+ * @param id it is dealers id
+ * @return Dealer object from DB
+ * @see Dealer*/
     public Dealer getDealerById(String id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction transaction=session.beginTransaction();
@@ -126,17 +138,15 @@ try {
     List<Dealer> dealers = query.list();
     return dealers;
 }
-catch (Exception e){
-    return null;
-}
-        finally {
-    if(session.isOpen())session.close();
-        }
-
-
+catch (Exception e){return null;}
+finally {if(session.isOpen())session.close();}
     }
-
+/**
+ * @param key it is KeyHolder object
+ * @see KeyHolder*/
+    @Nullable
     public void  setKeyHolder(KeyHolder key){
+        if(key==null)return;
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr=session.beginTransaction();
         try {
@@ -152,12 +162,22 @@ catch (Exception e){
             if(session.isOpen()){session.close();}
         }
     }
-
+/**
+ * this method create new Dealer obj with his fields. See details in Dealer.class
+ * @see Dealer
+ * @return special message from file messages_ru.properties
+ * @see StandartMasege*/
     public String setDealer(String numberDealer, String nameDealer, String email, String name, String personPhone, String password, String city) {
-        if (getDealerName(numberDealer) != null) {
+        if (checkDealerById(numberDealer)) {
             return standartMasege.getMessage(11);
         }
         if (!nameDealer.isEmpty() || !numberDealer.isEmpty() || !email.isEmpty() || !name.isEmpty() || !password.isEmpty() || !city.isEmpty()) {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Transaction tr=session.beginTransaction();
+            try {
+               String htmlMessage = "<a href='" + Setting.getHost() + "/ConfirmationOfRegistration?id=" + encoderId.encodId(numberDealer) + "'>" + standartMasege.getMessage(18) + "</a>";
+
+            sendHTMLEmail.sendHtmlMessage(email, htmlMessage, standartMasege.getMessage(17));
             Dealer dealer = new Dealer();
             Address address = new Address();
             dealer.setDateRegistration(new Date());
@@ -178,8 +198,6 @@ catch (Exception e){
             contact_persons.add(contact_person);
             dealer.setContact_persons(contact_persons);
             PasswordHelper passwordHelper = new PasswordHelper();
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            Transaction tr=session.beginTransaction();
             session.merge(dealer);
             Login login = new Login();
             login.setIdDealer(dealer.getNumberDealer());
@@ -188,17 +206,19 @@ catch (Exception e){
             session.merge(login);
             new File(Setting.getClientsFolder() + numberDealer).mkdir();
             tr.commit();
-            if(session.isOpen()){
-                session.close();
+           }
+           catch (Exception e){
+               tr.rollback();
+           }
+            finally {
+                if(session.isOpen()){
+                    session.close();
+                }
             }
-            String htmlMessage = "<a href='" + Setting.getHost() + "/ConfirmationOfRegistration?id=" + encoderId.encodId(numberDealer) + "'>" + standartMasege.getMessage(18) + "</a>";
-            sendHTMLEmail.sendHtmlMessage(email, htmlMessage, standartMasege.getMessage(17));
             return standartMasege.getMessage(12) +
                     " \n " + standartMasege.getMessage(13);
         }
         return standartMasege.getMessage(14);
-
-
     }
 
     public boolean changeContactPersonsData(String idDealer, Integer contactPersonsNumber, Contact_person contact_person) {

@@ -38,7 +38,7 @@ public class Car {
     private String enginesType;
     private Integer prise;
     private String idDealer;
-    private Long views;
+    private Long views=0L;
     private String mileage;
     private String engineCapacity;
     private String region;

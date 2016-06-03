@@ -12,7 +12,7 @@ if(email==""||message==""){
 }
         else {
     if (emailReg.test(email)) {
-        $.post("/save_message", {email: email, message: message})
+        $.post("/vw-trade-in/save_message", {email: email, message: message})
             .done(function (data) {
             });
         alert(successful);

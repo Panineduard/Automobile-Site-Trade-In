@@ -13,8 +13,8 @@
 
     <title>Регистрация</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/res/css/style_registration.css">
-
+    <link rel="stylesheet" type="text/css" href="<%=Setting.getPath()%>/res/css/style_registration.css">
+    <link rel="shortcut icon" href="/res/img/favicon.ico"/>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -85,6 +85,7 @@
                         }
 
                     %>
+                    <h2>${msg}</h2><br>
                     <h2>Заполните данные диллерского центра</h2>
 
                     <input type="text" placeholder="Название организации" value="<%=nameDealer%>" name="nameDealer"><br>
@@ -124,18 +125,18 @@
 </div>
 
 <footer>Подвал </footer>
-<link rel="stylesheet" type="text/css" href="/res/css/modal_window.css">
+<link rel="stylesheet" type="text/css" href="<%=Setting.getPath()%>/res/css/modal_window.css">
 <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-<script type="text/javascript" src="/res/js/modal_window.js"></script>
+<script type="text/javascript" src="<%=Setting.getPath()%>/res/js/modal_window.js"></script>
 <script>
     var successful="Спасибо за отзыв, мы постараемся исправить это в ближайщее время.";
     var unsuccessful="Введите корректный email.";
     var empty_field ="Вы оставили пустые поля!"
 </script>
-<script type="text/javascript" charset=utf-8" src="/res/js/feedback-sender.js"></script>
+<script type="text/javascript" charset=utf-8" src="<%=Setting.getPath()%>/res/js/feedback-sender.js"></script>
 <!-- Модальное окно -->
 <div id="modal_form">
-    <img id="modal_close" src="../res/img/close.png" style="
+    <img id="modal_close" src="..<%=Setting.getPath()%>/res/img/close.png" style="
     width: 40px;
     height: 40px;
     left: 91%;
@@ -146,7 +147,7 @@
         <h3>Введите пожалуйста данные</h3>
         <%--<input type="hidden" name="id" value="">--%>
         <p>Электронный адресс<br />
-            <input  type="email" class="email" required="required" size="40" />
+            <input  style="width: 280px;" type="email" class="email" required="required" size="40" />
         </p>
         <p>Сообщение<br />
             <textarea style="resize: inherit" name="message" class="message" maxlength="380" required="required" cols="37" rows="8"></textarea>
