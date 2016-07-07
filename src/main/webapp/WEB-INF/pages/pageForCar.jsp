@@ -10,13 +10,15 @@
 <head>
     <title>Добавить авто</title>
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script>
         var engine_parameter=['Бензин','Дизель','Электро','Гибрид','Газ/бензин','Другое'];
         var gearbox_parameter=['Другое','Автоматическая','Механическая'];
     </script>
     <script type="text/javascript" src="/res/js/get_model_by_brand.js"></script>
     <script type="text/javascript" src="/res/js/write_parameters.js"></script>
-    <script src="/res/assets/plugins/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script type="text/javascript" src="/res/js/pageForCar.js"></script>
     <link rel="shortcut icon" href="/res/img/favicon.ico"/>
     <link rel="stylesheet" type="text/css" href="/res/css/style_addCar.css">
@@ -136,14 +138,32 @@
 <div id="layout">
     <div id="baner-left">
     </div>
-    <div id="baner-right">
-        some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 777777777777 77777 77777777 77777777 7777777 7777777
-    </div>
+    <%--<div id="baner-right">--%>
+        <%--some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 777777777777 77777 77777777 77777777 7777777 7777777--%>
+    <%--</div>--%>
     <div id="result">
         <h3>Мое меню:</h3>
         <div class="auto">
 
+            <%--///////////////////////////////////////////////////////////////////////////////////////////////--%>
 
+                <link rel="stylesheet" href="/res/css/percircle.css">
+
+                <style>
+
+                    .small{
+                        position: absolute;
+                        font-size: 80px;
+                        left: 50px;
+                        top: 25px;
+                    }
+
+
+                </style>
+
+
+
+            <%--/////////////////////////////////////////////////////////////////////////////////////--%>
             <form:form  action="addCarWithPhoto" method="post"
                         modelAttribute="uploadForm" enctype="multipart/form-data" >
                 <%if (presentCar){%>
@@ -237,6 +257,8 @@
                                 <div class="photo">
 
 
+
+
                                     <%for (int i=0;i<8;i++){
                                         boolean presentPhoto=false;
                                         Long idPhotoCar=0L;
@@ -248,6 +270,7 @@
                                                 path="/getPhoto?pathPhoto="+car.getPhotoPath().get(i)+"&Width=200&Height=200";
                                             }
                                         }%>
+
                                     <div class="photoCar" id="class_with_photo<%=i+1%>" data-parameter="<%=i+1%>" >
                                         <div class="modal_form" id="modal_form<%=i+1%>">
                                             <p style="position: absolute; top: -15%">
@@ -261,6 +284,19 @@
 
                                         <a hidden id="file<%=i+1%>" ><input accept="image/jpeg" id="image_p<%=i+1%>" name="files[<%=i%>]"  onchange="readURL(this,<%=i%>);" type="file" /></a>
                                         <img  id="car_photo<%=i+1%>"  src="<%=path%>" class="image_block" alt=""/>
+
+                                        <%--                          Progress bar                             --%>
+                                        <div id="pinkcircle<%=i+1%>"  style="display: none"  class="small  pink percircle animate ">
+                                            <span id="percent<%=i+1%>">0%</span>
+                                            <!--gt50-->
+                                            <div class="slice">
+                                                <div class="bar" id="percent_rotation<%=i+1%>" style="transform: rotate(0deg);"></div>
+                                                    <div class="fill" id="percent_rot1"></div>
+                                            </div>
+                                        </div>
+
+                                        <%--<progress class="progressbar" id="progressbar<%=i+1%>" value="0" max="100"></progress>--%>
+
                                         <div  id="<%=i+1%>"  class="photoCarDel" >  </div>
                                     </div>
                                     <%if(!presentPhoto){%>

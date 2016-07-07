@@ -121,6 +121,35 @@ public class CarController {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @RequestMapping(value = "/putPhoto",method = RequestMethod.POST,headers ="Accept=application/json" )
+    public int putPhoto(@ModelAttribute("file") File File,@ModelAttribute("id")String id){
+        int idPhoto=100;
+        System.out.println("putPhoto");
+        System.out.println(id);
+        System.out.println(File.getName());
+        return idPhoto;
+
+    }
+
     @RequestMapping(value = "/getModelByBrand",method = RequestMethod.GET, headers="Accept=application/json")
     public @ResponseBody List<String> getModelForm(@ModelAttribute("model")String model){
         return carDAO.getModelByBrand(model);
@@ -302,7 +331,7 @@ public class CarController {
 
     }
     @RequestMapping(value = {"*/addCarWithPhoto","/addCarWithPhoto"},method = RequestMethod.POST)
-    public ModelAndView uploadCarsFile(@ModelAttribute("uploadForm") FileUploadForm inputUploadForm,Model map,
+    public ModelAndView uploadCarsFile(@ModelAttribute("uploadForm") FileUploadForm inputUploadForm,
                                           @ModelAttribute("make")String make,@ModelAttribute("model")String model,
                                           @ModelAttribute("prise")String prise,@ModelAttribute("year_prov")String year_prov,
                                           @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox,
