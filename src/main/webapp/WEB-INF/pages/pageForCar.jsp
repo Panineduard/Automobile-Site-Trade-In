@@ -2,6 +2,10 @@
 <%@ page import="com.modelClass.Car" %>
 <%@ page import="com.helpers.EncoderId" %>
 <%@ page import="com.setting.Setting" %>
+<%@ page import="com.modelClass.PhotoPath" %>
+<%@ page import="java.util.Collections" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Comparator" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -9,7 +13,7 @@
 <html>
 <head>
     <title>Добавить авто</title>
-    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <%--<script src="http://code.jquery.com/jquery-1.8.3.js"></script>--%>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script>
         var engine_parameter=['Бензин','Дизель','Электро','Гибрид','Газ/бензин','Другое'];
@@ -66,7 +70,16 @@
             $('div#'+count).remove();
         };
 
-
+        function change_field_on_input_img(count,index_img){
+//            alert(count);
+            count=count+1;
+            var id_photo=$('#idPh'+count).val();
+            var place=$('#file'+count);
+//            alert(id_photo);
+            place.empty();
+            var id=count-1;
+            place.append('<input accept="image/jpeg" id="image_p'+count+'" name="files['+id+']"  onchange="readURL(this,'+id+');" type="file" multiple/>');
+        }
         function delete_image_funct(count ){
             $('#modal_form'+count)
                     .css('display', 'block') // убираем у модального окна display: none;
@@ -91,6 +104,7 @@
                                     $(this).css('display', 'none'); // делаем ему display: none;
                                 }
                         );
+                        change_field_on_input_img(count-1,0);
                         //меняем фто  на изображение
                        change_img_atribute(count);
                        //Шлем запрос на сервер
@@ -164,13 +178,11 @@
 
 
             <%--/////////////////////////////////////////////////////////////////////////////////////--%>
-            <form:form  action="addCarWithPhoto" method="post"
-                        modelAttribute="uploadForm" enctype="multipart/form-data" >
+            <form action="addCarWithPhoto" method="post">
                 <%if (presentCar){%>
-
                 <input type="hidden" id="id_car" value="<%= encoderId.encodId(car.getIdCar().toString())%>" name="id_car">
-
                 <%}%>
+                <input type="hidden" name="count_of_photo" value="8">
                 <div class="col-sm-6 form-group">
                     <h2>Марка</h2>
                     <select id="id_make" class="form-control" onchange="p_delete(this.value,'');" name="make">
@@ -255,19 +267,26 @@
                             <br>
                             <div id="form_cars_data" >
                                 <div class="photo">
+                                    <%
 
 
-
-
-                                    <%for (int i=0;i<8;i++){
+                                        for (int i=0;i<8;i++){
                                         boolean presentPhoto=false;
                                         Long idPhotoCar=0L;
                                         String path="../res/img/add_photo.png";
                                         if(presentCar){
+                                            List<PhotoPath> photoPaths=car.getPhotoPath();
+//                                            Collections.sort(photoPaths, new Comparator<PhotoPath>() {
+//                                                @Override
+//                                                public int compare(PhotoPath o1, PhotoPath o2) {
+//                                                    return o1.getIdPhoto().compareTo(o2.getIdPhoto());
+//                                                }
+//                                            });
                                             if(i<car.getPhotoPath().size()){
+
                                                 presentPhoto=true;
-                                                idPhotoCar=car.getPhotoPath().get(i).getIdPhoto();
-                                                path="/getPhoto?pathPhoto="+car.getPhotoPath().get(i)+"&Width=200&Height=200";
+                                                idPhotoCar=photoPaths.get(i).getIdPhoto();
+                                                path="/getPhoto?pathPhoto="+photoPaths.get(i)+"&Width=200&Height=200";
                                             }
                                         }%>
 
@@ -282,7 +301,7 @@
                                         <input id="present_photo<%=i+1%>" type="hidden"  value="<%=presentPhoto%>"  >
                                         <input id="idPhoto<%=i+1%>" type="hidden" value="<%=idPhotoCar%>">
 
-                                        <a hidden id="file<%=i+1%>" ><input accept="image/jpeg" id="image_p<%=i+1%>" name="files[<%=i%>]"  onchange="readURL(this,<%=i%>);" type="file" /></a>
+                                        <a hidden id="file<%=i+1%>" ><input accept="image/jpeg" id="image_p<%=i+1%>" name="files[<%=i%>]"  onchange="readURL(this,<%=i%>);" type="file" multiple/></a>
                                         <img  id="car_photo<%=i+1%>"  src="<%=path%>" class="image_block" alt=""/>
 
                                         <%--                          Progress bar                             --%>
@@ -321,7 +340,7 @@
                 <%}
 
                 %>
-            </form:form>
+            </form>
 
         </div>
     </div>

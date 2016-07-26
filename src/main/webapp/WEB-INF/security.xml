@@ -10,6 +10,7 @@
         <access-denied-handler error-page="/403" />
         <intercept-url pattern="/ConfirmationOfRegistration" access="ROLE_ANONYMOUS"/>
         <!--UserController-->
+        <intercept-url pattern="/putPhoto" access="ROLE_USER,ROLE_ADMIN"/>
         <intercept-url pattern="/myAccount" access="ROLE_USER,ROLE_ADMIN" />
         <intercept-url pattern="/myAccount/*" access="ROLE_USER,ROLE_ADMIN" />
         <intercept-url pattern="/feedback" access="ROLE_USER,ROLE_ADMIN"/>

@@ -261,7 +261,7 @@
             path="/res/img/notAvailable.png";
         }
         else {
-            path = "/getPhoto?pathPhoto="+car.getPhotoPath().get(0)+"&percentage_of_reduction=30";
+            path = "/getPhoto?pathPhoto="+car.getMainPhotoUrl()+"&percentage_of_reduction=30";
         }
         String EnginesType="нет данных";
         String transmission ="нет данных";

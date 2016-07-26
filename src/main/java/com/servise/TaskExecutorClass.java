@@ -2,6 +2,7 @@ package com.servise;
 
 import com.dao.CarDAO;
 import com.dao.DealerDao;
+import com.dao.TempPhotoDAO;
 import com.setting.Setting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,10 +26,15 @@ public class TaskExecutorClass {
     DealerDao dealerDao;
     @Autowired
     CarDAO carDAO;
+    @Autowired
+    TempPhotoDAO tempPhotoDAO;
 
 //    @Scheduled(cron="*/5 * * * * ?")
+    /**
+     * This method performed every day automatically*/
     public void cleanDbWithoutAuth()
     {
+        tempPhotoDAO.deleteDataByScheduler();
         dealerDao.getIdDealersWithoutAuth()
                 .stream()
                 .filter(n ->LocalDateTime.ofInstant(Instant.ofEpochMilli(n.getDateRegistration()
@@ -37,6 +43,8 @@ public class TaskExecutorClass {
         dealerDao.deleteOldKeyHolders();
 
     }
+    /**
+     * This method performed every month automatically*/
     public  void sendEmailToOwnersOldCars()
     {
         String message="<a href='"+ Setting.getHost()+"/myAccount'>"+standartMasege.getMessage(31)+"</a>" +

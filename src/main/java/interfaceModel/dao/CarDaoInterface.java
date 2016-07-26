@@ -14,13 +14,13 @@ import java.util.List;
 public interface CarDaoInterface {
     public boolean deletePhotoByCarsId(long idCar,long numberOfPhoto);
     public List<Car> getCarByIdDealer(String idD);
-    public Long setCar(Car car,List<MultipartFile> multipartFiles);
+    public Long setCar(Car car,List<Integer> ids,String id );
     //this method found cars for all or one parameters if prise 1 it is ascending_price if prise 2 by_prices_descending 0 nothing
     public ResultCars getCarsByParameters(SearchOptions options, int page);
     public List<Car> getLastCars(Integer countLastCar);
     public Car getCarById(String id);
     public boolean deleteCarById(String idCar);
-    public boolean updateCarById(Car car,List<MultipartFile> multipartFiles);
+    public boolean updateCarById(Car car,List<Integer> idPhotos,String id);
     public HashSet<String> getOldCarOwnersEmails(Integer period_in_month);
     public boolean deleteOldCar(Integer period_in_month);
     public  void updateDateProvideDyId(Long id);

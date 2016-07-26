@@ -56,6 +56,12 @@ public class Setting {
     public static Integer get_IMG_WIDTH(){return settingJavax.get_IMG_WIDTH();}
     public static Integer get_IMG_HEIGHT(){return settingJavax.get_IMG_HEIGHT();}
     public static  String getProjectName(){return settingJavax.get_project_name();}
-
+public static String getTempFolder(){
+    File folder = new File(settingJavax.getTempFolder());
+    if(!folder.exists()) {
+        folder.mkdirs();
+    }
+    return settingJavax.getTempFolder();
+}
 
 }

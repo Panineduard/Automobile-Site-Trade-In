@@ -34,7 +34,58 @@ StandartMasege standartMasege;
 @Autowired
 DealerDao dealerDao;
 @Autowired
+TempPhotoDAO tempPhotoDAO;
+    @Autowired
 ChangeImgSize changeImgSize;
+    private boolean movePhotoFiles(Car car,List<Integer> idPhotos,String idSession,Session session){
+        final boolean[] res = {true};
+        List<TempImg> photos=new ArrayList<>();
+        idPhotos.forEach(id -> {
+            photos.add( (TempImg)session.createQuery("from TempImg where id =:id")
+                    .setParameter("id", id)
+                    .list().get(0));
+        });
+        List<PhotoPath> pathPhoto;
+        System.out.println("Path from Car - "+car.getPhotoPath());
+        if(car.getPhotoPath()!=null)pathPhoto=car.getPhotoPath();
+        else pathPhoto=new ArrayList<>();
+        int[] numberPhoto={pathPhoto.size()};
+        photos.forEach(photo -> {
+            InputStream inStream = null;
+            int pointPosition = photo.getPath().lastIndexOf('.');
+            String formatFile = photo.getPath().substring(pointPosition);
+            try {
+                File file1 = new File(photo.getPath());
+                File file2 = new File(Setting.getClientsFolder() + car.getIdDealer(), car.getIdCar() + "-" + photo.getPosition() + formatFile);
+                inStream = new FileInputStream(file1);
+                BufferedImage bufferedImage = ImageIO.read(inStream);
+
+                ImageIO.write(bufferedImage, formatFile.substring(1).toLowerCase(), file2);
+
+                inStream.close();
+                //delete the original file
+                file1.delete();
+                pathPhoto.add(photo.getPosition(),new PhotoPath(car.getIdCar(), file2.getAbsolutePath()));
+
+
+            } catch (IOException e) {
+                res[0] = false;
+            }
+        });
+
+
+//        pathPhoto.add(new PhotoPath(car.getIdCar(), file1.getAbsolutePath()));
+//        byte[] bytes = baos.toByteArray();
+//        baos.close();
+//        stream =new BufferedOutputStream(new FileOutputStream(file1));
+//        stream.write(bytes);
+//        numberPhoto++;
+//        convFile.delete();
+        car.setMainPhotoUrl(pathPhoto.get(0).getPath());
+        car.setPhotoPath(pathPhoto);
+        tempPhotoDAO.deleteDataByIdSession(idSession);
+        return res[0];
+    }
     private List<PhotoPath> setPhotoFiles(Car car,List<MultipartFile> multipartFiles){
         List<PhotoPath> pathPhoto=new ArrayList<>();
         int numberPhoto=car.getPhotoPath().size();
@@ -185,7 +236,7 @@ ChangeImgSize changeImgSize;
      * @param multipartFiles it is List of MultipartFile
      * @see MultipartFile
      * @return cars id from DB in this car or return -1 if something from data equally 0 */
-    public Long setCar(Car car,List<MultipartFile> multipartFiles){
+    public Long setCar(Car car,List<Integer>idPhotos,String idSession){//List<MultipartFile> multipartFiles
         //check block fo null and empty
              if(car.getBrand().isEmpty()){
                  System.out.println("марка");
@@ -232,15 +283,15 @@ ChangeImgSize changeImgSize;
             session.save(car);
             session.flush();
             carId=car.getIdCar();
-            List<PhotoPath>photoPaths=new ArrayList<>();
-            photoPaths.add(new PhotoPath(carId, "one"));
-            photoPaths.add(new PhotoPath(carId, "too"));
-            car.setPhotoPath(photoPaths);
-            if (multipartFiles.size()>0) {
-                pathPhoto=setPhotoFiles(car,multipartFiles);
+//            List<PhotoPath>photoPaths=new ArrayList<>();
+//            photoPaths.add(new PhotoPath(carId, "one"));
+//            photoPaths.add(new PhotoPath(carId, "too"));
+//            car.setPhotoPath(photoPaths);
+            if (idPhotos.size()>0) {
+                movePhotoFiles(car, idPhotos,idSession,session);
             }
 //            else pathPhoto.add(new PhotoPath(carId,"null"));
-            car.setPhotoPath(pathPhoto);
+//            car.setPhotoPath(pathPhoto);
             session.update(car);
             tr.commit();
 
@@ -490,22 +541,22 @@ ChangeImgSize changeImgSize;
  * This method just update car in DB with new parameters
  * @param car it is object Car.class
  * @see Car
- * @param multipartFiles it is list of MultipartFile
- * @see MultipartFile
+ * @param idPhotos it is list of id photo from temp folder
+// * @see MultipartFile
  * @return true if successful completion return false if something happened(see StackTrace)*/
-    public boolean updateCarById(Car car,List<MultipartFile> multipartFiles){
+    public boolean updateCarById(Car car,List<Integer>idPhotos,String idSession){//List<MultipartFile> multipartFiles
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         try {
 
 
         Transaction tr=session.beginTransaction();
-        List<PhotoPath> pathPhoto=new ArrayList<>();
-        if (multipartFiles.size()>0) {
-            pathPhoto=setPhotoFiles(car,multipartFiles);
+//        List<PhotoPath> pathPhoto=new ArrayList<>();
+        if (idPhotos.size()>0) {
+            movePhotoFiles(car, idPhotos,idSession,session);
         }
-        List<PhotoPath>photos=car.getPhotoPath();
-        pathPhoto.forEach(p -> photos.add(p));
-        car.setPhotoPath(photos);
+//        List<PhotoPath>photos=car.getPhotoPath();
+//        pathPhoto.forEach(p -> photos.add(p));
+//        car.setPhotoPath(photos);
         session.update(car);
         tr.commit();
         return true;

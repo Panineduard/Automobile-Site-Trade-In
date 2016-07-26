@@ -1,6 +1,7 @@
 package com.controllers;
 
 import com.dao.AdminServiceDAO;
+import com.dao.TempPhotoDAO;
 import com.helpers.ResultCars;
 import com.helpers.EncoderId;
 import com.helpers.FileUploadForm;
@@ -10,6 +11,7 @@ import com.helpers.SearchOptions;
 import com.modelClass.*;
 import com.servise.ChangeImgSize;
 import com.servise.StandartMasege;
+import com.setting.Setting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,6 +40,8 @@ public class CarController {
     EncoderId encoderId;
     @Autowired
     CarDAO carDAO;
+    @Autowired
+    TempPhotoDAO tempPhotoDAO;
     @Autowired
     AdminServiceDAO adminServiceDAO;
     @Autowired
@@ -121,33 +125,15 @@ public class CarController {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @RequestMapping(value = "/putPhoto",method = RequestMethod.POST,headers ="Accept=application/json" )
-    public int putPhoto(@ModelAttribute("file") File File,@ModelAttribute("id")String id){
-        int idPhoto=100;
-        System.out.println("putPhoto");
-        System.out.println(id);
-        System.out.println(File.getName());
+    public @ResponseBody Integer putPhoto(@ModelAttribute("file") MultipartFile file,@ModelAttribute("type")String type,
+            @ModelAttribute("position")String position,HttpSession session){
+        int idPhoto=-1;
+        int pointPosition= type.lastIndexOf(".");
+        String formatFile =type.substring(pointPosition);
+        if(position==null)position=new String("-1");
+           idPhoto= tempPhotoDAO.putTempPhoto(file,formatFile,session.getId(),new Integer(position));
         return idPhoto;
-
     }
 
     @RequestMapping(value = "/getModelByBrand",method = RequestMethod.GET, headers="Accept=application/json")
@@ -331,7 +317,8 @@ public class CarController {
 
     }
     @RequestMapping(value = {"*/addCarWithPhoto","/addCarWithPhoto"},method = RequestMethod.POST)
-    public ModelAndView uploadCarsFile(@ModelAttribute("uploadForm") FileUploadForm inputUploadForm,
+    //@ModelAttribute("uploadForm") FileUploadForm inputUploadForm,
+    public ModelAndView uploadCarsFile(HttpServletRequest request,@ModelAttribute("count_of_photo")String countOfPhoto,
                                           @ModelAttribute("make")String make,@ModelAttribute("model")String model,
                                           @ModelAttribute("prise")String prise,@ModelAttribute("year_prov")String year_prov,
                                           @ModelAttribute("engine")String engine,@ModelAttribute("gearbox")String gearbox,
@@ -342,14 +329,28 @@ public class CarController {
         session.removeAttribute("chCar");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String idDealer = auth.getName();
-        List<MultipartFile>files=new ArrayList<>();
-        inputUploadForm.getFiles().forEach(f->{
-            if(f.getSize()>0){
-                files.add(f);
+//        List<MultipartFile>files=new ArrayList<>();
+        List<Integer> idPhotos=new ArrayList<>();
+        if (!countOfPhoto.isEmpty()){
+            int count=new Integer(countOfPhoto);
+            for (int i=1;i<=count;i++){
+                String idString=request.getParameter("photo"+i);
+                if(idString!=null){
+                    idPhotos.add(new Integer(idString));
+                }
             }
-        });
-        FileUploadForm uploadForm =new FileUploadForm();
-        uploadForm.setFiles(files);
+        }
+
+//        if(inputUploadForm==null){
+//            System.out.println("Empty!!");
+//        }
+//        inputUploadForm.getFiles().forEach(f->{
+//            if(f.getSize()>0){
+//                files.add(f);
+//            }
+//        });
+//        FileUploadForm uploadForm =new FileUploadForm();
+//        uploadForm.setFiles(files);
         boolean update=false;
 
         if (!idDealer.isEmpty()) {
@@ -418,7 +419,8 @@ public class CarController {
                 }
                 else car.setMileage("0");
              if(!update){
-                if (carDAO.setCar(car, uploadForm.getFiles()) != -1L) {
+                if (carDAO.setCar(car,idPhotos,session.getId() ) != -1L) {//uploadForm.getFiles()
+//                    tempPhotoDAO.deleteDataByIdSession(session.getId());
                     ModelAndView modelAndView=new ModelAndView("my_account");
                     modelAndView.addObject("msg", standartMasege.getMessage(1));
                     dealerDao.updateCountOfCar(car.getIdDealer());
@@ -426,7 +428,8 @@ public class CarController {
                 }
              }
                 if (update){
-                    if (carDAO.updateCarById(car,uploadForm.getFiles())){
+                    if (carDAO.updateCarById(car,idPhotos,session.getId())){
+//                        tempPhotoDAO.deleteDataByIdSession(session.getId());
                         ModelAndView modelAndView=new ModelAndView("my_account");
                         modelAndView.addObject("msg", standartMasege.getMessage(1));
                         return viewHalper.addingDealerAndCarsInView(modelAndView);

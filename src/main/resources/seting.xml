@@ -9,6 +9,7 @@
         <host>http://localhost:8080/</host>
         <!--http://autoport.website-->
         <ClientsFolder>ClientsFolder/tmp/</ClientsFolder>
+        <TmpFolder>ClientsFolder/temporary/</TmpFolder>
         <path></path>
         <!--this is size images in client folder-->
         <IMG_WIDTH>1024</IMG_WIDTH>

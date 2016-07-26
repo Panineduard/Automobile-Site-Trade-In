@@ -1,6 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.modelClass.*" %>
 <%@ page import="com.setting.Setting" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Collections" %>
+<%@ page import="java.util.Comparator" %>
+<%@ page import="java.text.Collator" %>
+<%@ page import="java.text.CollationKey" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -140,7 +145,7 @@
       path=Setting.getPath()+"/res/img/notAvailable.png";
     }
     else {
-      path = "/getPhoto?pathPhoto="+car.getPhotoPath().get(0).getPath()+"&percentage_of_reduction=50";
+      path = "/getPhoto?pathPhoto="+car.getMainPhotoUrl()+"&percentage_of_reduction=50";
 
     }
 
@@ -183,8 +188,15 @@
   </div>
   <div class="small-photo">
   <%
+    List<PhotoPath>photoPaths=car.getPhotoPath();
+//    Collections.sort(photoPaths, new Comparator<PhotoPath>() {
+//      @Override
+//      public int compare(PhotoPath o1, PhotoPath o2) {
+//        return o1.getIdPhoto().compareTo(o2.getIdPhoto());
+//      }
+//    });
     int idPhoto=0;
-    for (PhotoPath photo:car.getPhotoPath()) {
+    for (PhotoPath photo:photoPaths) {
       String paths;
 
         paths = "/getPhoto?pathPhoto="+photo.getPath()+"&percentage_of_reduction=50";
@@ -259,7 +271,8 @@
         <div class="panelContainer">
           <%
             int i=1;
-            for (PhotoPath photo:car.getPhotoPath()) {
+
+            for (PhotoPath photo:photoPaths) {
             String paths;
               paths = "/getPhoto?pathPhoto="+photo.getPath();
           %>
@@ -278,11 +291,11 @@
       <div id="movers-row">
         <%
           int j=1;
-          for (PhotoPath photo:car.getPhotoPath()) {
+          for (PhotoPath photo:photoPaths) {
             String paths;
             paths = "/getPhoto?pathPhoto="+photo;
             %>
-        <%----%>
+      <%----%>
         <div><a class="cross-link" href="#<%=j%>" > <img src="<%=paths%>"  height="50" class="nav-thumb" alt="temp-thumb" /></a></div>
 <%j++;
 }

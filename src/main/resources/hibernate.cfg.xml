@@ -31,6 +31,7 @@
         <mapping class="com.modelClass.Years"/>
         <mapping class="com.modelClass.Brand"/>
         <mapping class="com.modelClass.Letter"/>
+        <mapping class="com.modelClass.TempImg"/>
 
 
 

@@ -45,6 +45,7 @@
     </bean>
     <bean name="CarDAO" class="com.dao.CarDAO"/>
     <bean name="DealerDao" class="com.dao.DealerDao"/>
+    <bean name="TempPhotoDAO" class="com.dao.TempPhotoDAO"/>
     <bean name="AnonymousUserDAO" class="com.dao.AnonymousUserDAO"/>
     <bean name="AdminServiceDAO" class="com.dao.AdminServiceDAO"/>
     <bean name="viewHalper" class="com.helpers.ViewHalper"/>

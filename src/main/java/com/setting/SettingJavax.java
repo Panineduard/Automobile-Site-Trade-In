@@ -32,6 +32,9 @@ public class SettingJavax {
     private Integer IMG_HEIGHT;
     @XmlElement
     private  String path;
+    @XmlElement
+    private String TmpFolder;
+
 
     public String get_path() {
         return path;
@@ -73,6 +76,14 @@ public class SettingJavax {
         this.RECIPIENT_EMAIL = RECIPIENT_EMAIL;
     }
 
+    public void setTmpFolder(String tmpFolder) {
+        TmpFolder = tmpFolder;
+    }
+
+
+    public String getTempFolder() {
+        return TmpFolder;
+    }
 
     public String get_project_name() {
         return nameOfOurProject;
