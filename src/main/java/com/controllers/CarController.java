@@ -254,7 +254,6 @@ public class CarController {
         Dealer dealer=null;
         idCar = encoderId.decodeID(idCar);
         if(!idCar.isEmpty()){
-
             car=carDAO.getCarById(idCar);
             if(car!=null) {
                 carDAO.updateViews(idCar);
@@ -310,9 +309,6 @@ public class CarController {
 
     @RequestMapping(value = "/delete_photo", method = RequestMethod.GET)
     public void deletePhoto(@RequestParam("count_of_photo") Integer countOfPhoto,@RequestParam("id_car") Integer idCar){
-//        System.out.println("count = "+countOfPhoto );
-//        System.out.println("id = "+idCar);
-
           carDAO.deletePhotoByCarsId(idCar, countOfPhoto);
 
     }

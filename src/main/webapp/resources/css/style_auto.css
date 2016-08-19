@@ -199,4 +199,15 @@ footer {
 		color:black;
 		}
 	
-
+.arrowLeft{
+	position: fixed;
+	left: 5%;
+	top: 30%;
+	z-index: 3;
+}
+.arrowRight{
+	position: fixed;
+	left: 1100px;
+	top: 30%;
+	z-index: 3;
+}

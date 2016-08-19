@@ -8,15 +8,14 @@ import com.modelClass.*;
 import com.servise.ChangeImgSize;
 import com.servise.StandartMasege;
 import com.setting.Setting;
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+import com.sun.istack.internal.*;
 import interfaceModel.dao.CarDaoInterface;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -750,7 +749,7 @@ ChangeImgSize changeImgSize;
             tr =session.beginTransaction();
             Long id = new Long(idCar);
             if(id.getClass()==Long.class) {
-                System.out.println(id);
+//                System.out.println(id);
                 Query query = session.createQuery("UPDATE Car set views=(views+1) where idCar=:id ").setParameter("id", id);
                 query.executeUpdate();
                 tr.commit();

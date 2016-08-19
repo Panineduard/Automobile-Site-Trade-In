@@ -13,27 +13,26 @@
   <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/jquery-1.2.6.min.js"></script>
   <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/jquery-easing-1.3.pack.js"></script>
   <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/jquery-easing-compatibility.1.2.pack.js"></script>
-  <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/coda-slider.1.1.1.pack.js"></script>
+  <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/jssor.slider.mini.js"></script>
+
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="shortcut icon" href="/res/img/favicon.ico"/>
   <link rel="stylesheet" type="text/css" href="<%=Setting.getPath()%>/res/css/style_auto.css">
   <link rel="stylesheet" type="text/css" href="<%=Setting.getPath()%>/res/css/style_for_slider.css">
-
   <script type="text/javascript">
     function setBigImageSlide(group) {
-      var images = document.getElementById(group).src;
-      var image = document.getElementById("bigimgslide").src=images;
+      function changeSrc(){
+        document.getElementById("bigimgslide").src=document.getElementById(group).src;
+      };
+      $("#bigimgslide").animate({opacity:0},300);
+      setTimeout(changeSrc,300);
+      $("#bigimgslide").animate({opacity:1},300);
     }
   </script>
-
   <script type="text/javascript">
-
     $(document).ready(function() { // вся магия после загрузки страницы
-
-
       $('a#go').click( function(event){ // ловим клик по ссылки с id="go"
-
         event.preventDefault(); // выключаем стандартную роль элемента
         $('#overlay').fadeIn(400, // сначала плавно показываем темную подложку
                 function(){ // после выполнения предъидущей анимации
@@ -62,48 +61,49 @@
       });
     });
   </script>
-  <script type="text/javascript">
-    var theInt = null;
-    var $crosslink, $navthumb;
-    var curclicked = 0;
-    $(function(){
+<script>
 
-      $("#main-photo-slider").codaSlider();
+  jQuery(document).ready(function ($) {
 
+    var jssor_1_options = {
+      $FillMode: 1,
+      $DragOrientation: 3,
+      $AutoPlay: false,
+      $ArrowNavigatorOptions: {
+        $Class: $JssorArrowNavigator$
+      },
+      $ThumbnailNavigatorOptions: {
+        $Class: $JssorThumbnailNavigator$,
+        $Cols: 8,
+        $SpacingX: 5,
+        $SpacingY: 3,
+        $Align: 260
+      }
+    };
 
-      $navthumb = $(".nav-thumb");
+    var jssor_1_slider = new $JssorSlider$("main-photo-slider", jssor_1_options);
 
-      $navthumb
-              .click(function() {
+    //responsive code begin
+    //you can remove responsive code if you don't want the slider scales while window resizing
+    function ScaleSlider() {
+      var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+      if (refSize) {
+        refSize = Math.min(refSize, 1200);
+        jssor_1_slider.$ScaleWidth(refSize);
+      }
+      else {
+        window.setTimeout(ScaleSlider, 30);
+      }
+    }
+    ScaleSlider();
+    $(window).bind("load", ScaleSlider);
+    $(window).bind("resize", ScaleSlider);
+    $(window).bind("orientationchange", ScaleSlider);
+    //responsive code end
+  });
+</script>
 
-                var photo=$(this);
-                var $this = $(this);
-                var big_photo=$('#big-photo1');
-                big_photo
-                        .css('position','relative')
-                        .css('right','0%');
-                if(photo.width()<photo.height()){
-                  $('.panel')
-                          .css('position','relative')
-//                          .css('right','-3%');
-                          .animate({right: '-4%'}, 500);
-                }
-                else{
-                  $('.panel')
-                          .css('position','relative')
-                          .animate({right: '0%'}, 500);
-//                .css('right','0%');
-                }
-              });
-
-    });
-
-  </script>
-
-
-
-  <!-- <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'> -->
-<title> Автомобили с пробегом </title>
+  <title> Автомобили с пробегом </title>
 </head>
 
 <body>
@@ -244,73 +244,64 @@
 
 </div>
 <%}%>
-<!-- <a title="Подробнее"href="http" class="more">
-Подробнее
-</a> -->
 </div>
 </div>
 
 </div>
-
-
-
-
-
-<%--<p><a href="#" id="go">Ссылка с окном</a></p>--%>
-
-
 
 
 <!-- Модальное окно -->
 <div id="modal_form">
-  <span id="modal_close"></span>
+
   <div id="page-wrap">
 
-    <div class="slider-wrap">
-      <div id="main-photo-slider" class="csw">
-        <div class="panelContainer">
-          <%
-            int i=1;
-
-            for (PhotoPath photo:photoPaths) {
-            String paths;
-              paths = "/getPhoto?pathPhoto="+photo.getPath();
-          %>
-          <div  class="panel" title="фото номер <%=i%>">
-            <div class="wrapper">
-              <img id="big-photo<%=i%>" src="<%=paths%>"  style="max-height: 100%;max-width: 100%;" alt="temp" />
-            </div>
-          </div>
-          <%i++;
-          }%>
-
-        </div>
-      </div>
-
-
-      <div id="movers-row">
+    <span id="modal_close"></span>
+    <div id="main-photo-slider" style="position: relative;left: 0; width: 1300px; height: 1000px">
+      <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 1300px; height: 1000px; overflow: hidden;">
         <%
-          int j=1;
           for (PhotoPath photo:photoPaths) {
             String paths;
-            paths = "/getPhoto?pathPhoto="+photo;
-            %>
-      <%----%>
-        <div><a class="cross-link" href="#<%=j%>" > <img src="<%=paths%>"  height="50" class="nav-thumb" alt="temp-thumb" /></a></div>
-<%j++;
-}
-}%>
+            String pathSmall;
+            paths = "/getPhoto?pathPhoto="+photo.getPath();
+            pathSmall = "/getPhoto?pathPhoto="+photo.getPath()+"&percentage_of_reduction=50";
+        %>
+        <div data-p="112.50" style="display: none;">
+          <img data-u="image" src="<%=paths%>" />
+          <img data-u="thumb" src="<%=pathSmall%>" />
+        </div>
+        <%}%>
+
+        <%--<a data-u="add" href="http://www.jssor.com" style="display:none">Jssor Slider</a>--%>
+
+      </div>
+      <!--Thumbnail Navigator -->
+      <div u="thumbnavigator" class="jssort03" style="position:absolute;left:0px;bottom:0px;width:800px;height:100px;" data-autocenter="1">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height:100%; background-color: #000; filter:alpha(opacity=30.0); opacity:0.3;"></div>
+        <!-- Thumbnail Item Skin Begin -->
+        <div u="slides" style="cursor: default;position: absolute;overflow: hidden;left: 41.5px;top: 24px; width: 517px;height: 50px;z-index: 0;">
+          <div u="prototype" class="p">
+            <!--<div class="w">-->
+            <div u="thumbnailtemplate" class="t"></div>
+            <!--</div>-->
+            <div class="c"></div>
+
+          </div>
+        </div>
+        <!-- Thumbnail Item Skin End -->
+      </div>
+      <!--Arrow Navigator -->
+      <span data-u="arrowleft" class="jssora02l" style="top:0px;left:8px;width:55px;height:55px;" data-autocenter="2"></span>
+      <span data-u="arrowright" class="jssora02r" style="top:0px;right:8px;width:55px;height:55px;" data-autocenter="2"></span>
     </div>
 
+<%
+}
+%>
   </div>
 </div>
 </div>
 <div id="overlay"></div>
-
-
-
-<footer>Подвал </footer>
-
+<footer style="text-align: center" >autoport.kh.ua@gmail.com </footer>
 </body>
 </html>
 

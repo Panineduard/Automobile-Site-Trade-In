@@ -23,6 +23,7 @@ public class MainController {
 StandartMasege standartMasege;
     @RequestMapping(value = {"/index","/ "})
     public ModelAndView printWelcome(HttpSession session) {
+        System.out.println("hhhhhh");
         List<Car> cars =(List<Car>)session.getAttribute("cars");
         ModelAndView model = new ModelAndView("index");//this is constructor were is view field
         if (cars!=null){

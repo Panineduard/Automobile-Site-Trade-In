@@ -1,4 +1,4 @@
-﻿
+
 header{
     text-align:left;
     padding:5px;
@@ -6,10 +6,8 @@ header{
     /* border:1px solid red; */
     border-radius: 4px;
     height: 100px;
-
-
-
 }
+
 footer{
     margin-top:5px;
     border-radius: 4px;
@@ -17,17 +15,16 @@ footer{
     padding:3px;
 }
 
-
 a{
     text-decoration:none;
 }
+
 h5{
     margin:10px 10px 10px 220px;
 }
 
 .header{
     text-decoration:none;
-
 }
 
 body{
@@ -42,16 +39,13 @@ body{
     max-width:960px;
     margin:auto;
 }
+
 nav ul {
     padding: 0;
-
-
 }
-
 
 nav ul li {
     display: inline-flex;
-
 }
 
 nav ul li a {
@@ -62,11 +56,11 @@ nav ul li a {
     border-bottom: 2px solid #7784A6;
     border-radius: 4px;
 }
+
 nav ul.menu{
     background-color:#7784A6 ;
     border-radius: 4px;
 }
-
 
 nav ul li a:hover {
     /*ckground-color: #415A98;*/
@@ -74,12 +68,35 @@ nav ul li a:hover {
     border-bottom: 2px solid #ee5557;
 }
 
+#layout{overflow:hidden;
+    /*background: url(img/background2.jpg)red;*/
+    border-radius: 4px;
+    max-width:100%;
+}
+
+aside{
+    width:200px;
+    background-color: white;
+    position:
+    border-radius: 4px;
+    float:left;
+    margin-top:5px;
+    border:1px solid #415A98;
+    /*margin-left:5px;*/
+    /*box-shadow : 0 0 10px rgba(0,0,0,0.5);*/
+    /*padding:5px;*/
+}
+
+#search{
+    margin: 5px;
+}
+
 #result {
     /*background-color: #C7E3E4;*/
     margin: 5px 205px 5px 205px;
     /* background:gray; */
-
 }
+
 #baner-right{
     width:200px;
     /*background-color:#DAE1F3;*/
@@ -89,6 +106,7 @@ nav ul li a:hover {
     margin-top:5px;
     margin-right:5px;
 }
+
 .auto{
     margin:5px;
     border:1px solid #415A98;
@@ -99,7 +117,95 @@ nav ul li a:hover {
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
-img {
+.info{
+    /* color:red; */
+    /* border:red; */
+    overflow:hidden;
+    /* margin-top:50px; */
+    font:600 12px/20px san-serif;
+    /*background-color:#8498C9;*/
+    /*border-radius: 4px;*/
+    border-bottom: 1px solid #415A98;
+    border-top: 1px solid #415A98;
+}
+
+.town{
+    width:100px;
+    float:left;
+    /*border:1px solid red; */
+    padding:3px;
+}
+
+.diller{
+    margin: 0px 210px 0px 110px;
+    /*border:1px solid red; */
+    padding:3px;
+}
+
+.phone-number{
+    width:200px;
+    float:right;
+    /*border:1px solid red; */
+
+    padding:3px;
+}
+
+.details {
+    /*background:#8498C9;*/
+    text-align:right;
+    margin:5px;
+    color: #424343;
+    padding:3px;
+    /*border-radius:4px;*/
+}
+
+.more{
+    color: #2d0cf5;
+}
+a.more:hover{
+    color:black;
+    /*font: bold 12px/14px ;*/
+    border-bottom:1px solid #ee5557;
+    background-color: #f8f8f8;
+
+}
+
+.model{
+    /*background-color:#8498C9;*/
+    text-align:left;
+    color:black;
+    margin:5px;
+    padding:5px;
+    font: bold 14px/14px  serif;
+    /* border:1px solid black; */
+    /*border-radius: 4px 4px 4px 4px;*/
+    border-bottom: 1px solid  #415A98;
+}
+
+.model:hover{
+    border-bottom:1px solid #ee5557;
+    background-color: #f8f8f8;
+}
+
+a.model-link{
+    color:black;
+}
+
+
+.car_photo{
+    float:left;
+    /* height: 120px; */
+    /* width: 185px; */
+    margin:5px;
+    display:block;
+    max-width:100%;
+    max-height: 160px;
+    /* padding:5px 5px 5px 5px; */
+    /* border: 3px solid red; */
+}
+
+
+.banner {
     float:left;
     /* height: 120px; */
     /* width: 185px; */
@@ -111,6 +217,60 @@ img {
 
 }
 
+div.foto-185x120{
+    float:left;
+    width:200px;
+}
+
+div.model-info {
+    /* color:green; */
+    /* line-height:30px; */
+    /* border:1px solid red; */
+    /* border-radius: 4px 4px 4px 4px; */
+    padding:5px;
+    margin:5px 5px 5px 220px;
+    font:400 14px/30px san-serif;
+}
+
+.model-info-data{
+    font: 600 16px  serif;
+}
+
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+ul.pagination li {display: inline;}
+
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+}
+
+ul.pagination li a.active {
+    background-color: #415A98;
+    color: white;
+    border: 1px solid #415A98;
+}
+
+ul.pagination li a:hover:not(.active) {background-color: #ddd;}
+div.page {
+    text-align:center;
+}
+/*input[type="text"] {
+background-color: #f3f3f3;
+border: 1px solid #e7e7e7;
+height: 30px;
+color: #b2b2b2;
+padding: 0 10px;
+vertical-align: top;*/
 
 button {
     color: #fff;
@@ -121,6 +281,7 @@ button {
     padding:5px;
     font-family: 'Oswald', sans-serif;
 }
+
 form select {
     width:75%;
     color:#424343;
@@ -129,19 +290,19 @@ form select {
     margin:3px 0px;
 }
 
+input[type="text"] {
+    background-color:  #f8f8f8;
+    margin:3px 0px;
+    border:1px solid #A9A9A9;
+    padding:5px 2px;
+
+}
+
 .register-group{
     border:0;
     float: right;
 }
-.field{
-    background-color:  #f8f8f8;
-    margin:3px 0px;
-    border:1px solid #A9A9A9;
-    border-radius: 4px;
-    font-size: 14px;
-    padding: 6px 12px;
-    width: 90%;
-}
+
 .register-group label {
     color: #648880;
     cursor: pointer;
@@ -149,6 +310,7 @@ form select {
     /*float:right;*/
 
 }
+
 .register-group input {
     border: 1px solid #c6c9cc;
     border-radius: 4px;
@@ -160,6 +322,7 @@ form select {
     /*font-size: 40px;*/
     /*margin-bottom:10px;*/
 }
+
 .btn-default {
     float:right;
     border: 0;
@@ -172,12 +335,15 @@ form select {
     /*margin: auto;*/
     /*display:block;*/
 }
+
 .btn-default:hover {
     background: #415A98;
 }
+
 .login{
     float:right;
 }
+
 div.login a:hover {
     border-bottom:1px solid #ee5557;
 }
@@ -185,9 +351,7 @@ div.login a:hover {
 footer {
     background: #7e7e7e;
     color: #dbdbdb;
-    font-size: 13px;
-    top: 400px;
-    position: relative;
+    font-size: 11px;
 }
 
 #footer {
@@ -196,6 +360,7 @@ footer {
     padding: 10px 0;
     height: 90px;
 }
+
 footer h3 {
     font: 14px 'Oswald', sans-serif;
     /*color: #fff;*/
@@ -206,11 +371,6 @@ footer h3 {
 footer p {
     margin: 5px 0;
 }
-
-
-/*footer a {
-	color: #dbdbdb;
-}*/
 
 #sitemap {
     width: 150px;
@@ -237,9 +397,24 @@ footer p {
 #sitemap a:hover {
     text-decoration: underline;
 }
+
 #footer-logo {
     float: right;
     margin-top: 20px;
     font-size: 10px;
     text-align: right;
+}
+.fix_position_of_search{
+    position: fixed;
+    top: 163px;
+}
+
+.to_top{
+    position: fixed;
+    top: 0px;
+    width: 960px;
+}
+
+.help_div{
+    height: 50px;
 }

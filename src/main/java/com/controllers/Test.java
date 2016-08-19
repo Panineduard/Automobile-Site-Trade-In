@@ -10,7 +10,6 @@ import com.modelClass.Address;
 import com.modelClass.Contact_person;
 import com.modelClass.Letter;
 import com.setting.Setting;
-import com.setting.TestClass;
 import javafx.util.converter.LocalDateTimeStringConverter;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
