@@ -18,6 +18,7 @@
     <script>
         var engine_parameter=['Бензин','Дизель','Электро','Гибрид','Газ/бензин','Другое'];
         var gearbox_parameter=['Другое','Автоматическая','Механическая'];
+        var formCantBeSend=true;
     </script>
     <script type="text/javascript" src="/res/js/get_model_by_brand.js"></script>
     <script type="text/javascript" src="/res/js/write_parameters.js"></script>
@@ -43,7 +44,6 @@
         }
     %>
 
-
     <script>
         //отображаем крестик в углу
         $(document).ready(function() {
@@ -51,7 +51,6 @@
                     var id=this.getAttribute("data-parameter");
                     if(id=='0')return;
                     $('div#'+id).append('<img class="delete" onclick="delete_image_funct('+id+')" style="  width: 35px;height:35px;" src="../res/img/close.png">');
-
                 }
                 , function(){ $('div.photoCarDel').children().remove(); }
         );

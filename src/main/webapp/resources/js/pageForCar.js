@@ -79,8 +79,7 @@ function readURL(input,index) {
                             // устанавливаем значение в атрибут value тега <progress>
                             // и это же значение альтернативным текстом для браузеров, не поддерживающих <progress>
                             //progressBar.attr("data-percent", percentComplete);
-
-
+                            formCantBeSend=false;
                         }
                     }, false);
                     return xhr;
@@ -91,7 +90,8 @@ function readURL(input,index) {
                     var place=$('#file'+index);
                     //alert(jsondata);
                     place.empty();
-                    place.append('<input id="idPh'+index+'" name="photo'+index+'" type="hidden" value="'+jsondata+'">')
+                    place.append('<input id="idPh'+index+'" name="photo'+index+'" type="hidden" value="'+jsondata+'">');
+                    formCantBeSend=true;
                 }
             })
 
