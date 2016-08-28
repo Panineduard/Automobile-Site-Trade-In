@@ -30,7 +30,6 @@ StandartMasege standartMasege;
                 cars.remove(null);
                 session.setAttribute("cars", cars);
             }
-
            return model;
         }
         else {
