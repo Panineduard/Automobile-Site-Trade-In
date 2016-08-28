@@ -36,25 +36,6 @@ StandartMasege standartMasege;
             int countOfCars = 20;
             session.setAttribute("cars", carDAO.getLastCars(countOfCars));
 
-
-//            if (cars != null && cars.size() < countOfCars) {
-//                cars = carDAO.getLastCars(cars.size());
-//                if (cars != null) {
-//                    Collections.sort(cars, (Car c1, Car c2) -> -c1.getIdCar().compareTo(c2.getIdCar()));
-//                }
-//                session.setAttribute("cars", cars);
-//                return model;
-//            }
-//            if (cars != null && cars.size() >= countOfCars) {
-//
-//                cars = carDAO.getLastCars(countOfCars);
-//                if (cars != null) {
-//                    Collections.sort(cars, (Car c1, Car c2) -> -c1.getIdCar().compareTo(c2.getIdCar()));
-//                }
-//                session.setAttribute("cars", cars);
-//                return model;
-//            }
-
                 return model;
 
         }
