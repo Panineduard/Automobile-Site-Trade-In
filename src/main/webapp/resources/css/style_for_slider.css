@@ -1,4 +1,4 @@
-#modal_form {
+#modal_form_photo {
 	/* Рaзмеры дoлжны быть фиксирoвaны */
 	/*border-radius: 5px;
 	border: 3px #000 solid;*/
@@ -17,7 +17,7 @@
     height: 600px;/* эксперимент*/
 }
 /* Кнoпкa зaкрыть для тех ктo в тaнке) */
-#modal_close {
+#modal_close_photo {
 	width: 40px;
 	height: 40px;
 	background: url(/res/img/close.png);

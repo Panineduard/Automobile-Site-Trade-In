@@ -25,31 +25,9 @@
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/modal_window.js"></script>
     <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/get_model_by_brand.js"></script>
-    <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/write_parameters_with_search_parameters.js"
-            charset="utf-8"></script>
+    <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/write_parameters_with_search_parameters.js"charset="utf-8"></script>
+    <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/stick_menu.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            var start_pos = $('#stick_menu').offset().top;
-            $(window).scroll(function () {
-                if ($(window).scrollTop() + 20 >= start_pos) {
-                    if ($('#stick_menu').hasClass() == false) {
-                        $('#stick_menu').addClass('to_top');
-                        $('#help_div').addClass('help_div')
-
-                    }
-                    if ($('#search_car').hasClass() == false) {
-                        $('#search_car').addClass('fix_position_of_search');
-                    }
-                }
-                else {
-                    $('#stick_menu').removeClass('to_top');
-                    $('#help_div').removeClass('help_div');
-                    $('#search_car').removeClass('fix_position_of_search');
-                }
-
-            });
-            $('#result').animate({opacity: 1}, 1000);
-        });
         var engine_parameter = ['все', 'Бензин', 'Дизель', 'Электро', 'Гибрид', 'Газ/бензин', 'Другое'];
         var gearbox_parameter = ['все', 'Другое', 'Автоматическая', 'Механическая'];
     </script>
@@ -117,7 +95,7 @@
                 <!-- <button class="btn-default" type="submit">Войти</button> -->
             </form>
             <div class="registration-password">
-                <a href="registration" class="">Регистрация /</a>
+                <a href="registration" class="">Регистрация </a>
                 <a href="/lost_password" class="repassword">Забыли пароль?</a>
             </div>
         </div>
