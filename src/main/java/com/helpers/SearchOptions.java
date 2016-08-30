@@ -14,7 +14,10 @@ public class SearchOptions {
     private String gearbox;
     private String region ;
     private  int prise=0;
+    public SearchOptions(){
+        make=model=price_from=price_to=year_to=year_from=engine=gearbox=region="";
 
+    }
     public SearchOptions(String make, String model, String price_from, String price_to, String year_from, String year_to, String engine, String gearbox, String region,int prise) {
         this.make = make;
         this.model = model;

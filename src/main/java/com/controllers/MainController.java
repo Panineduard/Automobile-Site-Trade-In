@@ -1,6 +1,8 @@
 package com.controllers;
 
 import com.dao.CarDAO;
+import com.helpers.ResultCars;
+import com.helpers.SearchOptions;
 import com.modelClass.Car;
 import com.servise.StandartMasege;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +36,14 @@ StandartMasege standartMasege;
         }
         else {
             int countOfCars = 20;
-            session.setAttribute("cars", carDAO.getLastCars(countOfCars));
-
+//            session.setAttribute("cars", carDAO.getLastCars(countOfCars));
+            SearchOptions options=new SearchOptions();
+            ResultCars result= carDAO.getCarsByParameters(options, 1);
+            session.setAttribute("options",options);
+            session.setAttribute("cars",result.getCars());
+            session.setAttribute("page",  result.getPage());
+            session.setAttribute("cars",  result.getCars());
+            session.setAttribute("pages", result.getPages());
                 return model;
 
         }

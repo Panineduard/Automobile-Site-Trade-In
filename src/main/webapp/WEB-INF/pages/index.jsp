@@ -32,7 +32,7 @@
         var gearbox_parameter = ['все', 'Другое', 'Автоматическая', 'Механическая'];
     </script>
 
-    <title> Автомобили с прбегом </title>
+    <title> Автомобили с пробегом </title>
 </head>
 <body>
 <div id="wrapper">

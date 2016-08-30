@@ -427,7 +427,10 @@ ChangeImgSize changeImgSize;
         ResultCars result=new ResultCars();
         result.setCars(carsList);
         result.setPage(page);
-        result.setPages((Long)query1.list().get(0)/10+1);
+        long carsCount=(Long)query1.list().get(0);
+               int addPage=0;
+               if(carsCount%10>0)addPage=1;
+        result.setPages(carsCount/10+addPage);
         return result ;
     }
    finally {
