@@ -278,7 +278,14 @@ public class CarController {
         session.removeAttribute("options");
         session.removeAttribute("pages");
         session.removeAttribute("page");
-        session.setAttribute("cars",carDAO.getLastCars(5));
+        SearchOptions options=new SearchOptions();
+        ResultCars result= carDAO.getCarsByParameters(options, 1);
+        session.setAttribute("options",options);
+        session.setAttribute("cars", result.getCars());
+        session.setAttribute("page", result.getPage());
+        session.setAttribute("cars", result.getCars());
+        session.setAttribute("pages", result.getPages());
+//        session.setAttribute("cars",carDAO.getLastCars(5));
         return new ModelAndView("index");
     }
 

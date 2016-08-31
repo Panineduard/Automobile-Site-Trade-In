@@ -38,7 +38,7 @@
 <div id="wrapper">
     <header>
 
-        <a class="header" title="На главную" href="/about_us"><img src="/res/img/primary_logo.png" alt=""></a>
+        <a class="header" title="На главную" href="/"><img src="/res/img/primary_logo.png" alt=""></a>
 
         <%
             EncoderId encoderId = new EncoderId();

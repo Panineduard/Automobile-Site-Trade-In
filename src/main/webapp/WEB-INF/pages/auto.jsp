@@ -28,7 +28,7 @@
 
 <div id="wrapper">
     <header>
-        <a class="header" title="На главную" href="/about_us"><img src="/res/img/primary_logo.png" alt=""></a>
+        <a class="header" title="На главную" href="/"><img src="/res/img/primary_logo.png" alt=""></a>
         <%
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String idDealer = auth.getName();
@@ -265,44 +265,8 @@
 </div>
 </div>
 <footer style="text-align: center">autoport.kh.ua@gmail.com</footer>
-<script>
-    var successful = "Спасибо за отзыв, мы постараемся исправить это в ближайщее время.";
-    var unsuccessful = "Введите корректный email.";
-    var empty_field = "Вы оставили пустые поля!"
-
-</script>
-<script type="text/javascript" charset=utf-8" src="<%=Setting.getPath()%>/res/js/feedback-sender.js"></script>
-<!-- Модальное окно -->
-<div id="modal_form">
-    <img id="modal_close" src="../res/img/close.png" style="
-    width: 40px;
-    height: 40px;
-    left: 98%;
-    top: -9%;
-    "/>
-    <%--<span id="modal_close">X</span>--%>
-    <%--action="/save_message" method="post"--%>
-    <form id="feedback">
-        <h3>Введите пожалуйста данные</h3>
-        <%--<input type="hidden" name="id" value="">--%>
-        <p>Электронный адресс<br/>
-            <input style="width: 280px;" type="email" class="email" size="40"/>
-        </p>
-
-        <p>Сообщение<br/>
-                <textarea style="width: 280px;" name="message" class="message" maxlength="380" required="required"
-                          cols="37" rows="8"></textarea>
-        </p>
-
-        <p style="text-align: center; padding-bottom: 10px;">
-            <input id="send_feedback" type="button" value="Отправить"/>
-        </p>
-
-    </form>
-</div>
-<div id="overlay"></div>
-</body>
-<script type="text/javascript" src="<%=Setting.getPath()%>/res/js/jquery-1.2.6.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+<%--<script type="text/javascript" src="<%=Setting.getPath()%>/res/js/jquery-1.2.6.min.js"></script>--%>
 <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/jquery-easing-1.3.pack.js"></script>
 <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/modal_window.js"></script>
 <script type="text/javascript" src="<%=Setting.getPath()%>/res/js/stick_menu.js"></script>
@@ -391,5 +355,43 @@
         //responsive code end
     });
 </script>
+<script>
+    var successful = "Спасибо за отзыв, мы постараемся исправить это в ближайщее время.";
+    var unsuccessful = "Введите корректный email.";
+    var empty_field = "Вы оставили пустые поля!"
+
+</script>
+<script type="text/javascript" charset=utf-8" src="<%=Setting.getPath()%>/res/js/feedback-sender.js"></script>
+<!-- Модальное окно -->
+<div id="modal_form">
+    <img id="modal_close" src="../res/img/close.png" style="
+    width: 40px;
+    height: 40px;
+    left: 98%;
+    top: -9%;
+    "/>
+    <%--<span id="modal_close">X</span>--%>
+    <%--action="/save_message" method="post"--%>
+    <form id="feedback">
+        <h3>Введите пожалуйста данные</h3>
+        <%--<input type="hidden" name="id" value="">--%>
+        <p>Электронный адресс<br/>
+            <input style="width: 280px;" type="email" class="email" size="40"/>
+        </p>
+
+        <p>Сообщение<br/>
+                <textarea style="width: 280px;" name="message" class="message" maxlength="380" required="required"
+                          cols="37" rows="8"></textarea>
+        </p>
+
+        <p style="text-align: center; padding-bottom: 10px;">
+            <input id="send_feedback" type="button" value="Отправить"/>
+        </p>
+
+    </form>
+</div>
+<div id="overlay"></div>
+</body>
+
 </html>
 

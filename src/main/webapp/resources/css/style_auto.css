@@ -89,7 +89,7 @@ color:white;
 }
 
 .auto{
-	height: 600px;
+	height: 690px;
 	margin:5px;
 	border:1px solid #415A98;
 	border-radius: 4px;
@@ -100,14 +100,14 @@ color:white;
 
 .info{
 	overflow:hidden;
-	margin-top:210px;
+	margin-top:19%;
 	font:600 12px/20px san-serif;
 	border-bottom: 1px solid #415A98;
 	border-top: 1px solid #415A98;
 }
 
 .town{
-	width:100px;
+	width:35%;
 	float:left;
 	padding:3px;
 }
@@ -180,7 +180,7 @@ img {
 
 }
 .big_photo{
-height: 300px;
+	height: 300px;
 }
 .small-foto{
 	margin:10px 5px 5px 5px;
@@ -194,9 +194,10 @@ height: 300px;
 }
 
 div.model-info {
-	padding:5px;
-	margin:5px 5px 5px 420px;
-	font:400 14px/30px san-serif;
+	padding: 5px;
+	margin: 5px 5px 5px 420px;
+	font: 400 14px/30px san-serif;
+	height: 450px;
 }
 
 .model-info-data{
