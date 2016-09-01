@@ -10,7 +10,7 @@ $(document).ready(function () {
                 $('#help_div').addClass('help_div')
 
             }
-            if ($('#search_car').hasClass() == false) {
+            if ($('#search_car').hasClass() == false&&screen.height>800) {
                 $('#search_car').addClass('fix_position_of_search');
             }
         }

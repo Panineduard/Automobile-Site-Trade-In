@@ -343,7 +343,7 @@ finally {if(session.isOpen())session.close();}
         try {
             tr = session.beginTransaction();
             Query query ;
-            query = session.createQuery("update Dealer set countOfCar = (select count(*)from Car c where c.idDealer>=:numberDealer)" +
+            query = session.createQuery("update Dealer set countOfCar = (select count(*)from Car c where c.idDealer=:numberDealer)" +
                     " where numberDealer = :numberDealer");
             query.setParameter("numberDealer", idDealer);
             query.executeUpdate();
