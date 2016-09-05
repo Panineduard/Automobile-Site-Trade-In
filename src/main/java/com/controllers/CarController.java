@@ -234,6 +234,10 @@ public class CarController {
         session.setAttribute("pages", cars.getPages());
         return modelAndView;
     }
+    /**
+     * @param page it is a number of page
+     * @param session it is HTTP Session from user
+     * @return JSP page with result or redirect to index.jsp with zerroPage.jsp*/
     @RequestMapping(value = "/replacing_the_page_number", method = RequestMethod.GET)
     public ModelAndView replacePage(@RequestParam("page") Integer page,HttpSession session){
         SearchOptions options=(SearchOptions)session.getAttribute("options");
@@ -242,10 +246,12 @@ public class CarController {
             session.setAttribute("page",  result.getPage());
             session.setAttribute("cars",  result.getCars());
             session.setAttribute("pages", result.getPages());
+            ModelAndView modelAndView = new ModelAndView("index");
+            return modelAndView;
         }
-
-        ModelAndView modelAndView = new ModelAndView("index");
-        return modelAndView;
+        else {
+            return new ModelAndView("zerroPage");
+        }
     }
     @RequestMapping(value = "/carPage",method = RequestMethod.GET)
     public ModelAndView getDealer(@RequestParam ("idCar") String idCar,HttpSession session){
