@@ -61,9 +61,7 @@ $(document).ready(function getRegions() {
                 else{
                     $('#id_make').append('<option value="'+jsondata[i].brand+'">'+jsondata[i].brand+' </option>');
                 }
-
             }
-
         }
     });
     $.ajax({
