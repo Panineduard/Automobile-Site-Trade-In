@@ -107,7 +107,6 @@ function readURL(input, index) {
             });
             return reader.readAsDataURL(input.files[0]);
         }
-
     }
 }
 function add_file(id) {
