@@ -16,9 +16,9 @@ function p_delete(e,model){
 //                alert( "Data Loaded: " + data[1] );
             for(var i=0;i<data.length;i++){
                 //var model=document.getElementById("id_model");
-                if(i==0){
+                if(i===0){
                     //manager.setAttribute("value",'');
-                    $('#id_model').append('<option  value="">'+data[i]+' </option>');
+                    $('#id_model').append("<option  value=''>"+data[i]+' </option>');
                 }
 
                 //var manager=document.createElement("OPTION");

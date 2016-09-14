@@ -406,6 +406,7 @@ public class CarController {
                         equipment=equipment.substring(0,20);
                     }
                     car.setEquipment(equipment);}
+                else {car.setEquipment("");}
                 if(!region.isEmpty())car.setRegion(region);
                 if(!engine_capacity.isEmpty()){car.setEngineCapacity(engine_capacity);}
                 else {car.setEngineCapacity(nullMsg);}

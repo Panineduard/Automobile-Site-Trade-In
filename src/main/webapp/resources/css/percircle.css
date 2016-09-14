@@ -231,6 +231,12 @@
   height: 1em;
   clip: rect(0, 1em, 1em, 0.5em);
 }
+.small {
+  position: absolute;
+  font-size: 80px;
+  left: 50px;
+  top: 25px;
+}
 /*.percircle:hover {*/
 /*cursor: default;*/
 /*}*/

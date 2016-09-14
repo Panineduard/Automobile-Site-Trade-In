@@ -50,8 +50,11 @@ $(document).ready(function getRegions() {
                 }
             }
             for(var i=0;i<jsondata.length;i++){
-
+                if(i==0){
+                    firstValueInBrand=jsondata[i].brand;
+                }
                 if(brand==jsondata[i].brand){
+
                     $('#id_make').append('<option selected="selected" value="'+jsondata[i].brand+'">'+jsondata[i].brand+' </option>');
                     p_delete(jsondata[i].brand,model);
                 }
