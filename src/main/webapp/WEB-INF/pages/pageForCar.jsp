@@ -331,8 +331,7 @@
 
 
     <div id="layout">
-        <div id="baner-left">
-        </div>
+
         <%--<div id="baner-right">--%>
         <%--some baner rightiygvbbuuuuuuuu uuuuuuuuuuuu uuuuuu uuuuuuuuuuu uuuuu uuuuuuu7 777777777777 77777 77777777 77777777 7777777 7777777--%>
         <%--</div>--%>
@@ -356,7 +355,7 @@
                             <select id="id_make" class="form-control" onchange="p_delete(this.value,'');" name="make">
                             </select>
 
-                            <div id="massage_make" style="position: absolute;opacity:0;left: 52%; top: 29%;">
+                            <div id="massage_make" style="position: absolute;opacity:0;left: 52%; top: 280px;">
                                 <p class="text_massage"></p>
                                 <img src="/res/img/massage.png">
                             </div>
@@ -368,7 +367,7 @@
                             <select id="id_model" name="model">
                                 <option value="" selected="selected">выберите марку</option>
                             </select></p>
-                            <div id="massage_model" style="position: absolute;opacity:0; left: 52%; top: 39%;">
+                            <div id="massage_model" style="position: absolute;opacity:0; left: 52%; top: 380px;">
                                 <p class="text_massage"></p>
                                 <img src="/res/img/massage.png">
                             </div>
@@ -382,7 +381,7 @@
                         <input id="id_prise" type="text" size="20" class="form-control" required="required" name="prise"
                                pattern="[ 0-9]+$"></h2>
                         <%}%>
-                        <div id="massage_prise" style="position: absolute;opacity: 0; left: 52%; top: 47%;">
+                        <div id="massage_prise" style="position: absolute;opacity: 0; left: 52%; top: 460px;">
                             <p class="text_massage"></p>
                             <img src="/res/img/massage.png">
                         </div>
@@ -397,7 +396,7 @@
                                name="mileage"
                                pattern="[0-9]+$"></h2>
                         <%}%>
-                        <div id="massage_mileage" style="position: absolute;opacity: 0; left: 52%; top: 54%;">
+                        <div id="massage_mileage" style="position: absolute;opacity: 0; left: 52%; top: 530px;">
                             <p class="text_massage"></p>
                             <img src="/res/img/massage.png">
                         </div>
@@ -424,7 +423,7 @@
                                name="engine_capacity"
                                pattern="\d+\.+\d{1}"></h2>
                         <%}%>
-                        <div id="massage_capacity" style="position: absolute;opacity:0; left: 52%; top: 81%;">
+                        <div id="massage_capacity" style="position: absolute;opacity:0; left: 52%; top: 800px;">
                             <p class="text_massage"></p>
                             <img src="/res/img/massage.png">
                         </div>
@@ -457,7 +456,7 @@
                               cols="40"
                               rows="7"></textarea></h2>
                         <%}%>
-                        <div id="massage_comment" style="opacity:0; position: absolute;left: 52%; top: 118%;">
+                        <div id="massage_comment" style="opacity:0; position: absolute;left: 52%; top: 1150px%;">
                             <p class="text_massage"></p>
                             <img src="/res/img/massage.png">
                         </div>

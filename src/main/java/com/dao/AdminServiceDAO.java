@@ -27,6 +27,7 @@ import java.util.stream.Stream;
 public class AdminServiceDAO {
     @Autowired
     StandartMasege standartMasege;
+
     public List<Dealer> getAllDealers(){
         Session session=HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -203,4 +204,6 @@ public class AdminServiceDAO {
         }
         return result;
     }
+
+
 }

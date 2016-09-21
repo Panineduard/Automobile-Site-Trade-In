@@ -185,7 +185,11 @@ public ModelAndView getAboutUsPage(){
         ModelAndView modelAndView = new ModelAndView("feedback");
         return modelAndView;
     }
-
+    @RequestMapping(value = "/check_id_dealer",method = RequestMethod.POST, headers="Accept=application/json")
+    public @ResponseBody
+    boolean getModelForm(@ModelAttribute("id")String id){
+        return dealerDao.checkDealerById(id);
+    }
 
     @RequestMapping(value = "*/change_contact_person", method = RequestMethod.POST)
     public ModelAndView changeContactPersonsData(@RequestParam("manager") String manager,@RequestParam("phone") String phone,

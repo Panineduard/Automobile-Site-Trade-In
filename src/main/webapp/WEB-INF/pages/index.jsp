@@ -105,7 +105,7 @@
             </form>
             <div class="registration-password">
                 <a href="registration" class="">Регистрация </a>
-                <a href="/lost_password" class="repassword">Забыли пароль?</a>
+                <a href="/lost_password" class="repassword">/Забыли пароль?</a>
             </div>
         </div>
         <%

@@ -36,70 +36,74 @@ public class DealerDao implements DealerDaoInterface {
     StandartMasege standartMasege;
     @Autowired
     EncoderId encoderId;
+
     /**
      * @param key It is key for KeyHolder object in data base. If param == null this method return null.
+     * @return KeyHolder object. If method can`t find element return null
+     * After returns this method will delete element KeyHolder in DB
      * @see KeyHolder
-     * @return  KeyHolder object. If method can`t find element return null
-     * After returns this method will delete element KeyHolder in DB */
+     */
     @Nullable
-    public KeyHolder getKeyDHolderByKeyAndDeleteKey(String key){
-        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction tr=session.beginTransaction();
+    public KeyHolder getKeyDHolderByKeyAndDeleteKey(String key) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr = session.beginTransaction();
         try {
-            Query query =session.createQuery("from KeyHolder where key=:key ");
+            Query query = session.createQuery("from KeyHolder where key=:key ");
             query.setParameter("key", key);
-            KeyHolder keyHolder = (KeyHolder)query.list().get(0);
-            if(keyHolder==null)return null;
+            KeyHolder keyHolder = (KeyHolder) query.list().get(0);
+            if (keyHolder == null) return null;
             session.delete(keyHolder);
             session.flush();
             tr.commit();
             return keyHolder;
-        }
-        catch (Exception e){
-            if (tr!=null){
+        } catch (Exception e) {
+            if (tr != null) {
                 tr.rollback();
             }
             return null;
-        }
-        finally {
-            if(session.isOpen()){session.close();}
+        } finally {
+            if (session.isOpen()) {
+                session.close();
+            }
         }
     }
-/**
- * @param email it is email of dealers registration
- * @param  idDealer it is id dealer fo registration
- * @return true if parameters is present in database*/
-    public boolean checkIdDealerByEmail(String email,String idDealer){
-        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction tr=session.beginTransaction();
-       try {
-        Query query =session.createQuery("select idDealer from Contact_person where email=:email and idDealer=:id");
-        query.setParameter("email", email);
-        query.setParameter("id", idDealer);
-        String result = (String)query.list().get(0);
-        tr.commit();
-           if(result!=null||!result.isEmpty())return true;
-           else return false;
-       }
-       catch (Exception e){
-           if (tr!=null){
-               tr.rollback();
-           }
-           return false;
-       }
-        finally {
-           if(session.isOpen()){session.close();}
-       }
 
-    }
-
-    private boolean checkDealerById(String numberDealer) {
+    /**
+     * @param email    it is email of dealers registration
+     * @param idDealer it is id dealer fo registration
+     * @return true if parameters is present in database
+     */
+    public boolean checkIdDealerByEmail(String email, String idDealer) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
+        Transaction tr = session.beginTransaction();
         try {
-            Query query = session.createQuery("from Dealer dealer where dealer.numberDealer =:numberDealer");
-            query.setParameter("numberDealer", numberDealer);
-            return (query.list().size()>0);
+            Query query = session.createQuery("select idDealer from Contact_person where email=:email and idDealer=:id");
+            query.setParameter("email", email);
+            query.setParameter("id", idDealer);
+            String result = (String) query.list().get(0);
+            tr.commit();
+            if (result != null || !result.isEmpty()) return true;
+            else return false;
+        } catch (Exception e) {
+            if (tr != null) {
+                tr.rollback();
+            }
+            return false;
+        } finally {
+            if (session.isOpen()) {
+                session.close();
+            }
+        }
+
+    }
+
+    public boolean checkDealerById(String numberDealer) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr = session.beginTransaction();
+        try {
+            Query query = session.createQuery("select 1 from Dealer where id=:id")
+                    .setParameter("id", numberDealer);
+            return (query.uniqueResult() != null);
         } catch (NullPointerException p) {
             return false;
         } finally {
@@ -107,23 +111,24 @@ public class DealerDao implements DealerDaoInterface {
                 session.close();
             }
         }
+
     }
-/**
- * @param id it is dealers id
- * @return Dealer object from DB
- * @see Dealer*/
+
+    /**
+     * @param id it is dealers id
+     * @return Dealer object from DB
+     * @see Dealer
+     */
     public Dealer getDealerById(String id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction transaction=session.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         try {
-          Dealer dealer = session.get(Dealer.class, id);
-          transaction.commit();
-        return dealer;
-        }
-        catch (Exception e){
+            Dealer dealer = session.get(Dealer.class, id);
+            transaction.commit();
+            return dealer;
+        } catch (Exception e) {
             return null;
-        }
-        finally {
+        } finally {
             if (session.isOpen()) {
                 session.close();
             }
@@ -133,85 +138,90 @@ public class DealerDao implements DealerDaoInterface {
     public List<Dealer> getIdDealersWithoutAuth() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-try {
-    Query query = session.createQuery("from  Dealer d where d.registration=false ");
-    List<Dealer> dealers = query.list();
-    return dealers;
-}
-catch (Exception e){return null;}
-finally {if(session.isOpen())session.close();}
+        try {
+            Query query = session.createQuery("from  Dealer d where d.registration=false ");
+            List<Dealer> dealers = query.list();
+            return dealers;
+        } catch (Exception e) {
+            return null;
+        } finally {
+            if (session.isOpen()) session.close();
+        }
     }
-/**
- * @param key it is KeyHolder object
- * @see KeyHolder*/
+
+    /**
+     * @param key it is KeyHolder object
+     * @see KeyHolder
+     */
     @Nullable
-    public void  setKeyHolder(KeyHolder key){
-        if(key==null)return;
-        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction tr=session.beginTransaction();
+    public void setKeyHolder(KeyHolder key) {
+        if (key == null) return;
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr = session.beginTransaction();
         try {
             session.merge(key);
             tr.commit();
-        }
-        catch (Exception e){
-            if (tr!=null){
+        } catch (Exception e) {
+            if (tr != null) {
                 tr.rollback();
             }
-        }
-        finally {
-            if(session.isOpen()){session.close();}
+        } finally {
+            if (session.isOpen()) {
+                session.close();
+            }
         }
     }
-/**
- * this method create new Dealer obj with his fields. See details in Dealer.class
- * @see Dealer
- * @return special message from file messages_ru.properties
- * @see StandartMasege*/
+
+    /**
+     * this method create new Dealer obj with his fields. See details in Dealer.class
+     *
+     * @return special message from file messages_ru.properties
+     * @see Dealer
+     * @see StandartMasege
+     */
     public String setDealer(String numberDealer, String nameDealer, String email, String name, String personPhone, String password, String city) {
         if (checkDealerById(numberDealer)) {
             return standartMasege.getMessage(11);
         }
         if (!nameDealer.isEmpty() || !numberDealer.isEmpty() || !email.isEmpty() || !name.isEmpty() || !password.isEmpty() || !city.isEmpty()) {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            Transaction tr=session.beginTransaction();
+            Transaction tr = session.beginTransaction();
             try {
-               String htmlMessage = "<a href='" + Setting.getHost() + "/ConfirmationOfRegistration?id=" + encoderId.encodId(numberDealer) + "'>" + standartMasege.getMessage(18) + "</a>";
+                String htmlMessage = "<a href='" + Setting.getHost() + "/ConfirmationOfRegistration?id=" + encoderId.encodId(numberDealer) + "'>" + standartMasege.getMessage(18) + "</a>";
 
-            sendHTMLEmail.sendHtmlMessage(email, htmlMessage, standartMasege.getMessage(17));
-            Dealer dealer = new Dealer();
-            Address address = new Address();
-            dealer.setDateRegistration(new Date());
-            dealer.setNumberDealer(numberDealer);
-            dealer.setNameDealer(nameDealer);
-            dealer.setRegistration(false);
-            address.setCity(city);
-            address.setIndex("");
-            address.setNumberHouse("");
-            address.setStreet("");
-            dealer.setAddress(address);
-            List<Contact_person> contact_persons = new ArrayList<>();
-            Contact_person contact_person = new Contact_person();
-            contact_person.setIdDealer(numberDealer);
-            contact_person.setEmail(email);
-            contact_person.setName(name);
-            contact_person.setPhone(personPhone);
-            contact_persons.add(contact_person);
-            dealer.setContact_persons(contact_persons);
-            PasswordHelper passwordHelper = new PasswordHelper();
-            session.merge(dealer);
-            Login login = new Login();
-            login.setIdDealer(dealer.getNumberDealer());
-            login.setPassword(passwordHelper.encode(password));
-            login.setRole(ListRole.ROLE_ANONYMOUS);
-            session.merge(login);
-            new File(Setting.getClientsFolder() + numberDealer).mkdir();
-            tr.commit();
-           }
-           catch (Exception e){
-               tr.rollback();
-           }
-            finally {
-                if(session.isOpen()){
+                sendHTMLEmail.sendHtmlMessage(email, htmlMessage, standartMasege.getMessage(17));
+                Dealer dealer = new Dealer();
+                Address address = new Address();
+                dealer.setDateRegistration(new Date());
+                dealer.setNumberDealer(numberDealer);
+                dealer.setNameDealer(nameDealer);
+                dealer.setRegistration(false);
+                address.setCity(city);
+                address.setIndex("");
+                address.setNumberHouse("");
+                address.setStreet("");
+                dealer.setAddress(address);
+                List<Contact_person> contact_persons = new ArrayList<>();
+                Contact_person contact_person = new Contact_person();
+                contact_person.setIdDealer(numberDealer);
+                contact_person.setEmail(email);
+                contact_person.setName(name);
+                contact_person.setPhone(personPhone);
+                contact_persons.add(contact_person);
+                dealer.setContact_persons(contact_persons);
+                PasswordHelper passwordHelper = new PasswordHelper();
+                session.merge(dealer);
+                Login login = new Login();
+                login.setIdDealer(dealer.getNumberDealer());
+                login.setPassword(passwordHelper.encode(password));
+                login.setRole(ListRole.ROLE_ANONYMOUS);
+                session.merge(login);
+                new File(Setting.getClientsFolder() + numberDealer).mkdir();
+                tr.commit();
+            } catch (Exception e) {
+                tr.rollback();
+            } finally {
+                if (session.isOpen()) {
                     session.close();
                 }
             }
@@ -263,25 +273,25 @@ finally {if(session.isOpen())session.close();}
         }
     }
 
-    public boolean changePasswordByIdDealer(String id,String password){
-        Session session=HibernateUtil.getSessionFactory().getCurrentSession();
-        Transaction tr=session.beginTransaction();
+    public boolean changePasswordByIdDealer(String id, String password) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tr = session.beginTransaction();
         try {
-           Login login= session.get(Login.class, id);
+            Login login = session.get(Login.class, id);
             login.setPassword(password);
             session.update(login);
             session.flush();
             tr.commit();
             return true;
-        }
-        catch (Exception e){
-            if (tr!=null){
+        } catch (Exception e) {
+            if (tr != null) {
                 tr.rollback();
             }
             return false;
-        }
-        finally {
-            if(session.isOpen()){session.close();}
+        } finally {
+            if (session.isOpen()) {
+                session.close();
+            }
         }
     }
 
@@ -342,7 +352,7 @@ finally {if(session.isOpen())session.close();}
 
         try {
             tr = session.beginTransaction();
-            Query query ;
+            Query query;
             query = session.createQuery("update Dealer set countOfCar = (select count(*)from Car c where c.idDealer=:numberDealer)" +
                     " where numberDealer = :numberDealer");
             query.setParameter("numberDealer", idDealer);
@@ -375,7 +385,7 @@ finally {if(session.isOpen())session.close();}
         dealer.setContact_persons(contact_persons);
         session.merge(dealer);
         tr.commit();
-        if(session.isOpen())session.close();
+        if (session.isOpen()) session.close();
         return true;
     }
 
@@ -386,8 +396,8 @@ finally {if(session.isOpen())session.close();}
             session.createQuery("delete Login where idDealer=:id")
                     .setParameter("id", id)
                     .executeUpdate();
-            Dealer dealer=(Dealer)session.createQuery("from Dealer where numberDealer=:id")
-                    .setParameter("id",id)
+            Dealer dealer = (Dealer) session.createQuery("from Dealer where numberDealer=:id")
+                    .setParameter("id", id)
                     .list().get(0);
             session.delete(dealer);
             session.flush();
@@ -395,40 +405,36 @@ finally {if(session.isOpen())session.close();}
             tr.commit();
             FileUtils.deleteDirectory(new File(Setting.getClientsFolder() + id));
             return true;
-        }
-
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            if (tr!=null){
+            if (tr != null) {
                 tr.rollback();
             }
             return false;
-        }
-        finally {
-            if(session.isOpen()){
+        } finally {
+            if (session.isOpen()) {
                 session.close();
             }
         }
     }
-    public void deleteOldKeyHolders(){
+
+    public void deleteOldKeyHolders() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tr = session.beginTransaction();
-     try {
-         Calendar calendar=Calendar.getInstance();
+        try {
+            Calendar calendar = Calendar.getInstance();
 
-        calendar.add(Calendar.HOUR, -24);
-        Date date =calendar.getTime();
-        Query query= session.createQuery("delete from KeyHolder where dateOfCreation<=:date");
-        query.setParameter("date",date);
-        query.executeUpdate();
-        tr.commit();
-     }
-     catch (Exception e){
-         if(tr!=null)tr.rollback();
-     }
-     finally {
-         if(session.isOpen())session.close();
-     }
+            calendar.add(Calendar.HOUR, -24);
+            Date date = calendar.getTime();
+            Query query = session.createQuery("delete from KeyHolder where dateOfCreation<=:date");
+            query.setParameter("date", date);
+            query.executeUpdate();
+            tr.commit();
+        } catch (Exception e) {
+            if (tr != null) tr.rollback();
+        } finally {
+            if (session.isOpen()) session.close();
+        }
     }
 
     public void deleteLegalsDealer(String idDealer) {
@@ -444,5 +450,10 @@ finally {if(session.isOpen())session.close();}
             }
         }
 
+    }
+
+
+    public static void main(String... arg) {
+        System.out.println(new DealerDao().checkDealerById("1"));
     }
 }
