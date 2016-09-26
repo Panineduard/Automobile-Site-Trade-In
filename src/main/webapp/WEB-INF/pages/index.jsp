@@ -128,13 +128,13 @@
         </nav>
     </div>
 
-    <%--<h5>Недавно добавлены: </h5>--%>
-    <ul id="menu2">
-        <h5>Сортировка:</h5>
+    <%--&lt;%&ndash;<h5>Недавно добавлены: </h5>&ndash;%&gt;--%>
+    <%--<ul id="menu2">--%>
+        <%--<h5>Сортировка:</h5>--%>
 
-        <li><a href="<%=Setting.getPath()%>/ascending_price">По возрастанию цены</a></li>
-        <li><a href="<%=Setting.getPath()%>/by_prices_descending">По убыванию цены</a></li>
-    </ul>
+        <%--<li><a href="<%=Setting.getPath()%>/ascending_price">По возрастанию цены</a></li>--%>
+        <%--<li><a href="<%=Setting.getPath()%>/by_prices_descending">По убыванию цены</a></li>--%>
+    <%--</ul>--%>
 
     <h5>Недавно добавлены: </h5>
 
