@@ -20,67 +20,121 @@
 <head>
   <link rel="shortcut icon" href="/res/img/favicon.ico"/>
   <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-  <script type="text/javascript" src="http://gc.kis.scr.kaspersky-labs.com/1B74BD89-2A22-4B93-B451-1C9E1052A0EC/main.js" charset="UTF-8"></script><script src="http://code.jquery.com/jquery-1.8.3.js"></script>
   <script>
-    $(document).ready(function getRegions() {
+    $(document).ready(function () {
+
+      $(".check_box").change(function () {
+        $('#message').css({display: "block"});
+        $('#message_theme').css({display: "block"});
+        if ($(this).attr("checked")) {
+          $(this).addClass("check_box_to_send");
+        }
+        else {
+          $(this).removeClass("check_box_to_send")
+        }
+      });
+
+
+      $("#send_msg").click(function () {
+
+
+        var res=new Object();
+        res.theme=$("#message_theme").val();
+        res.text=$("#message").val();
+        if(res.theme.length<5&&res.text.length<10){
+          alert("Сообщение или тема не заполнены или мало заполнены");
+          return;
+        }
+
+        var emails = $("input.check_box_to_send").map(function () {
+          this.checked = false;
+          $(this).removeClass("check_box_to_send");
+          return $(this).val();
+        }).get();
+        res.emails=emails;
+        $('#message').css({display: "none"});
+        $('#message_theme').css({display: "none"});
+
+        $.ajax({
+          contentType: 'application/json',
+          dataType: 'json',
+          type: "POST",
+          data: JSON.stringify(res),
+          url: "/send_msg_for_dealers",
+          success: function(data){
+            if(data){
+              alert("Сообщения успешно отправленны!")
+            }
+            else{
+              alert("Что то не так попробуйте еще раз")
+            }
+          },
+          statusCode: {
+            404: function() {
+              alert( "Сервер не доступен, попробуйте позже!" );
+            }
+          }
+
+        });
+      });
+
       $.ajax({
         dataType: 'json',
         url: '/getBrands',
         success: function (jsondata) {
-          for(var i=0;i<jsondata.length;i++){
-            $('#id_make').append('<option value="'+jsondata[i].brand+'">'+jsondata[i].brand+' </option>');
+          for (var i = 0; i < jsondata.length; i++) {
+            $('#id_make').append('<option value="' + jsondata[i].brand + '">' + jsondata[i].brand + ' </option>');
           }
 
         }
       });
+      function chng3() {
+        var files = $(".files3");
+        if (files.val().substring(files.val().lastIndexOf('.') + 1, files.val().length).toLowerCase() != 'txt') {
+          alert('Необходимо выбрать файл file.txt');
+          var file = $(".file3");
+          file.empty();
+          file.append('<input type="file" class="files3" name="files[0]"  onChange="chng3()" > <br>')
+        }
+        ;
+      }
+
+      function chng2() {
+        var files = $(".files2");
+        if (files.val().substring(files.val().lastIndexOf('.') + 1, files.val().length).toLowerCase() != 'txt') {
+          alert('Необходимо выбрать файл file.txt');
+          var file = $(".file2");
+          file.empty();
+          file.append('<input type="file" class="files2" name="files[0]"  onChange="chng2()" > <br>')
+        }
+        ;
+      }
+
+      function chng1() {
+        var files = $(".files1");
+        if (files.val().substring(files.val().lastIndexOf('.') + 1, files.val().length).toLowerCase() != 'txt') {
+          alert('Необходимо выбрать файл file.txt');
+          var file = $(".file1");
+          file.empty();
+          file.append('<input type="file" class="files1" name="files[0]"  onChange="chng1()" > <br>')
+        }
+        ;
+      }
+
+      function chng() {
+        var files = $(".files");
+        if (files.val().substring(files.val().lastIndexOf('.') + 1, files.val().length).toLowerCase() != 'txt') {
+          alert('Необходимо выбрать файл file.txt');
+          var file = $(".file");
+          file.empty();
+          file.append('<input type="file" class="files" name="files[0]"  onChange="chng()" > <br>')
+        }
+        ;
+      }
     });
-    function chng3()
-    {
-      var files=$(".files3");
-      if(files.val().substring(files.val().lastIndexOf('.')+1,files.val().length).toLowerCase()!='txt')
-      {
-        alert('Необходимо выбрать файл file.txt');
-        var file=$( ".file3" );
-        file.empty();
-        file.append('<input type="file" class="files3" name="files[0]"  onChange="chng3()" > <br>')
-      };}
-    function chng2()
-    {
-      var files=$(".files2");
-      if(files.val().substring(files.val().lastIndexOf('.')+1,files.val().length).toLowerCase()!='txt')
-      {
-        alert('Необходимо выбрать файл file.txt');
-        var file=$( ".file2" );
-        file.empty();
-        file.append('<input type="file" class="files2" name="files[0]"  onChange="chng2()" > <br>')
-      };}
-    function chng1()
-    {
-      var files=$(".files1");
-      if(files.val().substring(files.val().lastIndexOf('.')+1,files.val().length).toLowerCase()!='txt')
-      {
-        alert('Необходимо выбрать файл file.txt');
-        var file=$( ".file1" );
-        file.empty();
-        file.append('<input type="file" class="files1" name="files[0]"  onChange="chng1()" > <br>')
-      };}
-    function chng()
-    {
-      var files=$(".files");
-      if(files.val().substring(files.val().lastIndexOf('.')+1,files.val().length).toLowerCase()!='txt')
-      {
-        alert('Необходимо выбрать файл file.txt');
-        var file=$( ".file" );
-        file.empty();
-        file.append('<input type="file" class="files" name="files[0]"  onChange="chng()" > <br>')
-      };
-    }
   </script>
   <meta charset="UTF-8" />
   <title>Панель администратора</title>
-  <meta name="Description" content="" />
-  <meta name="Keywords"  content="" />
-
   <link rel="stylesheet" type="text/css" media="screen,print" href="<%=Setting.getPath()%>/res/css/style_admin_page.css" />
 </head>
 
@@ -100,7 +154,7 @@
     <caption>Дилеры:</caption>
     <tr>
       <th class="number">№пп</th>
-      <th><button>От</button></th>
+      <th><button id="send_msg">От</button></th>
       <th>Дилер</th>
       <th>Номер Дилера</th>
       <th>Количество автомобилей</th>
@@ -117,7 +171,7 @@
     <tr>
       <td><%=count%></td>
       <td>
-        <input type="checkbox">
+        <input class="check_box" value="<%=dealer.getContact_persons().get(0).getEmail()%>" type="checkbox">
       </td>
       <td><%=dealer.getNameDealer()%></td>
       <td><%=dealer.getNumberDealer()%></td>
@@ -142,7 +196,15 @@
        count++; }
     }%>
   </table>
-<br><br><br>
+<br>
+<caption>Тема письма</caption>
+
+<input type="text" style="display: none"  size="20" id="message_theme" maxlength="40">
+<br>
+<caption>Текст письма</caption>
+
+<textarea style="display: none" id="message" cols="40" rows="9"></textarea>
+<br><br>
 <table>
   <caption>Сообщения</caption>
   <tr>

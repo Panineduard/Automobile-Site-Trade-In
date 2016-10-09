@@ -14,6 +14,10 @@ import com.servise.StandartMasege;
 import com.setting.Setting;
 import com.sun.deploy.net.HttpResponse;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
@@ -28,10 +32,7 @@ import sun.plugin.liveconnect.SecurityContextHelper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Эдуард on 07.11.15.
@@ -57,178 +58,236 @@ public class UserController {
     AnonymousUserDAO anonymousUserDAO;
 
 
-//Methods for all users
+    //Methods for all users
     @RequestMapping(value = "/lost_password", method = RequestMethod.GET)
-    public ModelAndView getLostPassword(HttpServletRequest request){
-        String key=request.getParameter("key");
-        if(key==null){return new ModelAndView("lost_password");}
-        KeyHolder keyHolder=dealerDao.getKeyDHolderByKeyAndDeleteKey(key);
-        if(keyHolder!=null){
+    public ModelAndView getLostPassword(HttpServletRequest request) {
+        String key = request.getParameter("key");
+        if (key == null) {
+            return new ModelAndView("lost_password");
+        }
+        KeyHolder keyHolder = dealerDao.getKeyDHolderByKeyAndDeleteKey(key);
+        if (keyHolder != null) {
             dealerDao.changePasswordByIdDealer(keyHolder.getIdDealer(), keyHolder.getPass());
             ModelAndView modelAndView = new ModelAndView("successfulRegistration");
             modelAndView.addObject("msg", standartMasege.getMessage(39));
             return modelAndView;
-        }
-        else {return new ModelAndView("index");}
-
-    }
-    @RequestMapping(value = "/lost_password", method = RequestMethod.POST)
-    public ModelAndView changeLostPassword(@RequestParam("dealers_number")String dealers_number,@RequestParam("email")String email,@RequestParam("password")String password){
-        if(email==null||password==null){
+        } else {
             return new ModelAndView("index");
         }
-            ;
-            if(dealerDao.checkIdDealerByEmail(email,dealers_number)){
-                String key=DigestUtils.md5Hex(dealers_number+System.currentTimeMillis() + new Random().nextInt());
-                PasswordHelper passwordHelper=new PasswordHelper();
-                dealerDao.setKeyHolder(new KeyHolder(dealers_number,key,passwordHelper.encode(password)));
-                String msg ="<a href='"+ Setting.getHost()+"/lost_password?key="+key+"'>"+standartMasege.getMessage(35)+"</a>";
-                sendHTMLEmail.sendHtmlMessage(email, msg, standartMasege.getMessage(36));
-                ModelAndView modelAndView = new ModelAndView("successfulRegistration");
-                modelAndView.addObject("msg",standartMasege.getMessage(37));
-                return modelAndView;
-            }
-            else {
-                ModelAndView modelAndView = new ModelAndView("successfulRegistration");
-                modelAndView.addObject("msg","<a href = '/registration'>"+standartMasege.getMessage(38)+"</a>");
-                return modelAndView;
-            }
 
     }
+
+    @RequestMapping(value = "/lost_password", method = RequestMethod.POST)
+    public ModelAndView changeLostPassword(@RequestParam("dealers_number") String dealers_number, @RequestParam("email") String email, @RequestParam("password") String password) {
+        if (email == null || password == null) {
+            return new ModelAndView("index");
+        }
+        ;
+        if (dealerDao.checkIdDealerByEmail(email, dealers_number)) {
+            String key = DigestUtils.md5Hex(dealers_number + System.currentTimeMillis() + new Random().nextInt());
+            PasswordHelper passwordHelper = new PasswordHelper();
+            dealerDao.setKeyHolder(new KeyHolder(dealers_number, key, passwordHelper.encode(password)));
+            String msg = "<a href='" + Setting.getHost() + "/lost_password?key=" + key + "'>" + standartMasege.getMessage(35) + "</a>";
+            sendHTMLEmail.sendHtmlMessage(email, msg, standartMasege.getMessage(36));
+            ModelAndView modelAndView = new ModelAndView("successfulRegistration");
+            modelAndView.addObject("msg", standartMasege.getMessage(37));
+            return modelAndView;
+        } else {
+            ModelAndView modelAndView = new ModelAndView("successfulRegistration");
+            modelAndView.addObject("msg", "<a href = '/registration'>" + standartMasege.getMessage(38) + "</a>");
+            return modelAndView;
+        }
+
+    }
+
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public ModelAndView getRegistrationForm(){
+    public ModelAndView getRegistrationForm() {
 
         ModelAndView modelAndView = new ModelAndView("registration");
         return modelAndView;
     }
-    @RequestMapping(value = "/registration",method = RequestMethod.POST)
-    public ModelAndView saveUserData(@RequestParam("pasword") String pasword,@RequestParam("checkPasword") String checkPasword,@RequestParam("numberDealer")
-                String numberDealer,@RequestParam("nameDealer") String nameDealer,@RequestParam("email") String email,
-                @RequestParam("name") String name,@RequestParam("personPhone")String personPhone,
-                @RequestParam("city")String city,@RequestParam("captcha")String input_captcha,HttpSession session,
+
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    public ModelAndView saveUserData(@RequestParam("pasword") String pasword, @RequestParam("checkPasword") String checkPasword, @RequestParam("numberDealer")
+    String numberDealer, @RequestParam("nameDealer") String nameDealer, @RequestParam("email") String email,
+                                     @RequestParam("name") String name, @RequestParam("personPhone") String personPhone,
+                                     @RequestParam("city") String city, @RequestParam("captcha") String input_captcha, HttpSession session,
                                      ModelMap modelMap) {
-                String captcha =(String)session.getAttribute("CAPTCHA");
+        String captcha = (String) session.getAttribute("CAPTCHA");
         PasswordHelper passwordHelper = new PasswordHelper();
 
 
-        if(captcha==null || (captcha!=null && !passwordHelper.matches(input_captcha, captcha))){
+        if (captcha == null || (captcha != null && !passwordHelper.matches(input_captcha, captcha))) {
             ModelAndView modelAndView = new ModelAndView("registration");
             modelAndView.addAllObjects(modelMap);
-            modelAndView.addObject("msg",standartMasege.getMessage(22)+"<br>"+standartMasege.getMessage(23));
+            modelAndView.addObject("msg", standartMasege.getMessage(22) + "<br>" + standartMasege.getMessage(23));
             return modelAndView;
         }
         String returnMessage;
-       try{ if (pasword.equals(checkPasword)){
-            returnMessage= dealerDao.setDealer(numberDealer, nameDealer,email,name,personPhone,pasword,city);
-        }
-        else {
-            returnMessage = standartMasege.getMessage(6);
-        }
-        ModelAndView model = new ModelAndView("successfulRegistration");
-        model.addObject("msg", standartMasege.getMessage(7) +" "+ name + " " + returnMessage);
-        return model;}
-        catch (NumberFormatException e){
+        try {
+            if (pasword.equals(checkPasword)) {
+                returnMessage = dealerDao.setDealer(numberDealer, nameDealer, email, name, personPhone, pasword, city);
+            } else {
+                returnMessage = standartMasege.getMessage(6);
+            }
+            ModelAndView model = new ModelAndView("successfulRegistration");
+            model.addObject("msg", standartMasege.getMessage(7) + " " + name + " " + returnMessage);
+            return model;
+        } catch (NumberFormatException e) {
 
-           ModelAndView model1 = new ModelAndView("registration");
-           model1.addObject("msg", standartMasege.getMessage(8));
-           return model1;
+            ModelAndView model1 = new ModelAndView("registration");
+            model1.addObject("msg", standartMasege.getMessage(8));
+            return model1;
         }
     }
 
-@RequestMapping(value = "/ConfirmationOfRegistration", method = RequestMethod.GET)
-public  ModelAndView registrationComp(@RequestParam("id") String idDealer){
-    String msg;
-    ModelAndView model;
-    if(dealerDao.updateRegistrationAndRoleById(idDealer))
-    {
-        model = new ModelAndView("successfulRegistration");
-        msg=standartMasege.getMessage(9)+"<br><ul id='menu'><li><a href='/myAccount'>"+standartMasege.getMessage(3)+"</a></li></ul>";
-        model.addObject("msg",msg );
+    @RequestMapping(value = "/ConfirmationOfRegistration", method = RequestMethod.GET)
+    public ModelAndView registrationComp(@RequestParam("id") String idDealer) {
+        String msg;
+        ModelAndView model;
+        if (dealerDao.updateRegistrationAndRoleById(idDealer)) {
+            model = new ModelAndView("successfulRegistration");
+            msg = standartMasege.getMessage(9) + "<br><ul id='menu'><li><a href='/myAccount'>" + standartMasege.getMessage(3) + "</a></li></ul>";
+            model.addObject("msg", msg);
+        } else {
+            model = new ModelAndView("zerroPage");
+        }
+        return model;
     }
-    else {
-        model=new ModelAndView("zerroPage");
-    }
-    return model;
-}
 
-    @RequestMapping(value = "/save_message",method = RequestMethod.POST)
-    public ModelAndView saveMessage(@RequestParam("email")String email,@RequestParam("message")String message){
+    @RequestMapping(value = "/save_message", method = RequestMethod.POST)
+    public ModelAndView saveMessage(@RequestParam("email") String email, @RequestParam("message") String message) {
 
         String checkEmail1 = "[a-z][a-z[0-9]\u005F\u002E\u002D]*[a-z||0-9]";
         String checkEmail2 = "([a-z]){2,4}";
-        if(email.matches(checkEmail1 + "@" + checkEmail1 + "\\u002E" + checkEmail2)){
-            if(message.length()>380){
-                message=message.substring(0,380);
+        if (email.matches(checkEmail1 + "@" + checkEmail1 + "\\u002E" + checkEmail2)) {
+            if (message.length() > 380) {
+                message = message.substring(0, 380);
             }
             anonymousUserDAO.saveLetter(new Letter(email, message));
         }
         return new ModelAndView("index");
 
-}
-@RequestMapping(value = "/about_us",method = RequestMethod.GET)
-public ModelAndView getAboutUsPage(){
-    return new ModelAndView("about-us-page");
-}
+    }
+
+    @RequestMapping(value = "/about_us", method = RequestMethod.GET)
+    public ModelAndView getAboutUsPage() {
+        return new ModelAndView("about-us-page");
+    }
 
 
     //Methods for registration users
 
-    @RequestMapping(value = {"/myAccount","*/myAccount"})
-    public ModelAndView accountModel(HttpSession session){
-            session.removeAttribute("chCar");
-            ModelAndView modelAndView = new ModelAndView("my_account");
-            return viewHalper.addingDealerAndCarsInView(modelAndView);
+    @RequestMapping(value = {"/myAccount", "*/myAccount"})
+    public ModelAndView accountModel(HttpSession session) {
+        session.removeAttribute("chCar");
+        ModelAndView modelAndView = new ModelAndView("my_account");
+        return viewHalper.addingDealerAndCarsInView(modelAndView);
     }
 
     @RequestMapping(value = "/feedback")
-    public ModelAndView getFeedbackForm(){
+    public ModelAndView getFeedbackForm() {
         ModelAndView modelAndView = new ModelAndView("feedback");
         return modelAndView;
     }
-    @RequestMapping(value = "/check_id_dealer",method = RequestMethod.POST, headers="Accept=application/json")
-    public @ResponseBody
-    boolean getModelForm(@ModelAttribute("id")String id){
+
+    @RequestMapping(value = "/check_id_dealer", method = RequestMethod.POST, headers = "Accept=application/json")
+    public
+    @ResponseBody
+    boolean getModelForm(@ModelAttribute("id") String id) {
         return dealerDao.checkDealerById(id);
     }
 
     @RequestMapping(value = "*/change_contact_person", method = RequestMethod.POST)
-    public ModelAndView changeContactPersonsData(@RequestParam("manager") String manager,@RequestParam("phone") String phone,
-                                                 @RequestParam("id") Integer idPerson, @RequestParam("email") String email){
+    public ModelAndView changeContactPersonsData(@RequestParam("manager") String manager, @RequestParam("phone") String phone,
+                                                 @RequestParam("id") Integer idPerson, @RequestParam("email") String email) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String idDealer=auth.getName();
+        String idDealer = auth.getName();
         Contact_person contact_person = new Contact_person();
         contact_person.setIdDealer(idDealer);
-        if(!manager.isEmpty()){contact_person.setName(manager);}
-        if(!phone.isEmpty()){contact_person.setPhone(phone);}
-        if(!email.isEmpty()){contact_person.setEmail(email);}
+        if (!manager.isEmpty()) {
+            contact_person.setName(manager);
+        }
+        if (!phone.isEmpty()) {
+            contact_person.setPhone(phone);
+        }
+        if (!email.isEmpty()) {
+            contact_person.setEmail(email);
+        }
         dealerDao.changeContactPersonsData(idDealer, idPerson, contact_person);
         ModelAndView modelAndView = new ModelAndView("my_account");
         return viewHalper.addingDealerAndCarsInView(modelAndView);
     }
 
     @RequestMapping(value = "*/changeAddress", method = RequestMethod.POST)
-    public ModelAndView addContactPersonsData(@RequestParam("index") String index,@RequestParam("street") String street,
-                                                 @RequestParam("house_number") String house_number){
+    public ModelAndView addContactPersonsData(@RequestParam("index") String index, @RequestParam("street") String street,
+                                              @RequestParam("house_number") String house_number) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String idDealer=auth.getName();
+        String idDealer = auth.getName();
 //        DealerDao dealerDao= new DealerDao();
-        if(index.isEmpty()){index="";}
-        if(street.isEmpty()){street="";}
-        if(house_number.isEmpty()){house_number="";}
-        dealerDao.changeDealersAddress(idDealer,index,street,house_number);
+        if (index.isEmpty()) {
+            index = "";
+        }
+        if (street.isEmpty()) {
+            street = "";
+        }
+        if (house_number.isEmpty()) {
+            house_number = "";
+        }
+        dealerDao.changeDealersAddress(idDealer, index, street, house_number);
         ModelAndView modelAndView = new ModelAndView("my_account");
         return viewHalper.addingDealerAndCarsInView(modelAndView);
     }
+
     @RequestMapping(value = "*/delete_contact_person", method = RequestMethod.GET)
-    public ModelAndView deleteContactPerson(@RequestParam("count")String id ,HttpSession session){
+    public ModelAndView deleteContactPerson(@RequestParam("count") String id, HttpSession session) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String idDealer=auth.getName();
+        String idDealer = auth.getName();
         Integer idPerson = new Integer(encoderId.decodeID(id));
-        if(idPerson!=null){
-        dealerDao.deleteContactPersonById(idDealer,idPerson);
+        if (idPerson != null) {
+            dealerDao.deleteContactPersonById(idDealer, idPerson);
         }
         ModelAndView modelAndView = new ModelAndView("my_account");
         return viewHalper.addingDealerAndCarsInView(modelAndView);
+    }
+
+    @RequestMapping(value = "/send_msg_for_dealer", method = RequestMethod.POST, headers = "Accept=application/json")
+    public
+    @ResponseBody
+    Boolean sendMessage(@RequestBody String ids) {
+        String id;
+        String message;
+        String clientMail;
+        String tel;
+        String tellInfo;
+        Set<String> dealersEmail = new HashSet<>();
+        JSONParser parser = new JSONParser();
+        Object obj = null;
+        try {
+            obj = parser.parse(ids);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        JSONObject jsonObj = (JSONObject) obj;
+        try {
+
+            message = jsonObj.get("message").toString();
+            id = jsonObj.get("id").toString();
+            clientMail = jsonObj.get("client_mail").toString();
+            tel = jsonObj.get("tel").toString();
+            if (tel != null && !tel.isEmpty()) {
+                tellInfo = " tel:" + tel;
+            } else tellInfo = " ";
+            dealerDao.getDealerById(id).getContact_persons().forEach(contact_person -> {
+                sendHTMLEmail.sendHtmlMessage(contact_person.getEmail(), message, standartMasege.getMessage(46) + " email:" + clientMail + tellInfo);
+            });
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+
     }
 }

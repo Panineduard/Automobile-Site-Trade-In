@@ -146,9 +146,9 @@
 
                 <div class="main-foto">
                     <div class="big_photo">
-                    <a title="<%=car.getBrand()%>  <%=car.getModel()%>" href=# id="slider">
-                        <img id='bigimgslide' class="foto-380x250" src='<%=path%>' align="left">
-                    </a>
+                        <a title="<%=car.getBrand()%>  <%=car.getModel()%>" href=# id="slider">
+                            <img id='bigimgslide' class="foto-380x250" src='<%=path%>' align="left">
+                        </a>
                     </div>
                     <div class="small-foto">
                         <%
@@ -190,6 +190,7 @@
                     Комплектация: <span class="model-info-data"><%=car.getEquipment()%></span><br>
                     Дополнительно: <br><span class="model-info-data-coment"><%=car.getDescription()%></span>
                 </div>
+
                 <%if (dealer != null) {%>
                 <div class="info">
                     <div class="town">Город:<br> <%=dealer.getAddress().getCity()%>
@@ -198,10 +199,15 @@
                         <%for (Contact_person contact_person : dealer.getContact_persons()) {%>
                         <%=contact_person.getPhone()%> <br>
                         <%}%>
-                        </div>
-                    <div class="diller">Дилер:<br> <%=dealer.getNameDealer()%></div>
+                    </div>
+                    <div class="diller">Дилер:<br> <%=dealer.getNameDealer()%>
+                    </div>
+                </div>
+                <div class="send-mail">
+                    <button class="btn-send" id="add_contact_person" type="button">Отправить письмо дилеру</button>
                 </div>
                 <%}%>
+
             </div>
         </div>
     </div>
@@ -314,7 +320,48 @@
     });
 </script>
 <script>
+    function msg_validator(msg) {
+        if (msg.id.length === 0)return false;
+        if (msg.message.length === 0)return false;
+        if (msg.client_mail.length === 0)return false;
+        else return true;
+    }
+    $(document).ready(function () {
+        $("#send_msg").click(function () {
+            var message = new Object();
+            message.id = $("#dealer_id").val();
+            message.message = $("#dealer_message").val();
+            message.client_mail = $("#client_email").val();
+            message.tel=$("#client_tel").val();
+            if (msg_validator(message)) {
+                $.ajax({
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: "POST",
+                    data: JSON.stringify(message),
+                    url: "/send_msg_for_dealer",
+                    success: function (data) {
+                        if (data) {
+                            alert("Сообщение успешно отправленно!");
+                            $("#dealer_message").val("");
+                        }
+                        else {
+                            alert("Что то не так попробуйте еще раз")
+                        }
+                    },
+                    statusCode: {
+                        404: function () {
+                            alert("Сервер не доступен, попробуйте позже!");
+                        }
+                    }
+                });
+            }
+            else alert("Что то не так попробуйте еще раз");
+            $("#modal_close1").click();
+        })
 
+
+    });
     jQuery(document).ready(function ($) {
 
         var jssor_1_options = {
@@ -355,6 +402,38 @@
         //responsive code end
     });
 </script>
+<!-- Модальное окно -->
+<div id="modal_form1">
+    <img id="modal_close1" src="../res/img/close.png" style="
+    width: 40px;
+    height: 40px;
+    left: 98%;
+    top: -9%;
+    "/>
+    <%--<form action="/send_msg_for_dealer" method="post">--%>
+    <h3>Введите пожалуйста данные</h3>
+    <input type="hidden" id="dealer_id" value="<%=dealer.getNumberDealer()%>">
+
+    <p>Электронный адресс<br/>
+        <input type="email" id="client_email" size="35"/>
+    </p>
+    <p>Телефон для связи (Необязательно)<br/>
+        <input type="text" id="client_tel" size="35"/>
+    </p>
+
+    <p>Сообщение<br/>
+                <textarea style="width: 280px;" id="dealer_message" class="message" maxlength="380" required="required"
+                          cols="37" rows="8"></textarea>
+    </p>
+
+    <p style="text-align: center; padding-bottom: 10px;">
+        <input id="send_msg" type="button" value="Отправить"/>
+    </p>
+
+    <%--</form>--%>
+</div>
+
+<!-- Модальное окно -->
 <script>
     var successful = "Спасибо за отзыв, мы постараемся исправить это в ближайщее время.";
     var unsuccessful = "Введите корректный email.";
@@ -362,7 +441,6 @@
 
 </script>
 <script type="text/javascript" charset=utf-8" src="<%=Setting.getPath()%>/res/js/feedback-sender.js"></script>
-<!-- Модальное окно -->
 <div id="modal_form">
     <img id="modal_close" src="../res/img/close.png" style="
     width: 40px;

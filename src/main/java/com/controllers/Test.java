@@ -4,6 +4,12 @@ import com.dao.AdminServiceDAO;
 import com.dao.AnonymousUserDAO;
 import com.dao.CarDAO;
 import com.dao.DealerDao;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.ParseException;
+import org.json.simple.parser.JSONParser;
 import com.helpers.EncoderId;
 import com.helpers.PasswordHelper;
 import com.modelClass.Address;
@@ -12,6 +18,7 @@ import com.modelClass.Letter;
 import com.setting.Setting;
 import javafx.util.converter.LocalDateTimeStringConverter;
 import org.apache.commons.codec.digest.DigestUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -38,9 +45,32 @@ public class Test {
 //    public String test(){
 //        return testClass.getName();
 //    }
-    public static void main(String... arg) throws IOException, NoSuchAlgorithmException {
-        AnonymousUserDAO anonymousUserDAO=new AnonymousUserDAO();
-        anonymousUserDAO.saveLetter(new Letter("fff","Привет"));
+    public static void main(String... arg) throws  ParseException {
+        String json = "{\"paramsArray\": [\"first\", 100,100],"
+                + "\"paramsObj\": {\"one\": \"two\", \"three\": \"four\"},"
+                + "\"paramsStr\": \"some string\"}";
+
+
+
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(json);
+        JSONObject jsonObj = (JSONObject) obj;
+        System.out.println(jsonObj.get("paramsStr"));
+//// some string
+//
+//        JsonObject jo = (JsonObject) jsonObj.get("paramsObj");
+//        System.out.println(jo.get("three"));
+//// four
+//
+
+        JSONArray ja = (JSONArray) jsonObj.get("paramsArray");
+        System.out.println(ja.get(1));
+        Set<String> dealersEmail=new HashSet<>();
+        ja.forEach(jsonObject -> dealersEmail.add(jsonObject.toString()));
+        System.out.println(dealersEmail);
+//// 100
+//        AnonymousUserDAO anonymousUserDAO=new AnonymousUserDAO();
+//        anonymousUserDAO.saveLetter(new Letter("fff","Привет"));
 //
 //        System.out.println();
 //

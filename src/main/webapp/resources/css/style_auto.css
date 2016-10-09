@@ -100,7 +100,7 @@ color:white;
 
 .info{
 	overflow:hidden;
-	margin-top:19%;
+	margin-top:15%;
 	font:600 12px/20px san-serif;
 	border-bottom: 1px solid #415A98;
 	border-top: 1px solid #415A98;
@@ -358,4 +358,21 @@ footer p {
 
 .help_div{
 	height: 50px;
+}
+.btn-send {
+
+	border: 0;
+	border-radius:4px;
+	background: #29c5e6;
+	margin-top: 1%;
+	/*color:#DAE1F3;*/
+	width: 100%;
+	/*padding: 10px;*/
+	font-size: 18px;
+	bottom:5px;
+}
+
+.btn-send:hover {
+	background: #415A98;
+	cursor: pointer;
 }

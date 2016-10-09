@@ -456,7 +456,7 @@
                               cols="40"
                               rows="7"></textarea></h2>
                         <%}%>
-                        <div id="massage_comment" style="opacity:0; position: absolute;left: 52%; top: 1150px%;">
+                        <div id="massage_comment" style="opacity:0; position: absolute;left: 52%; top: 1150px;">
                             <p class="text_massage"></p>
                             <img src="/res/img/massage.png">
                         </div>

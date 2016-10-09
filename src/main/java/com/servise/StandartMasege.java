@@ -30,42 +30,15 @@ import java.util.stream.Stream;
  */
 @Component
 public class StandartMasege {
-   @Autowired
-   MessageSource messageSource;//=new ClassPathXmlApplicationContext("spring-app.xml");
-   public String  getMessage(Integer p){
+    @Autowired
+    MessageSource messageSource;//=new ClassPathXmlApplicationContext("spring-app.xml");
 
-        String message = messageSource.getMessage(p.toString(), null, "Messages was not found",Locale.getDefault());
+    /**
+     * @param p it is a number of message
+     * @return String it is a messages from Resource Bundle messages by number
+     */
+    public String getMessage(Integer p) {
+        String message = messageSource.getMessage(p.toString(), null, "Messages was not found", Locale.getDefault());
         return message;
     }
-
-//    public static void getMessage(Integer p)  {
-//
-//        String rootPath;
-//        if(Setting.isAbsolutePath()){
-//            rootPath=Setting.getTheAbsolutePathOfTheMessageFile();
-//        }
-//        else {
-//            String catalinaBase = new File(new File( System.getProperty( "java.class.path" ) ).getParent()).getParent();
-//            StringBuffer stringBuffer =new StringBuffer(catalinaBase);
-//            int index=stringBuffer.indexOf(";");
-//            rootPath=stringBuffer.substring(index + 1)+"\\webapps\\ROOT\\resources\\messages.txt";
-//            //        System.out.println(rootPath);
-//        }
-//        final String[] returnMessage = new String[1];
-//        BufferedReader reader = null;
-//        try(Stream<String> stream=new BufferedReader(new FileReader(rootPath)).lines()) {
-//            stream
-//                    .filter(s -> ( new Integer(s.substring(0,2))).equals(p))
-//                    .forEach(s1 -> {
-//                        returnMessage[0] = new String(s1.substring(3));
-//                    });
-////            return returnMessage[0];
-//        } catch (FileNotFoundException e) {
-////            return "The file with messages was not found";
-//        }
-
-
-
-
-//    }
 }

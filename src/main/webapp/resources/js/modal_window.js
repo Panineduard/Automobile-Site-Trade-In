@@ -23,7 +23,7 @@
             );
         });
 
-        $('a#add_contact_person').click( function(event){ // ловим клик по ссылки с id="go"
+        $('#add_contact_person').click( function(event){ // ловим клик по ссылки с id="go"
             event.preventDefault(); // выключаем стандартную роль элемента
             $('#overlay').fadeIn(400, // сначала плавно показываем темную подложку
                 function(){ // после выполнения предъидущей анимации
