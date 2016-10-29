@@ -199,14 +199,14 @@
                 </form>
             </aside>
         </div>
-        <div id="baner-right">
-            <a href="https://adclick.g.doubleclick.net/pcs/click%253Fxai%253DAKAOjss2PHZ-OCWm0-j9gUlm-eoK-w1Nzt6AEiHVz7SMN2fA1SVKQRpHNSuzQMRHd4hhQHRHyNfSZCbaLDPTKCW3BuGbSJLi5HJHUcr9sTgMEZzCYsr4PNvR_cjLGvfYkjt_dBX_LNpvH_j6uOsx0PdAJ2HBFci5EpxNGKmgS9wWGaKJLoFOgwyH-X9Y86qDwekc641sIJ-ZIe6G92K-ILU7jEDT_I9uJajYZbCqCtpw5-uxlz5udLd6MS2sNfM%2526sig%253DCg0ArKJSzN53VUBcyITuEAE%2526urlfix%253D1%2526adurl%253Dhttps://ad.doubleclick.net/ddm/trackclk/N4022.1909409MOBILEDE.DE/B10050978.135595613%3Bdc_trk_aid%3D308114197%3Bdc_trk_cid%3D72857594%3Bdc_lat%3D%3Bdc_rdid%3D%3Btag_for_child_directed_treatment%3D"
-               id="skyImage6295189607" onclick="window.open(this.href); return false;"><img class="banner"
-                                                                                            src="https://tpc.googlesyndication.com/pagead/imgad?id=CICAgKDLlOOSjQEQARgBMgj_7mJtqnRdzA"
-                                                                                            width="200" height="700"
-                                                                                            id="sky_content_6295189607"
-                                                                                            alt="Click me."></a>
-        </div>
+        <%--<div id="baner-right">--%>
+            <%--<a href="https://adclick.g.doubleclick.net/pcs/click%253Fxai%253DAKAOjss2PHZ-OCWm0-j9gUlm-eoK-w1Nzt6AEiHVz7SMN2fA1SVKQRpHNSuzQMRHd4hhQHRHyNfSZCbaLDPTKCW3BuGbSJLi5HJHUcr9sTgMEZzCYsr4PNvR_cjLGvfYkjt_dBX_LNpvH_j6uOsx0PdAJ2HBFci5EpxNGKmgS9wWGaKJLoFOgwyH-X9Y86qDwekc641sIJ-ZIe6G92K-ILU7jEDT_I9uJajYZbCqCtpw5-uxlz5udLd6MS2sNfM%2526sig%253DCg0ArKJSzN53VUBcyITuEAE%2526urlfix%253D1%2526adurl%253Dhttps://ad.doubleclick.net/ddm/trackclk/N4022.1909409MOBILEDE.DE/B10050978.135595613%3Bdc_trk_aid%3D308114197%3Bdc_trk_cid%3D72857594%3Bdc_lat%3D%3Bdc_rdid%3D%3Btag_for_child_directed_treatment%3D"--%>
+               <%--id="skyImage6295189607" onclick="window.open(this.href); return false;"><img class="banner"--%>
+                                                                                            <%--src="https://tpc.googlesyndication.com/pagead/imgad?id=CICAgKDLlOOSjQEQARgBMgj_7mJtqnRdzA"--%>
+                                                                                            <%--width="200" height="700"--%>
+                                                                                            <%--id="sky_content_6295189607"--%>
+                                                                                            <%--alt="Click me."></a>--%>
+        <%--</div>--%>
         <div id="result">
 
             <%

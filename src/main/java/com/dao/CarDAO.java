@@ -45,10 +45,9 @@ ChangeImgSize changeImgSize;
                     .list().get(0));
         });
         List<PhotoPath> pathPhoto;
-        System.out.println("Path from Car - "+car.getPhotoPath());
+//        System.out.println("Path from Car - "+car.getPhotoPath());
         if(car.getPhotoPath()!=null)pathPhoto=car.getPhotoPath();
         else pathPhoto=new ArrayList<>();
-        int[] numberPhoto={pathPhoto.size()};
         photos.forEach(photo -> {
             InputStream inStream = null;
             int pointPosition = photo.getPath().lastIndexOf('.');
@@ -64,7 +63,13 @@ ChangeImgSize changeImgSize;
                 inStream.close();
                 //delete the original file
                 file1.delete();
-                pathPhoto.add(photo.getPosition(),new PhotoPath(car.getIdCar(), file2.getAbsolutePath()));
+                if(photo.getPosition()<pathPhoto.size()){
+                    pathPhoto.add(photo.getPosition(),new PhotoPath(car.getIdCar(), file2.getAbsolutePath()));
+                }
+                else {
+                    pathPhoto.add(new PhotoPath(car.getIdCar(), file2.getAbsolutePath()));
+                }
+
 
 
             } catch (IOException e) {

@@ -49,9 +49,7 @@
     <authentication-manager>
         <authentication-provider user-service-ref="userDetailsServiceImpl">
             <password-encoder ref="passwordHelper"/>
-
                 </authentication-provider>
-
     </authentication-manager>
     <beans:bean id="passwordHelper" class="com.helpers.PasswordHelper"/>
     <beans:bean id="userDetailsServiceImpl"

@@ -37,7 +37,6 @@
     <script>
         var engine_parameter = ['Бензин', 'Дизель', 'Электро', 'Гибрид', 'Газ/бензин', 'Другое'];
         var gearbox_parameter = ['Другое', 'Автоматическая', 'Механическая'];
-        var formCantBeSend = [];
         var firstValueInBrand = '';
     </script>
     <script type="text/javascript" src="/res/js/get_model_by_brand.js"></script>
@@ -223,9 +222,10 @@
                     function () {
                         var result = [make_valid, model_valid, prise_valid, capacity_valid, comment_valid, mileage_valid];
                         if (make_valid && model_valid && prise_valid && capacity_valid && comment_valid && mileage_valid) {
-                            for(var x=0;x<formCantBeSend.length;x++){
-                                if(!formCantBeSend[x]){
-                                    alert("Подождите загрузку фотографий!")
+                            for(var x=1;x<=8;x++){
+                                var can_send=$('#suusesful_download'+x).val();
+                                if(can_send=='false'){
+                                    alert("Подождите загрузку фотографий!");
                                     return false;
                                 }
                             }

@@ -72,7 +72,7 @@ function readURL(input, index) {
             form_data.append("position", (index - 1));
             form_data.append("type", file.name);
             var progressBar = $('#pinkcircle' + index);
-            formCantBeSend[index - 1] = false;
+            $('#suusesful_download'+index).val(false);
             $.ajax({
                 url: "/putPhoto",
                 dataType: 'json',
@@ -102,7 +102,7 @@ function readURL(input, index) {
                     //alert(jsondata);
                     place.empty();
                     place.append('<input id="idPh' + index + '" name="photo' + index + '" type="hidden" value="' + jsondata + '">');
-                    formCantBeSend[index - 1] = true;
+                    $('#suusesful_download'+index).val(true);
                 }
             });
             return reader.readAsDataURL(input.files[0]);
