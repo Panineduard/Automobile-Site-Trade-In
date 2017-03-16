@@ -10,8 +10,8 @@
 
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/all_cars</property>
-        <property name="hibernate.connection.username">panined</property>
-        <property name="connection.password">p1120772_</property>
+        <property name="hibernate.connection.username">******</property>
+        <property name="connection.password">*******</property>
         <property name="connection.pool_size">1</property>
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL81Dialect</property>
