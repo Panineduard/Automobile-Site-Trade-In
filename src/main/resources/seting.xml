@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <setting>
         <nameOfOurProject>autoport.website</nameOfOurProject>
-        <emailTo>panin.eduard.a@gmail.com</emailTo>
-        <fromEmailAddr>autoport.kh.ua@gmail.com</fromEmailAddr>
-        <password>p1120772</password>
-        <username>veselayagora1@gmail.com</username>
-        <RECIPIENT_EMAIL>veselaya_gora@mail.ru</RECIPIENT_EMAIL>
+        <emailTo>******</emailTo>
+        <fromEmailAddr>*******</fromEmailAddr>
+        <password>******</password>
+        <username>*******</username>
+        <RECIPIENT_EMAIL>******</RECIPIENT_EMAIL>
         <host>http://localhost:8080/</host>
         <!--http://autoport.website-->
         <ClientsFolder>ClientsFolder/tmp/</ClientsFolder>
