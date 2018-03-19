@@ -1,39 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-configuration SYSTEM "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
-        <!--http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd-->
-
-
+<!--http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd-->
 
 <hibernate-configuration>
-
     <session-factory>
-
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/all_cars</property>
-        <property name="hibernate.connection.username">******</property>
-        <property name="connection.password">*******</property>
+        <property name="hibernate.connection.username">YOUR_POSTGRES_USER_NAME</property>
+        <property name="connection.password">YOUR_POSTGRES_PASSWORD</property>
         <property name="connection.pool_size">1</property>
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL81Dialect</property>
 
         <property name="show_sql">true</property>
         <property name="hbm2ddl.auto">update</property>
-        <mapping class="com.modelClass.Login"/>
-        <mapping class="com.modelClass.Car"/>
-        <mapping class="com.modelClass.Contact_person"/>
-        <mapping class="com.modelClass.PhotoPath"/>
-        <mapping class="com.modelClass.Dealer"/>
-        <mapping class="com.modelClass.Address"/>
-        <mapping class="com.modelClass.CarBrand"/>
-        <mapping class="com.modelClass.AuthorizedDealers"/>
-        <mapping class="com.modelClass.KeyHolder"/>
-        <mapping class="com.modelClass.Region"/>
-        <mapping class="com.modelClass.Years"/>
-        <mapping class="com.modelClass.Brand"/>
-        <mapping class="com.modelClass.Letter"/>
-        <mapping class="com.modelClass.TempImg"/>
-
-
-
+        <mapping class="com.models.Login"/>
+        <mapping class="com.models.Car"/>
+        <mapping class="com.models.Contact_person"/>
+        <mapping class="com.models.PhotoPath"/>
+        <mapping class="com.models.Dealer"/>
+        <mapping class="com.models.Address"/>
+        <mapping class="com.models.CarBrand"/>
+        <mapping class="com.models.AuthorizedDealers"/>
+        <mapping class="com.models.KeyHolder"/>
+        <mapping class="com.models.Region"/>
+        <mapping class="com.models.Years"/>
+        <mapping class="com.models.Brand"/>
+        <mapping class="com.models.Letter"/>
+        <mapping class="com.models.TempImg"/>
     </session-factory>
 </hibernate-configuration>

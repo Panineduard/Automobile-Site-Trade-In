@@ -5,3 +5,5 @@ I used Spring MailSender with SMPT and Scheduling for sending email to users aut
 PostgreSQL DB server is used for persisting data.  I used AWT for create captcha in registration. 
 I used Scheduling for clean DB automatically. I write JavaScript(JQuery) for JSP pages. 
 Then I bought VPS server and start this project on Apache and Tomcat servers.
+
+Before you start the server you should configure the you DB (hibernate.cfg.xml) and your SMTP server (setting.xml)
