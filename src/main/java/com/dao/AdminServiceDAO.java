@@ -1,10 +1,8 @@
 package com.dao;
 
-import com.controllers.AdminController;
 import com.dao.configuration.files.HibernateUtil;
-import com.modelClass.*;
-import com.servise.StandartMasege;
-import org.apache.commons.codec.CharEncoding;
+import com.models.*;
+import com.service.StandartMasege;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -14,9 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
 

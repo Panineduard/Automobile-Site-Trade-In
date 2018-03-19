@@ -1,6 +1,6 @@
 package com.helpers;
 
-import com.modelClass.Car;
+import com.models.Car;
 
 import java.util.List;
 

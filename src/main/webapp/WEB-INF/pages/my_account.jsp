@@ -1,8 +1,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ page import="com.modelClass.Dealer" %>
-<%@ page import="com.modelClass.Car" %>
+<%@ page import="com.models.Dealer" %>
+<%@ page import="com.models.Car" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.modelClass.Contact_person" %>
+<%@ page import="com.models.Contact_person" %>
 <%@ page import="com.helpers.EncoderId" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.Instant" %>

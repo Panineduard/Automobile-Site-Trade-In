@@ -24,7 +24,7 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <bean id="SendHTMLEmail" class="com.servise.SendHTMLEmail">
+    <bean id="SendHTMLEmail" class="com.service.SendHTMLEmail">
         <property name="mailSender" ref="mailSender"/>
     </bean>
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" >
@@ -50,7 +50,7 @@
     <bean name="AdminServiceDAO" class="com.dao.AdminServiceDAO"/>
     <bean name="viewHalper" class="com.helpers.ViewHalper"/>
     <bean name="encoderId" class="com.helpers.EncoderId"/>
-    <bean name="taskExecutorClass" class="com.servise.TaskExecutorClass"/>
+    <bean name="taskExecutorClass" class="com.service.TaskExecutorClass"/>
 
 
     <bean id="messageSource"
@@ -60,8 +60,8 @@
         <property name="useCodeAsDefaultMessage" value="false"/>
     </bean>
 
-    <bean name="standartMasege" class="com.servise.StandartMasege" />
-    <bean name="changeImgSize" class="com.servise.ChangeImgSize"/>
+    <bean name="standartMasege" class="com.service.StandartMasege" />
+    <bean name="changeImgSize" class="com.service.ChangeImgSize"/>
 
 
     <mvc:resources location="/resources/**" mapping="/res/**"/>

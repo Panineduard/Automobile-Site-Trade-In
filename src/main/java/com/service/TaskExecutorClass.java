@@ -1,4 +1,4 @@
-package com.servise;
+package com.service;
 
 import com.dao.CarDAO;
 import com.dao.DealerDao;

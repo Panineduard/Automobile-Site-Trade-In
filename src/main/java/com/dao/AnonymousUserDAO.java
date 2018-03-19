@@ -1,10 +1,8 @@
 package com.dao;
 
-import com.controllers.Message;
 import com.dao.configuration.files.HibernateUtil;
-import com.modelClass.Letter;
-import com.servise.StandartMasege;
-import org.hibernate.Query;
+import com.models.Letter;
+import com.service.StandartMasege;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;

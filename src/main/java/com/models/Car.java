@@ -1,4 +1,4 @@
-package com.modelClass;
+package com.models;
 
 
 
@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

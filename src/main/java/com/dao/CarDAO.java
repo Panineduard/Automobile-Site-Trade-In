@@ -3,10 +3,10 @@ package com.dao;
 import com.dao.configuration.files.HibernateUtil;
 import com.helpers.ResultCars;
 import com.helpers.SearchOptions;
-import com.modelClass.*;
+import com.models.*;
 
-import com.servise.ChangeImgSize;
-import com.servise.StandartMasege;
+import com.service.ChangeImgSize;
+import com.service.StandartMasege;
 import com.setting.Setting;
 import com.sun.istack.internal.*;
 import interfaceModel.dao.CarDaoInterface;

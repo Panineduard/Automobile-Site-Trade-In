@@ -7,19 +7,15 @@ import com.dao.DealerDao;
 
 import com.helpers.EncoderId;
 import com.helpers.PasswordHelper;
-import com.helpers.SearchOptions;
-import com.modelClass.*;
-import com.servise.SendHTMLEmail;
-import com.servise.StandartMasege;
+import com.models.*;
+import com.service.SendHTMLEmail;
+import com.service.StandartMasege;
 import com.setting.Setting;
-import com.sun.deploy.net.HttpResponse;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.*;
@@ -27,10 +23,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import com.helpers.ViewHalper;
-import sun.plugin.liveconnect.SecurityContextHelper;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 

@@ -3,15 +3,12 @@ package com.controllers;
 import com.dao.AdminServiceDAO;
 import com.dao.CarDAO;
 import com.dao.DealerDao;
-import com.dao.configuration.files.HibernateUtil;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.helpers.EncoderId;
 import com.helpers.FileUploadForm;
-import com.modelClass.AuthorizedDealers;
-import com.servise.SendHTMLEmail;
-import com.servise.StandartMasege;
-import com.servise.TaskExecutorClass;
+import com.models.AuthorizedDealers;
+import com.service.SendHTMLEmail;
+import com.service.StandartMasege;
+import com.service.TaskExecutorClass;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -20,18 +17,10 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import java.io.*;
-import java.net.URL;
 import java.util.*;
-import java.util.stream.Stream;
 
 /**
  * Created by volkswagen1 on 14.02.2016.

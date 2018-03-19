@@ -1,7 +1,4 @@
-package com.modelClass;
-
-import org.hibernate.annotations.*;
-import javax.persistence.CascadeType;
+package com.models;
 
 import javax.persistence.*;
 import javax.persistence.Entity;

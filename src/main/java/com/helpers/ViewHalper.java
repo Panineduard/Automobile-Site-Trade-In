@@ -2,8 +2,8 @@
 
 
     import com.dao.configuration.files.HibernateUtil;
-    import com.modelClass.Car;
-    import com.modelClass.Dealer;
+    import com.models.Car;
+    import com.models.Dealer;
     import org.hibernate.Query;
     import org.hibernate.Session;
     import org.hibernate.Transaction;
@@ -15,7 +15,7 @@
     import java.util.List;
 
     /**
-     * Created by Эдуард on 25.12.15.
+     * Created by пїЅпїЅпїЅпїЅпїЅпїЅ on 25.12.15.
      */
     @Component
     public class ViewHalper {

@@ -1,4 +1,4 @@
-<%@ page import="com.modelClass.Login" %>
+<%@ page import="com.models.Login" %>
 <%@ page import="org.springframework.security.core.Authentication" %>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="com.setting.Setting" %>

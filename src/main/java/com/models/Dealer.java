@@ -1,8 +1,6 @@
-package com.modelClass;
+package com.models;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
 
 /**

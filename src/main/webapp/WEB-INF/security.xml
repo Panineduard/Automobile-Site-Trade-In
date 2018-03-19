@@ -53,5 +53,5 @@
     </authentication-manager>
     <beans:bean id="passwordHelper" class="com.helpers.PasswordHelper"/>
     <beans:bean id="userDetailsServiceImpl"
-                class="com.servise.UserDetailsServiceImpl" />
+                class="com.service.UserDetailsServiceImpl" />
 </beans:beans>

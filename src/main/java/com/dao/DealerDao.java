@@ -1,17 +1,16 @@
 package com.dao;
 
 import com.dao.configuration.files.HibernateUtil;
-import com.servise.SendHTMLEmail;
+import com.service.SendHTMLEmail;
 import com.helpers.EncoderId;
 
 import com.helpers.PasswordHelper;
-import com.modelClass.*;
-import com.servise.StandartMasege;
+import com.models.*;
+import com.service.StandartMasege;
 import com.setting.Setting;
 import com.sun.istack.internal.Nullable;
 import interfaceModel.dao.DealerDaoInterface;
 import org.apache.commons.io.FileUtils;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,10 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
-import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
 
 /**

@@ -2,8 +2,7 @@ package interfaceModel.dao;
 
 import com.helpers.ResultCars;
 import com.helpers.SearchOptions;
-import com.modelClass.Car;
-import org.springframework.web.multipart.MultipartFile;
+import com.models.Car;
 
 import java.util.HashSet;
 import java.util.List;

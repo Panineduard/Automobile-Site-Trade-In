@@ -1,12 +1,12 @@
 <%@ page import="org.springframework.security.core.Authentication" %>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
-<%@ page import="com.modelClass.Car" %>
+<%@ page import="com.models.Car" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.springframework.ui.ModelMap" %>
 <%@ page import="com.helpers.SearchOptions" %>
 <%@ page import="com.helpers.EncoderId" %>
 <%@ page import="com.setting.Setting" %>
-<%@ page import="com.servise.StandartMasege" %>
+<%@ page import="com.service.StandartMasege" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--

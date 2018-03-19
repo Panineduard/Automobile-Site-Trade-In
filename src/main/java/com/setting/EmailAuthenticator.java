@@ -1,4 +1,4 @@
-package com.controllers.email;
+package com.setting;
 
 
 import com.setting.Setting;
@@ -9,8 +9,8 @@ import javax.mail.PasswordAuthentication;
 /**
  * Created by volkswagen1 on 08.01.2016.
  */
-public class Auth extends Authenticator {
-    public Auth(){
+public class EmailAuthenticator extends Authenticator {
+    public EmailAuthenticator(){
         super();
     }
     public PasswordAuthentication getPasswordAuthentication(){

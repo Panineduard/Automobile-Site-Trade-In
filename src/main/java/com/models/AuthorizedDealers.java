@@ -1,4 +1,4 @@
-package com.modelClass;
+package com.models;
 
 
 

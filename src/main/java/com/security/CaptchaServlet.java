@@ -1,6 +1,5 @@
-package com.captcha.servlet;
+package com.security;
 
-import com.captcha.util.Util;
 import com.helpers.PasswordHelper;
 
 import javax.imageio.ImageIO;
@@ -14,7 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class CaptchaGenServlet extends HttpServlet {
+public class CaptchaServlet extends HttpServlet {
 
     public static final String FILE_TYPE = "jpeg";
 
@@ -29,9 +28,9 @@ public class CaptchaGenServlet extends HttpServlet {
 
         String captchaStr="";
 
-        //captchaStr=Util.generateCaptchaTextMethod();
+        //captchaStr=CaptchaUtil.generateCaptchaTextMethod();
 
-        captchaStr=Util.generateCaptchaTextMethod2(6);
+        captchaStr= CaptchaUtil.generateCaptchaText(6);
 
         try {
 

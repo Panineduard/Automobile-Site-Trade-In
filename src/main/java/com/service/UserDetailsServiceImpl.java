@@ -1,8 +1,8 @@
-package com.servise;
+package com.service;
 
 
 import com.dao.configuration.files.HibernateUtil;
-import com.modelClass.Login;
+import com.models.Login;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.security.core.userdetails.UserDetails;

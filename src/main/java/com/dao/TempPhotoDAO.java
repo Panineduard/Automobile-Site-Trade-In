@@ -1,10 +1,9 @@
 package com.dao;
 
 import com.dao.configuration.files.HibernateUtil;
-import com.modelClass.TempImg;
-import com.servise.ChangeImgSize;
+import com.models.TempImg;
+import com.service.ChangeImgSize;
 import com.setting.Setting;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.file.Files;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;

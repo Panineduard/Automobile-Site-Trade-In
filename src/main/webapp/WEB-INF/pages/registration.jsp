@@ -3,7 +3,7 @@
 <%@ page import="org.springframework.security.core.Authentication" %>
 <%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
 <%@ page import="com.helpers.EncoderId" %>
-<%@ page import="com.modelClass.Car" %>
+<%@ page import="com.models.Car" %>
 <%@ page import="com.helpers.SearchOptions" %>
 <%@ page import="java.util.List" %>
 <%--

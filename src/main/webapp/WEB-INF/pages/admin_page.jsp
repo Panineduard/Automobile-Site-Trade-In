@@ -1,10 +1,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.modelClass.Dealer" %>
+<%@ page import="com.models.Dealer" %>
 <%@ page import="com.helpers.EncoderId" %>
-<%@ page import="com.modelClass.AuthorizedDealers" %>
+<%@ page import="com.models.AuthorizedDealers" %>
 <%@ page import="org.springframework.beans.factory.annotation.Autowired" %>
-<%@ page import="com.modelClass.Letter" %>
+<%@ page import="com.models.Letter" %>
 <%@ page import="com.setting.Setting" %>
 <%--
   Created by IntelliJ IDEA.

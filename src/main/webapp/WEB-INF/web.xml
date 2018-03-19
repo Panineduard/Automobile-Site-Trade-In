@@ -67,7 +67,7 @@
 
     <servlet>
         <servlet-name>CaptchaServlet</servlet-name>
-        <servlet-class>com.captcha.servlet.CaptchaGenServlet</servlet-class>
+        <servlet-class>com.security.CaptchaServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CaptchaServlet</servlet-name>

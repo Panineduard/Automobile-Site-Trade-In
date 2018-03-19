@@ -1,7 +1,7 @@
 package interfaceModel.dao;
 
-import com.modelClass.Dealer;
-import com.modelClass.KeyHolder;
+import com.models.Dealer;
+import com.models.KeyHolder;
 
 import java.util.List;
 

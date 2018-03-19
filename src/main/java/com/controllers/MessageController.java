@@ -1,7 +1,7 @@
 package com.controllers;
 
-import com.servise.SendHTMLEmail;
-import com.servise.StandartMasege;
+import com.service.SendHTMLEmail;
+import com.service.StandartMasege;
 import com.setting.Setting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Created by Эдуард on 29.11.15.
  */
 @Controller
-public class Message {
+public class MessageController {
     @Autowired
     SendHTMLEmail sendHTMLEmail;
     @Autowired
